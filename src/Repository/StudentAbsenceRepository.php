@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Student;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\StudentAbsence;
+use DateTimeInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 
@@ -12,8 +15,18 @@ use Doctrine\ORM\Query;
  *
  * @category Repository
  */
-class StudentAbsenceRepository extends EntityRepository
+class StudentAbsenceRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, StudentAbsence::class);
+    }
+
     /**
      * @param Student $student
      *
@@ -49,12 +62,12 @@ class StudentAbsenceRepository extends EntityRepository
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
+     * @param DateTimeInterface $startDate
+     * @param DateTimeInterface $endDate
      *
      * @return QueryBuilder
      */
-    public function getFilteredByBeginAndEndQB(\DateTime $startDate, \DateTime $endDate)
+    public function getFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate)
     {
         return $this->createQueryBuilder('sa')
             ->where('sa.day BETWEEN :startDate AND :endDate')
@@ -63,23 +76,23 @@ class StudentAbsenceRepository extends EntityRepository
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
+     * @param DateTimeInterface $startDate
+     * @param DateTimeInterface $endDate
      *
      * @return Query
      */
-    public function getFilteredByBeginAndEndQ(\DateTime $startDate, \DateTime $endDate)
+    public function getFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate)
     {
         return $this->getFilteredByBeginAndEndQB($startDate, $endDate)->getQuery();
     }
 
     /**
-     * @param \DateTime $startDate
-     * @param \DateTime $endDate
+     * @param DateTimeInterface $startDate
+     * @param DateTimeInterface $endDate
      *
      * @return array
      */
-    public function getFilteredByBeginAndEnd(\DateTime $startDate, \DateTime $endDate)
+    public function getFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate)
     {
         return $this->getFilteredByBeginAndEndQ($startDate, $endDate)->getResult();
     }

@@ -4,7 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Tariff;
 use App\Enum\TariffTypeEnum;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
 
@@ -13,8 +14,18 @@ use Doctrine\ORM\Query;
  *
  * @category Repository
  */
-class TariffRepository extends EntityRepository
+class TariffRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Tariff::class);
+    }
+
     /**
      * @return QueryBuilder
      */

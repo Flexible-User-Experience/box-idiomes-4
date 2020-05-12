@@ -2,15 +2,27 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use App\Entity\ContactMessage;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 
 /**
  * Class ContactMessageRepository.
  *
  * @category Repository
  */
-class ContactMessageRepository extends EntityRepository
+class ContactMessageRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, ContactMessage::class);
+    }
+
     /**
      * @return int
      */

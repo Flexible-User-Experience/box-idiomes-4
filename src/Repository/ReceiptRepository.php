@@ -5,8 +5,9 @@ namespace App\Repository;
 use App\Entity\Invoice;
 use App\Entity\Receipt;
 use App\Entity\Student;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
@@ -15,8 +16,18 @@ use Doctrine\ORM\QueryBuilder;
  *
  * @category Repository
  */
-class ReceiptRepository extends EntityRepository
+class ReceiptRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Receipt::class);
+    }
+
     /**
      * @param Student $student
      * @param int     $year
