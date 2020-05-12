@@ -1,3 +1,7 @@
+imports:
+    - { resource: 'services/repositories.yaml' }
+    - { resource: 'services/admins.yaml' }
+
 parameters:
     default_locale:           '%env(string:DEFAULT_LOCALE)%'
     database_server_version:  '%env(resolve:DATABASE_SERVER_VERSION)%'

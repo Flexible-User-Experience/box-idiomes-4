@@ -1,0 +1,87 @@
+services:
+    # Repositories
+    app.bank_repository:
+        class: App\Repository\BankRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Bank'
+    app.parent_repository:
+        class: App\Repository\PersonRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Person'
+    app.city_repository:
+        class: App\Repository\CityRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:City'
+    app.province_repository:
+        class: App\Repository\ProvinceRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Province'
+    app.teacher_repository:
+        class: App\Repository\TeacherRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Teacher'
+    app.teacher_absence_repository:
+        class: App\Repository\TeacherAbsenceRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:TeacherAbsence'
+    app.student_repository:
+        class: App\Repository\StudentRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Student'
+    app.student_absence_repository:
+        class: App\Repository\StudentAbsenceRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:StudentAbsence'
+    app.event_repository:
+        class: App\Repository\EventRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Event'
+    app.class_group_repository:
+        class: App\Repository\ClassGroupRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:ClassGroup'
+    app.tariff_repository:
+        class: App\Repository\TariffRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Tariff'
+    app.receipt_repository:
+        class: App\Repository\ReceiptRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Receipt'
+    app.invoice_repository:
+        class: App\Repository\InvoiceRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Invoice'
+    app.provider_repository:
+        class: App\Repository\ProviderRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Provider'
+    app.spending_category_repository:
+        class: App\Repository\SpendingCategoryRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:SpendingCategory'
+    app.spending_repository:
+        class: App\Repository\SpendingRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:Spending'
+    app.contact_message_repository:
+        class: App\Repository\ContactMessageRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:ContactMessage'
