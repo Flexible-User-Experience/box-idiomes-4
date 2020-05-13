@@ -1,0 +1,97 @@
+{% extends 'Front/layout.html.twig' %}
+
+{% form_theme newsletterForm _self %}
+
+{% block _contact_homepage_privacy_widget %}
+    <div class="checkbox">
+        <input type="checkbox" id="checkbox-privacy-homepage" {{ block('widget_attributes') }} />
+        <label for="checkbox-privacy-homepage" class="control-label my-privacy-label-homepage">
+            Accepto la <a href="{{ path('app_privacy_policy')}}">política de privacitat</a>
+        </label>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row extra-m-bottom">
+            <div class="col-xs-12">
+                <h2 class="hidden">Viu els idiomes</h2>
+                <div class="text-center">
+                    <img src="{{ asset('bundles/app/img/homepage_def.png') }}"
+                         class="img-responsive center-block" alt="imatge portada">
+                </div>
+            </div>
+        </div>
+        {# Teachers section #}
+        <div class="row">
+            {% if teachers | length is divisible by(2) %}
+                {# two columns #}
+                {% for teacher in teachers %}
+                    <div class="col-sm-6 col-xs-12 bottom-margin-responsive">
+                        {% if teacher.imageName is not null %}
+                            <img src="{{ vich_uploader_asset(teacher, 'imageFile') | imagine_filter('585x756_teacher_mask') }}"
+                                 class="img-responsive" alt="{{ teacher.imageName }}">
+                        {% else %}
+                            <img src="{{ asset('bundles/app/img/1teacher.jpeg') | imagine_filter('585x756_teacher_mask') }}"
+                                 class="img-responsive" alt="1teacher">
+                        {% endif %}
+                        <h4 class="{{ teacher.cssColor }} normal-m-top">{{ teacher.name }}</h4>
+                        <p>{{ teacher.description | raw }}</p>
+                    </div>
+                    {% if loop.index is divisible by(2) %}
+                        </div>
+                        <div class="row extra-big-m-top">
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {# three columns #}
+                {% for teacher in teachers %}
+                    <div class="col-sm-4 col-xs-8 col-sm-offset-0 col-xs-offset-2 bottom-margin-responsive">
+                        {% if teacher.imageName is not null %}
+                            <img src="{{ vich_uploader_asset(teacher, 'imageFile') | imagine_filter('480x620_teacher_mask') }}"
+                                 class="img-responsive" alt="{{ teacher.imageName }}">
+                        {% else %}
+                            <img src="{{ asset('bundles/app/img/1teacher.jpeg') | imagine_filter('480x620_teacher_mask') }}"
+                                 class="img-responsive" alt="1teacher">
+                        {% endif %}
+                        <h4 class="{{ teacher.cssColor }} normal-m-top">{{ teacher.name }}</h4>
+                        <p>{{ teacher.description | raw }}</p>
+                    </div>
+                    {% if loop.index is divisible by(3) %}
+                        </div>
+                        <div class="row extra-big-m-top">
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {# Flash message#}
+    {% include ':Front/includes:notice_flash.html.twig' %}
+    {# Newsletter section #}
+    <div class="p-vertical violet-background">
+        <div class="container">
+            <div class="row normal-m-top">
+                <div class="col-sm-4">
+                    <h4 class="c-white no-m-top">Newsletter</h4>
+                    <p class="c-white no-m-top">Subscriu-te! Et mantindrem informat de totes les novetats.</p>
+                </div>
+                {{ form_start(newsletterForm) }}
+                <div class="col-sm-4">
+                    {{ form_widget(newsletterForm.email) }}
+                    {{ form_errors(newsletterForm.email) }}
+                    {{ form_widget(newsletterForm.privacy) }}
+                    {{ form_errors(newsletterForm.privacy) }}
+                </div>
+                <div class="col-sm-4 text-center top-margin-responsive">
+                    {{ form_rest(newsletterForm) }}
+                </div>
+                {{ form_end(newsletterForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include ':Front/includes:scroll-to-flash-js.html.twig' %}
+{% endblock %}

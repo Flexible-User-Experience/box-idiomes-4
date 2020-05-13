@@ -18,14 +18,17 @@ use App\Enum\UserRolesEnum;
 use App\Manager\ReceiptManager;
 use App\Service\SmartAssetsHelperService;
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Class AppExtension.
  *
  * @category Twig
  */
-class AppExtension extends \Twig_Extension
+class AppExtension extends AbstractExtension
 {
     /**
      * @var SmartAssetsHelperService
@@ -70,9 +73,9 @@ class AppExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('generate_random_error_text', array($this, 'generateRandomErrorText')),
-            new \Twig_SimpleFunction('is_receipt_invoiced', array($this, 'isReceiptInvoicedFunction')),
-            new \Twig_SimpleFunction('get_absolute_asset_path_context_independent', array($this, 'getAbsoluteAssetPathContextIndependent')),
+            new TwigFunction('generate_random_error_text', array($this, 'generateRandomErrorText')),
+            new TwigFunction('is_receipt_invoiced', array($this, 'isReceiptInvoicedFunction')),
+            new TwigFunction('get_absolute_asset_path_context_independent', array($this, 'getAbsoluteAssetPathContextIndependent')),
         );
     }
 
@@ -124,14 +127,14 @@ class AppExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('draw_role_span', array($this, 'drawRoleSpan')),
-            new \Twig_SimpleFilter('draw_teacher_color', array($this, 'drawTeacherColorSpan')),
-            new \Twig_SimpleFilter('draw_teacher_absence_type', array($this, 'drawTeacherAbsenceType')),
-            new \Twig_SimpleFilter('draw_class_group_color', array($this, 'drawClassGroupColorSpan')),
-            new \Twig_SimpleFilter('draw_tariff_type', array($this, 'drawTariffType')),
-            new \Twig_SimpleFilter('draw_event_classroom_type', array($this, 'drawEventClassroomType')),
-            new \Twig_SimpleFilter('draw_invoice_month', array($this, 'drawInvoiceMonth')),
-            new \Twig_SimpleFilter('draw_money', array($this, 'drawMoney')),
+            new TwigFilter('draw_role_span', array($this, 'drawRoleSpan')),
+            new TwigFilter('draw_teacher_color', array($this, 'drawTeacherColorSpan')),
+            new TwigFilter('draw_teacher_absence_type', array($this, 'drawTeacherAbsenceType')),
+            new TwigFilter('draw_class_group_color', array($this, 'drawClassGroupColorSpan')),
+            new TwigFilter('draw_tariff_type', array($this, 'drawTariffType')),
+            new TwigFilter('draw_event_classroom_type', array($this, 'drawEventClassroomType')),
+            new TwigFilter('draw_invoice_month', array($this, 'drawInvoiceMonth')),
+            new TwigFilter('draw_money', array($this, 'drawMoney')),
         );
     }
 
