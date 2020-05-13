@@ -2,6 +2,10 @@
 
 namespace App\Service;
 
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
 /**
  * Class CourierService.
  *
@@ -10,7 +14,7 @@ namespace App\Service;
 class CourierService
 {
     /**
-     * @var \Swift_Mailer
+     * @var MailerInterface
      */
     private $mailer;
 
@@ -21,9 +25,9 @@ class CourierService
     /**
      * CourierService constructor.
      *
-     * @param \Swift_Mailer $mailer
+     * @param MailerInterface $mailer
      */
-    public function __construct(\Swift_Mailer $mailer)
+    public function __construct(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -38,20 +42,18 @@ class CourierService
      * @param string|null $replyAddress
      * @param string|null $toName
      *
-     * @return \Swift_Message
+     * @return Email
      */
-    private function buildSwiftMesage($from, $toEmail, $subject, $body, $replyAddress = null, $toName = null)
+    private function buildEmail($from, $toEmail, $subject, $body, $replyAddress = null, $toName = null)
     {
-        $message = new \Swift_Message();
+        $message = new Email();
         $message
-            ->setSubject($subject)
-            ->setFrom($from)
-            ->setTo($toEmail, $toName)
-            ->setBody($body)
-            ->setCharset('UTF-8')
-            ->setContentType('text/html');
+            ->subject($subject)
+            ->from($from)
+            ->to($toEmail, $toName)
+            ->text($body);
         if (!is_null($replyAddress)) {
-            $message->setReplyTo($replyAddress);
+            $message->replyTo($replyAddress);
         }
 
         return $message;
@@ -60,20 +62,22 @@ class CourierService
     /**
      * Send an email.
      *
-     * @param string      $from
-     * @param string      $toEmail
-     * @param string      $subject
-     * @param string      $body
+     * @param string $from
+     * @param string $toEmail
+     * @param string $subject
+     * @param string $body
      * @param string|null $replyAddress
      * @param string|null $toName
      *
-     * @return int
+     * @return void
+     *
+     * @throws TransportExceptionInterface
      */
     public function sendEmail($from, $toEmail, $subject, $body, $replyAddress = null, $toName = null)
     {
-        $message = $this->buildSwiftMesage($from, $toEmail, $subject, $body, $replyAddress, $toName);
+        $message = $this->buildEmail($from, $toEmail, $subject, $body, $replyAddress, $toName);
 
-        return $this->mailer->send($message);
+        $this->mailer->send($message);
     }
 
     /**
@@ -87,7 +91,9 @@ class CourierService
      * @param string $pdfFilename
      * @param \TCPDF $pdf
      *
-     * @return int
+     * @return void
+     *
+     * @throws TransportExceptionInterface
      */
     public function sendEmailWithPdfAttached($from, $toEmail, $toName, $subject, $body, $pdfFilename, \TCPDF $pdf)
     {
@@ -95,6 +101,6 @@ class CourierService
         $message = $this->buildSwiftMesage($from, $toEmail, $subject, $body, null, $toName);
         $message->attach($swiftAttatchment);
 
-        return $this->mailer->send($message);
+        $this->mailer->send($message);
     }
 }

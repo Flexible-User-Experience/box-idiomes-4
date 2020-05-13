@@ -1,0 +1,7 @@
+sonata_block:
+    default_contexts: [ cms ]
+    blocks:
+        sonata.admin.block.admin_list: ~
+        sonata.block.service.text:     ~
+        app.block.event_calendar:      ~
+        app.block.charts:              ~

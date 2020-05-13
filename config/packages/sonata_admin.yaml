@@ -1,12 +1,62 @@
 sonata_admin:
-    title: 'Sonata Admin'
-    dashboard:
-        blocks:
-            - { type: sonata.admin.block.admin_list, position: left }
+    title:           '%project_backend_title%'
+    title_logo:      '/bundles/app/img/login-logo.png'
+    persist_filters: true
     options:
+        html5_validate:             true
+        confirm_exit:               true
+        use_select2:                true
         legacy_twig_text_extension: false
-
-sonata_block:
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts: [admin]
+        pager_links:                10
+    security:
+        handler: sonata.admin.security.handler.role
+    templates:
+        layout:    'Admin/layout.html.twig'
+        dashboard: 'Admin/dashboard.html.twig'
+        list:      'Admin/list.html.twig'
+        edit:      'Admin/edit.html.twig'
+        show:      'Admin/show.html.twig'
+    dashboard:
+        groups:
+            Alumnes:
+                icon:     '<i class="fa fa-graduation-cap"></i>'
+            Professors:
+                icon:     '<i class="fa fa-user"></i>'
+            Aules:
+                icon:     '<i class="fa fa-window-maximize"></i>'
+            Facturació:
+                icon:     '<i class="fa fa-eur"></i>'
+                provider: 'backend_invoice_menu'
+                roles:    [ 'ROLE_ADMIN' ]
+            Despeses:
+                icon:     '<i class="fa fa-eur"></i>'
+                roles:    [ 'ROLE_ADMIN' ]
+            Serveis:
+                icon:     '<i class="fa fa-list-ul"></i>'
+            Fitxers:
+                icon:     '<i class="fa fa-file"></i>'
+                provider: 'backend_files_manager_menu'
+                roles:    [ 'ROLE_MANAGER' ]
+            Contactes:
+                icon:     '<i class="fa fa-envelope"></i>'
+            Configuració:
+                icon:     '<i class="fa fa-cogs"></i>'
+        blocks:
+            -
+                position: top
+                type:     sonata.block.service.text
+                class:    'col-xs-12'
+                roles:    [ 'ROLE_CMS' ]
+                settings:
+                    content: >
+                        <h1 style='margin-top:0'>%project_backend_title%</h1>
+            -
+                position: top
+                type:     app.block.event_calendar
+                class:    'col-xs-12'
+                roles:    [ 'ROLE_MANAGER' ]
+            -
+                position: top
+                type:     app.block.charts
+                class:    'col-xs-12'
+                roles:    [ 'ROLE_ADMIN' ]
