@@ -66,7 +66,7 @@
         </div>
     </div>
     {# Flash message#}
-    {% include ':Front/includes:notice_flash.html.twig' %}
+    {% include 'Front/includes/notice_flash.html.twig' %}
     {# Newsletter section #}
     <div class="p-vertical violet-background">
         <div class="container">
@@ -93,5 +93,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% include ':Front/includes:scroll-to-flash-js.html.twig' %}
+    {% include 'Front/includes/scroll-to-flash-js.html.twig' %}
 {% endblock %}
