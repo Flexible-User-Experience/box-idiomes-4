@@ -1,4 +1,7 @@
 {
+    "artgris/filemanager-bundle": {
+        "version": "2.0.2"
+    },
     "beberlei/doctrineextensions": {
         "version": "v1.2.6"
     },
@@ -7,6 +10,9 @@
     },
     "cocur/slugify": {
         "version": "v4.0.0"
+    },
+    "composer/installers": {
+        "version": "v1.9.0"
     },
     "digitick/sepa-xml": {
         "version": "1.6.2"
@@ -90,11 +96,36 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
+    "excelwebzone/recaptcha-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "fd4da7bc71749db65bc83abf5d164bfa9c839cf4"
+        },
+        "files": [
+            "config/packages/dev/ewz_recaptcha.yaml",
+            "config/packages/ewz_recaptcha.yaml"
+        ]
+    },
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.41"
+    },
+    "google/recaptcha": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.1",
+            "ref": "d087df3e087f50da3955f2def05079380da5894b"
+        },
+        "files": [
+            "config/packages/google_recaptcha.yaml"
+        ]
     },
     "imagine/imagine": {
         "version": "1.2.3"
@@ -151,6 +182,9 @@
     "ocramius/proxy-manager": {
         "version": "2.8.0"
     },
+    "oomphinc/composer-installers-extender": {
+        "version": "v1.1.2"
+    },
     "php": {
         "version": "7.4"
     },
@@ -162,6 +196,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.1.0"
+    },
+    "presta/sitemap-bundle": {
+        "version": "v2.1.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -649,6 +686,18 @@
     },
     "symfony/yaml": {
         "version": "v4.4.8"
+    },
+    "tattali/calendar-bundle": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.1",
+            "ref": "0c643e17b5340747b35c2c75e11727fa31bfa9bb"
+        },
+        "files": [
+            "config/routes/calendar.yaml"
+        ]
     },
     "twig/extensions": {
         "version": "1.0",

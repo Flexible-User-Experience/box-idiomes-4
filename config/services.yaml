@@ -11,6 +11,7 @@ parameters:
     google_analytics_account: '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
     google_maps_api_key:      '%env(string:GOOGLE_MAPS_API_KEY)%'
     delivery_dev_address:     '%env(string:DEV_DELIVERY_ADDRESS)%'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     _defaults:
