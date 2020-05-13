@@ -26,4 +26,5 @@ return [
     Sonata\UserBundle\SonataUserBundle::class => ['all' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+    SaadTazi\GChartBundle\SaadTaziGChartBundle::class => ['all' => true],
 ];

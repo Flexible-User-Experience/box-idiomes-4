@@ -11,7 +11,7 @@ use SaadTazi\GChartBundle\DataTable\DataCell;
 use SaadTazi\GChartBundle\DataTable\DataTable;
 use SaadTazi\GChartBundle\DataTable\DataColumn;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ChartsFactoryService.

@@ -6,7 +6,7 @@ use App\Service\ChartsFactoryService;
 use SaadTazi\GChartBundle\DataTable\Exception\InvalidColumnTypeException;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,9 +26,10 @@ class ChartsBlock extends AbstractBlockService
      * ChartsBlock constructor.
      *
      * @param string|null               $name
+     * @param EngineInterface|null      $templating
      * @param ChartsFactoryService|null $cfs
      */
-    public function __construct($name = null, EngineInterface $templating = null, $cfs = null)
+    public function __construct($name = null, ?EngineInterface $templating = null, $cfs = null)
     {
         parent::__construct($name, $templating);
         $this->cfs = $cfs;
@@ -36,6 +37,9 @@ class ChartsBlock extends AbstractBlockService
 
     /**
      * Execute.
+     *
+     * @param BlockContextInterface $blockContext
+     * @param Response|null $response
      *
      * @return Response
      *

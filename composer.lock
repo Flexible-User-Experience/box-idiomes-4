@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0952d9f10ad3e4482277854f0d06499",
+    "content-hash": "e912b2191485ce8632090ca85de5470c",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2929,6 +2929,46 @@
                 "psr-3"
             ],
             "time": "2020-03-23T09:12:05+00:00"
+        },
+        {
+            "name": "saad-tazi/g-chart-bundle",
+            "version": "v3.1.1",
+            "target-dir": "SaadTazi/GChartBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/saadtazi/SaadTaziGChartBundle.git",
+                "reference": "c2a50672b5dbdb59b237e526dbd5a7f82530b5a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/saadtazi/SaadTaziGChartBundle/zipball/c2a50672b5dbdb59b237e526dbd5a7f82530b5a9",
+                "reference": "c2a50672b5dbdb59b237e526dbd5a7f82530b5a9",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "3.* || 4.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "SaadTazi\\GChartBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Saad Tazi"
+                }
+            ],
+            "description": "A super simple Bundle that facilitate the usage of Google Chart Tool, Google Chart Image API and Google Infographics.",
+            "keywords": [
+                "chart",
+                "google"
+            ],
+            "time": "2018-11-26T19:45:52+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
