@@ -1,0 +1,31 @@
+/* Colors */
+.black-background      { background-color: #000000; }
+.white-background      { background-color: #FFFFFF; }
+.light-grey-background { background-color: #E3E3E3; }
+.white-color      { color: #FFFFFF; }
+.grey-color       { color: #6F6F6F; }
+.blue-color       { color: #009CC2; }
+
+/* Margins */
+.vertical-padding { padding: 20px 0; }
+.padding-bottom   { padding: 16px 0; }
+
+/* Custom main container */
+.container-main {
+   min-height: 400px;
+   padding-top: 40px;
+   padding-bottom: 40px;
+}
+
+/* Custom margins */
+.no-m-bottom  { margin-bottom: 0; }
+.normal-m-top { margin: 30px; }
+.only-normal-m-top { margin-top: 30px; }
+.left-margin-negative { margin-left: 15px; }
+
+/* Size icons */
+.footer-icon {
+   float: left;
+   display: inline-block;
+   width: 30px;
+}
