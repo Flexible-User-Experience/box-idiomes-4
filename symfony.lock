@@ -8,6 +8,9 @@
     "cocur/slugify": {
         "version": "v4.0.0"
     },
+    "digitick/sepa-xml": {
+        "version": "1.6.2"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

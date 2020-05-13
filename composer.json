@@ -4,9 +4,11 @@
     "require": {
         "php": ">7.4.0",
         "ext-ctype": "*",
+        "ext-fileinfo": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "beberlei/doctrineextensions": "^1.0",
+        "digitick/sepa-xml": "^1.6",
         "egulias/email-validator": "^2.1",
         "knplabs/knp-menu-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^3.0",
