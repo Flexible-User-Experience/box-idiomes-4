@@ -33,7 +33,7 @@ App\Entity\Teacher:
 # TeacherAbsence
 App\Entity\TeacherAbsence:
   teacherabsence{1..2}:
-    teacher: @teacher<numberBetween(1,2)>
+    teacher: '@teacher<numberBetween(1,2)>'
     type: <numberBetween(0, 1)>
     day: <dateTimeThisMonth()>
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
@@ -51,10 +51,10 @@ App\Entity\Student:
     email: <safeEmail()>
     address: <address()>
     payment: <numberBetween(0, 1)>
-    city: @city*
-    bank: @bank1
-    tariff: @tariff*
-    parent: @person1
+    city: '@city*'
+    bank: '@bank1'
+    tariff: '@tariff*'
+    parent: '@person1'
     schedule: <name()>
     comments: <paragraph()>
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
@@ -69,9 +69,9 @@ App\Entity\Student:
     email: <safeEmail()>
     address: <address()>
     payment: <numberBetween(0, 1)>
-    city: @city*
-    bank: @bank2
-    tariff: @tariff1
+    city: '@city*'
+    bank: '@bank2'
+    tariff: '@tariff1'
     schedule: <name()>
     comments: <paragraph()>
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
@@ -81,7 +81,7 @@ App\Entity\Student:
 # StudentAbsence
 App\Entity\StudentAbsence:
   studentabsence{1..2}:
-    student: @student<numberBetween(1,2)>
+    student: '@student<numberBetween(1,2)>'
     day: <dateTimeThisMonth()>
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
     updatedAt: <dateTimeThisMonth()>
@@ -109,7 +109,7 @@ App\Entity\City:
   city{1..2}:
     name: <city()>
     postalCode: <postcode()>
-    province: @province*
+    province: '@province*'
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
     updatedAt: <dateTimeThisMonth()>
     enabled: true
@@ -133,9 +133,9 @@ App\Entity\Person:
     phone: <phoneNumber()>
     email: <safeEmail()>
     address: <address()>
-    city: @city*
+    city: '@city*'
     payment: <numberBetween(0, 1)>
-    bank: @bank1
+    bank: '@bank1'
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
     updatedAt: <dateTimeThisMonth()>
     enabled: true
@@ -164,42 +164,42 @@ App\Entity\Event:
   event1:
     begin: <dateTimeThisMonth()>
     end: <dateTimeThisMonth()>
-    teacher: @teacher1
+    teacher: '@teacher1'
     classroom: <numberBetween(0, 3)>
-    group: @classgroup1
+    group: '@classgroup1'
     students:
-        - @student1
-        - @student2
-    next: @event2
+        - '@student1'
+        - '@student2'
+    next: '@event2'
     dayFrequencyRepeat: <randomDigit()>
     until: <dateTimeThisMonth()>
   event2:
     begin: <dateTimeThisMonth()>
     end: <dateTimeThisMonth()>
-    teacher: @teacher1
+    teacher: '@teacher1'
     classroom: <numberBetween(0, 3)>
-    group: @classgroup1
+    group: '@classgroup1'
     students:
-        - @student1
-        - @student2
-    previous: @event1
+        - '@student1'
+        - '@student2'
+    previous: '@event1'
     dayFrequencyRepeat: <randomDigit()>
     until: <dateTimeThisMonth()>
   event3:
     begin: <dateTimeThisMonth()>
     end: <dateTimeThisMonth()>
-    teacher: @teacher1
+    teacher: '@teacher1'
     classroom: <numberBetween(0, 3)>
-    group: @classgroup2
+    group: '@classgroup2'
     students:
-        - @student1
+        - '@student1'
 
 # Receipt
 App\Entity\Receipt:
   receipt{1..2}:
-    student: @student<current()>
-    person: @person1
-    date: <date()>
+    student: '@student<current()>'
+    person: '@person1'
+    date: '<dateTime()>'
     isPayed: <boolean()>
     baseAmount: <randomFloat(1, 5)>
     discountApplied: <boolean()>
@@ -214,15 +214,15 @@ App\Entity\ReceiptLine:
     priceUnit: <randomFloat(1, 5)>
     discount: <randomFloat(1, 5)>
     total: <randomFloat(1, 5)>
-    receipt: @receipt<current()>
+    receipt: '@receipt<current()>'
 
 # Invoice
 App\Entity\Invoice:
   invoice{1..2}:
-    receipt: @receipt<current()>
-    student: @student<current()>
-    person: @person1
-    date: <date()>
+    receipt: '@receipt<current()>'
+    student: '@student<current()>'
+    person: '@person1'
+    date: '<dateTime()>'
     isPayed: <boolean()>
     baseAmount: <randomFloat(1, 5)>
     taxPercentage: 0
@@ -240,7 +240,7 @@ App\Entity\InvoiceLine:
     priceUnit: <randomFloat(1, 5)>
     discount: <randomFloat(1, 5)>
     total: <randomFloat(1, 5)>
-    invoice: @invoice<current()>
+    invoice: '@invoice<current()>'
 
 # Spending Category
 App\Entity\SpendingCategory:
@@ -250,9 +250,9 @@ App\Entity\SpendingCategory:
 # Spending
 App\Entity\Spending:
   spending{1..2}:
-    date: <date()>
-    category: @spendingcategory1
-    provider: @provider1
+    date: '<dateTime()>'
+    category: '@spendingcategory1'
+    provider: '@provider1'
     description: <sentence()>
     baseAmount: <randomFloat(1, 5)>
     isPayed: <boolean()>
@@ -264,7 +264,7 @@ App\Entity\Provider:
     tic: <word()>
     name: <word()>
     address: <word()>
-    city: @city<numberBetween(1, 2)>
+    city: '@city<numberBetween(1, 2)>'
     phone: <word()>
     email: <safeEmail()>
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
@@ -275,8 +275,8 @@ App\Entity\Provider:
 ## Users
 App\Entity\User:
     admin:
-        username: <{private_admin_test_user}>
-        plainPassword: <{private_admin_test_pass}>
+        username: admin
+        plainPassword: passwd
         email: <safeEmail()>
         firstname: <name()>
         lastname: <lastname()>

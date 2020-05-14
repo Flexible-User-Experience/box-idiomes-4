@@ -2,7 +2,6 @@
 
 namespace App\Listener;
 
-use AncaRebeca\FullCalendarBundle\Event\CalendarEvent;
 use App\Entity\Event as AppEvent;
 use App\Entity\Student;
 use App\Entity\TeacherAbsence;
@@ -10,7 +9,10 @@ use App\Repository\EventRepository;
 use App\Repository\StudentRepository;
 use App\Repository\TeacherAbsenceRepository;
 use App\Service\EventTrasnformerFactoryService;
+use CalendarBundle\CalendarEvents;
+use CalendarBundle\Event\CalendarEvent;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -19,7 +21,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @category Listener
  */
-class FullCalendarListener
+class FullCalendarListener implements EventSubscriberInterface
 {
     /**
      * @var EventRepository
@@ -73,6 +75,16 @@ class FullCalendarListener
         $this->etfs = $etfs;
         $this->rss = $rss;
         $this->router = $router;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            CalendarEvents::SET_DATA => 'loadData',
+        ];
     }
 
     /**

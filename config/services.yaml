@@ -134,17 +134,6 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: 'presta.sitemap.listener' }
-    app.event_fullcalendar:
-        class: App\Listener\FullCalendarListener
-        arguments:
-            - '@app.event_repository'
-            - '@app.teacher_absence_repository'
-            - '@app.student_repository'
-            - '@app.event_transformer_factory'
-            - '@request_stack'
-            - '@router'
-        tags:
-            - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: 'loadData' }
     # Managers
     app.smart_assets_helper:
         class: App\Service\SmartAssetsHelperService
