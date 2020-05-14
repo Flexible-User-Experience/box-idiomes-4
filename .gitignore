@@ -1,3 +1,12 @@
+###> app/bundle ###
+!/public/uploads/.gitkeep
+/public/uploads/disc/*
+!/public/uploads/disc/.gitkeep
+/public/uploads/documents/*
+!/public/uploads/documents/.gitkeep
+/public/uploads/images/*
+!/public/uploads/images/.gitkeep
+###< app/bundle ###
 
 ###> symfony/framework-bundle ###
 /.env.local
