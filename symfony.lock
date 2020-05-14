@@ -96,36 +96,11 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
-    "excelwebzone/recaptcha-bundle": {
-        "version": "1.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.5",
-            "ref": "fd4da7bc71749db65bc83abf5d164bfa9c839cf4"
-        },
-        "files": [
-            "config/packages/dev/ewz_recaptcha.yaml",
-            "config/packages/ewz_recaptcha.yaml"
-        ]
-    },
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.41"
-    },
-    "google/recaptcha": {
-        "version": "1.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.1",
-            "ref": "d087df3e087f50da3955f2def05079380da5894b"
-        },
-        "files": [
-            "config/packages/google_recaptcha.yaml"
-        ]
     },
     "imagine/imagine": {
         "version": "1.2.3"
@@ -196,9 +171,6 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.1.0"
-    },
-    "presta/sitemap-bundle": {
-        "version": "v2.1.0"
     },
     "psr/cache": {
         "version": "1.0.1"

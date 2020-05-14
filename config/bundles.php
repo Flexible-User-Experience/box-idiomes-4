@@ -29,6 +29,4 @@ return [
     SaadTazi\GChartBundle\SaadTaziGChartBundle::class => ['all' => true],
     CalendarBundle\CalendarBundle::class => ['all' => true],
     Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true],
-    EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle::class => ['all' => true],
-    Presta\SitemapBundle\PrestaSitemapBundle::class => ['all' => true],
 ];
