@@ -1,0 +1,285 @@
+# Contact messages
+App\Entity\ContactMessage:
+  contactmessage{1..5}:
+    name: <name()>
+    subject: <word()>
+    email: <safeEmail()>
+    phone: <phoneNumber()>
+    message: <paragraph()>
+    description: <paragraph()>
+    checked: <boolean(70)>
+    answered: <boolean(30)>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# NewsletterContact
+App\Entity\NewsletterContact:
+  newslettercontact{1..5}:
+    email: <safeEmail()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# Teachers
+App\Entity\Teacher:
+  teacher{1..2}:
+    name: <name()>
+    description: <paragraph()>
+    position: <numberBetween(1, 2)>
+    color: <numberBetween(0, 3)>
+    showInHomepage: true
+
+# TeacherAbsence
+App\Entity\TeacherAbsence:
+  teacherabsence{1..2}:
+    teacher: @teacher<numberBetween(1,2)>
+    type: <numberBetween(0, 1)>
+    day: <dateTimeThisMonth()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# Student
+App\Entity\Student:
+  student{1..2}:
+    dni: <bothify('########?')>
+    name: <name()>
+    surname: <firstName()>
+    birthDate: <dateTimeBetween()>
+    phone: <phoneNumber()>
+    email: <safeEmail()>
+    address: <address()>
+    payment: <numberBetween(0, 1)>
+    city: @city*
+    bank: @bank1
+    tariff: @tariff*
+    parent: @person1
+    schedule: <name()>
+    comments: <paragraph()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+  student3:
+    dni: <bothify('########?')>
+    name: <name()>
+    surname: <firstName()>
+    birthDate: <dateTimeBetween()>
+    phone: <phoneNumber()>
+    email: <safeEmail()>
+    address: <address()>
+    payment: <numberBetween(0, 1)>
+    city: @city*
+    bank: @bank2
+    tariff: @tariff1
+    schedule: <name()>
+    comments: <paragraph()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# StudentAbsence
+App\Entity\StudentAbsence:
+  studentabsence{1..2}:
+    student: @student<numberBetween(1,2)>
+    day: <dateTimeThisMonth()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# Services
+App\Entity\Service:
+  service{1..2}:
+    title: <name()>
+    description: <paragraph()>
+    position: <numberBetween(1, 2)>
+
+# Province
+App\Entity\Province:
+  province{1..2}:
+    code: <postcode()>
+    name: <city()>
+    country: <country()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# City
+App\Entity\City:
+  city{1..2}:
+    name: <city()>
+    postalCode: <postcode()>
+    province: @province*
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# Bank
+App\Entity\Bank:
+  bank{1..2}:
+    name: <company()>
+    accountNumber: <iban('ES')>
+    swiftCode: <swiftBicNumber()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# Person
+App\Entity\Person:
+  person1:
+    dni: <bothify('########?')>
+    name: <name()>
+    surname: <firstName()>
+    phone: <phoneNumber()>
+    email: <safeEmail()>
+    address: <address()>
+    city: @city*
+    payment: <numberBetween(0, 1)>
+    bank: @bank1
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# ClassGroup
+App\Entity\ClassGroup:
+  classgroup{1..2}:
+    code: <ean8()>
+    name: <name()>
+    book: <name()>
+    color: <hexcolor()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# Tariff
+App\Entity\Tariff:
+  tariff{1..2}:
+    year: <year('now')>
+    price: <randomFloat(1, 5)>
+    type: <numberBetween(0, 4)>
+    name: <name()>
+
+# Event
+App\Entity\Event:
+  event1:
+    begin: <dateTimeThisMonth()>
+    end: <dateTimeThisMonth()>
+    teacher: @teacher1
+    classroom: <numberBetween(0, 3)>
+    group: @classgroup1
+    students:
+        - @student1
+        - @student2
+    next: @event2
+    dayFrequencyRepeat: <randomDigit()>
+    until: <dateTimeThisMonth()>
+  event2:
+    begin: <dateTimeThisMonth()>
+    end: <dateTimeThisMonth()>
+    teacher: @teacher1
+    classroom: <numberBetween(0, 3)>
+    group: @classgroup1
+    students:
+        - @student1
+        - @student2
+    previous: @event1
+    dayFrequencyRepeat: <randomDigit()>
+    until: <dateTimeThisMonth()>
+  event3:
+    begin: <dateTimeThisMonth()>
+    end: <dateTimeThisMonth()>
+    teacher: @teacher1
+    classroom: <numberBetween(0, 3)>
+    group: @classgroup2
+    students:
+        - @student1
+
+# Receipt
+App\Entity\Receipt:
+  receipt{1..2}:
+    student: @student<current()>
+    person: @person1
+    date: <date()>
+    isPayed: <boolean()>
+    baseAmount: <randomFloat(1, 5)>
+    discountApplied: <boolean()>
+    month: <month()>
+    year: <year()>
+
+# ReceiptLine
+App\Entity\ReceiptLine:
+  lineReceipt{1..2}:
+    description: <sentence()>
+    units: <numberBetween(1, 100)>
+    priceUnit: <randomFloat(1, 5)>
+    discount: <randomFloat(1, 5)>
+    total: <randomFloat(1, 5)>
+    receipt: @receipt<current()>
+
+# Invoice
+App\Entity\Invoice:
+  invoice{1..2}:
+    receipt: @receipt<current()>
+    student: @student<current()>
+    person: @person1
+    date: <date()>
+    isPayed: <boolean()>
+    baseAmount: <randomFloat(1, 5)>
+    taxPercentage: 0
+    irpfPercentage: 15
+    discountApplied: <boolean()>
+    totalAmount: <randomFloat(1, 5)>
+    month: <month()>
+    year: <year()>
+
+# InvoiceLine
+App\Entity\InvoiceLine:
+  lineInvoice{1..2}:
+    description: <sentence()>
+    units: <numberBetween(1, 100)>
+    priceUnit: <randomFloat(1, 5)>
+    discount: <randomFloat(1, 5)>
+    total: <randomFloat(1, 5)>
+    invoice: @invoice<current()>
+
+# Spending Category
+App\Entity\SpendingCategory:
+  spendingcategory{1..2}:
+    name: <sentence()>
+
+# Spending
+App\Entity\Spending:
+  spending{1..2}:
+    date: <date()>
+    category: @spendingcategory1
+    provider: @provider1
+    description: <sentence()>
+    baseAmount: <randomFloat(1, 5)>
+    isPayed: <boolean()>
+    paymentMethod: <numberBetween(0, 2)>
+
+# Provider
+App\Entity\Provider:
+  provider{1..2}:
+    tic: <word()>
+    name: <word()>
+    address: <word()>
+    city: @city<numberBetween(1, 2)>
+    phone: <word()>
+    email: <safeEmail()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    paymentMethod: <numberBetween(0, 2)>
+    enabled: true
+
+## Users
+App\Entity\User:
+    admin:
+        username: <{private_admin_test_user}>
+        plainPassword: <{private_admin_test_pass}>
+        email: <safeEmail()>
+        firstname: <name()>
+        lastname: <lastname()>
+        enabled: true
+        roles:
+            - ROLE_SUPER_ADMIN

@@ -22,6 +22,7 @@ parameters:
     bic_number:                '%env(string:BIC_NUMBER)%'
     mailer_destination:        '%env(string:MAILER_DESTINATION)%'
     delivery_dev_address:      '%env(string:DEV_DELIVERY_ADDRESS)%'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     _defaults:

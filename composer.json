@@ -11,6 +11,8 @@
         "beberlei/doctrineextensions": "^1.0",
         "digitick/sepa-xml": "^1.6",
         "egulias/email-validator": "^2.1",
+        "excelwebzone/recaptcha-bundle": "^1.5",
+        "hautelook/alice-bundle": "^2.7",
         "knplabs/knp-menu-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^3.0",
         "liip/imagine-bundle": "^2.1",
@@ -42,7 +44,8 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "4.4.*",
         "tattali/calendar-bundle": "^1.2",
-        "vich/uploader-bundle": "1.13.1"
+        "vich/uploader-bundle": "1.13.1",
+        "whiteoctober/tcpdf-bundle": "^1.1"
     },
     "require-dev": {
         "sensiolabs/security-checker": "^6.0",

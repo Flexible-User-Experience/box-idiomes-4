@@ -38,6 +38,9 @@
     "doctrine/common": {
         "version": "2.12.0"
     },
+    "doctrine/data-fixtures": {
+        "version": "1.4.2"
+    },
     "doctrine/dbal": {
         "version": "2.10.2"
     },
@@ -96,11 +99,53 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
+    "excelwebzone/recaptcha-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "fd4da7bc71749db65bc83abf5d164bfa9c839cf4"
+        },
+        "files": [
+            "config/packages/dev/ewz_recaptcha.yaml",
+            "config/packages/ewz_recaptcha.yaml"
+        ]
+    },
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.1"
+    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.41"
+    },
+    "google/recaptcha": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.1",
+            "ref": "d087df3e087f50da3955f2def05079380da5894b"
+        },
+        "files": [
+            "config/packages/google_recaptcha.yaml"
+        ]
+    },
+    "hautelook/alice-bundle": {
+        "version": "2.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.1",
+            "ref": "71822522faf7ed2792d86b7f94ce73443358ccb9"
+        },
+        "files": [
+            "config/packages/dev/hautelook_alice.yaml",
+            "config/packages/test/hautelook_alice.yaml",
+            "fixtures/.gitignore"
+        ]
     },
     "imagine/imagine": {
         "version": "1.2.3"
@@ -148,6 +193,22 @@
     "monolog/monolog": {
         "version": "1.25.3"
     },
+    "myclabs/deep-copy": {
+        "version": "1.9.5"
+    },
+    "nelmio/alice": {
+        "version": "3.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.2",
+            "ref": "0b9900ece737bec7752e4155c0164639dd9b0cb0"
+        },
+        "files": [
+            "config/packages/dev/nelmio_alice.yaml",
+            "config/packages/test/nelmio_alice.yaml"
+        ]
+    },
     "nikic/php-parser": {
         "version": "v4.4.0"
     },
@@ -186,6 +247,18 @@
     },
     "saad-tazi/g-chart-bundle": {
         "version": "v3.1.1"
+    },
+    "sebastian/comparator": {
+        "version": "4.0.0"
+    },
+    "sebastian/diff": {
+        "version": "4.0.1"
+    },
+    "sebastian/exporter": {
+        "version": "4.0.0"
+    },
+    "sebastian/recursion-context": {
+        "version": "4.0.0"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -671,6 +744,18 @@
             "config/routes/calendar.yaml"
         ]
     },
+    "tecnickcom/tcpdf": {
+        "version": "6.3.5"
+    },
+    "theofidry/alice-data-fixtures": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "fe5a50faf580eb58f08ada2abe8afbd2d4941e05"
+        }
+    },
     "twig/extensions": {
         "version": "1.0",
         "recipe": {
@@ -709,5 +794,8 @@
     },
     "webmozart/assert": {
         "version": "1.8.0"
+    },
+    "whiteoctober/tcpdf-bundle": {
+        "version": "1.1.2"
     }
 }
