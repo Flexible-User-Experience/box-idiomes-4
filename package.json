@@ -20,7 +20,7 @@
         "ckeditor4": "^4.11.0",
         "dropzone": "^5.5.1",
         "google-charts": "^2.0.0",
-
+        "jquery": "^3.5.1",
         "pdfjs-dist": "^2.2.228"
     },
     "license": "UNLICENSED",
