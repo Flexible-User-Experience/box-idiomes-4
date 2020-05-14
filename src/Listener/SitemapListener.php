@@ -2,7 +2,7 @@
 
 namespace App\Listener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,7 +24,7 @@ class SitemapListener implements EventSubscriberInterface
     private $router;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -36,9 +36,9 @@ class SitemapListener implements EventSubscriberInterface
      * SitemapListener constructor
      *
      * @param RouterInterface $router
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(RouterInterface $router, EntityManager $em)
+    public function __construct(RouterInterface $router, EntityManagerInterface $em)
     {
         $this->router = $router;
         $this->em = $em;

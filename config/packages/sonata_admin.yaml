@@ -1,6 +1,6 @@
 sonata_admin:
     title:           '%project_backend_title%'
-    title_logo:      '/bundles/app/img/login-logo.png'
+    title_logo:      '/build/img/login-logo.png'
     persist_filters: true
     options:
         html5_validate:             true

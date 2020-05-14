@@ -1,4 +1,4 @@
-{% extends "SonataAdminBundle::standard_layout.html.twig" %}
+{% extends "@SonataAdmin/standard_layout.html.twig" %}
 
 {# removes top search bar #}
 {% block sonata_sidebar_search %}{% endblock %}
@@ -6,7 +6,7 @@
 {# custom logo #}
 {% block logo %}
     <a class="logo" href="{{ path('sonata_admin_dashboard') }}">
-        <img src="{{ asset('bundles/app/img/backend-logo.png') }}" alt="{{ sonata_admin.adminPool.title }}">
+        <img src="{{ asset('build/img/backend-logo.png') }}" alt="{{ sonata_admin.adminPool.title }}">
         <span>{{ sonata_admin.adminPool.title }}</span>
     </a>
 {% endblock %}
@@ -26,15 +26,14 @@
 {# override css includes #}
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets filter="cssrewrite,less" "@mybackendcss" %}
-        <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
-    {% endstylesheets %}
+    {{ encore_entry_link_tags('backend') }}
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}"/>
 {% endblock %}
 
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/js/pdf.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/pdf.worker.js') }}"></script>
+    {{ encore_entry_script_tags('backend') }}
+{#    <script type="text/javascript" src="{{ asset('bundles/app/js/pdf.js') }}"></script>#}
+{#    <script type="text/javascript" src="{{ asset('bundles/app/js/pdf.worker.js') }}"></script>#}
 {% endblock %}
