@@ -3,9 +3,9 @@
 namespace App\Listener;
 
 use Doctrine\ORM\EntityManager;
-use Presta\SitemapBundle\Service\SitemapListenerInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\RouterInterface;
  * @package  App\Listener
  * @author   Anton Serra <aserratorta@gmail.com>
  */
-class SitemapListener implements SitemapListenerInterface
+class SitemapListener implements EventSubscriberInterface
 {
     /**
      * @var RouterInterface
@@ -42,6 +42,16 @@ class SitemapListener implements SitemapListenerInterface
     {
         $this->router = $router;
         $this->em = $em;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            SitemapPopulateEvent::ON_SITEMAP_POPULATE => 'populateSitemap',
+        ];
     }
 
     /**

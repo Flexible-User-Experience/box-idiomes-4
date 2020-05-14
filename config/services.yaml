@@ -126,14 +126,6 @@ services:
             - '@request_stack'
         tags:
             - { name: knp_menu.menu, alias: top }
-    # Listeners
-    app.sitemap:
-        class: App\Listener\SitemapListener
-        arguments:
-            - '@router'
-            - '@doctrine.orm.entity_manager'
-        tags:
-            - { name: 'presta.sitemap.listener' }
     # Managers
     app.smart_assets_helper:
         class: App\Service\SmartAssetsHelperService
