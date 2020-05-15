@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use AncaRebeca\FullCalendarBundle\Model\Event;
+use CalendarBundle\Entity\Event;
 
 /**
  * Class EventFullCalendar.

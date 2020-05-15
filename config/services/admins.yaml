@@ -19,7 +19,6 @@ services:
             - { name: sonata.admin, manager_type: orm, label: "Pare, mare o tutor", group: "Alumnes" }
         calls:
             - [ setTemplate, [ edit, "::Admin/Student/edit.html.twig" ] ]
-
     # Teachers
     admin.teacher:
         class: App\Admin\TeacherAdmin
@@ -31,7 +30,6 @@ services:
         arguments: [ ~, App\Entity\TeacherAbsence, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Absència", group: "Professors" }
-
     # Classrooms
     admin.class_group:
         class: App\Admin\ClassGroupAdmin
@@ -47,7 +45,6 @@ services:
             - { name: sonata.admin, manager_type: orm, label: "Horari", group: "Aules" }
         calls:
             - [ setTemplate, [ edit, "::Admin/Event/edit.html.twig" ] ]
-
     # Billings
     admin.tariff:
         class: App\Admin\TariffAdmin
@@ -79,7 +76,6 @@ services:
         arguments: [ ~, App\Entity\InvoiceLine, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Línies factura", group: "Facturació", show_in_dashboard: false }
-
     # Purchases
     admin.purchases.provider:
         class: App\Admin\ProviderAdmin
@@ -96,14 +92,12 @@ services:
         arguments: [ ~, App\Entity\Spending, App:Admin\SpendingAdmin, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Despesa", group: "Despeses" }
-
     # Services
     admin.service:
         class: App\Admin\ServiceAdmin
         arguments: [ ~, App\Entity\Service, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Servei", group: "Serveis" }
-
     # Contacts
     admin.contactmessage:
         class: App\Admin\ContactMessageAdmin
@@ -115,7 +109,6 @@ services:
         arguments: [ ~, App\Entity\NewsletterContact, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Butlletí de contacte", group: "Contactes" }
-
     # Configurations
     admin.province:
         class: App\Admin\ProvinceAdmin
@@ -137,7 +130,6 @@ services:
         arguments: [ ~, App\Entity\Bank, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Bank", group: "Configuració", show_in_dashboard: false }
-
     # Dummies
     admin.file_manager_dummy:
         class: App\Admin\FileDummyAdmin

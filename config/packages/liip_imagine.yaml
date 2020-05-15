@@ -1,7 +1,5 @@
-# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
 liip_imagine:
-    # valid drivers options include "gd" or "gmagick" or "imagick"
-    driver: "gd"
+    driver: 'gd'
     loaders:
         default:
             filesystem:
@@ -15,13 +13,13 @@ liip_imagine:
             filters:
                 thumbnail: { size: [ 585, 756 ], mode: outbound }
                 watermark:
-                    image: Resources/Watermark/teacher-mask-big.png
+                    image:    '../assets/watermark/teacher-mask-big.png'
                     position: center
         480x620_teacher_mask:
             filters:
                 thumbnail: { size: [ 480, 620 ], mode: outbound }
                 watermark:
-                    image: Resources/Watermark/teacher-mask.png
+                    image:    '../assets/watermark/teacher-mask.png'
                     position: center
         2400xY:
             quality: 75

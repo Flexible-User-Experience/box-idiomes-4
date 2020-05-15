@@ -1,5 +1,4 @@
 services:
-    # Repositories
     app.bank_repository:
         class: App\Repository\BankRepository
         factory: [ '@doctrine', getRepository ]

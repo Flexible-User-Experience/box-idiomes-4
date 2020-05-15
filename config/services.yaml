@@ -3,22 +3,283 @@ imports:
     - { resource: 'services/admins.yaml' }
 
 parameters:
-    default_locale:           '%env(string:DEFAULT_LOCALE)%'
-    database_server_version:  '%env(resolve:DATABASE_SERVER_VERSION)%'
-    project_web_title:        '%env(string:PROJECT_WEB_TITLE)%'
-    project_url_base:         '%env(string:PROJECT_BASE_URL)%'
-    google_analytics_enabled: '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
-    google_analytics_account: '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
-    google_maps_api_key:      '%env(string:GOOGLE_MAPS_API_KEY)%'
-    delivery_dev_address:     '%env(string:DEV_DELIVERY_ADDRESS)%'
+    default_locale:            '%env(string:DEFAULT_LOCALE)%'
+    database_server_version:   '%env(resolve:DATABASE_SERVER_VERSION)%'
+    project_web_title:         '%env(string:PROJECT_WEB_TITLE)%'
+    project_url_base:          '%env(string:PROJECT_BASE_URL)%'
+    project_backend_title:     '%env(string:PROJECT_BACKEND_TITLE)%'
+    google_analytics_enabled:  '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
+    google_analytics_account:  '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
+    google_maps_api_key:       '%env(string:GOOGLE_MAPS_API_KEY)%'
+    facebook_pixel_enabled:    '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
+    facebook_pixel_id:         '%env(string:FACEBOOK_PIXEL_ID)%'
+    mailchimp_api_key:         '%env(string:MAILCHIMP_API_KEY)%'
+    boss_name:                 '%env(string:BOSS_NAME)%'
+    boss_dni:                  '%env(string:BOSS_DNI)%'
+    boss_address:              '%env(string:BOSS_ADDRESS)%'
+    boss_city:                 '%env(string:BOSS_CITY)%'
+    iban_business:             '%env(string:IBAN_BUSINESS)%'
+    bic_number:                '%env(string:BIC_NUMBER)%'
+    mailer_destination:        '%env(string:MAILER_DESTINATION)%'
+    delivery_dev_address:      '%env(string:DEV_DELIVERY_ADDRESS)%'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     _defaults:
         autowire:      true
         autoconfigure: true
+        bind:
+            $mub: '%project_url_base%'
+    # Commons
     App\:
         resource: '../src/*'
         exclude:  '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+    # Controllers
     App\Controller\:
         resource: '../src/Controller'
-        tags:     ['controller.service_arguments']
+        tags:     [ 'controller.service_arguments' ]
+    # Template Blocks
+    app.block.event_calendar:
+        class: App\Block\EventCalendarBlock
+        arguments:
+            - 'app.block.event_calendar'
+            - '@templating'
+        tags:
+            - { name: sonata.block }
+    app.block.charts:
+        class: App\Block\ChartsBlock
+        arguments:
+            - 'app.block.charts'
+            - '@templating'
+            - '@app.charts_factory_service'
+        tags:
+            - { name: sonata.block }
+    # Messaging
+    app.courier:
+        class: App\Service\CourierService
+        arguments:
+            - '@mailer'
+    app.notification:
+        class: App\Service\NotificationService
+        arguments:
+            - '@app.courier'
+            - '@twig'
+            - '%mailer_destination%'
+            - '%project_url_base%'
+    # Factories
+    app.event_transformer_factory:
+        class: App\Service\EventTrasnformerFactoryService
+        arguments:
+            - '@router'
+    app.charts_factory_service:
+        class: App\Service\ChartsFactoryService
+        arguments:
+            - '@translator'
+            - '@app.receipt_repository'
+            - '@app.invoice_repository'
+            - '@app.spending_repository'
+    # Menus
+    app.backend_top_nav_menu_builder:
+        class: App\Menu\BackendTopNavMenuBuilder
+        arguments:
+            - '@knp_menu.factory'
+            - '@security.token_storage'
+            - '@security.authorization_checker'
+            - '@app.contact_message_repository'
+    app.backend_top_nav_menu:
+        class: Knp\Menu\MenuItem
+        factory: [ '@app.backend_top_nav_menu_builder', createTopNavMenu ]
+        tags:
+            - { name: knp_menu.menu, alias: backend_top_nav_menu }
+    app.backend_invoice_menu_builder:
+        class: App\Menu\BackendInvoiceMenuBuilder
+        arguments:
+            - '@knp_menu.factory'
+    app.backend_invoice_menu:
+        class: Knp\Menu\MenuItem
+        factory: [ '@app.backend_invoice_menu_builder', createSideMenu ]
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: knp_menu.menu, alias: backend_invoice_menu }
+    app.backend_files_manager_menu_builder:
+        class: App\Menu\BackendFilesManagerMenuBuilder
+        arguments:
+            - '@knp_menu.factory'
+    app.backend_files_manager_menu:
+        class: Knp\Menu\MenuItem
+        factory: [ '@app.backend_files_manager_menu_builder', createSideMenu ]
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: knp_menu.menu, alias: backend_files_manager_menu }
+    app.frontend_menu_builder:
+        class: App\Menu\FrontendMenuBuilder
+        arguments:
+            - '@knp_menu.factory'
+            - '@security.authorization_checker'
+            - '@security.token_storage'
+    app.frontend_top_menu:
+        class: Knp\Menu\MenuItem
+        factory: [ '@app.frontend_menu_builder', createTopMenu ]
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: knp_menu.menu, alias: top }
+    # Managers
+    app.smart_assets_helper:
+        class: App\Service\SmartAssetsHelperService
+        arguments:
+            - '@kernel'
+            - '%project_url_base%'
+    app.mailchimp_manager:
+        class: App\Manager\MailchimpManager
+        arguments:
+            - '@app.notification'
+            - '%mailchimp_api_key%'
+    app.receipt_manager:
+        class: App\Manager\ReceiptManager
+        arguments:
+            - '@app.invoice_repository'
+    app.event_manager:
+        class: App\Manager\EventManager
+        arguments:
+            - '@app.tariff_repository'
+    app.generate_receipt_form_manager:
+        class: App\Manager\GenerateReceiptFormManager
+        arguments:
+            - '@logger'
+            - '@kernel'
+            - '@doctrine.orm.entity_manager'
+            - '@translator.default'
+            - '@app.student_repository'
+            - '@app.event_repository'
+            - '@app.receipt_repository'
+            - '@app.event_manager'
+    app.generate_invoice_form_manager:
+        class: App\Manager\GenerateInvoiceFormManager
+        arguments:
+            - '@logger'
+            - '@kernel'
+            - '@doctrine.orm.entity_manager'
+            - '@translator.default'
+            - '@app.student_repository'
+            - '@app.event_repository'
+            - '@app.invoice_repository'
+    # PDF Builders
+    app.base_tcpdf:
+        class: App\Pdf\BaseTcpdf
+        arguments:
+            - '@app.smart_assets_helper'
+    app.student_image_rights_pdf_builder:
+        class: App\Pdf\StudentImageRightsBuilderPdf
+        arguments:
+            - '@white_october.tcpdf'
+            - '@app.smart_assets_helper'
+            - '@translator.default'
+            - '%project_web_title%'
+    app.sepa_agreement_pdf_builder:
+        class: App\Pdf\SepaAgreementBuilderPdf
+        arguments:
+            - '@white_october.tcpdf'
+            - '@app.smart_assets_helper'
+            - '@translator.default'
+            - '%project_web_title%'
+            - '%boss_name%'
+    app.receipt_reminder_pdf_builder:
+        class: App\Pdf\ReceiptReminderBuilderPdf
+        arguments:
+            - '@white_october.tcpdf'
+            - '@app.smart_assets_helper'
+            - '@translator.default'
+            - '%project_web_title%'
+            - '%boss_name%'
+            - '%boss_dni%'
+            - '%boss_address%'
+            - '%boss_city%'
+            - '%iban_business%'
+            - '%default_locale%'
+    app.receipt_pdf_builder:
+        class: App\Pdf\ReceiptBuilderPdf
+        arguments:
+            - '@white_october.tcpdf'
+            - '@app.smart_assets_helper'
+            - '@translator.default'
+            - '%project_web_title%'
+            - '%boss_name%'
+            - '%boss_dni%'
+            - '%boss_address%'
+            - '%boss_city%'
+            - '%iban_business%'
+            - '%default_locale%'
+    app.invoice_pdf_builder:
+        class: App\Pdf\InvoiceBuilderPdf
+        arguments:
+            - '@white_october.tcpdf'
+            - '@app.smart_assets_helper'
+            - '@translator.default'
+            - '%project_web_title%'
+            - '%boss_name%'
+            - '%boss_dni%'
+            - '%boss_address%'
+            - '%boss_city%'
+            - '%iban_business%'
+            - '%default_locale%'
+    app.class_group_pdf_builder:
+        class: App\Pdf\ClassGroupBuilderPdf
+        arguments:
+            - '@white_october.tcpdf'
+            - '@app.smart_assets_helper'
+            - '@translator.default'
+            - '%project_web_title%'
+            - '%boss_name%'
+            - '%boss_dni%'
+            - '%boss_address%'
+            - '%boss_city%'
+            - '%iban_business%'
+            - '%default_locale%'
+    # SEPA
+    app.xml_sepa_builder:
+        class: App\Service\XmlSepaBuilderService
+        arguments:
+            - '@app.spanish_sepa_helper'
+            - '%boss_name%'
+            - '%boss_dni%'
+            - '%iban_business%'
+            - '%bic_number%'
+    app.spanish_sepa_helper:
+        class: App\Service\SpanishSepaHelperService
+    # File
+    app.file_service:
+        class: App\Service\FileService
+        arguments:
+            - '@vich_uploader.templating.helper.uploader_helper'
+            - '%kernel.root_dir%'
+    # Forms
+    app.form.type.generate_receipt:
+        class: App\Form\Type\GenerateReceiptType
+        arguments:
+            - '@router.default'
+        tags:
+            - { name: form.type }
+    app.form.type.generate_invoice:
+        class: App\Form\Type\GenerateInvoiceType
+        arguments:
+            - '@router.default'
+        tags:
+            - { name: form.type }
+    app.form.type.event:
+        class: App\Form\Type\EventType
+        arguments:
+            - '@app.teacher_repository'
+            - '@app.class_group_repository'
+            - '@app.student_repository'
+            - '@app.event_manager'
+        tags:
+            - { name: form.type }
+    app.form.type.event_batch_remove:
+        class: App\Form\Type\EventBatchRemoveType
+        arguments:
+            - '@app.event_manager'
+        tags:
+            - { name: form.type }

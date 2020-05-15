@@ -1,8 +1,7 @@
 framework:
-    secret:         '%env(APP_SECRET)%'
-    default_locale: '%default_locale%'
+    secret: '%env(APP_SECRET)%'
     templating:
-        engines: ['twig']
+        engines: [ 'twig' ]
     session:
         handler_id: null
         cookie_secure: auto

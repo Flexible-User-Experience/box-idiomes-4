@@ -1,0 +1,31 @@
+{% extends "::Admin/edit.html.twig" %}
+
+{# override javascript includes #}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            {% if form.isPayed is defined %}
+                var isPayedNode = jQuery('#{{ form.isPayed.vars.id }}');
+                var paymentDateNode = jQuery('#sonata-ba-field-container-{{ form.paymentDate.vars.id }}');
+                isPayedNode.on('ifChecked', function(){
+                    paymentDateNode.removeClass("hidden");
+                });
+                isPayedNode.on('ifUnchecked', function(){
+                    paymentDateNode.addClass("hidden");
+                });
+                {% if form.vars.value.isPayed == 0 %}
+                    paymentDateNode.addClass("hidden");
+                {% endif %}
+            {% endif %}
+            {% if form.isSepaXmlGenerated is defined and form.vars.value.isSepaXmlGenerated == 0 %}
+                var sepaXmlGeneratedDateNode = jQuery('#sonata-ba-field-container-{{ form.sepaXmlGeneratedDate.vars.id }}');
+                sepaXmlGeneratedDateNode.addClass("hidden");
+            {% endif %}
+            {% if form.isSended is defined and form.vars.value.isSended == 0 %}
+                var sendDateNode = jQuery('#sonata-ba-field-container-{{ form.sendDate.vars.id }}');
+                sendDateNode.addClass("hidden");
+            {% endif %}
+        });
+    </script>
+{% endblock %}

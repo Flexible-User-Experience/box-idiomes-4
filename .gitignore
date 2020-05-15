@@ -1,3 +1,12 @@
+###> app/bundle ###
+!/public/uploads/.gitkeep
+/public/uploads/disc/*
+!/public/uploads/disc/.gitkeep
+/public/uploads/documents/*
+!/public/uploads/documents/.gitkeep
+/public/uploads/images/*
+!/public/uploads/images/.gitkeep
+###< app/bundle ###
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -18,3 +27,10 @@
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
