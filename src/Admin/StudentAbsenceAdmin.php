@@ -193,8 +193,8 @@ class StudentAbsenceAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'notification' => array('template' => '::Admin/Buttons/list__action_student_absence_notification_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'notification' => array('template' => 'Admin/Buttons/list__action_student_absence_notification_button.html.twig'),
                     ),
                     'label' => 'backend.admin.actions',
                 )

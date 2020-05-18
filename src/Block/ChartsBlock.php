@@ -77,7 +77,7 @@ class ChartsBlock extends AbstractBlockService
         $resolver->setDefaults([
             'title' => 'Charts',
             'content' => 'Default content',
-            'template' => ':Admin/Block:charts.html.twig',
+            'template' => 'Admin/Block/charts.html.twig',
         ]);
     }
 }

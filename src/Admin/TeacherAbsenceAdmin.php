@@ -134,7 +134,7 @@ class TeacherAbsenceAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.image',
-                    'template' => '::Admin/Cells/list__cell_teacher_absence_image_field.html.twig',
+                    'template' => 'Admin/Cells/list__cell_teacher_absence_image_field.html.twig',
                 )
             )
             ->add(
@@ -163,7 +163,7 @@ class TeacherAbsenceAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.teacher_absence.type',
-                    'template' => '::Admin/Cells/list__cell_teacher_absence_type.html.twig',
+                    'template' => 'Admin/Cells/list__cell_teacher_absence_type.html.twig',
                 )
             )
             ->add(
@@ -171,7 +171,7 @@ class TeacherAbsenceAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
                     'label' => 'backend.admin.actions',
                 )

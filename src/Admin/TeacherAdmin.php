@@ -168,7 +168,7 @@ class TeacherAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.image',
-                    'template' => '::Admin/Cells/list__cell_image_field.html.twig',
+                    'template' => 'Admin/Cells/list__cell_image_field.html.twig',
                 )
             )
             ->add(
@@ -184,7 +184,7 @@ class TeacherAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.teacher.color',
-                    'template' => '::Admin/Cells/list__cell_teacher_color.html.twig',
+                    'template' => 'Admin/Cells/list__cell_teacher_color.html.twig',
                 )
             )
             ->add(
@@ -208,9 +208,9 @@ class TeacherAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'detail' => array(
-                            'template' => '::Admin/Cells/list__action_teacher_detail.html.twig',
+                            'template' => 'Admin/Cells/list__action_teacher_detail.html.twig',
                         ),
                     ),
                     'label' => 'backend.admin.actions',

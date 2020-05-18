@@ -72,7 +72,7 @@ class ReceiptAdminController extends BaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            '::Admin/Receipt/generate_receipt_form.html.twig',
+            'Admin/Receipt/generate_receipt_form.html.twig',
             array(
                 'action' => 'generate',
                 'year_month_form' => $yearMonthForm->createView(),
