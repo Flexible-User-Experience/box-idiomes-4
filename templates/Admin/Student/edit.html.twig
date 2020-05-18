@@ -11,13 +11,13 @@
                 var bankNode = jQuery('#sonata-ba-field-container-{{ form.bank.vars.id }}');
                 var bankNameNode = jQuery('#sonata-ba-field-container-{{ form.bank.vars.id }}');
                 {# on init #}
-                if (parseInt(paymentNode.val()) !== {{ constant('AppBundle\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') }}) {
+                if (parseInt(paymentNode.val()) !== {{ constant('App\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') }}) {
                     bankNode.addClass("hidden");
                     bankNameNode.addClass("hidden");
                 }
                 {# on change #}
                 paymentNode.change(function() {
-                    if (parseInt(jQuery(this).val()) === {{ constant('AppBundle\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') }}) {
+                    if (parseInt(jQuery(this).val()) === {{ constant('App\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') }}) {
                         {# bank account #}
                         bankNode.removeClass("hidden");
                         bankNameNode.removeClass("hidden");
