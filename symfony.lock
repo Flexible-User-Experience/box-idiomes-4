@@ -133,6 +133,9 @@
             "config/packages/google_recaptcha.yaml"
         ]
     },
+    "gremo/zurb-ink-bundle": {
+        "version": "v4.1.0"
+    },
     "hautelook/alice-bundle": {
         "version": "2.1",
         "recipe": {
@@ -189,6 +192,9 @@
             "config/packages/liip_imagine.yaml",
             "config/routes/liip_imagine.yaml"
         ]
+    },
+    "lorenzo/pinky": {
+        "version": "1.0.5"
     },
     "monolog/monolog": {
         "version": "1.25.3"
@@ -759,6 +765,12 @@
             "ref": "fe5a50faf580eb58f08ada2abe8afbd2d4941e05"
         }
     },
+    "tijsverkoyen/css-to-inline-styles": {
+        "version": "2.2.2"
+    },
+    "twig/cssinliner-extra": {
+        "version": "v3.0.3"
+    },
     "twig/extensions": {
         "version": "1.0",
         "recipe": {
@@ -772,6 +784,12 @@
         ]
     },
     "twig/extra-bundle": {
+        "version": "v3.0.3"
+    },
+    "twig/inky-extra": {
+        "version": "v3.0.3"
+    },
+    "twig/markdown-extra": {
         "version": "v3.0.3"
     },
     "twig/string-extra": {
