@@ -1,4 +1,4 @@
-{% extends "::Admin/show.html.twig" %}
+{% extends "Admin/show.html.twig" %}
 
 {% block title %}
     {{ 'title_edit' | trans({'%name%': admin.toString(object) }, 'SonataAdminBundle') }}
@@ -96,7 +96,7 @@
                         <a class="btn btn-success" href="{{ admin.generateObjectUrl('edit', object) }}" title="{{ 'backend.admin.event.button.switch_to_normal_edit' | trans({}, 'messages') }}"><i class="fa fa-save" aria-hidden="true"></i> {{ 'backend.admin.event.button.switch_to_normal_edit' | trans({}, 'messages') }}</a>
                         <a class="btn btn-danger" href="{{ path('admin_app_event_list') }}" title="{{ 'backend.admin.event.button.cancel' | trans({}, 'messages') }}"><i class="fa fa-times" aria-hidden="true"></i> {{ 'backend.admin.event.button.cancel' | trans({}, 'messages') }}</a>
                         {# timelapse buttons section #}
-                        {% include ":Admin/Event:timelapse_buttons_section.html.twig" with {mode: 'batchedit'} %}
+                        {% include "Admin/Event:timelapse_buttons_section.html.twig" with {mode: 'batchedit'} %}
                     </div>
                 </div>
             </div>

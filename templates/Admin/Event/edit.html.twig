@@ -1,4 +1,4 @@
-{% extends "::Admin/edit.html.twig" %}
+{% extends "Admin/edit.html.twig" %}
 
 {# override actions bottom bar #}
 {% block sonata_form_actions %}
@@ -16,5 +16,5 @@
         </div>
     {% endif %}
     {# timelapse buttons section #}
-    {% include ":Admin/Event:timelapse_buttons_section.html.twig" with {mode: 'edit'} %}
+    {% include "Admin/Event:timelapse_buttons_section.html.twig" with {mode: 'edit'} %}
 {% endblock %}

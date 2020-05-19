@@ -1,4 +1,4 @@
-{% extends "::Admin/show.html.twig" %}
+{% extends "Admin/show.html.twig" %}
 
 {# override css includes #}
 {% block stylesheets %}
@@ -37,7 +37,7 @@
                                     <td>{{ object.phone }}</td>
                                 </tr>
                             {% endif %}
-                            {% include ":Admin/Helpers:common_student_parent_show_include.html.twig" with {object: object} %}
+                            {% include "Admin/Helpers:common_student_parent_show_include.html.twig" with {object: object} %}
                             {% if object.parent is null %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.payment' | trans }}</th>
@@ -112,7 +112,7 @@
                                     <th>{{ 'backend.admin.student.name' | trans }}</th>
                                     <td>{{ object.parent }}</td>
                                 </tr>
-                                {% include ":Admin/Helpers:common_student_parent_show_include.html.twig" with {object: object.parent} %}
+                                {% include "Admin/Helpers:common_student_parent_show_include.html.twig" with {object: object.parent} %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.payment' | trans }}</th>
                                     <td>{{ object.parent.paymentString }}</td>
