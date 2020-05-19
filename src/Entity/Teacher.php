@@ -105,7 +105,7 @@ class Teacher extends AbstractBase
      */
     public function getCssColor()
     {
-        return 'c-'.TeacherColorEnum::getEnumArray()[$this->getColor()];
+        return 'c-'.TeacherColorEnum::getReversedEnumArray()[$this->getColor()];
     }
 
     /**
