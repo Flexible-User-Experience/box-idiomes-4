@@ -20,6 +20,14 @@ class TeacherAbsenceTypeEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::PERSONAL_ISSUES => 'Assumptes personals',
             self::TRAINING => 'Formació',

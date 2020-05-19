@@ -126,7 +126,6 @@ class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.month',
                     'required' => true,
                     'choices' => InvoiceYearMonthEnum::getMonthEnumArray(),
-                    'choices_as_values' => false,
                 )
             )
             ->add(
@@ -342,7 +341,6 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'choices' => InvoiceYearMonthEnum::getMonthEnumArray(),
-                    'choices_as_values' => false,
                     'expanded' => false,
                     'multiple' => false,
                 )
@@ -392,7 +390,6 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'choices' => StudentPaymentEnum::getEnumArray(),
-                    'choices_as_values' => false,
                     'expanded' => false,
                     'multiple' => false,
                 )

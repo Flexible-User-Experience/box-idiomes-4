@@ -330,7 +330,6 @@ class StudentAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'choices' => StudentPaymentEnum::getEnumArray(),
-                    'choices_as_values' => false,
                     'expanded' => false,
                     'multiple' => false,
                 )

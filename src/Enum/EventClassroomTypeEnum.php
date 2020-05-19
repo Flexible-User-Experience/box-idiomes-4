@@ -20,6 +20,14 @@ class EventClassroomTypeEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::CLASSROOM_1 => 'backend.admin.event.classroom_1',
             self::CLASSROOM_2 => 'backend.admin.event.classroom_2',

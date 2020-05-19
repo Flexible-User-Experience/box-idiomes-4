@@ -27,6 +27,14 @@ class TariffTypeEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::TARIFF_ONE_HOUR_PER_WEEK => 'backend.admin.tariff.tariff_1',
             self::TARIFF_ONE_AND_A_HALF_HOUR_PER_WEEK => 'backend.admin.tariff.tariff_4',
