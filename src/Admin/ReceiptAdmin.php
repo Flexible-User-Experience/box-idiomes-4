@@ -262,7 +262,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'backend.admin.invoice.line',
                         'required' => true,
-                        'cascade_validation' => true,
                         'error_bubbling' => true,
                         'by_reference' => false,
                     ),

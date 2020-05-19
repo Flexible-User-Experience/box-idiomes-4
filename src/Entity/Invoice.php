@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Invoice.
@@ -29,6 +30,7 @@ class Invoice extends AbstractReceiptInvoice
     /**
      * @var ArrayCollection|array|InvoiceLine[]
      *
+     * @Assert\Valid
      * @ORM\OneToMany(targetEntity="App\Entity\InvoiceLine", mappedBy="invoice", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $lines;
