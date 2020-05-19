@@ -1,5 +1,5 @@
 fos_js_routing:
     routes_to_expose:
-#        - 'admin_app_customer_getAuditsFromCustomerId'
+        - 'sonata_admin_dashboard'
 #        - 'admin_app_workorder_getWindfarmsFromCustomerId'
 #        - 'admin_app_workorder_getWindmillsFromSelectedWindfarmsIds'
