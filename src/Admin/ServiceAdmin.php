@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * Class ServiceAdmin.
@@ -42,7 +43,7 @@ class ServiceAdmin extends AbstractBaseAdmin
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
             ->add(
                 'imageFile',
-                'file',
+                FileType::class,
                 array(
                     'label' => 'backend.admin.image',
                     'help' => $this->getImageHelperFormMapperWithThumbnail(),
