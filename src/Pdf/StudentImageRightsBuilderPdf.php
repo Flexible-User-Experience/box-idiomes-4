@@ -5,8 +5,8 @@ namespace App\Pdf;
 use App\Entity\Student;
 use App\Service\SmartAssetsHelperService;
 use IntlDateFormatter;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * Class StudentImageRightsBuilderPdf.

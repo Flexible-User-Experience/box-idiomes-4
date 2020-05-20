@@ -66,7 +66,7 @@ services:
             - { name: sonata.admin, manager_type: orm, label: "Línies rebut", group: "Facturació", show_in_dashboard: false }
     admin.invoice:
         class: App\Admin\InvoiceAdmin
-        arguments: [ ~, App\Entity\Invoice, App\Controller\Admin\InvoiceAdmin, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
+        arguments: [ ~, App\Entity\Invoice, App\Controller\Admin\InvoiceAdminController, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Factura", group: "Facturació" }
         calls:

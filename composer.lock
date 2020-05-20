@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5717ba055e46f5c7c13415adb3580659",
+    "content-hash": "bebeeb6bf39c58f2a99a5da5ac74eb34",
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
@@ -3894,6 +3894,49 @@
                 "psr-3"
             ],
             "time": "2020-03-23T09:12:05+00:00"
+        },
+        {
+            "name": "qipsius/tcpdf-bundle",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Qipsius/QipsiusTCPDFBundle.git",
+                "reference": "1b1816f5e133dbc3860b3aab4420cc486eed2300"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Qipsius/QipsiusTCPDFBundle/zipball/1b1816f5e133dbc3860b3aab4420cc486eed2300",
+                "reference": "1b1816f5e133dbc3860b3aab4420cc486eed2300",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "symfony/framework-bundle": ">=3.4",
+                "tecnickcom/tcpdf": "*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Qipsius\\TCPDFBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rich Sage",
+                    "email": "rich.sage@gmail.com"
+                }
+            ],
+            "description": "A bundle to easily integrate TCPDF into Symfony",
+            "homepage": "https://github.com/qipsius/QipsiusTCPDFBundle",
+            "keywords": [
+                "TCPDF",
+                "pdf"
+            ],
+            "time": "2019-12-06T11:11:25+00:00"
         },
         {
             "name": "saad-tazi/g-chart-bundle",
@@ -10973,49 +11016,6 @@
                 "validate"
             ],
             "time": "2020-04-18T12:12:48+00:00"
-        },
-        {
-            "name": "whiteoctober/tcpdf-bundle",
-            "version": "1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/whiteoctober/WhiteOctoberTCPDFBundle.git",
-                "reference": "33e57940af790c0c8ee6a200a1f0661e415d0a5c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/WhiteOctoberTCPDFBundle/zipball/33e57940af790c0c8ee6a200a1f0661e415d0a5c",
-                "reference": "33e57940af790c0c8ee6a200a1f0661e415d0a5c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": ">=2.0",
-                "tecnickcom/tcpdf": "*"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "WhiteOctober\\TCPDFBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rich Sage",
-                    "email": "rich.sage@gmail.com"
-                }
-            ],
-            "description": "A bundle to easily integrate TCPDF into Symfony2",
-            "homepage": "https://github.com/whiteoctober/WhiteOctoberTCPDFBundle",
-            "keywords": [
-                "TCPDF",
-                "pdf"
-            ],
-            "time": "2019-01-14T13:51:20+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
