@@ -9,6 +9,9 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Class UserAdmin.
@@ -94,7 +97,7 @@ class UserAdmin extends ParentUserAdmin
             )
             ->add(
                 'plainPassword',
-                'text',
+                TextType::class,
                 array(
                     'label' => 'backend.admin.user.plain_password',
                     'required' => (!$this->getSubject() || is_null($this->getSubject()->getId())),
@@ -104,7 +107,7 @@ class UserAdmin extends ParentUserAdmin
             ->with('backend.admin.controls', array('class' => 'col-md-3'))
             ->add(
                 'enabled',
-                'checkbox',
+                CheckboxType::class,
                 array(
                     'label' => 'backend.admin.enabled',
                     'required' => false,
@@ -112,7 +115,7 @@ class UserAdmin extends ParentUserAdmin
             )
             ->add(
                 'roles',
-                'choice',
+                ChoiceType::class,
                 array(
                     'label' => 'backend.admin.user.roles',
                     'choices' => UserRolesEnum::getEnumArray(),
