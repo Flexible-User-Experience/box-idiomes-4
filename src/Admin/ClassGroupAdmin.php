@@ -191,7 +191,7 @@ class ClassGroupAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.class_group.color',
-                    'template' => '::Admin/Cells/list__cell_class_group_color.html.twig',
+                    'template' => 'Admin/Cells/list__cell_class_group_color.html.twig',
                 )
             )
             ->add(
@@ -215,8 +215,8 @@ class ClassGroupAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'emails' => array('template' => '::Admin/Cells/list__action_group_emails.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'emails' => array('template' => 'Admin/Cells/list__action_group_emails.html.twig'),
                     ),
                     'label' => 'backend.admin.actions',
                 )

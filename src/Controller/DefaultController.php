@@ -203,7 +203,7 @@ class DefaultController extends AbstractController
     {
         $invoice = $this->getDoctrine()->getRepository('App:Invoice')->find(8);
 
-        return$this->render(':Mails:invoice_pdf_notification.html.twig', array(
+        return $this->render('Mails/invoice_pdf_notification.html.twig', array(
             'invoice' => $invoice,
         ));
     }

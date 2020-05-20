@@ -1,0 +1,5 @@
+fos_ck_editor:
+    inline: false
+    configs:
+        my_config:
+            toolbar: standard

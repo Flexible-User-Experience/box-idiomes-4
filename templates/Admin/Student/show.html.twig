@@ -1,4 +1,4 @@
-{% extends "::Admin/show.html.twig" %}
+{% extends "Admin/show.html.twig" %}
 
 {# override css includes #}
 {% block stylesheets %}
@@ -37,13 +37,13 @@
                                     <td>{{ object.phone }}</td>
                                 </tr>
                             {% endif %}
-                            {% include ":Admin/Helpers:common_student_parent_show_include.html.twig" with {object: object} %}
+                            {% include "Admin/Helpers/common_student_parent_show_include.html.twig" with {object: object} %}
                             {% if object.parent is null %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.payment' | trans }}</th>
                                     <td>{{ object.paymentString }}</td>
                                 </tr>
-                                {% if object.payment == constant('AppBundle\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') %}
+                                {% if object.payment == constant('App\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') %}
                                     <tr class="sonata-ba-view-container">
                                         <th>{{ 'backend.admin.bank.accountNumber' | trans }}</th>
                                         <td>{{ object.bank.accountNumber }}</td>
@@ -112,12 +112,12 @@
                                     <th>{{ 'backend.admin.student.name' | trans }}</th>
                                     <td>{{ object.parent }}</td>
                                 </tr>
-                                {% include ":Admin/Helpers:common_student_parent_show_include.html.twig" with {object: object.parent} %}
+                                {% include "Admin/Helpers/common_student_parent_show_include.html.twig" with {object: object.parent} %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.payment' | trans }}</th>
                                     <td>{{ object.parent.paymentString }}</td>
                                 </tr>
-                                {% if object.parent.payment == constant('AppBundle\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') %}
+                                {% if object.parent.payment == constant('App\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') %}
                                     <tr class="sonata-ba-view-container">
                                         <th>{{ 'backend.admin.bank.accountNumber' | trans }}</th>
                                         <td>{{ object.parent.bank.accountNumber }}</td>
@@ -137,7 +137,8 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-xs-12 margin-bottom">
-                                {% include "@FullCalendar/Calendar/calendar.html.twig" %}
+                                <div id="calendar-holder"></div>
+{#                                {% include "@FullCalendar/Calendar/calendar.html.twig" %}#}
                             </div>
                         </div>
                     </div>

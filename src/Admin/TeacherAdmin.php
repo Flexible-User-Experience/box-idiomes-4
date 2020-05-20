@@ -3,13 +3,14 @@
 namespace App\Admin;
 
 use App\Enum\TeacherColorEnum;
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * Class TeacherAdmin.
@@ -48,7 +49,7 @@ class TeacherAdmin extends AbstractBaseAdmin
             ->with('backend.admin.image', $this->getFormMdSuccessBoxArray(4))
             ->add(
                 'imageFile',
-                'file',
+                FileType::class,
                 array(
                     'label' => 'backend.admin.image',
                     'help' => $this->getImageHelperFormMapperWithThumbnailAspectRatio(),
@@ -168,7 +169,7 @@ class TeacherAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.image',
-                    'template' => '::Admin/Cells/list__cell_image_field.html.twig',
+                    'template' => 'Admin/Cells/list__cell_image_field.html.twig',
                 )
             )
             ->add(
@@ -184,7 +185,7 @@ class TeacherAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.teacher.color',
-                    'template' => '::Admin/Cells/list__cell_teacher_color.html.twig',
+                    'template' => 'Admin/Cells/list__cell_teacher_color.html.twig',
                 )
             )
             ->add(
@@ -208,9 +209,9 @@ class TeacherAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'detail' => array(
-                            'template' => '::Admin/Cells/list__action_teacher_detail.html.twig',
+                            'template' => 'Admin/Cells/list__action_teacher_detail.html.twig',
                         ),
                     ),
                     'label' => 'backend.admin.actions',

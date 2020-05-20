@@ -120,7 +120,7 @@ class EventAdminController extends BaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            '::Admin/Event/batch_edit_form.html.twig',
+            'Admin/Event/batch_edit_form.html.twig',
             array(
                 'action' => 'batchedit',
                 'object' => $object,
@@ -262,7 +262,7 @@ class EventAdminController extends BaseAdminController
         }
 
         return $this->renderWithExtraParams(
-            '::Admin/Event/batch_delete_form.html.twig',
+            'Admin/Event/batch_delete_form.html.twig',
             array(
                 'action' => 'batchdelete',
                 'object' => $object,

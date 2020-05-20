@@ -40,7 +40,7 @@ class TeacherAdminController extends BaseAdminController
         $absences = $this->container->get('app.teacher_absence_repository')->getTeacherAbsencesSortedByDate($object);
 
         return $this->renderWithExtraParams(
-            '::Admin/Teacher/detail.html.twig',
+            'Admin/Teacher/detail.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,

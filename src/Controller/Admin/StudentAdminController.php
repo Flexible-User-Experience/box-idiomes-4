@@ -101,7 +101,7 @@ class StudentAdminController extends BaseAdminController
         $this->admin->setSubject($object);
 
         return $this->renderWithExtraParams(
-            '::Admin/Student/show.html.twig',
+            'Admin/Student/show.html.twig',
             array(
                 'action' => 'show',
                 'object' => $object,

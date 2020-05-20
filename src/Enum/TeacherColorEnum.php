@@ -19,6 +19,14 @@ class TeacherColorEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::MAGENTA => 'color.magenta',
             self::BLUE => 'color.blue',

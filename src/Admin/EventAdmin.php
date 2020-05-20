@@ -264,7 +264,7 @@ class EventAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.event.classroom',
-                    'template' => '::Admin/Cells/list__cell_classroom_type.html.twig',
+                    'template' => 'Admin/Cells/list__cell_classroom_type.html.twig',
                 )
             )
             ->add(
@@ -295,7 +295,7 @@ class EventAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.event.students',
-                    'template' => '::Admin/Cells/list__cell_classroom_students_amount.html.twig',
+                    'template' => 'Admin/Cells/list__cell_classroom_students_amount.html.twig',
                 )
             )
             ->add(
@@ -303,9 +303,9 @@ class EventAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'batchedit' => array('template' => '::Admin/Buttons/list__action_event_batch_edit_button.html.twig'),
-                        'batchdelete' => array('template' => '::Admin/Buttons/list__action_batch_delete_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'batchedit' => array('template' => 'Admin/Buttons/list__action_event_batch_edit_button.html.twig'),
+                        'batchdelete' => array('template' => 'Admin/Buttons/list__action_batch_delete_button.html.twig'),
                     ),
                     'label' => 'backend.admin.actions',
                 )

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Receipt.
@@ -20,6 +21,7 @@ class Receipt extends AbstractReceiptInvoice
     /**
      * @var ArrayCollection|array|ReceiptLine[]
      *
+     * @Assert\Valid
      * @ORM\OneToMany(targetEntity="App\Entity\ReceiptLine", mappedBy="receipt", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $lines;

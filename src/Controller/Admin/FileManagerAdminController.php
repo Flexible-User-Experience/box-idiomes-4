@@ -24,7 +24,7 @@ class FileManagerAdminController extends BaseAdminController
     public function handlerAction()
     {
         return $this->renderWithExtraParams(
-            '::Admin/FileManager/show_file_manager.html.twig',
+            'Admin/FileManager/show_file_manager.html.twig',
             array(
                 '_sonata_admin' => 'admin.file_manager_dummy',
                 'action' => 'show',

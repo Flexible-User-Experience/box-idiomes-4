@@ -7,10 +7,10 @@ use App\Entity\Invoice;
 use App\Entity\NewsletterContact;
 use App\Entity\Receipt;
 use App\Entity\StudentAbsence;
+use Exception;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use TCPDF;
 use Twig\Environment;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 /**
  * Class NotificationService.
@@ -66,20 +66,27 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return int
      */
     public function sendCommonUserNotification(ContactMessage $contactMessage)
     {
-        return $this->messenger->sendEmail(
-            $this->amd,
-            $contactMessage->getEmail(),
-            'Notificació pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:common_user_notification.html.twig', array(
-                'contact' => $contactMessage,
-            ))
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $contactMessage->getEmail(),
+                'Notificació pàgina web '.$this->urlBase,
+                $this->twig->render('Mails/common_user_notification.html.twig', array(
+                    'contact' => $contactMessage,
+                ))
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
@@ -87,20 +94,27 @@ class NotificationService
      *
      * @param ContactMessage $contactMessage
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return int
      */
     public function sendAdminNotification(ContactMessage $contactMessage)
     {
-        $this->messenger->sendEmail(
-            $contactMessage->getEmail(),
-            $this->amd,
-            $this->urlBase.' contact form received',
-            $this->twig->render('Mails:contact_form_admin_notification.html.twig', array(
-                'contact' => $contactMessage,
-            ))
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $contactMessage->getEmail(),
+                $this->amd,
+                $this->urlBase.' contact form received',
+                $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
+                    'contact' => $contactMessage,
+                ))
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
@@ -108,20 +122,27 @@ class NotificationService
      *
      * @param ContactMessage $contactMessage
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return int
      */
     public function sendContactAdminNotification(ContactMessage $contactMessage)
     {
-        $this->messenger->sendEmail(
-            $this->amd,
-            $this->amd,
-            'Missatge de contacte pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:contact_form_admin_notification.html.twig', array(
-                'contact' => $contactMessage,
-            ))
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $this->amd,
+                'Missatge de contacte pàgina web '.$this->urlBase,
+                $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
+                    'contact' => $contactMessage,
+                ))
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
@@ -129,20 +150,27 @@ class NotificationService
      *
      * @param ContactMessage $contactMessage
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return int
      */
     public function sendUserBackendNotification(ContactMessage $contactMessage)
     {
-        $this->messenger->sendEmail(
-            $this->amd,
-            $contactMessage->getEmail(),
-            $this->urlBase.' contact form answer',
-            $this->twig->render('Mails:contact_form_user_backend_notification.html.twig', array(
-                'contact' => $contactMessage,
-            ))
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $contactMessage->getEmail(),
+                $this->urlBase.' contact form answer',
+                $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', array(
+                    'contact' => $contactMessage,
+                ))
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
@@ -150,21 +178,28 @@ class NotificationService
      *
      * @param NewsletterContact $newsletterContact
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return int
      */
     public function sendNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact)
     {
-        $this->messenger->sendEmail(
-            $this->amd,
-            $this->amd,
-            'Missatge de newsletter pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:newsletter_form_admin_notification.html.twig', array(
-                'contact' => $newsletterContact,
-            )),
-            $newsletterContact->getEmail()
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $this->amd,
+                'Missatge de newsletter pàgina web '.$this->urlBase,
+                $this->twig->render('Mails/newsletter_form_admin_notification.html.twig', array(
+                    'contact' => $newsletterContact,
+                )),
+                $newsletterContact->getEmail()
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
@@ -172,21 +207,28 @@ class NotificationService
      *
      * @param NewsletterContact $newsletterContact
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @return int
      */
     public function sendFailureNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact)
     {
-        $this->messenger->sendEmail(
-            $this->amd,
-            $this->amd,
-            'Missatge de newsletter pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:newsletter_failure_admin_notification.html.twig', array(
-                'contact' => $newsletterContact,
-            )),
-            $newsletterContact->getEmail()
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $this->amd,
+                'Missatge de newsletter pàgina web '.$this->urlBase,
+                $this->twig->render('Mails/newsletter_failure_admin_notification.html.twig', array(
+                    'contact' => $newsletterContact,
+                )),
+                $newsletterContact->getEmail()
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
@@ -195,102 +237,122 @@ class NotificationService
      * @param NewsletterContact $newsletterContact
      *
      * @return int If is 0 failure otherwise amount of recipients
-     *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
     public function sendCommonNewsletterUserNotification(NewsletterContact $newsletterContact)
     {
-        return $this->messenger->sendEmail(
-            $this->amd,
-            $newsletterContact->getEmail(),
-            'Notificació newsletter pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:common_newsletter_user_notification.html.twig', array(
-                'contact' => $newsletterContact,
-            ))
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $newsletterContact->getEmail(),
+                'Notificació newsletter pàgina web '.$this->urlBase,
+                $this->twig->render('Mails/common_newsletter_user_notification.html.twig', array(
+                    'contact' => $newsletterContact,
+                ))
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
      * Send attached remainder receipt PDF to customer.
      *
      * @param Receipt $receipt
-     * @param \TCPDF  $pdf
+     * @param TCPDF   $pdf
      *
      * @return int If is 0 failure otherwise amount of recipients
-     *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
-    public function sendReceiptReminderPdfNotification(Receipt $receipt, \TCPDF $pdf)
+    public function sendReceiptReminderPdfNotification(Receipt $receipt, TCPDF $pdf)
     {
-        return $this->messenger->sendEmailWithPdfAttached(
-            $this->amd,
-            $receipt->getMainEmail(),
-            $receipt->getMainEmailName(),
-            'Recordatori de pagament rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
-            $this->twig->render('Mails:receipt_reminder_pdf_notification.html.twig', array(
-                'receipt' => $receipt,
-            )),
-            'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
-            $pdf
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmailWithPdfAttached(
+                $this->amd,
+                $receipt->getMainEmail(),
+                $receipt->getMainEmailName(),
+                'Recordatori de pagament rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
+                $this->twig->render('Mails/receipt_reminder_pdf_notification.html.twig', array(
+                    'receipt' => $receipt,
+                )),
+                'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
+                $pdf
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
      * Send attached receipt PDF to customer.
      *
      * @param Receipt $receipt
-     * @param \TCPDF  $pdf
+     * @param TCPDF   $pdf
      *
      * @return int If is 0 failure otherwise amount of recipients
-     *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
-    public function sendReceiptPdfNotification(Receipt $receipt, \TCPDF $pdf)
+    public function sendReceiptPdfNotification(Receipt $receipt, TCPDF $pdf)
     {
-        return $this->messenger->sendEmailWithPdfAttached(
-            $this->amd,
-            $receipt->getMainEmail(),
-            $receipt->getMainEmailName(),
-            'Rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
-            $this->twig->render('Mails:receipt_pdf_notification.html.twig', array(
-                'receipt' => $receipt,
-            )),
-            'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
-            $pdf
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmailWithPdfAttached(
+                $this->amd,
+                $receipt->getMainEmail(),
+                $receipt->getMainEmailName(),
+                'Rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
+                $this->twig->render('Mails/receipt_pdf_notification.html.twig', array(
+                    'receipt' => $receipt,
+                )),
+                'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
+                $pdf
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
      * Send attached invoice PDF to customer.
      *
      * @param Invoice $invoice
-     * @param \TCPDF  $pdf
+     * @param TCPDF   $pdf
      *
      * @return int If is 0 failure otherwise amount of recipients
-     *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
-    public function sendInvoicePdfNotification(Invoice $invoice, \TCPDF $pdf)
+    public function sendInvoicePdfNotification(Invoice $invoice, TCPDF $pdf)
     {
-        return $this->messenger->sendEmailWithPdfAttached(
-            $this->amd,
-            $invoice->getMainEmail(),
-            $invoice->getMainEmailName(),
-            'Factura Box Idiomes núm. '.$invoice->getInvoiceNumber(),
-            $this->twig->render('Mails:invoice_pdf_notification.html.twig', array(
-                'invoice' => $invoice,
-            )),
-            'invoice_'.$invoice->getSluggedInvoiceNumber().'.pdf',
-            $pdf
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmailWithPdfAttached(
+                $this->amd,
+                $invoice->getMainEmail(),
+                $invoice->getMainEmailName(),
+                'Factura Box Idiomes núm. '.$invoice->getInvoiceNumber(),
+                $this->twig->render('Mails/invoice_pdf_notification.html.twig', array(
+                    'invoice' => $invoice,
+                )),
+                'invoice_'.$invoice->getSluggedInvoiceNumber().'.pdf',
+                $pdf
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 
     /**
@@ -299,20 +361,25 @@ class NotificationService
      * @param StudentAbsence $studentAbsence
      *
      * @return int If is 0 failure otherwise amount of recipients
-     *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
     public function sendStudentAbsenceNotification(StudentAbsence $studentAbsence)
     {
-        return $this->messenger->sendEmail(
-            $this->amd,
-            $studentAbsence->getStudent()->getMainEmailSubject(),
-            'Falta a classe el dia '.$studentAbsence->getDayString(),
-            $this->twig->render('Mails:student_absence_notification.html.twig', array(
-                'studentAbsence' => $studentAbsence,
-            ))
-        );
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $studentAbsence->getStudent()->getMainEmailSubject(),
+                'Falta a classe el dia '.$studentAbsence->getDayString(),
+                $this->twig->render('Mails/student_absence_notification.html.twig', array(
+                    'studentAbsence' => $studentAbsence,
+                ))
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 }

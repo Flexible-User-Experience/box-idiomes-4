@@ -217,13 +217,13 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 array(
                     'actions' => array(
                         'show' => array(
-                            'template' => '::Admin/Buttons/list__action_show_button.html.twig',
+                            'template' => 'Admin/Buttons/list__action_show_button.html.twig',
                         ),
                         'answer' => array(
-                            'template' => '::Admin/Cells/list__action_answer.html.twig',
+                            'template' => 'Admin/Cells/list__action_answer.html.twig',
                         ),
                         'delete' => array(
-                            'template' => '::Admin/Buttons/list__action_delete_button.html.twig',
+                            'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
                         ),
                     ),
                 )

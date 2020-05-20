@@ -31,13 +31,6 @@ class PersonAdmin extends AbstractBaseAdmin
     );
 
     /**
-     * @var array
-     */
-    protected $formOptions = array(
-        'cascade_validation' => true,
-    );
-
-    /**
      * Configure route collection.
      *
      * @param RouteCollection $collection
@@ -236,7 +229,6 @@ class PersonAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'choices' => StudentPaymentEnum::getEnumArray(),
-                    'choices_as_values' => false,
                     'expanded' => false,
                     'multiple' => false,
                 )
@@ -338,7 +330,7 @@ class PersonAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
                     'label' => 'Accions',
                 )

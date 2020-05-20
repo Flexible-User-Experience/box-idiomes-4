@@ -180,7 +180,7 @@ class UserAdmin extends ParentUserAdmin
                 null,
                 array(
                     'label' => 'backend.admin.user.roles',
-                    'template' => '::Admin/Cells/list__cell_user_roles.html.twig',
+                    'template' => 'Admin/Cells/list__cell_user_roles.html.twig',
                 )
             )
             ->add(
@@ -197,8 +197,8 @@ class UserAdmin extends ParentUserAdmin
                 array(
                     'label' => 'backend.admin.actions',
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'delete' => array('template' => '::Admin/Buttons/list__action_delete_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                 )
             );

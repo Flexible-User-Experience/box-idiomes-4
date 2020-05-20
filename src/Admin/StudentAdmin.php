@@ -34,13 +34,6 @@ class StudentAdmin extends AbstractBaseAdmin
     );
 
     /**
-     * @var array
-     */
-    protected $formOptions = array(
-        'cascade_validation' => true,
-    );
-
-    /**
      * Configure route collection.
      *
      * @param RouteCollection $collection
@@ -330,7 +323,6 @@ class StudentAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'choices' => StudentPaymentEnum::getEnumArray(),
-                    'choices_as_values' => false,
                     'expanded' => false,
                     'multiple' => false,
                 )
@@ -512,10 +504,10 @@ class StudentAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'show' => array('template' => '::Admin/Buttons/list__action_show_button.html.twig'),
-                        'imagerights' => array('template' => '::Admin/Cells/list__action_image_rights.html.twig'),
-                        'sepaagreement' => array('template' => '::Admin/Cells/list__action_sepa_agreement.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
+                        'imagerights' => array('template' => 'Admin/Cells/list__action_image_rights.html.twig'),
+                        'sepaagreement' => array('template' => 'Admin/Cells/list__action_sepa_agreement.html.twig'),
                     ),
                     'label' => 'backend.admin.actions',
                 )

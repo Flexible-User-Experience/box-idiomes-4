@@ -18,6 +18,14 @@ class StudentPaymentEnum
      */
     public static function getEnumArray()
     {
+        return array_flip(self::getReversedEnumArray());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getReversedEnumArray()
+    {
         return array(
             self::BANK_ACCOUNT_NUMBER => 'backend.admin.student.bank',
             self::CASH => 'backend.admin.student.cash',

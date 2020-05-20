@@ -209,7 +209,7 @@ class AppExtension extends AbstractExtension
      */
     public function drawTeacherAbsenceType($object)
     {
-        return '<div class="text-left">'.TeacherAbsenceTypeEnum::getEnumArray()[$object->getType()].'</div>';
+        return '<div class="text-left">'.TeacherAbsenceTypeEnum::getReversedEnumArray()[$object->getType()].'</div>';
     }
 
     /**
@@ -219,7 +219,7 @@ class AppExtension extends AbstractExtension
      */
     public function drawTariffType($object)
     {
-        return TariffTypeEnum::getEnumArray()[$object->getType()];
+        return TariffTypeEnum::getReversedEnumArray()[$object->getType()];
     }
 
     /**
@@ -229,7 +229,7 @@ class AppExtension extends AbstractExtension
      */
     public function drawEventClassroomType($object)
     {
-        return EventClassroomTypeEnum::getEnumArray()[$object->getClassroom()];
+        return EventClassroomTypeEnum::getReversedEnumArray()[$object->getClassroom()];
     }
 
     /**

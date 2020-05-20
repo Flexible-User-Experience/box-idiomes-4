@@ -41,6 +41,7 @@ services:
     # Template Blocks
     app.block.event_calendar:
         class: App\Block\EventCalendarBlock
+        public: true
         arguments:
             - 'app.block.event_calendar'
             - '@templating'
@@ -57,10 +58,12 @@ services:
     # Messaging
     app.courier:
         class: App\Service\CourierService
+        public: true
         arguments:
             - '@mailer'
     app.notification:
         class: App\Service\NotificationService
+        public: true
         arguments:
             - '@app.courier'
             - '@twig'
@@ -69,10 +72,12 @@ services:
     # Factories
     app.event_transformer_factory:
         class: App\Service\EventTrasnformerFactoryService
+        public: true
         arguments:
             - '@router'
     app.charts_factory_service:
         class: App\Service\ChartsFactoryService
+        public: true
         arguments:
             - '@translator'
             - '@app.receipt_repository'
@@ -129,24 +134,29 @@ services:
     # Managers
     app.smart_assets_helper:
         class: App\Service\SmartAssetsHelperService
+        public: true
         arguments:
             - '@kernel'
             - '%project_url_base%'
     app.mailchimp_manager:
         class: App\Manager\MailchimpManager
+        public: true
         arguments:
             - '@app.notification'
             - '%mailchimp_api_key%'
     app.receipt_manager:
         class: App\Manager\ReceiptManager
+        public: true
         arguments:
             - '@app.invoice_repository'
     app.event_manager:
         class: App\Manager\EventManager
+        public: true
         arguments:
             - '@app.tariff_repository'
     app.generate_receipt_form_manager:
         class: App\Manager\GenerateReceiptFormManager
+        public: true
         arguments:
             - '@logger'
             - '@kernel'
@@ -158,6 +168,7 @@ services:
             - '@app.event_manager'
     app.generate_invoice_form_manager:
         class: App\Manager\GenerateInvoiceFormManager
+        public: true
         arguments:
             - '@logger'
             - '@kernel'
@@ -173,6 +184,7 @@ services:
             - '@app.smart_assets_helper'
     app.student_image_rights_pdf_builder:
         class: App\Pdf\StudentImageRightsBuilderPdf
+        public: true
         arguments:
             - '@white_october.tcpdf'
             - '@app.smart_assets_helper'
@@ -180,6 +192,7 @@ services:
             - '%project_web_title%'
     app.sepa_agreement_pdf_builder:
         class: App\Pdf\SepaAgreementBuilderPdf
+        public: true
         arguments:
             - '@white_october.tcpdf'
             - '@app.smart_assets_helper'
@@ -188,6 +201,7 @@ services:
             - '%boss_name%'
     app.receipt_reminder_pdf_builder:
         class: App\Pdf\ReceiptReminderBuilderPdf
+        public: true
         arguments:
             - '@white_october.tcpdf'
             - '@app.smart_assets_helper'
@@ -201,6 +215,7 @@ services:
             - '%default_locale%'
     app.receipt_pdf_builder:
         class: App\Pdf\ReceiptBuilderPdf
+        public: true
         arguments:
             - '@white_october.tcpdf'
             - '@app.smart_assets_helper'
@@ -214,6 +229,7 @@ services:
             - '%default_locale%'
     app.invoice_pdf_builder:
         class: App\Pdf\InvoiceBuilderPdf
+        public: true
         arguments:
             - '@white_october.tcpdf'
             - '@app.smart_assets_helper'
@@ -227,6 +243,7 @@ services:
             - '%default_locale%'
     app.class_group_pdf_builder:
         class: App\Pdf\ClassGroupBuilderPdf
+        public: true
         arguments:
             - '@white_october.tcpdf'
             - '@app.smart_assets_helper'
@@ -241,6 +258,7 @@ services:
     # SEPA
     app.xml_sepa_builder:
         class: App\Service\XmlSepaBuilderService
+        public: true
         arguments:
             - '@app.spanish_sepa_helper'
             - '%boss_name%'
@@ -249,27 +267,32 @@ services:
             - '%bic_number%'
     app.spanish_sepa_helper:
         class: App\Service\SpanishSepaHelperService
+        public: true
     # File
     app.file_service:
         class: App\Service\FileService
+        public: true
         arguments:
             - '@vich_uploader.templating.helper.uploader_helper'
             - '%kernel.root_dir%'
     # Forms
     app.form.type.generate_receipt:
         class: App\Form\Type\GenerateReceiptType
+        public: true
         arguments:
             - '@router.default'
         tags:
             - { name: form.type }
     app.form.type.generate_invoice:
         class: App\Form\Type\GenerateInvoiceType
+        public: true
         arguments:
             - '@router.default'
         tags:
             - { name: form.type }
     app.form.type.event:
         class: App\Form\Type\EventType
+        public: true
         arguments:
             - '@app.teacher_repository'
             - '@app.class_group_repository'
@@ -279,6 +302,7 @@ services:
             - { name: form.type }
     app.form.type.event_batch_remove:
         class: App\Form\Type\EventBatchRemoveType
+        public: true
         arguments:
             - '@app.event_manager'
         tags:

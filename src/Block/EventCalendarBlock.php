@@ -56,7 +56,7 @@ class EventCalendarBlock extends AbstractBlockService
         $resolver->setDefaults(array(
             'title' => 'Calendar',
             'content' => 'Default content',
-            'template' => ':Admin/Block:calendar.html.twig',
+            'template' => 'Admin/Block/calendar.html.twig',
         ));
     }
 }

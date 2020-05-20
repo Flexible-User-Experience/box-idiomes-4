@@ -126,7 +126,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.month',
                     'required' => true,
                     'choices' => InvoiceYearMonthEnum::getMonthEnumArray(),
-                    'choices_as_values' => false,
                 )
             )
             ->add(
@@ -263,7 +262,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
                     array(
                         'label' => 'backend.admin.invoice.line',
                         'required' => true,
-                        'cascade_validation' => true,
                         'error_bubbling' => true,
                         'by_reference' => false,
                     ),
@@ -320,7 +318,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'choices' => InvoiceYearMonthEnum::getMonthEnumArray(),
-                    'choices_as_values' => false,
                     'expanded' => false,
                     'multiple' => false,
                 )
@@ -358,7 +355,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 array(
                     'choices' => StudentPaymentEnum::getEnumArray(),
-                    'choices_as_values' => false,
                     'expanded' => false,
                     'multiple' => false,
                 )
@@ -455,7 +451,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.receipt.id',
-                    'template' => '::Admin/Cells/list__cell_receipt_number.html.twig',
+                    'template' => 'Admin/Cells/list__cell_receipt_number.html.twig',
                 )
             )
             ->add(
@@ -463,7 +459,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.receipt.date',
-                    'template' => '::Admin/Cells/list__cell_receipt_date.html.twig',
+                    'template' => 'Admin/Cells/list__cell_receipt_date.html.twig',
                     'editable' => false,
                 )
             )
@@ -472,7 +468,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.invoice.year',
-                    'template' => '::Admin/Cells/list__cell_event_year.html.twig',
+                    'template' => 'Admin/Cells/list__cell_event_year.html.twig',
                     'editable' => false,
                 )
             )
@@ -481,7 +477,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.invoice.month',
-                    'template' => '::Admin/Cells/list__cell_event_month.html.twig',
+                    'template' => 'Admin/Cells/list__cell_event_month.html.twig',
                 )
             )
             ->add(
@@ -501,7 +497,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.invoice.baseAmount',
-                    'template' => '::Admin/Cells/list__cell_receipt_amount.html.twig',
+                    'template' => 'Admin/Cells/list__cell_receipt_amount.html.twig',
                     'editable' => false,
                 )
             )
@@ -542,14 +538,14 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => '::Admin/Buttons/list__action_edit_button.html.twig'),
-                        'reminder' => array('template' => '::Admin/Buttons/list__action_receipt_reminder_button.html.twig'),
-                        'sendReminder' => array('template' => '::Admin/Buttons/list__action_receipt_reminder_send_button.html.twig'),
-                        'pdf' => array('template' => '::Admin/Buttons/list__action_receipt_pdf_button.html.twig'),
-                        'send' => array('template' => '::Admin/Buttons/list__action_receipt_send_button.html.twig'),
-                        'createInvoice' => array('template' => '::Admin/Buttons/list__action_receipt_create_invoice_button.html.twig'),
-                        'generateDirectDebit' => array('template' => '::Admin/Buttons/list__action_generate_direct_debit_xml_button.html.twig'),
-                        'delete' => array('template' => '::Admin/Buttons/list__action_delete_superadmin_button.html.twig'),
+                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'reminder' => array('template' => 'Admin/Buttons/list__action_receipt_reminder_button.html.twig'),
+                        'sendReminder' => array('template' => 'Admin/Buttons/list__action_receipt_reminder_send_button.html.twig'),
+                        'pdf' => array('template' => 'Admin/Buttons/list__action_receipt_pdf_button.html.twig'),
+                        'send' => array('template' => 'Admin/Buttons/list__action_receipt_send_button.html.twig'),
+                        'createInvoice' => array('template' => 'Admin/Buttons/list__action_receipt_create_invoice_button.html.twig'),
+                        'generateDirectDebit' => array('template' => 'Admin/Buttons/list__action_generate_direct_debit_xml_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_superadmin_button.html.twig'),
                     ),
                     'label' => 'backend.admin.actions',
                 )
