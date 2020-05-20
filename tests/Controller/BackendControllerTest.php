@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -18,7 +19,7 @@ class BackendControllerTest extends WebTestCase
      */
     public function testAdminLoginPageIsSuccessful()
     {
-        $client = $this->createClient();           // anonymous user
+        $client = WebTestCase::createClient();
         $client->request('GET', '/admin/login');
 
         $this->assertResponseIsSuccessful();
@@ -33,10 +34,10 @@ class BackendControllerTest extends WebTestCase
      */
     public function testAdminPagesAreSuccessful($url)
     {
-        $client = $this->makeClient(true);         // authenticated user
+        $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
 
-        $this->assertStatusCode(200, $client);
+        $this->assertResponseIsSuccessful();
     }
 
     /**
@@ -141,7 +142,7 @@ class BackendControllerTest extends WebTestCase
      */
     public function testAdminPagesAreNotFound($url)
     {
-        $client = $this->makeClient(true);         // authenticated user
+        $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
 
         $this->assertResponseStatusCodeSame(404);
@@ -184,5 +185,16 @@ class BackendControllerTest extends WebTestCase
             array('/admin/purchases/spending/batch'),
             array('/admin/purchases/spending/1/show'),
         );
+    }
+
+    /**
+     * @return KernelBrowser
+     */
+    private function getAuthenticatedClient()
+    {
+        return WebTestCase::createClient([], [
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW'   => 'passwd',
+        ]);
     }
 }
