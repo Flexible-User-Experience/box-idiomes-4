@@ -274,7 +274,7 @@ services:
         public: true
         arguments:
             - '@vich_uploader.templating.helper.uploader_helper'
-            - '%kernel.root_dir%'
+            - '%kernel.project_dir%'
     # Forms
     app.form.type.generate_receipt:
         class: App\Form\Type\GenerateReceiptType
