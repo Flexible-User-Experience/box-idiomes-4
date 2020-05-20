@@ -1,3 +1,8 @@
 doctrine:
     dbal:
         driver: 'pdo_sqlite'
+    orm:
+        dql:
+            datetime_functions:
+                month: DoctrineExtensions\Query\Sqlite\Month
+                year:  DoctrineExtensions\Query\Sqlite\Year

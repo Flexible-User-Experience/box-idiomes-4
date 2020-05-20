@@ -50,7 +50,6 @@ class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
                 array(
                     'label' => 'backend.admin.invoice.items',
                     'allow_extra_fields' => true,
-                    'cascade_validation' => true,
                     'required' => false,
                     'entry_type' => GenerateReceiptItemType::class,
                     'by_reference' => false,
