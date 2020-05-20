@@ -76,7 +76,7 @@ class NotificationService
             $this->amd,
             $contactMessage->getEmail(),
             'Notificació pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:common_user_notification.html.twig', array(
+            $this->twig->render('Mails/common_user_notification.html.twig', array(
                 'contact' => $contactMessage,
             ))
         );
@@ -97,7 +97,7 @@ class NotificationService
             $contactMessage->getEmail(),
             $this->amd,
             $this->urlBase.' contact form received',
-            $this->twig->render('Mails:contact_form_admin_notification.html.twig', array(
+            $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
                 'contact' => $contactMessage,
             ))
         );
@@ -118,7 +118,7 @@ class NotificationService
             $this->amd,
             $this->amd,
             'Missatge de contacte pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:contact_form_admin_notification.html.twig', array(
+            $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
                 'contact' => $contactMessage,
             ))
         );
@@ -139,7 +139,7 @@ class NotificationService
             $this->amd,
             $contactMessage->getEmail(),
             $this->urlBase.' contact form answer',
-            $this->twig->render('Mails:contact_form_user_backend_notification.html.twig', array(
+            $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', array(
                 'contact' => $contactMessage,
             ))
         );
@@ -160,7 +160,7 @@ class NotificationService
             $this->amd,
             $this->amd,
             'Missatge de newsletter pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:newsletter_form_admin_notification.html.twig', array(
+            $this->twig->render('Mails/newsletter_form_admin_notification.html.twig', array(
                 'contact' => $newsletterContact,
             )),
             $newsletterContact->getEmail()
@@ -182,7 +182,7 @@ class NotificationService
             $this->amd,
             $this->amd,
             'Missatge de newsletter pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:newsletter_failure_admin_notification.html.twig', array(
+            $this->twig->render('Mails/newsletter_failure_admin_notification.html.twig', array(
                 'contact' => $newsletterContact,
             )),
             $newsletterContact->getEmail()
@@ -206,7 +206,7 @@ class NotificationService
             $this->amd,
             $newsletterContact->getEmail(),
             'Notificació newsletter pàgina web '.$this->urlBase,
-            $this->twig->render('Mails:common_newsletter_user_notification.html.twig', array(
+            $this->twig->render('Mails/common_newsletter_user_notification.html.twig', array(
                 'contact' => $newsletterContact,
             ))
         );
@@ -231,7 +231,7 @@ class NotificationService
             $receipt->getMainEmail(),
             $receipt->getMainEmailName(),
             'Recordatori de pagament rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
-            $this->twig->render('Mails:receipt_reminder_pdf_notification.html.twig', array(
+            $this->twig->render('Mails/receipt_reminder_pdf_notification.html.twig', array(
                 'receipt' => $receipt,
             )),
             'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
@@ -258,7 +258,7 @@ class NotificationService
             $receipt->getMainEmail(),
             $receipt->getMainEmailName(),
             'Rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
-            $this->twig->render('Mails:receipt_pdf_notification.html.twig', array(
+            $this->twig->render('Mails/receipt_pdf_notification.html.twig', array(
                 'receipt' => $receipt,
             )),
             'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
@@ -285,7 +285,7 @@ class NotificationService
             $invoice->getMainEmail(),
             $invoice->getMainEmailName(),
             'Factura Box Idiomes núm. '.$invoice->getInvoiceNumber(),
-            $this->twig->render('Mails:invoice_pdf_notification.html.twig', array(
+            $this->twig->render('Mails/invoice_pdf_notification.html.twig', array(
                 'invoice' => $invoice,
             )),
             'invoice_'.$invoice->getSluggedInvoiceNumber().'.pdf',
@@ -310,7 +310,7 @@ class NotificationService
             $this->amd,
             $studentAbsence->getStudent()->getMainEmailSubject(),
             'Falta a classe el dia '.$studentAbsence->getDayString(),
-            $this->twig->render('Mails:student_absence_notification.html.twig', array(
+            $this->twig->render('Mails/student_absence_notification.html.twig', array(
                 'studentAbsence' => $studentAbsence,
             ))
         );
