@@ -2,6 +2,8 @@ import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import listPlugin from '@fullcalendar/list';
+import caLocale from '@fullcalendar/core/locales/ca';
 
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
@@ -10,37 +12,29 @@ import "@fullcalendar/timegrid/main.css";
 document.addEventListener("DOMContentLoaded", () => {
     var calendarEl = document.getElementById("calendar-holder");
     var calendar = new Calendar(calendarEl, {
-        // eventSources: [
-        //     {
-        //         url: eventsUrl,
-        //         method: "POST",
-        //         extraParams: {
-        //             filters: JSON.stringify({})
-        //         },
-        //         failure: () => {
-        //             // alert("There was an error while fetching FullCalendar!");
-        //         },
-        //     },
-        // ],
-        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin],
+        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
         timeZone: "UTC",
         header: {
             left: 'prev today next',
             center: 'title',
-            right: 'dayGridMonth,agendaDay listWeek'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay listWeek'
         },
         views: {
-
-            agendaDay: {
+            timeGrid: {
                 allDaySlot: true,
-                slotLabelFormat: 'HH:mm',
+                slotLabelFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    omitZeroMinute: false,
+                    meridiem: 'short'
+                },
                 scrollTime: '08:00:00',
                 minTime: '06:00:00',
                 maxTime: '22:00:00'
             }
         },
         height: 750,
-        locale: 'ca',
+        locale: caLocale,
         timeFormat: 'HH:mm',
         firstDay: 1,
         lazyFetching: false,
@@ -51,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         displayEventTime: true,
         fixedWeekCount: false,
         weekNumbers: false,
-        defaultView: 'dayGridMonth',
+        defaultView: 'timeGridWeek',
         themeSystem: 'bootstrap3',
         googleCalendarApiKey: 'AIzaSyCZZYZV-LqX2qDtggiEo1GmeNhxe3SAhfI',
         eventSources: [
