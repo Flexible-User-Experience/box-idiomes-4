@@ -3,6 +3,10 @@
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/fenrizbescolorpickertype/lib/js/iris.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/fenrizbescolorpickertype/js/color_picker_type.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/colorpicker/js/jqColorPicker.min.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery('.colorpicker').colorPicker();
+        });
+    </script>
 {% endblock %}

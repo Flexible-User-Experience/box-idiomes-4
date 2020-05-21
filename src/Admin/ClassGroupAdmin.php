@@ -2,7 +2,7 @@
 
 namespace App\Admin;
 
-use Fenrizbes\ColorPickerTypeBundle\Form\Type\ColorPickerType;
+use KunicMarko\ColorPickerBundle\Form\Type\ColorPickerType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -76,20 +76,6 @@ class ClassGroupAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.teacher.color',
                     'required' => true,
-                    'picker_options' => array(
-                        'color' => false,
-                        'mode' => 'hsl',
-                        'hide' => false,
-                        'border' => true,
-                        'target' => false,
-                        'width' => 200,
-                        'palettes' => true,
-                        'controls' => array(
-                            'horiz' => 's',
-                            'vert' => 'l',
-                            'strip' => 'h',
-                        ),
-                    ),
                 )
             )
             ->add(

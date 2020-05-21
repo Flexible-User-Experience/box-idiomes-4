@@ -195,6 +195,9 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v3.0.0"
     },
+    "kunicmarko/color-picker-bundle": {
+        "version": "1.1.0"
+    },
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
