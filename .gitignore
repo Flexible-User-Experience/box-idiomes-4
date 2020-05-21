@@ -6,6 +6,7 @@
 !/public/uploads/documents/.gitkeep
 /public/uploads/images/*
 !/public/uploads/images/.gitkeep
+!.travis.yml
 ###< app/bundle ###
 
 ###> symfony/framework-bundle ###
