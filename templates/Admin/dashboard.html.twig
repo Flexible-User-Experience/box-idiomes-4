@@ -3,20 +3,16 @@
 {# override css includes #}
 {% block stylesheets %}
     {{ parent() }}
-{#    <link rel="stylesheet" href="{{ asset('bundles/app/css/fullcalendar.min.css') }}" />#}
+{#    {{ encore_entry_link_tags('calendar') }}#}
 {% endblock %}
 
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('build/moment/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('build/fullcalendar/core/main.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('build/fullcalendar/core/locales/ca.js') }}"></script>
-{#    <script type="text/javascript" src="{{ asset('bundles/app/js/fullcalendar.default-settings.js') }}"></script>#}
-{#    <script type="text/javascript" src="{{ asset('bundles/app/js/gcal.min.js') }}"></script>#}
     <script type="text/javascript" src="{{ asset('build/google-charts/googleCharts.min.js') }}"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
         google.load('visualization', '1', {packages:['corechart'], 'language': '{{ app.request.locale }}'});
     </script>
+    {{ encore_entry_script_tags('fullcalendardefaultsettings') }}
 {% endblock %}
