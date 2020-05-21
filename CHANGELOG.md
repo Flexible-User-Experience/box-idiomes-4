@@ -5,6 +5,9 @@ Changelog
  * finish migration from Symfony 2.8
  * add new pre register form feature
 
+##### Version 0.0.04 (2020-05-21)
+ * config new vendors after upgrade process
+
 ##### Version 0.0.03 (2020-05-20)
  * fix bad references after Symfony 2.8 migration
 
