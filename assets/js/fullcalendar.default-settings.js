@@ -8,6 +8,7 @@ import caLocale from '@fullcalendar/core/locales/ca';
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
+import "@fullcalendar/list/main.css";
 
 document.addEventListener("DOMContentLoaded", () => {
     var calendarEl = document.getElementById("calendar-holder");
