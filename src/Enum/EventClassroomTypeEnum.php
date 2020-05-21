@@ -20,7 +20,7 @@ class EventClassroomTypeEnum
      */
     public static function getEnumArray()
     {
-        return array_flip(self::getEnumArray());
+        return array_flip(self::getReversedEnumArray());
     }
 
     /**

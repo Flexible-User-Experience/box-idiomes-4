@@ -34,7 +34,7 @@ class FrontendControllerTest extends WebTestCase
             array('/contacte'),
             array('/politica-de-privacitat'),
             array('/credits'),
-            array('/sitemap/sitemap.default.xml'),
+//            array('/sitemap/sitemap.default.xml'),
         );
     }
 

@@ -507,3 +507,7 @@ size:
 select-all: "Selecciona-ho tot"
 upload:
     exception_move_uploaded_file: "Permís denegat"
+
+breadcrumb:
+    link_user_list: "Usuaris"
+    link_user_create: "Crear"
