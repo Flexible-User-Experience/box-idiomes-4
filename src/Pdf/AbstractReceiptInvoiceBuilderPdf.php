@@ -3,8 +3,8 @@
 namespace App\Pdf;
 
 use App\Service\SmartAssetsHelperService;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * Abstract class AbstractReceiptInvoiceBuilderPdf.

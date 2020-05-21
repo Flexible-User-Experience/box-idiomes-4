@@ -38,7 +38,7 @@ jQuery(function () {
         googleCalendarApiKey: 'AIzaSyCZZYZV-LqX2qDtggiEo1GmeNhxe3SAhfI',
         eventSources: [
             {
-                url: Routing.generate('ancarebeca_full_calendar_load'),
+                url: Routing.generate('fc_load_events'),
                 type: 'POST',
                 data: {},
                 error: function(data) {

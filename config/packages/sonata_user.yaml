@@ -7,7 +7,7 @@ sonata_user:
     admin:
         user:
             class:       App\Admin\UserAdmin
-            controller:  App\Controller\UserAdminController
+            controller:  App\Controller\Admin\UserAdminController
             translation: messages
         group:
             class:       Sonata\UserBundle\Admin\Entity\GroupAdmin

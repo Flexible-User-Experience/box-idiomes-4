@@ -18,8 +18,10 @@
         "hautelook/alice-bundle": "^2.7",
         "knplabs/knp-menu-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^3.0",
+        "kunicmarko/color-picker-bundle": "^1.1",
         "liip/imagine-bundle": "^2.1",
         "presta/sitemap-bundle": "^2.1",
+        "qipsius/tcpdf-bundle": "^2.0",
         "saad-tazi/g-chart-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.5",
         "sonata-project/admin-bundle": "^3.52",
@@ -48,11 +50,11 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "4.4.*",
         "tattali/calendar-bundle": "^1.2",
+        "tecnickcom/tcpdf": "^6.2.17",
         "twig/cssinliner-extra": "^3.0",
         "twig/inky-extra": "^3.0",
         "twig/markdown-extra": "^3.0",
-        "vich/uploader-bundle": "1.13.1",
-        "whiteoctober/tcpdf-bundle": "^1.1"
+        "vich/uploader-bundle": "1.13.1"
     },
     "require-dev": {
         "sensiolabs/security-checker": "^6.0",

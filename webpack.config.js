@@ -18,9 +18,7 @@ Encore
         {from: './node_modules/ckeditor4/lang', to: 'ckeditor4/lang/[path][name].[ext]'},
         {from: './node_modules/ckeditor4/plugins', to: 'ckeditor4/plugins/[path][name].[ext]'},
         {from: './node_modules/ckeditor4/skins', to: 'ckeditor4/skins/[path][name].[ext]'},
-        {from: './node_modules/moment/min', to: 'moment/[path][name].[ext]'},
         {from: './node_modules/google-charts/dist', to: 'google-charts/[path][name].[ext]'},
-        {from: './node_modules/@fullcalendar', to: 'fullcalendar/[path][name].[ext]'},
         {from: './node_modules/pdfjs-dist/build', to: 'pdfjs/[path][name].[ext]'}
     ])
     // public path used by the web server to access the output path
@@ -39,6 +37,9 @@ Encore
      */
     .addEntry('frontend', './assets/js/frontend.js')
     .addEntry('backend', './assets/js/backend.js')
+    .addEntry('fullcalendardefaultsettings', './assets/js/fullcalendar.default-settings.js')
+    .addEntry('fullcalendarstudentsettings', './assets/js/fullcalendar.student-settings.js')
+    // .addEntry('gcal', './assets/js/gcal.min.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

@@ -14,7 +14,7 @@ class FrontendControllerTest extends WebTestCase
      */
     public function testPagesAreSuccessful($url)
     {
-        $client = $this->createClient();
+        $client = WebTestCase::createClient();
         $client->request('GET', $url);
 
         $this->assertResponseIsSuccessful();
@@ -46,7 +46,7 @@ class FrontendControllerTest extends WebTestCase
      */
     public function testPagesAreNotFound($url)
     {
-        $client = $this->createClient();         // anonymous user
+        $client = WebTestCase::createClient();
         $client->request('GET', $url);
 
         $this->assertResponseStatusCodeSame(404);

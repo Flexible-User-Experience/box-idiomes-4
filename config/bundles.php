@@ -29,7 +29,6 @@ return [
     SaadTazi\GChartBundle\SaadTaziGChartBundle::class => ['all' => true],
     CalendarBundle\CalendarBundle::class => ['all' => true],
     Artgris\Bundle\FileManagerBundle\ArtgrisFileManagerBundle::class => ['all' => true],
-    WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle::class => ['all' => true],
     EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle::class => ['all' => true],
     Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle::class => ['dev' => true, 'test' => true],
     Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle::class => ['dev' => true, 'test' => true],
@@ -38,4 +37,6 @@ return [
     Gremo\ZurbInkBundle\GremoZurbInkBundle::class => ['all' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
+    Qipsius\TCPDFBundle\QipsiusTCPDFBundle::class => ['all' => true],
+    KunicMarko\ColorPickerBundle\ColorPickerBundle::class => ['all' => true],
 ];

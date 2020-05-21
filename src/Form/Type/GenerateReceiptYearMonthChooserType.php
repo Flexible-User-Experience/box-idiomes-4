@@ -31,7 +31,6 @@ class GenerateReceiptYearMonthChooserType extends AbstractType
                     'label' => 'backend.admin.invoice.year',
                     'required' => true,
                     'choices' => ReceiptYearMonthEnum::getYearEnumArray(),
-                    'choices_as_values' => true,
                 )
             )
             ->add(
@@ -41,7 +40,6 @@ class GenerateReceiptYearMonthChooserType extends AbstractType
                     'label' => 'backend.admin.invoice.month',
                     'required' => true,
                     'choices' => ReceiptYearMonthEnum::getMonthEnumArray(),
-                    'choices_as_values' => false,
                 )
             )
             ->add(

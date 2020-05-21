@@ -5,11 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\ClassGroup;
 use App\Pdf\ClassGroupBuilderPdf;
 use App\Repository\StudentRepository;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ClassGroupAdminController.
@@ -32,8 +32,8 @@ class ClassGroupAdminController extends BaseAdminController
     {
         /** @var StudentRepository $srs */
         $srs = $this->container->get('app.student_repository');
-        /** @var Translator $translator */
-        $translator = $this->container->get('translator.default');
+        /** @var TranslatorInterface $translator */
+        $translator = $this->container->get('translator');
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
 

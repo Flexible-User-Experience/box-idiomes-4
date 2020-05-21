@@ -56,7 +56,7 @@ class FileService
     public function getMimeType($entity, $attribute)
     {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $path = $this->krd.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'web'.$this->uhs->asset($entity, $attribute);
+        $path = $this->krd.DIRECTORY_SEPARATOR.'public'.$this->uhs->asset($entity, $attribute);
         $mimeType = finfo_file($finfo, $path);
         finfo_close($finfo);
 

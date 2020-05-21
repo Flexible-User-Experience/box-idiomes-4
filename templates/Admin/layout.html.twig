@@ -34,6 +34,8 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('backend') }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script type="text/javascript" src="{{ asset('build/pdfjs/pdf.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('build/pdfjs/pdf.worker.min.js') }}"></script>
 {% endblock %}

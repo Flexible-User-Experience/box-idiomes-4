@@ -48,7 +48,6 @@ class GenerateInvoiceType extends GenerateInvoiceYearMonthChooserType
                 array(
                     'label' => 'backend.admin.invoice.items',
                     'allow_extra_fields' => true,
-                    'cascade_validation' => true,
                     'required' => false,
                     'entry_type' => GenerateInvoiceItemType::class,
                     'by_reference' => false,

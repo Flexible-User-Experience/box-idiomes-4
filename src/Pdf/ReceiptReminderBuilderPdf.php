@@ -4,8 +4,8 @@ namespace App\Pdf;
 
 use App\Entity\Receipt;
 use App\Service\SmartAssetsHelperService;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * Class ReceiptReminderBuilderPdf.
@@ -116,7 +116,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
     public function buildReceiptRemainderPageForItem($pdf, Receipt $receipt)
     {
         // logo
-        $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/bundles/app/img/logo-pdf.png'), BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP, 40);
+        $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/img/logo-pdf.png'), BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP, 40);
         $pdf->SetXY(BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP * 2 + BaseTcpdf::MARGIN_VERTICAL_SMALL);
 
         // invoice header

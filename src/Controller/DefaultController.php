@@ -11,6 +11,8 @@ use App\Service\NotificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -74,10 +76,6 @@ class DefaultController extends AbstractController
 
     /**
      * @param NewsletterContact $newsletterContact
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     private function setFlashMessageAndEmailNotifications($newsletterContact)
     {
@@ -131,10 +129,6 @@ class DefaultController extends AbstractController
      * @param Request $request
      *
      * @return Response
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function contactAction(Request $request)
     {
@@ -197,10 +191,16 @@ class DefaultController extends AbstractController
     /**
      * @Route("/test-email", name="app_test_email")
      *
+     * @param KernelInterface $kernel
+     *
      * @return Response
      */
-    public function testEmailAction()
+    public function testEmailAction(KernelInterface $kernel)
     {
+        if ($kernel->getEnvironment() === 'prod') {
+            throw new AccessDeniedHttpException();
+        }
+
         $invoice = $this->getDoctrine()->getRepository('App:Invoice')->find(8);
 
         return $this->render('Mails/invoice_pdf_notification.html.twig', array(

@@ -12,10 +12,13 @@ use App\Manager\GenerateInvoiceFormManager;
 use App\Pdf\InvoiceBuilderPdf;
 use App\Service\NotificationService;
 use App\Service\XmlSepaBuilderService;
+use Digitick\Sepa\Exception\InvalidArgumentException;
+use Digitick\Sepa\Exception\InvalidPaymentMethodException;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Exception;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
@@ -24,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class InvoiceAdminController.
@@ -90,12 +94,12 @@ class InvoiceAdminController extends BaseAdminController
      * @throws NotFoundHttpException                 If the object does not exist
      * @throws AccessDeniedException                 If access is not granted
      * @throws NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws OptimisticLockException
      */
     public function creatorAction(Request $request)
     {
-        /** @var Translator $translator */
-        $translator = $this->container->get('translator.default');
+        /** @var TranslatorInterface $translator */
+        $translator = $this->container->get('translator');
         /** @var GenerateInvoiceFormManager $gifm */
         $gifm = $this->container->get('app.generate_invoice_form_manager');
         $generateInvoice = $gifm->transformRequestArrayToModel($request->get('generate_invoice'));
@@ -119,6 +123,7 @@ class InvoiceAdminController extends BaseAdminController
      *
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
+     * @throws Exception
      */
     public function pdfAction(Request $request)
     {
@@ -146,9 +151,7 @@ class InvoiceAdminController extends BaseAdminController
      * @return RedirectResponse
      *
      * @throws NotFoundHttpException If the object does not exist
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Exception
      */
     public function sendAction(Request $request)
     {
@@ -194,8 +197,8 @@ class InvoiceAdminController extends BaseAdminController
      *
      * @return Response|BinaryFileResponse
      *
-     * @throws \Digitick\Sepa\Exception\InvalidArgumentException
-     * @throws \Digitick\Sepa\Exception\InvalidPaymentMethodException
+     * @throws InvalidArgumentException
+     * @throws InvalidPaymentMethodException
      */
     public function generateDirectDebitAction(Request $request)
     {

@@ -38,6 +38,7 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags:     [ 'controller.service_arguments' ]
+    Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
     # Template Blocks
     app.block.event_calendar:
         class: App\Block\EventCalendarBlock
@@ -186,7 +187,7 @@ services:
         class: App\Pdf\StudentImageRightsBuilderPdf
         public: true
         arguments:
-            - '@white_october.tcpdf'
+            - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '%project_web_title%'
@@ -194,7 +195,7 @@ services:
         class: App\Pdf\SepaAgreementBuilderPdf
         public: true
         arguments:
-            - '@white_october.tcpdf'
+            - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '%project_web_title%'
@@ -203,7 +204,7 @@ services:
         class: App\Pdf\ReceiptReminderBuilderPdf
         public: true
         arguments:
-            - '@white_october.tcpdf'
+            - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '%project_web_title%'
@@ -217,7 +218,7 @@ services:
         class: App\Pdf\ReceiptBuilderPdf
         public: true
         arguments:
-            - '@white_october.tcpdf'
+            - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '%project_web_title%'
@@ -231,7 +232,7 @@ services:
         class: App\Pdf\InvoiceBuilderPdf
         public: true
         arguments:
-            - '@white_october.tcpdf'
+            - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '%project_web_title%'
@@ -245,7 +246,7 @@ services:
         class: App\Pdf\ClassGroupBuilderPdf
         public: true
         arguments:
-            - '@white_october.tcpdf'
+            - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
             - '%project_web_title%'
@@ -274,7 +275,7 @@ services:
         public: true
         arguments:
             - '@vich_uploader.templating.helper.uploader_helper'
-            - '%kernel.root_dir%'
+            - '%kernel.project_dir%'
     # Forms
     app.form.type.generate_receipt:
         class: App\Form\Type\GenerateReceiptType
@@ -307,3 +308,11 @@ services:
             - '@app.event_manager'
         tags:
             - { name: form.type }
+    # Listeners
+    app.sitemap.blog_post_subscriber:
+        class: App\Listener\SitemapListener
+        arguments:
+            - "@router"
+            - "@doctrine.orm.default_entity_manager"
+        tags:
+            - { name: "kernel.event_subscriber", priority: 100 }
