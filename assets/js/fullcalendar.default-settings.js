@@ -10,11 +10,11 @@ import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
 
-document.addEventListener("DOMContentLoaded", () => {
-    var calendarEl = document.getElementById("calendar-holder");
+document.addEventListener('DOMContentLoaded', () => {
+    var calendarEl = document.getElementById('calendar-holder');
     var calendar = new Calendar(calendarEl, {
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-        timeZone: "UTC",
+        timeZone: 'UTC',
         header: {
             left: 'prev today next',
             center: 'title',
