@@ -1,9 +1,7 @@
-{% extends "SonataAdminBundle:CRUD:base_list_field.html.twig" %}
+{% extends "@SonataAdmin/CRUD/base_list_field.html.twig" %}
 
 {% block field %}
-    {% spaceless %}
-        <div class="text-left">
-            {{ object | draw_event_classroom_type | trans }}
-        </div>
-    {% endspaceless %}
+    <div class="text-left">
+        {{ object | draw_event_classroom_type | trans }}
+    </div>
 {% endblock %}
