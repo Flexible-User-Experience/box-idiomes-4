@@ -63,8 +63,9 @@ class MailchimpManager
         ));
 
         // check error
-        if (is_array($result) && self::SUBSCRIBED == $result['status']) {
+        if (is_array($result) && array_key_exists('status', $result) && ((!array_key_exists('title', $result) && self::SUBSCRIBED === $result['status']) || ((array_key_exists('title', $result) && 'Member Exists' === $result['title'] && 400 === $result['status'])))) {
             $this->messenger->sendCommonNewsletterUserNotification($newsletterContact);
+            $result['status'] = self::SUBSCRIBED;
         } else {
             $this->messenger->sendFailureNewsletterSubscriptionAdminNotification($newsletterContact);
         }

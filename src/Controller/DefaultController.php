@@ -50,7 +50,7 @@ class DefaultController extends AbstractController
             // Subscribe contact to mailchimp list
             $result = $mailchimpManager->subscribeContactToList($contact, $this->getParameter('mailchimp_list_id'));
 
-            if (is_array($result) && 'subscribed' == $result['status']) {
+            if (is_array($result) && MailchimpManager::SUBSCRIBED === $result['status']) {
                 // Send notification and OK flash
                 $this->setFlashMessageAndEmailNotifications($messenger, $contact);
                 // Clean up new form
