@@ -7,6 +7,7 @@ use App\Enum\StudentPaymentEnum;
 use App\Service\NotificationService;
 use App\Pdf\ReceiptBuilderPdf;
 use App\Pdf\ReceiptReminderBuilderPdf;
+use Exception;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,23 +47,21 @@ class DeliverReceiptsBatchByEmailCommand extends ContainerAwareCommand
     /**
      * Execute command.
      *
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return int|null|void
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Welcome to '.$this->getName().' command</info>');
         /** @var Receipt[]|array $receipts */
-        $receipts = $this->getContainer()->get('doctrine')->getRepository('App:Receipt')->findByIdsArray($input->getArgument('receipts'));
+        $receipts = $this->getContainer()->get('doctrine')->getRepository(Receipt::class)->findByIdsArray($input->getArgument('receipts'));
         if (count($receipts) > 0) {
             /** @var Logger $logger */
-            $logger = $this->getContainer()->get('monolog.logger.email');
+            $logger = $this->getContainer()->get('monolog.logger');
             /** @var ReceiptReminderBuilderPdf $rrbp */
             $rrbp = $this->getContainer()->get('app.receipt_reminder_pdf_builder');
             /** @var ReceiptBuilderPdf $rbp */

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\ContactMessage;
+use App\Entity\Invoice;
 use App\Entity\NewsletterContact;
+use App\Entity\Service;
+use App\Entity\Teacher;
 use App\Form\Type\ContactHomepageType;
 use App\Form\Type\ContactMessageType;
 use App\Manager\MailchimpManager;
@@ -35,7 +38,7 @@ class DefaultController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $teachers = $this->getDoctrine()->getRepository('App:Teacher')->findAllEnabledSortedByPosition();
+        $teachers = $this->getDoctrine()->getRepository(Teacher::class)->findAllEnabledSortedByPosition();
 
         $contact = new NewsletterContact();
         $newsletterForm = $this->createForm(ContactHomepageType::class, $contact);
@@ -104,8 +107,7 @@ class DefaultController extends AbstractController
      */
     public function servicesAction()
     {
-        $services = $this->getDoctrine()->getRepository('App:Service')
-            ->findAllEnabledSortedByPosition();
+        $services = $this->getDoctrine()->getRepository(Service::class)->findAllEnabledSortedByPosition();
 
         return $this->render(
             'Front/services.html.twig',
@@ -201,7 +203,7 @@ class DefaultController extends AbstractController
             throw new AccessDeniedHttpException();
         }
 
-        $invoice = $this->getDoctrine()->getRepository('App:Invoice')->find(8);
+        $invoice = $this->getDoctrine()->getRepository(Invoice::class)->find(8);
 
         return $this->render('Mails/invoice_pdf_notification.html.twig', array(
             'invoice' => $invoice,

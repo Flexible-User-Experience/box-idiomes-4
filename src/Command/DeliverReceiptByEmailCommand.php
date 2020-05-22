@@ -57,7 +57,7 @@ class DeliverReceiptByEmailCommand extends ContainerAwareCommand
     {
         $output->writeln('<info>Welcome to '.$this->getName().' command</info>');
         /** @var Receipt|null $receipt */
-        $receipt = $this->getContainer()->get('doctrine')->getRepository('App:Receipt')->find(intval($input->getArgument('receipt')));
+        $receipt = $this->getContainer()->get('doctrine')->getRepository(Receipt::class)->find(intval($input->getArgument('receipt')));
         if ($receipt) {
             $output->write('building PDF receipt number '.$receipt->getReceiptNumber().'... ');
             /** @var Logger $logger */

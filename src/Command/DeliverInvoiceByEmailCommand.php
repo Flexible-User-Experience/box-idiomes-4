@@ -57,7 +57,7 @@ class DeliverInvoiceByEmailCommand extends ContainerAwareCommand
     {
         $output->writeln('<info>Welcome to '.$this->getName().' command</info>');
         /** @var Invoice|null $invoice */
-        $invoice = $this->getContainer()->get('doctrine')->getRepository('App:Invoice')->find(intval($input->getArgument('invoice')));
+        $invoice = $this->getContainer()->get('doctrine')->getRepository(Invoice::class)->find(intval($input->getArgument('invoice')));
         if ($invoice) {
             $output->write('building PDF invoice number '.$invoice->getInvoiceNumber().'... ');
             /** @var InvoiceBuilderPdf $ibp */
