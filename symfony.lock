@@ -96,6 +96,9 @@
     "doctrine/reflection": {
         "version": "1.2.1"
     },
+    "drewm/mailchimp-api": {
+        "version": "v2.5.4"
+    },
     "egulias/email-validator": {
         "version": "2.1.17"
     },

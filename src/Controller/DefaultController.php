@@ -28,15 +28,13 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="app_homepage")
      *
-     * @param Request $request
+     * @param Request             $request
+     * @param MailchimpManager    $mailchimpManager
+     * @param NotificationService $messenger
      *
      * @return Response
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, MailchimpManager $mailchimpManager, NotificationService $messenger)
     {
         $teachers = $this->getDoctrine()->getRepository(Teacher::class)->findAllEnabledSortedByPosition();
 
@@ -49,14 +47,12 @@ class DefaultController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($contact);
             $em->flush();
-            /** @var MailchimpManager $mailchimpManager */
-            $mailchimpManager = $this->get('app.mailchimp_manager');
             // Subscribe contact to mailchimp list
-            $result = $mailchimpManager->subscribeContactToList($contact, $this->getParameter('mailchimp_test_list_id'));
+            $result = $mailchimpManager->subscribeContactToList($contact, $this->getParameter('mailchimp_list_id'));
 
             if (is_array($result) && 'subscribed' == $result['status']) {
                 // Send notification and OK flash
-                $this->setFlashMessageAndEmailNotifications($contact);
+                $this->setFlashMessageAndEmailNotifications($messenger, $contact);
                 // Clean up new form
                 $contact = new NewsletterContact();
                 $newsletterForm = $this->createForm(ContactHomepageType::class, $contact);
@@ -78,12 +74,11 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @param NewsletterContact $newsletterContact
+     * @param NotificationService $messenger
+     * @param NewsletterContact   $newsletterContact
      */
-    private function setFlashMessageAndEmailNotifications($newsletterContact)
+    private function setFlashMessageAndEmailNotifications(NotificationService $messenger, NewsletterContact $newsletterContact)
     {
-        /** @var NotificationService $messenger */
-        $messenger = $this->get('app.notification');
         // Send email notifications
         if (0 != $messenger->sendCommonNewsletterUserNotification($newsletterContact)) {
             // Set frontend flash message

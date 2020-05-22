@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\NewsletterContact;
 use App\Service\NotificationService;
 use DrewM\MailChimp\MailChimp;
+use Exception;
 
 /**
  * Class MailchimpManager.
@@ -35,13 +36,13 @@ class MailchimpManager
      * MailchimpManager constructor.
      *
      * @param NotificationService $messenger
-     * @param string              $apiKey
+     * @param string              $mak       Mailchimp API key
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __construct(NotificationService $messenger, $apiKey)
+    public function __construct(NotificationService $messenger, $mak)
     {
-        $this->mailChimp = new MailChimp($apiKey);
+        $this->mailChimp = new MailChimp($mak);
         $this->messenger = $messenger;
     }
 
@@ -52,10 +53,6 @@ class MailchimpManager
      * @param string            $listId
      *
      * @return bool $result = false if everything goes well
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function subscribeContactToList(NewsletterContact $newsletterContact, $listId)
     {

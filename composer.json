@@ -10,6 +10,7 @@
         "artgris/filemanager-bundle": "^2.0",
         "beberlei/doctrineextensions": "^1.0",
         "digitick/sepa-xml": "^1.6",
+        "drewm/mailchimp-api": "^2.5",
         "egulias/email-validator": "^2.1",
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.2",

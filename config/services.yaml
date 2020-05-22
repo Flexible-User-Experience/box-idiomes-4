@@ -14,6 +14,7 @@ parameters:
     facebook_pixel_enabled:    '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
     facebook_pixel_id:         '%env(string:FACEBOOK_PIXEL_ID)%'
     mailchimp_api_key:         '%env(string:MAILCHIMP_API_KEY)%'
+    mailchimp_list_id:         '%env(string:MAILCHIMP_LIST_ID)%'
     boss_name:                 '%env(string:BOSS_NAME)%'
     boss_dni:                  '%env(string:BOSS_DNI)%'
     boss_address:              '%env(string:BOSS_ADDRESS)%'
@@ -29,7 +30,9 @@ services:
         autowire:      true
         autoconfigure: true
         bind:
-            $mub: '%project_url_base%'
+            $amd: '%mailer_destination%'
+            $pub: '%project_url_base%'
+            $mak: '%mailchimp_api_key%'
     # Commons
     App\:
         resource: '../src/*'
