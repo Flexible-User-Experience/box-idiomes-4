@@ -14,6 +14,7 @@
     # ansistrano shared resources
     ansistrano_shared_paths:
       - "var/log"
+      - "public/media"
       - "public/uploads"
     ansistrano_shared_files: []
     ansistrano_ensure_shared_paths_exist: yes
