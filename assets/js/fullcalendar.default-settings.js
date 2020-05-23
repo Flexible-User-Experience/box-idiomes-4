@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 scrollTime: '08:00:00',
                 minTime: '06:00:00',
-                maxTime: '22:00:00'
+                maxTime: '22:00:00',
+                hiddenDays: [ 0 ]
             }
         },
         height: 750,
