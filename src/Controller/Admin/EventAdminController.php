@@ -174,18 +174,18 @@ class EventAdminController extends BaseAdminController
             $eventIdStopRange = $form->get('range')->getData();
 
             /** @var Event|null $eventStopRange */
-            $eventStopRange = $em->getRepository('App:Event')->find($eventIdStopRange);
+            $eventStopRange = $em->getRepository(Event::class)->find($eventIdStopRange);
 
             /** @var Event|null $eventAfterStopRange */
             $eventAfterStopRange = null;
             if (!is_null($eventStopRange->getNext())) {
-                $eventAfterStopRange = $em->getRepository('App:Event')->find($eventStopRange->getNext()->getId());
+                $eventAfterStopRange = $em->getRepository(Event::class)->find($eventStopRange->getNext()->getId());
             }
 
             /** @var Event|null $eventBeforeStartRange */
             $eventBeforeStartRange = null;
             if (!is_null($object->getPrevious())) {
-                $eventBeforeStartRange = $em->getRepository('App:Event')->find($object->getPrevious()->getId());
+                $eventBeforeStartRange = $em->getRepository(Event::class)->find($object->getPrevious()->getId());
             }
 
             // begin range

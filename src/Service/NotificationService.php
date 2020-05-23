@@ -30,14 +30,14 @@ class NotificationService
     private $twig;
 
     /**
-     * @var string system's app email
+     * @var string system's App Mail Destionation
      */
     private $amd;
 
     /**
-     * @var string
+     * @var string Project URL Base
      */
-    private $urlBase;
+    private $pub;
 
     /**
      * Methods.
@@ -46,17 +46,17 @@ class NotificationService
     /**
      * NotificationService constructor.
      *
-     * @param CourierService    $messenger
-     * @param Environment       $twig
-     * @param string            $amd
-     * @param string            $urlBase
+     * @param CourierService $messenger
+     * @param Environment    $twig
+     * @param string         $amd
+     * @param string         $pub
      */
-    public function __construct(CourierService $messenger, Environment $twig, $amd, $urlBase)
+    public function __construct(CourierService $messenger, Environment $twig, $amd, $pub)
     {
         $this->messenger = $messenger;
         $this->twig = $twig;
         $this->amd = $amd;
-        $this->urlBase = $urlBase;
+        $this->pub = $pub;
     }
 
     /**
@@ -75,7 +75,7 @@ class NotificationService
             $this->messenger->sendEmail(
                 $this->amd,
                 $contactMessage->getEmail(),
-                'Notificació pàgina web '.$this->urlBase,
+                'Notificació pàgina web '.$this->pub,
                 $this->twig->render('Mails/common_user_notification.html.twig', array(
                     'contact' => $contactMessage,
                 ))
@@ -103,7 +103,7 @@ class NotificationService
             $this->messenger->sendEmail(
                 $contactMessage->getEmail(),
                 $this->amd,
-                $this->urlBase.' contact form received',
+                $this->pub.' contact form received',
                 $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
                     'contact' => $contactMessage,
                 ))
@@ -131,7 +131,7 @@ class NotificationService
             $this->messenger->sendEmail(
                 $this->amd,
                 $this->amd,
-                'Missatge de contacte pàgina web '.$this->urlBase,
+                'Missatge de contacte pàgina web '.$this->pub,
                 $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
                     'contact' => $contactMessage,
                 ))
@@ -159,7 +159,7 @@ class NotificationService
             $this->messenger->sendEmail(
                 $this->amd,
                 $contactMessage->getEmail(),
-                $this->urlBase.' contact form answer',
+                $this->pub.' contact form answer',
                 $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', array(
                     'contact' => $contactMessage,
                 ))
@@ -187,7 +187,7 @@ class NotificationService
             $this->messenger->sendEmail(
                 $this->amd,
                 $this->amd,
-                'Missatge de newsletter pàgina web '.$this->urlBase,
+                'Missatge de newsletter pàgina web '.$this->pub,
                 $this->twig->render('Mails/newsletter_form_admin_notification.html.twig', array(
                     'contact' => $newsletterContact,
                 )),
@@ -216,7 +216,7 @@ class NotificationService
             $this->messenger->sendEmail(
                 $this->amd,
                 $this->amd,
-                'Missatge de newsletter pàgina web '.$this->urlBase,
+                'Missatge de newsletter pàgina web '.$this->pub,
                 $this->twig->render('Mails/newsletter_failure_admin_notification.html.twig', array(
                     'contact' => $newsletterContact,
                 )),
@@ -245,7 +245,7 @@ class NotificationService
             $this->messenger->sendEmail(
                 $this->amd,
                 $newsletterContact->getEmail(),
-                'Notificació newsletter pàgina web '.$this->urlBase,
+                'Notificació newsletter pàgina web '.$this->pub,
                 $this->twig->render('Mails/common_newsletter_user_notification.html.twig', array(
                     'contact' => $newsletterContact,
                 ))

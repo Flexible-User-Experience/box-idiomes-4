@@ -22,9 +22,9 @@ class SmartAssetsHelperService
     private $kernel;
 
     /**
-     * @var string mailer URL base
+     * @var string Project URL base
      */
-    private $mub;
+    private $pub;
 
     /**
      * Methods.
@@ -34,12 +34,12 @@ class SmartAssetsHelperService
      * SmartAssetsHelperService constructor.
      *
      * @param KernelInterface $kernel
-     * @param string          $mub
+     * @param string          $pub
      */
-    public function __construct(KernelInterface $kernel, $mub)
+    public function __construct(KernelInterface $kernel, $pub)
     {
         $this->kernel = $kernel;
-        $this->mub = $mub;
+        $this->pub = $pub;
     }
 
     /**
@@ -61,7 +61,7 @@ class SmartAssetsHelperService
      */
     public function getAbsoluteAssetPathContextIndependent($assetPath)
     {
-        $package = new UrlPackage(self::HTTP_PROTOCOL.$this->mub.'/', new EmptyVersionStrategy());
+        $package = new UrlPackage(self::HTTP_PROTOCOL.$this->pub.'/', new EmptyVersionStrategy());
 
         return $package->getUrl($assetPath);
     }
@@ -76,7 +76,6 @@ class SmartAssetsHelperService
     public function getAbsoluteAssetPathByContext($assetPath)
     {
         $result = $this->getAbsoluteAssetPathContextIndependent($assetPath);
-
         if ($this->isCliContext()) {
             $result = $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
         }
@@ -108,7 +107,6 @@ class SmartAssetsHelperService
     public function getRelativeAssetPathByContext($assetPath)
     {
         $result = $this->getRelativeAssetPathContextIndependent($assetPath);
-
         if ($this->isCliContext()) {
             $result = $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
         }
@@ -125,8 +123,6 @@ class SmartAssetsHelperService
      */
     public function getAbsoluteAssetFilePath($assetPath)
     {
-        $result = $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
-
-        return $result;
+        return $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
     }
 }

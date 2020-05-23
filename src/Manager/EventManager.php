@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Event;
 use App\Entity\Tariff;
 use App\Repository\TariffRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * Class EventManager.
@@ -148,7 +149,7 @@ class EventManager
             }
         }
 
-        return $result;
+        return array_flip($result);
     }
 
     /**
@@ -168,7 +169,7 @@ class EventManager
             }
         }
 
-        return $result;
+        return array_flip($result);
     }
 
     /**
@@ -196,7 +197,7 @@ class EventManager
      *
      * @return Tariff last current Tariff for private or shared private lessons
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function getCurrentPrivateLessonsTariffForEvents($events)
     {

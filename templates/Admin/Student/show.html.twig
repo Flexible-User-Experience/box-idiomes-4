@@ -3,7 +3,7 @@
 {# override css includes #}
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/fullcalendar.min.css') }}" />
+    {{ encore_entry_link_tags('fullcalendarstudentsettings') }}
 {% endblock %}
 
 {% block show %}
@@ -138,7 +138,6 @@
                         <div class="row">
                             <div class="col-xs-12 margin-bottom">
                                 <div id="calendar-holder"></div>
-{#                                {% include "@FullCalendar/Calendar/calendar.html.twig" %}#}
                             </div>
                         </div>
                     </div>
@@ -151,11 +150,5 @@
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script type="text/javascript" src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/fullcalendar.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/fullcalendar-locale-ca.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/fullcalendar.student-settings.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/gcal.min.js') }}"></script>
+    {{ encore_entry_script_tags('fullcalendarstudentsettings') }}
 {% endblock %}

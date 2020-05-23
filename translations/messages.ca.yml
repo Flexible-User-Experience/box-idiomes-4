@@ -335,6 +335,7 @@ backend:
         receiptLine:
             isPreviouslyGenerated: Nou
         invoice:
+            duplicate: Duplicar
             receipt: Rebut
             download: Descarregar PDF
             generate_direct_debit_xml: Gir bancari XML

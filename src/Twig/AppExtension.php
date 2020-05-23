@@ -147,7 +147,7 @@ class AppExtension extends AbstractExtension
     {
         $span = '';
         if ($object instanceof User && count($object->getRoles()) > 0) {
-            $ea = UserRolesEnum::getEnumArray();
+            $ea = UserRolesEnum::getReversedEnumArray();
             /** @var string $role */
             foreach ($object->getRoles() as $role) {
                 if (UserRolesEnum::ROLE_CMS == $role) {

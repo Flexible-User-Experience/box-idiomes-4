@@ -4,7 +4,9 @@ namespace App\Service;
 
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use TCPDF;
 
 /**
  * Class CourierService.
@@ -49,9 +51,9 @@ class CourierService
         $message = new Email();
         $message
             ->subject($subject)
-            ->from($from)
-            ->to($toEmail, $toName)
-            ->text($body);
+            ->from(new Address($from))
+            ->to(new Address($toEmail, is_null($toName) ? '' : $toName))
+            ->html($body);
         if (!is_null($replyAddress)) {
             $message->replyTo($replyAddress);
         }
@@ -89,16 +91,16 @@ class CourierService
      * @param string $subject
      * @param string $body
      * @param string $pdfFilename
-     * @param \TCPDF $pdf
+     * @param TCPDF  $pdf
      *
      * @return void
      *
      * @throws TransportExceptionInterface
      */
-    public function sendEmailWithPdfAttached($from, $toEmail, $toName, $subject, $body, $pdfFilename, \TCPDF $pdf)
+    public function sendEmailWithPdfAttached($from, $toEmail, $toName, $subject, $body, $pdfFilename, TCPDF $pdf)
     {
         $swiftAttatchment = new \Swift_Attachment($pdf->Output($pdfFilename, 'S'), $pdfFilename, 'application/pdf');
-        $message = $this->buildSwiftMesage($from, $toEmail, $subject, $body, null, $toName);
+        $message = $this->buildEmail($from, $toEmail, $subject, $body, null, $toName);
         $message->attach($swiftAttatchment);
 
         $this->mailer->send($message);
