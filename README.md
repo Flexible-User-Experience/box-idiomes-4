@@ -1,13 +1,13 @@
 Box Idiomes
 ===========
 
-A Symfony 4 webapp project to manage [Box Idiomes](http://www.boxidiomes.cat) website and custom made ERP.
+A Symfony 4.4 LTS project to manage [Box Idiomes](http://www.boxidiomes.cat) website content with custom ERP integrated functionalities.
 
 ---
 
 #### Installation requirements
 
-* PHP 7.2
+* PHP 7.4
 * MySQL 5.7
 * Git
 * Composer
@@ -25,14 +25,6 @@ $ yarn install
 ```
 
 Remember to edit `.env` config file according to your system environment needs.
-
-#### Load database fixtures commands
-
-```bash
-$ php bin/console doctrine:database:create
-$ php bin/console doctrine:migrations:migrate
-$ php bin/console hautelook:fixtures:load
-```
 
 #### Testing suite commands
 
