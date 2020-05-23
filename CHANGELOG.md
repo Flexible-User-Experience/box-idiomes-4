@@ -1,9 +1,11 @@
 Changelog
 =========
 
-##### Version 4.0.01 (WIP)
- * finish migration from Symfony 2.8
+##### Version 4.1.00 (WIP)
  * add new pre register form feature
+
+##### Version 4.0.00 (2020-05-23)
+ * finish migration from Symfony 2.8
 
 ##### Version 0.0.05 (2020-05-23)
  * finish new vendors config after upgrade process
