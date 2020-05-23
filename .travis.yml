@@ -26,9 +26,7 @@ before_install:
 install:
   - composer install
   - ./bin/phpunit install
-  - . $HOME/.nvm/nvm.sh
-  - nvm install stable
-  - nvm use stable
+  - nvm use 10.15.3
 
 script:
   # setting up
