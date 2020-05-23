@@ -6,6 +6,9 @@ cache:
     - $HOME/symfony-bridge/.phpunit
   yarn: true
 
+node_js:
+  - 12
+
 env:
   global:
     - PHPUNIT_FLAGS="-v"
@@ -24,12 +27,11 @@ services:
 before_install:
   - cp env.travis .env
   - cp env.travis .env.test
-  - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
   - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
   - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update -qq
   - sudo apt-get install -y -qq yarn
+  - export PATH=$HOME/.yarn/bin:$PATH
 
 install:
   - composer install
