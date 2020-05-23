@@ -7,7 +7,7 @@ cache:
     - $HOME/symfony-bridge/.phpunit
 
 node_js:
-  - 12
+  - 11
 
 env:
   global:
@@ -18,7 +18,6 @@ matrix:
   fast_finish: true
   include:
     - php: 7.4
-    - node_js: 12
 
 services:
   - mysql
