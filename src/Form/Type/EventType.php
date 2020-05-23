@@ -11,7 +11,7 @@ use App\Manager\EventManager;
 use App\Repository\ClassGroupRepository;
 use App\Repository\StudentRepository;
 use App\Repository\TeacherRepository;
-use Sonata\CoreBundle\Form\Type\DateTimePickerType;
+use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
