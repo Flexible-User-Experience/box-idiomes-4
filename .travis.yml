@@ -45,8 +45,8 @@ script:
   - ./bin/console lint:xliff translations --env=test
   - ./bin/console security:check --env=test
   # testing
-  - ./yarn install
-  - ./yarn encore prod
+  - yarn install
+  - yarn encore prod
   - ./bin/phpunit --no-coverage
 
 branches:
