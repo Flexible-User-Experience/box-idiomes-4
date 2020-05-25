@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -30,11 +31,8 @@ class PreRegisterType extends AbstractType
                 'name',
                 TextType::class,
                 array(
+                    'label' => 'frontend.forms.preregister.name',
                     'required' => true,
-                    'attr' => array(
-                        'placeholder' => 'frontend.forms.name',
-                        'class' => 'pre-register',
-                    ),
                     'constraints' => array(
                         new Assert\NotBlank(),
                     ),
@@ -44,25 +42,27 @@ class PreRegisterType extends AbstractType
                 'surname',
                 TextType::class,
                 array(
+                    'label' => 'frontend.forms.preregister.surname',
                     'required' => true,
-                    'attr' => array(
-                        'placeholder' => 'frontend.forms.surname',
-                        'class' => 'pre-register',
-                    ),
                     'constraints' => array(
                         new Assert\NotBlank(),
                     ),
                 )
             )
             ->add(
+                'phone',
+                TextType::class,
+                array(
+                    'label' => 'frontend.forms.preregister.phone',
+                    'required' => false,
+                )
+            )
+            ->add(
                 'email',
                 EmailType::class,
                 array(
+                    'label' => 'frontend.forms.preregister.email',
                     'required' => true,
-                    'attr' => array(
-                        'placeholder' => 'frontend.forms.email',
-                        'class' => 'pre-register',
-                    ),
                     'constraints' => array(
                         new Assert\NotBlank(),
                         new Assert\Email(array(
@@ -70,6 +70,49 @@ class PreRegisterType extends AbstractType
                             'checkMX' => true,
                             'checkHost' => true,
                         )),
+                    ),
+                )
+            )
+            ->add(
+                'age',
+                TextType::class,
+                array(
+                    'label' => 'frontend.forms.preregister.age',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'courseLevel',
+                TextType::class,
+                array(
+                    'label' => 'frontend.forms.preregister.course_level',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'preferredTimetable',
+                TextType::class,
+                array(
+                    'label' => 'frontend.forms.preregister.preferred_timetable',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'previousAcademy',
+                TextType::class,
+                array(
+                    'label' => 'frontend.forms.preregister.previous_academy',
+                    'required' => false,
+                )
+            )
+            ->add(
+                'comments',
+                TextareaType::class,
+                array(
+                    'label' => 'frontend.forms.preregister.comments',
+                    'required' => false,
+                    'attr' => array(
+                        'rows' => 5,
                     ),
                 )
             )

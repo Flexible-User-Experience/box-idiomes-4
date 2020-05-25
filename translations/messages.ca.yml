@@ -70,10 +70,10 @@ Província: Província
 
 frontend:
     menu:
-        academy: l'acadèmia
-        services: serveis
-        contact: contacte
-        preregistes: preinscripcions
+        academy: "l'acadèmia"
+        services: "serveis"
+        contact: "contacte"
+        preregistes: "preinscripcions"
         cms: "[ CMS ]"
     credits:
         credits: crèdits
@@ -84,8 +84,18 @@ frontend:
         email: Email
         message: Missatge
         privacy: Accepto la política de privacitat
-        subscribe: SUBSCRIU-T'HI
+        subscribe: "SUBSCRIU-T'HI"
         send: Envia
+        preregister:
+            name: "Nom de l'alumne/a*"
+            surname: "Cognoms de l'alumne/a*"
+            email: "Email de contacte*"
+            phone: "Telèfon de contacte"
+            age: "Edat"
+            course_level: "Nivell o curs escolar"
+            preferred_timetable: "Horari preferit"
+            comments: "Comentaris"
+            previous_academy: "Acadèmia anterior"
 
 backend:
     admin:
@@ -104,7 +114,7 @@ backend:
         image: Imatge
         position: Posició
         description: Descripció
-        image_rigths_agreement: Dret d'imatge amb PDF
+        image_rigths_agreement: "Dret d'imatge amb PDF"
         sepa_agreement: Autorització domiciliació bancària amb PDF
         pictures: Imatges
         payments: Pagaments
@@ -150,7 +160,7 @@ backend:
             address: Adreça
             city: Ciutat
             payment: Pagament
-            payment_no_parent_help: vàlid sempre i quan l'alumne no tingui un pare assignat
+            payment_no_parent_help: "vàlid sempre i quan l'alumne no tingui un pare assignat"
             is_payment_excempt: Exempt de pagament
             schedule: Horari
             comments: Comentaris
@@ -166,33 +176,33 @@ backend:
             book: Llibre
             color: Color
             pdf:
-                button: 'Generar PDF amb llistat d''alumnes'
-                title: 'Llistat d''alumnes'
-                group: 'Grup'
-                total: 'Total'
+                button: "Generar PDF amb llistat d'alumnes"
+                title: "Llistat d'alumnes"
+                group: "Grup"
+                total: "Total"
             emails_generator:
-                flash_success: 'S''han afegit %amount% alumnes al llistat del grup.'
-                flash_warning: 'No s''ha trobat cap alumne en aquest grup.'
+                flash_success: "S'han afegit %amount% alumnes al llistat del grup."
+                flash_warning: "No s'ha trobat cap alumne en aquest grup."
 
         tariff:
             year: Any
             price: Preu
             type: Tipus
             name: Nom
-            tariff_1: 1h / setmana
-            tariff_2: 2h / setmana
-            tariff_3: 3h / setmana
-            tariff_4: 1'5h / setmana
-            tariff_5: hora particular
-            tariff_6: hora particular compartida
-            tariff_7: 3'5h / setmana
-            tariff_8: 4h / setmana
-            tariff_9: 4'5h / setmana
-            tariff_10: 5h / setmana
-            tariff_11: 5'5h / setmana
-            tariff_12: 2'5h / setmana
+            tariff_1: "1h / setmana"
+            tariff_2: "2h / setmana"
+            tariff_3: "3h / setmana"
+            tariff_4: "1'5h / setmana"
+            tariff_5: "hora particular"
+            tariff_6: "hora particular compartida"
+            tariff_7: "3'5h / setmana"
+            tariff_8: "4h / setmana"
+            tariff_9: "4'5h / setmana"
+            tariff_10: "5h / setmana"
+            tariff_11: "5'5h / setmana"
+            tariff_12: "2'5h / setmana"
         event:
-            range: Limitar l'abast dels canvis a la data
+            range: "Limitar l'abast dels canvis a la data"
             begin: Inici
             end: Fi
             teacher: Professor
@@ -213,18 +223,18 @@ backend:
                 previous: Esdeveniment anterior
                 next: Següent esdeveniment
                 special_timelapse_update: Mode edició amb lot
-                special_timelapse_update_helper: L'edició amb lot aplicarà els canvis a tots els esdeveniments futurs
+                special_timelapse_update_helper: "L'edició amb lot aplicarà els canvis a tots els esdeveniments futurs"
                 special_timelapse_update_action: Editar amb lot
                 switch_to_normal_edit: Mode edició normal
                 special_timelapse_remove_action: Esborrar totes les dates seleccionades
-                cancel: Cancel·lar l'acció i tornar al llistat
+                cancel: "Cancel·lar l'acció i tornar al llistat"
                 add: Afegir horari
-            timelapse: Lot de dates afectades amb l'edició
+            timelapse: "Lot de dates afectades amb l'edició"
             batch_delete:
                 button: Mode esborrar amb lot
-                title: Lot de dates afectades amb l'esborrat
+                title: "Lot de dates afectades amb l'esborrat"
                 helper: (marcat amb color verd)
-                range: Limitar l'abast dels esborraments consecutius fins a la data
+                range: "Limitar l'abast dels esborraments consecutius fins a la data"
         service:
             title: Nom
         contact:
@@ -254,28 +264,28 @@ backend:
             checkbox_label: Drets Imatge Acceptats
             pdf_metadata_title: Drets Imatge
             pdf_metadata_subject: Document autorització Drets Imatge
-            description1: "El centre Box, viu els idiomes gestiona diversos espais a la xarxa: web, Facebook Instagram i diverses pàgines associades on, de tant en tant, poden aparèixer, ja sigui individualment o en grup imatges dels nostres alumnes fent algunes de les activitats que es duguin a terme a les aules o fora d’elles."
-            description2: "Donat que el dret a la pròpia imatge és reconegut en l’article 18.1 de la Constitució i regulat per Llei 5/1985, de 5 de maig, sobre el dret a l’honor, a la intimitat personal i familiar i a la pròpia imatge; la direcció d’aquest centre demana el consentiment per escrit als pares, mares o tutors legals dels menors d’edat per poder publicar fotografies, vídeos o imatges on apareguin els seus fills i filles i on siguin clarament identificables."
+            description1: "El centre Box, viu els idiomes gestiona diversos espais a la xarxa: web, Facebook Instagram i diverses pàgines associades on, de tant en tant, poden aparèixer, ja sigui individualment o en grup imatges dels nostres alumnes fent algunes de les activitats que es duguin a terme a les aules o fora d'elles."
+            description2: "Donat que el dret a la pròpia imatge és reconegut en l'article 18.1 de la Constitució i regulat per Llei 5/1985, de 5 de maig, sobre el dret a l'honor, a la intimitat personal i familiar i a la pròpia imatge; la direcció d'aquest centre demana el consentiment per escrit als pares, mares o tutors legals dels menors d'edat per poder publicar fotografies, vídeos o imatges on apareguin els seus fills i filles i on siguin clarament identificables."
             contact_name_with_parent: "Nom i cognom mare, pare o tutor legal: %name%"
             contact_name_without_parent: "Nom i cognom: %name%"
             contact_dni: "DNI o passaport número: %contact_dni%"
             autortization1: "Si, autoritzo que la imatge del meu fill/la meva filla %student_name% de %years_old% anys pugui aparèixer en fotografies o vídeos del centre publicades a qualsevol dels seus espais web o xarxes socials."
-            autortization2: "No, no autoritzo el centre  a publicar cap tipus d’imatge del meu fill o a la meva filla."
+            autortization2: "No, no autoritzo el centre  a publicar cap tipus d'imatge del meu fill o a la meva filla."
             registration_date: "Amposta, %day% %month% de %year%"
             sign: Signatura
         sepaagreement:
             checkbox_label: SEPA Acceptat
             first_text: Autorització de domiciliació bancària per al pagament de rebuts
-            text1: "D’acord amb el que estableixen els articles 25, 26 i 31 de la llei 16/2009 de serveis de pagament:"
-            text2: "Autoritzo i consenteixo la present ordre de domiciliació bancària per què, a càrrec del compte del qual s’indica el titular i número, i fins nou avís, Ester Escrihuela Simó procedeixi al cobrament de rebuts bancaris que s’originin mensualment amb relació a les classes impartides."
-            text3: "Tanmateix, autoritzo a Ester Escrihuela Simó perquè traslladi aquesta ordre a l’entitat bancària corresponent per tal que en prenguin coneixement i constància."
+            text1: "D'acord amb el que estableixen els articles 25, 26 i 31 de la llei 16/2009 de serveis de pagament:"
+            text2: "Autoritzo i consenteixo la present ordre de domiciliació bancària per què, a càrrec del compte del qual s'indica el titular i número, i fins nou avís, Ester Escrihuela Simó procedeixi al cobrament de rebuts bancaris que s'originin mensualment amb relació a les classes impartides."
+            text3: "Tanmateix, autoritzo a Ester Escrihuela Simó perquè traslladi aquesta ordre a l'entitat bancària corresponent per tal que en prenguin coneixement i constància."
             contact_name: Nom complet del titular del compte
             contact_dni: "DNI/NIE o CIF"
             parent_address: Adreça completa del titular
             contact_phone: Telèfon
             bank_name: Entitat Bancària
             bank_account: "Compte bancari:"
-            end_text: "D’acord amb el que estableix la llei orgànica 15/1999, li fem saber que les seves dades seran incorporades a un fitxer autoritzat sota la responsabilitat de Ester Escrihuela Simó amb la finalitat de poder atendre els compromisos derivats de la relació que mantenim amb vostès."
+            end_text: "D'acord amb el que estableix la llei orgànica 15/1999, li fem saber que les seves dades seran incorporades a un fitxer autoritzat sota la responsabilitat de Ester Escrihuela Simó amb la finalitat de poder atendre els compromisos derivats de la relació que mantenim amb vostès."
         bank:
             name: Entitat bancària
             accountNumber: Núm. de compte
