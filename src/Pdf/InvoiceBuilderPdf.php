@@ -6,8 +6,11 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Enum\StudentPaymentEnum;
 use App\Service\SmartAssetsHelperService;
+use Exception;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use ReflectionException;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use TCPDF;
 
 /**
  * Class InvoiceBuilderPdf.
@@ -38,7 +41,10 @@ class InvoiceBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
     /**
      * @param Invoice $invoice
      *
-     * @return \TCPDF
+     * @return TCPDF
+     *
+     * @throws ReflectionException
+     * @throws Exception
      */
     public function build(Invoice $invoice)
     {

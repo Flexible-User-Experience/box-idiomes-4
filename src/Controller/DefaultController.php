@@ -167,7 +167,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/pre-inscripcions", name="app_pre_register")
+     * @Route("/preinscripcions", name="app_pre_register")
      *
      * @param Request             $request
      * @param NotificationService $messenger
