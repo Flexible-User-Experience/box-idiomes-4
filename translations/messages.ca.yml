@@ -73,11 +73,13 @@ frontend:
         academy: l'acadèmia
         services: serveis
         contact: contacte
+        preregistes: preinscripcions
         cms: "[ CMS ]"
     credits:
         credits: crèdits
     forms:
         name: Nom
+        surname: Cognoms
         phone: Telèfon
         email: Email
         message: Missatge

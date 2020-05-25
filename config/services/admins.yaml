@@ -19,6 +19,11 @@ services:
             - { name: sonata.admin, manager_type: orm, label: "Pare, mare o tutor", group: "Alumnes" }
         calls:
             - [ setTemplate, [ edit, "Admin/Student/edit.html.twig" ] ]
+    admin.pre_register:
+        class: App\Admin\PreRegisterAdmin
+        arguments: [ ~, App\Entity\PreRegister, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Preinscipcions", group: "Alumnes" }
     # Teachers
     admin.teacher:
         class: App\Admin\TeacherAdmin
