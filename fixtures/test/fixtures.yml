@@ -140,6 +140,16 @@ App\Entity\Person:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
+# PreRegister
+App\Entity\PreRegister:
+  preregister1:
+    dni: <bothify('########?')>
+    name: <firstName()>
+    surname: <lastName()>
+    email: <safeEmail()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+
 # ClassGroup
 App\Entity\ClassGroup:
   classgroup{1..2}:

@@ -11,6 +11,12 @@ services:
         factory: [ '@doctrine', getRepository ]
         arguments:
             - 'App:Person'
+    app.pre_register_repository:
+        class: App\Repository\PreRegisterRepository
+        public: true
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:PreRegister'
     app.city_repository:
         class: App\Repository\CityRepository
         public: true
