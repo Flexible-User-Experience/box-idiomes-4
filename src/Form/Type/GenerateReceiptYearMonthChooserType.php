@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Enum\ReceiptYearMonthEnum;
 use App\Form\Model\GenerateReceiptModel;
+use Exception;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,7 +20,9 @@ class GenerateReceiptYearMonthChooserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
+     *
+     * @throws Exception
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -53,14 +56,6 @@ class GenerateReceiptYearMonthChooserType extends AbstractType
                 )
             )
         ;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'generate_receipt_year_month_chooser';
     }
 
     /**

@@ -13,14 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GenerateInvoiceYearMonthChooserType extends GenerateReceiptYearMonthChooserType
 {
     /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'generate_invoice_year_month_chooser';
-    }
-
-    /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)

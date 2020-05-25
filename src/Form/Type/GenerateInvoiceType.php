@@ -69,12 +69,4 @@ class GenerateInvoiceType extends GenerateInvoiceYearMonthChooserType
             ->setAction($this->rs->generate('admin_app_invoice_creator'))
         ;
     }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'generate_invoice';
-    }
 }

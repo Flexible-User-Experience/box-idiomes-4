@@ -96,14 +96,6 @@ class PreRegisterType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'pre_register';
-    }
-
-    /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
