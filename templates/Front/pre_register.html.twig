@@ -11,10 +11,16 @@
     </div>
 {% endblock %}
 
-{% block title %}{{ 'frontend.menu.preregistes' | trans }} · {{ parent() }}{% endblock %}
+{% block title %}{{ 'frontend.menu.preregisters' | trans }} · {{ parent() }}{% endblock %}
 
 {% block main %}
     <div class="container container-main">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <h1 class="c-blue no-m-top extra-m-bottom">{{ 'frontend.preregister.title' | trans }}</h1>
+{#                <p>{{ 'frontend.preregister.description' | trans }}</p>#}
+            </div>
+        </div>
         {{ form_start(preRegisterForm) }}
         <div class="row">
             <div class="col-sm-6 col-md-4">

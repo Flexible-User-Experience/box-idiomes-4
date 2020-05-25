@@ -2,16 +2,11 @@
 
 namespace App\Admin;
 
-use App\Entity\City;
-use App\Entity\Person;
-use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
 use Sonata\Form\Type\DatePickerType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -24,10 +19,10 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class PreRegisterAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Preregisters';
-    protected $baseRoutePattern = 'students/parent';
+    protected $baseRoutePattern = 'students/pre-register';
     protected $datagridValues = array(
-        '_sort_by' => 'surname',
-        '_sort_order' => 'asc',
+        '_sort_by' => 'createdAt',
+        '_sort_order' => 'desc',
     );
 
     /**
@@ -37,8 +32,10 @@ class PreRegisterAdmin extends AbstractBaseAdmin
      */
     protected function configureRoutes(RouteCollection $collection)
     {
-        parent::configureRoutes($collection);
-        $collection->remove('delete');
+        $collection
+            ->remove('show')
+            ->remove('delete')
+        ;
     }
 
     /**
@@ -52,14 +49,14 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'name',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.name',
+                    'label' => 'frontend.forms.preregister.name',
                 )
             )
             ->add(
                 'surname',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.surname',
+                    'label' => 'frontend.forms.preregister.surname',
                 )
             )
             ->end()
@@ -68,86 +65,19 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'phone',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.phone',
+                    'label' => 'frontend.forms.preregister.phone',
                 )
             )
             ->add(
                 'email',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.email',
+                    'label' => 'frontend.forms.preregister.email',
                     'required' => false,
-                )
-            )
-            ->add(
-                'address',
-                null,
-                array(
-                    'label' => 'backend.admin.parent.address',
-                    'required' => false,
-                )
-            )
-            ->add(
-                'city',
-                EntityType::class,
-                array(
-                    'label' => 'backend.admin.parent.city',
-                    'required' => true,
-                    'class' => City::class,
-                    'choice_label' => 'name',
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.city_repository')->getEnabledSortedByNameQB(),
-                )
-            )
-            ->end()
-            ->with('backend.admin.student.payment_information', $this->getFormMdSuccessBoxArray(3))
-            ->add(
-                'payment',
-                ChoiceType::class,
-                array(
-                    'label' => 'backend.admin.student.payment',
-                    'choices' => StudentPaymentEnum::getEnumArray(),
-                    'multiple' => false,
-                    'expanded' => false,
-                    'required' => true,
-                )
-            )
-            ->add(
-                'bank',
-                AdminType::class,
-                array(
-                    'label' => ' ',
-                    'required' => false,
-                    'btn_add' => false,
-                    'by_reference' => false,
                 )
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
-            ->add(
-                'students',
-                null,
-                array(
-                    'label' => 'backend.admin.parent.students',
-                    'required' => false,
-                    'disabled' => true,
-                )
-            )
-            ->add(
-                'dni',
-                null,
-                array(
-                    'label' => 'backend.admin.parent.dni',
-                )
-            )
-            ->add(
-                'dischargeDate',
-                DatePickerType::class,
-                array(
-                    'label' => 'backend.admin.student.dischargeDate',
-                    'format' => 'd/M/y',
-                    'required' => false,
-                )
-            )
             ->add(
                 'enabled',
                 CheckboxType::class,
@@ -167,95 +97,42 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     {
         $datagridMapper
             ->add(
-                'dni',
-                null,
-                array(
-                    'label' => 'backend.admin.parent.dni',
-                )
-            )
-            ->add(
                 'name',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.name',
+                    'label' => 'frontend.forms.preregister.name',
                 )
             )
             ->add(
                 'surname',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.surname',
+                    'label' => 'frontend.forms.preregister.surname',
                 )
             )
             ->add(
                 'phone',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.phone',
+                    'label' => 'frontend.forms.preregister.phone',
                 )
             )
             ->add(
                 'email',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.email',
+                    'label' => 'frontend.forms.preregister.email',
                 )
             )
             ->add(
-                'address',
+                'enabled',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.address',
+                    'label' => 'backend.admin.enabled',
                 )
             )
             ->add(
-                'city',
-                ModelAutocompleteFilter::class,
-                array(
-                    'label' => 'backend.admin.parent.city',
-                ),
-                null,
-                array(
-                    'class' => City::class,
-                    'property' => array('name', 'postalCode'),
-                )
-            )
-            ->add(
-                'payment',
-                null,
-                array(
-                    'label' => 'backend.admin.parent.payment',
-                ),
-                ChoiceType::class,
-                array(
-                    'choices' => StudentPaymentEnum::getEnumArray(),
-                    'expanded' => false,
-                    'multiple' => false,
-                )
-            )
-            ->add(
-                'bank.name',
-                null,
-                array(
-                    'label' => 'backend.admin.bank.name',
-                )
-            )
-            ->add(
-                'bank.swiftCode',
-                null,
-                array(
-                    'label' => 'backend.admin.bank.swiftCode',
-                )
-            )
-            ->add(
-                'bank.accountNumber',
-                null,
-                array(
-                    'label' => 'IBAN',
-                )
-            )
-            ->add(
-                'dischargeDate',
+                'createdAt',
                 'doctrine_orm_date',
                 array(
                     'label' => 'backend.admin.student.dischargeDate',
@@ -266,13 +143,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'widget' => 'single_text',
                     'format' => 'dd-MM-yyyy',
-                )
-            )
-            ->add(
-                'enabled',
-                null,
-                array(
-                    'label' => 'backend.admin.enabled',
                 )
             )
         ;
@@ -289,7 +159,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'name',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.name',
+                    'label' => 'frontend.forms.preregister.name',
                     'editable' => true,
                 )
             )
@@ -297,7 +167,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'surname',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.surname',
+                    'label' => 'frontend.forms.preregister.surname',
                     'editable' => true,
                 )
             )
@@ -305,7 +175,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'phone',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.phone',
+                    'label' => 'frontend.forms.preregister.phone',
                     'editable' => true,
                 )
             )
@@ -313,7 +183,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'email',
                 null,
                 array(
-                    'label' => 'backend.admin.parent.email',
+                    'label' => 'frontend.forms.preregister.email',
                     'editable' => true,
                 )
             )
@@ -344,48 +214,12 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     public function getExportFields()
     {
         return array(
-            'dni',
+            // TODO
             'name',
             'surname',
             'phone',
             'email',
-            'address',
-            'city',
-            'paymentString',
-            'bank.name',
-            'bank.swiftCode',
-            'bank.accountNumber',
-            'dischargeDateString',
             'enabled',
         );
-    }
-
-    /**
-     * @param Person $object
-     */
-    public function prePersist($object)
-    {
-        $this->commonPreActions($object);
-    }
-
-    /**
-     * @param Person $object
-     */
-    public function preUpdate($object)
-    {
-        $this->commonPreActions($object);
-    }
-
-    /**
-     * @param Person $object
-     */
-    private function commonPreActions($object)
-    {
-        if ($object->getBank()->getAccountNumber()) {
-            $object->getBank()->setAccountNumber(strtoupper($object->getBank()->getAccountNumber()));
-        }
-        if ($object->getBank()->getSwiftCode()) {
-            $object->getBank()->setSwiftCode(strtoupper($object->getBank()->getSwiftCode()));
-        }
     }
 }

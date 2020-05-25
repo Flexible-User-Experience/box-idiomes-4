@@ -73,10 +73,13 @@ frontend:
         academy: "l'acadèmia"
         services: "serveis"
         contact: "contacte"
-        preregistes: "preinscripcions"
+        preregisters: "preinscripcions"
         cms: "[ CMS ]"
     credits:
         credits: crèdits
+    preregister:
+        title: "Reserva de plaça curs estiu 2020"
+        description: "Lorem ipsum dolor..."
     forms:
         name: Nom
         surname: Cognoms
