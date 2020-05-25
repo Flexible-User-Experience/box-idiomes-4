@@ -112,7 +112,7 @@ class PreRegisterType extends AbstractType
                     'label' => 'frontend.forms.preregister.comments',
                     'required' => false,
                     'attr' => array(
-                        'rows' => 5,
+                        'rows' => 3,
                     ),
                 )
             )

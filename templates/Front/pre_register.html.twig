@@ -15,11 +15,30 @@
 
 {% block main %}
     <div class="container container-main">
+        {{ form_start(preRegisterForm) }}
         <div class="row">
-            <div class="col-sm-5 col-md-4">
-                {{ form(preRegisterForm) }}
+            <div class="col-sm-6 col-md-4">
+                {{ form_row(preRegisterForm.name) }}
+                {{ form_row(preRegisterForm.phone) }}
+                {{ form_row(preRegisterForm.age) }}
+                {{ form_row(preRegisterForm.preferredTimetable) }}
+            </div>
+            <div class="col-sm-6 col-md-4">
+                {{ form_row(preRegisterForm.surname) }}
+                {{ form_row(preRegisterForm.email) }}
+                {{ form_row(preRegisterForm.courseLevel) }}
+                {{ form_row(preRegisterForm.previousAcademy) }}
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                {{ form_row(preRegisterForm.comments) }}
+                {{ form_row(preRegisterForm.privacy) }}
+                {{ form_row(preRegisterForm.send) }}
+            </div>
+        </div>
+        {{ form_rest(preRegisterForm) }}
+        {{ form_end(preRegisterForm) }}
     </div>
     {% include 'Front/includes/notice_flash.html.twig' %}
 {% endblock %}
