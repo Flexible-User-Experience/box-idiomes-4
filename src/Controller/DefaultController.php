@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\ContactMessage;
 use App\Entity\Invoice;
 use App\Entity\NewsletterContact;
+use App\Entity\PreRegister;
 use App\Entity\Service;
 use App\Entity\Teacher;
 use App\Form\Type\ContactHomepageType;
 use App\Form\Type\ContactMessageType;
+use App\Form\Type\PreRegisterType;
 use App\Manager\MailchimpManager;
 use App\Service\NotificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -123,11 +125,12 @@ class DefaultController extends AbstractController
     /**
      * @Route("/contacte", name="app_contact")
      *
-     * @param Request $request
+     * @param Request             $request
+     * @param NotificationService $messenger
      *
      * @return Response
      */
-    public function contactAction(Request $request)
+    public function contactAction(Request $request, NotificationService $messenger)
     {
         $contactMessage = new ContactMessage();
         $contactMessageForm = $this->createForm(ContactMessageType::class, $contactMessage);
@@ -139,8 +142,6 @@ class DefaultController extends AbstractController
             $em->persist($contactMessage);
             $em->flush();
             // Send email notifications
-            /** @var NotificationService $messenger */
-            $messenger = $this->get('app.notification');
             if (0 != $messenger->sendCommonUserNotification($contactMessage)) {
                 // Set frontend flash message
                 $this->addFlash(
@@ -162,6 +163,50 @@ class DefaultController extends AbstractController
         return $this->render(
             'Front/contact.html.twig',
             ['contactMessageForm' => $contactMessageForm->createView()]
+        );
+    }
+
+    /**
+     * @Route("/pre-inscripcions", name="app_pre_register")
+     *
+     * @param Request             $request
+     * @param NotificationService $messenger
+     *
+     * @return Response
+     */
+    public function preRegistersAction(Request $request, NotificationService $messenger)
+    {
+        $preRegister = new PreRegister();
+        $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
+        $preRegisterForm->handleRequest($request);
+
+        if ($preRegisterForm->isSubmitted() && $preRegisterForm->isValid()) {
+            // Persist new pre-register record into DB
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($preRegister);
+            $em->flush();
+            // TODO Send email notifications
+//            if (0 != $messenger->sendCommonUserNotification($preRegister)) {
+//                // Set frontend flash message
+//                $this->addFlash(
+//                    'notice',
+//                    'El teu missatge s\'ha enviat correctament'
+//                );
+//            } else {
+//                $this->addFlash(
+//                    'danger',
+//                    'El teu missatge no s\'ha enviat'
+//                );
+//            }
+//            $messenger->sendContactAdminNotification($preRegister);
+            // Clean up new form
+            $preRegister = new PreRegister();
+            $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
+        }
+
+        return $this->render(
+            'Front/pre_register.html.twig',
+            ['preRegisterForm' => $preRegisterForm->createView()]
         );
     }
 
