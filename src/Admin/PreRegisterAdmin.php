@@ -154,6 +154,23 @@ class PreRegisterAdmin extends AbstractBaseAdmin
         unset($this->listModes['mosaic']);
         $listMapper
             ->add(
+                'createdAt',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.date',
+                    'editable' => false,
+                    'format' => 'd/m/Y H:i'
+                )
+            )
+            ->add(
+                'season',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.season',
+                    'template' => 'Admin/Cells/list__cell_pre_register_season.html.twig',
+                )
+            )
+            ->add(
                 'name',
                 null,
                 array(
