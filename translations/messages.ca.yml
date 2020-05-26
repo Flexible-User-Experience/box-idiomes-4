@@ -78,8 +78,11 @@ frontend:
     credits:
         credits: crèdits
     preregister:
-        title: "Reserva de plaça curs estiu 2020"
-        description: "Lorem ipsum dolor..."
+        main_title: "Preinscripcions"
+        title_summer: "Juliol 2020"
+        description_summer: "Reserva la teva plaça al curs estiu 2020"
+        title_winter: "Setembre 2020"
+        description_winter: "Formulari de preinscripció per al curs escolar 2020-2021"
     forms:
         name: Nom
         surname: Cognoms
@@ -99,6 +102,7 @@ frontend:
             preferred_timetable: "Horari preferit"
             comments: "Comentaris"
             previous_academy: "Acadèmia anterior"
+            submit: "Registrar"
 
 backend:
     admin:

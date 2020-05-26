@@ -129,7 +129,7 @@ class PreRegisterType extends AbstractType
                 'send',
                 SubmitType::class,
                 array(
-                    'label' => 'frontend.forms.subscribe',
+                    'label' => 'frontend.forms.preregister.submit',
                     'attr' => array(
                         'class' => 'btn-newsletter',
                     ),

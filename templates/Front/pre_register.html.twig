@@ -2,7 +2,7 @@
 
 {% form_theme preRegisterForm _self %}
 
-{% block _contact_message_privacy_widget %}
+{% block _pre_register_privacy_widget %}
     <div class="checkbox">
         <input type="checkbox" id="privacy_checkbox" {{ block('widget_attributes') }} />
         <label class="control-label my-privacy-label" for="privacy_checkbox">
@@ -11,14 +11,27 @@
     </div>
 {% endblock %}
 
-{% block title %}{{ 'frontend.menu.preregisters' | trans }} · {{ parent() }}{% endblock %}
+{% block title %}{{ 'frontend.menu.preregisters' | trans | capitalize }} · {{ parent() }}{% endblock %}
 
 {% block main %}
     <div class="container container-main">
         <div class="row">
             <div class="col-sm-12 col-md-8">
-                <h1 class="c-blue no-m-top extra-m-bottom">{{ 'frontend.preregister.title' | trans }}</h1>
-{#                <p>{{ 'frontend.preregister.description' | trans }}</p>#}
+                <h1 class="c-blue no-m-top extra-m-bottom">{{ 'frontend.preregister.main_title' | trans }}</h1>
+                <div class="extra-m-bottom">
+                    <ul class="nav nav-tabs normal-m-bottom" role="tablist">
+                        <li role="presentation" class="active"><a href="#season-tab-summer" aria-controls="season-tab-summer" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_summer' | trans }}</strong></a></li>
+                        <li role="presentation"><a href="#season-tab-winter" aria-controls="season-tab-winter" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_winter' | trans }}</strong></a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="season-tab-summer">
+                            <p class="c-violet">{{ 'frontend.preregister.description_summer' | trans }}</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="season-tab-winter">
+                            <p class="c-violet">{{ 'frontend.preregister.description_winter' | trans }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         {{ form_start(preRegisterForm) }}
@@ -47,9 +60,4 @@
         {{ form_end(preRegisterForm) }}
     </div>
     {% include 'Front/includes/notice_flash.html.twig' %}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {% include 'Front/includes/scroll-to-flash-js.html.twig' %}
 {% endblock %}
