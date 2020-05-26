@@ -7,6 +7,7 @@ use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -193,6 +194,93 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     }
 
     /**
+     * @param ShowMapper $showMapper
+     */
+    protected function configureShowFields(ShowMapper $showMapper): void
+    {
+        $showMapper
+            ->add(
+                'createdAt',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.date',
+                    'format' => 'd/m/Y H:i'
+                )
+            )
+            ->add(
+                'season',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.season',
+                )
+            )
+            ->add(
+                'name',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.name',
+                )
+            )
+            ->add(
+                'surname',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.surname',
+                )
+            )
+            ->add(
+                'phone',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.phone',
+                )
+            )
+            ->add(
+                'email',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.email',
+                )
+            )
+            ->add(
+                'age',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.age',
+                )
+            )
+            ->add(
+                'courseLevel',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.course_level',
+                )
+            )
+            ->add(
+                'preferredTimetable',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.preferred_timetable',
+                )
+            )
+            ->add(
+                'previousAcademy',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.previous_academy',
+                )
+            )
+            ->add(
+                'comments',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.comments',
+                )
+            )
+        ;
+    }
+
+    /**
      * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper): void
@@ -283,12 +371,17 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     public function getExportFields()
     {
         return array(
-            // TODO
+            'createdAtString',
+            'seasonString',
             'name',
             'surname',
             'phone',
             'email',
-            'enabled',
+            'age',
+            'courseLevel',
+            'preferredTimetable',
+            'previousAcademy',
+            'comments',
         );
     }
 }

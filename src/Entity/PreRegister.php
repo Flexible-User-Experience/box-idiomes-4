@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\PreRegisterSeasonEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -173,6 +174,14 @@ class PreRegister extends AbstractPerson
     public function getSeason(): int
     {
         return $this->season;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeasonString(): ?string
+    {
+        return PreRegisterSeasonEnum::getReversedEnumArray()[$this->getSeason()];
     }
 
     /**
