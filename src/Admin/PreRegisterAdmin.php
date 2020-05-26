@@ -2,12 +2,15 @@
 
 namespace App\Admin;
 
+use App\Enum\PreRegisterSeasonEnum;
+use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Class PreRegisterAdmin.
@@ -31,7 +34,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
-            ->remove('show')
+            ->remove('edit')
             ->remove('delete')
         ;
     }
@@ -95,6 +98,35 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     {
         $datagridMapper
             ->add(
+                'createdAt',
+                'doctrine_orm_date',
+                array(
+                    'label' => 'frontend.forms.preregister.date',
+                    'field_type' => DatePickerType::class,
+                    'format' => 'd-m-Y',
+                ),
+                null,
+                array(
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy',
+                )
+            )
+            ->add(
+                'season',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.season',
+                    'field_type' => DatePickerType::class,
+                    'format' => 'd-m-Y',
+                ),
+                ChoiceType::class,
+                array(
+                    'choices' => PreRegisterSeasonEnum::getEnumArray(),
+                    'expanded' => false,
+                    'multiple' => false,
+                )
+            )
+            ->add(
                 'name',
                 null,
                 array(
@@ -123,24 +155,38 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'enabled',
+                'age',
                 null,
                 array(
-                    'label' => 'backend.admin.enabled',
+                    'label' => 'frontend.forms.preregister.age',
                 )
             )
             ->add(
-                'createdAt',
-                'doctrine_orm_date',
-                array(
-                    'label' => 'backend.admin.student.dischargeDate',
-                    'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
-                ),
+                'courseLevel',
                 null,
                 array(
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'label' => 'frontend.forms.preregister.course_level',
+                )
+            )
+            ->add(
+                'preferredTimetable',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.preferred_timetable',
+                )
+            )
+            ->add(
+                'previousAcademy',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.previous_academy',
+                )
+            )
+            ->add(
+                'comments',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.comments',
                 )
             )
         ;
@@ -175,7 +221,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'frontend.forms.preregister.name',
-                    'editable' => true,
+                    'editable' => false,
                 )
             )
             ->add(
@@ -183,7 +229,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'frontend.forms.preregister.surname',
-                    'editable' => true,
+                    'editable' => false,
                 )
             )
             ->add(
@@ -191,7 +237,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'frontend.forms.preregister.phone',
-                    'editable' => true,
+                    'editable' => false,
                 )
             )
             ->add(
@@ -199,15 +245,23 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'frontend.forms.preregister.email',
-                    'editable' => true,
+                    'editable' => false,
                 )
             )
             ->add(
-                'enabled',
+                'age',
                 null,
                 array(
-                    'label' => 'backend.admin.enabled',
-                    'editable' => true,
+                    'label' => 'frontend.forms.preregister.age',
+                    'editable' => false,
+                )
+            )
+            ->add(
+                'courseLevel',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.course_level',
+                    'editable' => false,
                 )
             )
             ->add(
@@ -215,7 +269,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'actions',
                 array(
                     'actions' => array(
-                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
+                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                     ),
                     'label' => 'Accions',
                 )
