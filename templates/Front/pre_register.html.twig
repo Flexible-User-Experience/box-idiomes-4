@@ -14,6 +14,7 @@
 {% block title %}{{ 'frontend.menu.preregisters' | trans | capitalize }} · {{ parent() }}{% endblock %}
 
 {% block main %}
+    {% include 'Front/includes/notice_flash.html.twig' %}
     <div class="container container-main">
         <div class="row">
             <div class="col-sm-12 col-md-8">
@@ -59,14 +60,13 @@
         {{ form_rest(preRegisterForm) }}
         {{ form_end(preRegisterForm) }}
     </div>
-    {% include 'Front/includes/notice_flash.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            setPreRegisterSeasonNodeValue({{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020') }});
+            setPreRegisterSeasonNodeValue({{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }});
             jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let hrefTargetNode = jQuery(e.target).attr('href');
                 if (hrefTargetNode === "#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }}") {

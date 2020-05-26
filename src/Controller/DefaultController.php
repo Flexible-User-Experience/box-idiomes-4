@@ -187,17 +187,18 @@ class DefaultController extends AbstractController
             $em->flush();
             // TODO Send email notifications
 //            if (0 != $messenger->sendCommonUserNotification($preRegister)) {
-//                // Set frontend flash message
-//                $this->addFlash(
-//                    'notice',
-//                    'El teu missatge s\'ha enviat correctament'
-//                );
-//            } else {
-//                $this->addFlash(
-//                    'danger',
-//                    'El teu missatge no s\'ha enviat'
-//                );
-//            }
+            if (true) {
+                // Set frontend flash message
+                $this->addFlash(
+                    'notice',
+                    'La teva preinscripció s\'ha enviat correctament. Ens posarem en contacte amb tu tan aviat com ens sigui possible.'
+                );
+            } else {
+                $this->addFlash(
+                    'danger',
+                    'S\'ha produït un error inesperat durant el registre de la teva preinscripció. Si us plau, contacta directament amb nosaltres a través del telèfon que apareix al peu d\'aquesta pàgina. Gràcies.'
+                );
+            }
 //            $messenger->sendContactAdminNotification($preRegister);
             // Clean up new form
             $preRegister = new PreRegister();

@@ -34,6 +34,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.name',
                     'required' => true,
+                    'attr' => array(
+                        'tabindex' => 1,
+                    ),
                     'constraints' => array(
                         new Assert\NotBlank(),
                     ),
@@ -45,6 +48,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.surname',
                     'required' => true,
+                    'attr' => array(
+                        'tabindex' => 2,
+                    ),
                     'constraints' => array(
                         new Assert\NotBlank(),
                     ),
@@ -56,6 +62,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.phone',
                     'required' => false,
+                    'attr' => array(
+                        'tabindex' => 3,
+                    ),
                 )
             )
             ->add(
@@ -64,6 +73,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.email',
                     'required' => true,
+                    'attr' => array(
+                        'tabindex' => 4,
+                    ),
                     'constraints' => array(
                         new Assert\NotBlank(),
                         new Assert\Email(array(
@@ -80,6 +92,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.age',
                     'required' => false,
+                    'attr' => array(
+                        'tabindex' => 5,
+                    ),
                 )
             )
             ->add(
@@ -88,6 +103,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.course_level',
                     'required' => false,
+                    'attr' => array(
+                        'tabindex' => 6,
+                    ),
                 )
             )
             ->add(
@@ -96,6 +114,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.preferred_timetable',
                     'required' => false,
+                    'attr' => array(
+                        'tabindex' => 7,
+                    ),
                 )
             )
             ->add(
@@ -104,6 +125,9 @@ class PreRegisterType extends AbstractType
                 array(
                     'label' => 'frontend.forms.preregister.previous_academy',
                     'required' => false,
+                    'attr' => array(
+                        'tabindex' => 8,
+                    ),
                 )
             )
             ->add(
@@ -113,6 +137,7 @@ class PreRegisterType extends AbstractType
                     'label' => 'frontend.forms.preregister.comments',
                     'required' => false,
                     'attr' => array(
+                        'tabindex' => 9,
                         'rows' => 3,
                     ),
                 )
@@ -132,6 +157,9 @@ class PreRegisterType extends AbstractType
                     'required' => true,
                     'label' => 'frontend.forms.privacy',
                     'mapped' => false,
+                    'attr' => array(
+                        'tabindex' => 10,
+                    ),
                 )
             )
             ->add(
@@ -141,6 +169,7 @@ class PreRegisterType extends AbstractType
                     'label' => 'frontend.forms.preregister.submit',
                     'attr' => array(
                         'class' => 'btn-newsletter',
+                        'tabindex' => 11,
                     ),
                 )
             )
