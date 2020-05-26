@@ -3,7 +3,6 @@
 namespace App\Admin;
 
 use App\Enum\PreRegisterSeasonEnum;
-use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -35,6 +34,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
+            ->remove('create')
             ->remove('edit')
             ->remove('delete')
         ;
