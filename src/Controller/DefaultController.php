@@ -185,9 +185,7 @@ class DefaultController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($preRegister);
             $em->flush();
-            // TODO Send email notifications
-//            if (0 != $messenger->sendCommonUserNotification($preRegister)) {
-            if (true) {
+            if (0 != $messenger->sendPreRegisterAdminNotification($preRegister)) {
                 // Set frontend flash message
                 $this->addFlash(
                     'notice',
@@ -199,7 +197,6 @@ class DefaultController extends AbstractController
                     'S\'ha produït un error inesperat durant el registre de la teva preinscripció. Si us plau, contacta directament amb nosaltres a través del telèfon que apareix al peu d\'aquesta pàgina. Gràcies.'
                 );
             }
-//            $messenger->sendContactAdminNotification($preRegister);
             // Clean up new form
             $preRegister = new PreRegister();
             $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);

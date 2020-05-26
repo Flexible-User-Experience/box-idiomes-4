@@ -5,12 +5,14 @@ namespace App\Twig;
 use App\Entity\ClassGroup;
 use App\Entity\Event;
 use App\Entity\Invoice;
+use App\Entity\PreRegister;
 use App\Entity\Receipt;
 use App\Entity\Tariff;
 use App\Entity\Teacher;
 use App\Entity\TeacherAbsence;
 use App\Entity\User;
 use App\Enum\EventClassroomTypeEnum;
+use App\Enum\PreRegisterSeasonEnum;
 use App\Enum\TariffTypeEnum;
 use App\Enum\TeacherAbsenceTypeEnum;
 use App\Enum\TeacherColorEnum;
@@ -135,6 +137,8 @@ class AppExtension extends AbstractExtension
             new TwigFilter('draw_event_classroom_type', array($this, 'drawEventClassroomType')),
             new TwigFilter('draw_invoice_month', array($this, 'drawInvoiceMonth')),
             new TwigFilter('draw_money', array($this, 'drawMoney')),
+            new TwigFilter('draw_pre_register_season_type', array($this, 'drawPreRegisterSeasonType')),
+            new TwigFilter('write_pre_register_season_string', array($this, 'writePreRegisterSeasonString')),
         );
     }
 
@@ -261,6 +265,27 @@ class AppExtension extends AbstractExtension
         }
 
         return $result;
+    }
+
+    /**
+     * @param PreRegister $object
+     *
+     * @return string
+     */
+    public function drawPreRegisterSeasonType($object)
+    {
+        // TODO draw span label
+        return '<div class="text-left">'.PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()].'</div>';
+    }
+
+    /**
+     * @param PreRegister $object
+     *
+     * @return string
+     */
+    public function writePreRegisterSeasonString($object)
+    {
+        return PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()];
     }
 
     /**
