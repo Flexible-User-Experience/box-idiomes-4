@@ -102,6 +102,7 @@ frontend:
             preferred_timetable: "Horari preferit"
             comments: "Comentaris"
             previous_academy: "Acadèmia anterior"
+            season: "Temporada"
             submit: "Registrar"
 
 backend:
@@ -190,7 +191,6 @@ backend:
             emails_generator:
                 flash_success: "S'han afegit %amount% alumnes al llistat del grup."
                 flash_warning: "No s'ha trobat cap alumne en aquest grup."
-
         tariff:
             year: Any
             price: Preu
@@ -460,6 +460,14 @@ month:
     october: octubre
     november: novembre
     december: desembre
+
+seasons:
+    july_2020: "juny 2020"
+    september_2020: "septembre 2020"
+    july_2021: "juny 2021"
+    september_2021: "septembre 2021"
+    july_2022: "juny 2022"
+    september_2022: "septembre 2022"
 
 color:
     magenta: magenta

@@ -20,14 +20,14 @@
                 <h1 class="c-blue no-m-top extra-m-bottom">{{ 'frontend.preregister.main_title' | trans }}</h1>
                 <div class="extra-m-bottom">
                     <ul class="nav nav-tabs normal-m-bottom" role="tablist">
-                        <li role="presentation" class="active"><a href="#season-tab-summer" aria-controls="season-tab-summer" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_summer' | trans }}</strong></a></li>
-                        <li role="presentation"><a href="#season-tab-winter" aria-controls="season-tab-winter" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_winter' | trans }}</strong></a></li>
+                        <li role="presentation" class="active"><a href="#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }}" aria-controls="season-tab-summer" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_summer' | trans }}</strong></a></li>
+                        <li role="presentation"><a href="#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020') }}" aria-controls="season-tab-winter" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_winter' | trans }}</strong></a></li>
                     </ul>
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="season-tab-summer">
+                        <div role="tabpanel" class="tab-pane active" id="season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }}">
                             <p class="c-violet">{{ 'frontend.preregister.description_summer' | trans }}</p>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="season-tab-winter">
+                        <div role="tabpanel" class="tab-pane" id="season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020') }}">
                             <p class="c-violet">{{ 'frontend.preregister.description_winter' | trans }}</p>
                         </div>
                     </div>
@@ -60,4 +60,30 @@
         {{ form_end(preRegisterForm) }}
     </div>
     {% include 'Front/includes/notice_flash.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            setPreRegisterSeasonNodeValue({{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020') }});
+            jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                let hrefTargetNode = jQuery(e.target).attr('href');
+                if (hrefTargetNode === "#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }}") {
+                    setPreRegisterSeasonNodeValue({{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }});
+                } else if (hrefTargetNode === "#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020') }}") {
+                    setPreRegisterSeasonNodeValue({{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020') }});
+                }
+                // console.log('event', e);
+                // console.log(jQuery(e.target).attr('href'));
+                // console.log('newly activated tab', e.target);
+                // console.log('previous active tab', e.relatedTarget);
+            })
+        });
+        function setPreRegisterSeasonNodeValue(value) {
+            let seasonNode = jQuery('#{{ preRegisterForm.season.vars.id }}');
+            seasonNode.val(value);
+            console.log('setPreRegisterSeasonNodeValue', seasonNode.val());
+        }
+    </script>
 {% endblock %}

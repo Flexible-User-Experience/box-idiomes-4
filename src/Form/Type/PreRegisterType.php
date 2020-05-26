@@ -6,6 +6,7 @@ use App\Entity\PreRegister;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -114,6 +115,14 @@ class PreRegisterType extends AbstractType
                     'attr' => array(
                         'rows' => 3,
                     ),
+                )
+            )
+            ->add(
+                'season',
+                HiddenType::class,
+                array(
+                    'label' => 'frontend.forms.preregister.season',
+                    'required' => false,
                 )
             )
             ->add(

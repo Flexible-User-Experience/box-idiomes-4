@@ -50,6 +50,20 @@ class PreRegister extends AbstractPerson
     private $comments;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"default"=0})
+     */
+    private $season = 0;
+
+    /**
+     * @var ClassGroup
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\ClassGroup")
+     */
+    protected $classGroup;
+
+    /**
      * Methods.
      */
 
@@ -149,6 +163,46 @@ class PreRegister extends AbstractPerson
     public function setComments(?string $comments): PreRegister
     {
         $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSeason(): int
+    {
+        return $this->season;
+    }
+
+    /**
+     * @param int $season
+     *
+     * @return $this
+     */
+    public function setSeason(int $season): PreRegister
+    {
+        $this->season = $season;
+
+        return $this;
+    }
+
+    /**
+     * @return ClassGroup|null
+     */
+    public function getClassGroup(): ?ClassGroup
+    {
+        return $this->classGroup;
+    }
+
+    /**
+     * @param ClassGroup|null $classGroup
+     *
+     * @return $this
+     */
+    public function setClassGroup(?ClassGroup $classGroup): PreRegister
+    {
+        $this->classGroup = $classGroup;
 
         return $this;
     }
