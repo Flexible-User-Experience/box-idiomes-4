@@ -32,6 +32,7 @@ class FrontendControllerTest extends WebTestCase
             array('/serveis'),
             array('/academia'),
             array('/contacte'),
+            array('/preinscripcions'),
             array('/politica-de-privacitat'),
             array('/credits'),
             array('/sitemap/sitemap.default.xml'),

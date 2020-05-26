@@ -14,4 +14,4 @@ twig:
         facebook_pixel_enabled:   '%facebook_pixel_enabled%'
         facebook_pixel_id:        '%facebook_pixel_id%'
         main_brand_title:         '%project_web_title%'
-        admin_tag_version:        'v4.0.00'
+        admin_tag_version:        'v4.1.00'

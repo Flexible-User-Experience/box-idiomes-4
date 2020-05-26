@@ -1,7 +1,7 @@
 Changelog
 =========
 
-##### Version 4.1.00 (WIP)
+##### Version 4.1.00 (2020-05-26)
  * add new pre register form feature
 
 ##### Version 4.0.00 (2020-05-23)

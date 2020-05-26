@@ -5,12 +5,14 @@ namespace App\Twig;
 use App\Entity\ClassGroup;
 use App\Entity\Event;
 use App\Entity\Invoice;
+use App\Entity\PreRegister;
 use App\Entity\Receipt;
 use App\Entity\Tariff;
 use App\Entity\Teacher;
 use App\Entity\TeacherAbsence;
 use App\Entity\User;
 use App\Enum\EventClassroomTypeEnum;
+use App\Enum\PreRegisterSeasonEnum;
 use App\Enum\TariffTypeEnum;
 use App\Enum\TeacherAbsenceTypeEnum;
 use App\Enum\TeacherColorEnum;
@@ -135,6 +137,8 @@ class AppExtension extends AbstractExtension
             new TwigFilter('draw_event_classroom_type', array($this, 'drawEventClassroomType')),
             new TwigFilter('draw_invoice_month', array($this, 'drawInvoiceMonth')),
             new TwigFilter('draw_money', array($this, 'drawMoney')),
+            new TwigFilter('draw_pre_register_season_type', array($this, 'drawPreRegisterSeasonType')),
+            new TwigFilter('write_pre_register_season_string', array($this, 'writePreRegisterSeasonString')),
         );
     }
 
@@ -143,7 +147,7 @@ class AppExtension extends AbstractExtension
      *
      * @return string
      */
-    public function drawRoleSpan($object)
+    public function drawRoleSpan(User $object)
     {
         $span = '';
         if ($object instanceof User && count($object->getRoles()) > 0) {
@@ -172,7 +176,7 @@ class AppExtension extends AbstractExtension
      *
      * @return string
      */
-    public function drawTeacherColorSpan($object)
+    public function drawTeacherColorSpan(Teacher $object)
     {
         $span = '';
         if ($object instanceof Teacher) {
@@ -197,7 +201,7 @@ class AppExtension extends AbstractExtension
      *
      * @return string
      */
-    public function drawClassGroupColorSpan($object)
+    public function drawClassGroupColorSpan(ClassGroup $object)
     {
         return '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color:'.$object->getColor().'"></span>';
     }
@@ -207,7 +211,7 @@ class AppExtension extends AbstractExtension
      *
      * @return string
      */
-    public function drawTeacherAbsenceType($object)
+    public function drawTeacherAbsenceType(TeacherAbsence $object)
     {
         return '<div class="text-left">'.TeacherAbsenceTypeEnum::getReversedEnumArray()[$object->getType()].'</div>';
     }
@@ -217,7 +221,7 @@ class AppExtension extends AbstractExtension
      *
      * @return string
      */
-    public function drawTariffType($object)
+    public function drawTariffType(Tariff $object)
     {
         return TariffTypeEnum::getReversedEnumArray()[$object->getType()];
     }
@@ -227,13 +231,13 @@ class AppExtension extends AbstractExtension
      *
      * @return string
      */
-    public function drawEventClassroomType($object)
+    public function drawEventClassroomType(Event $object)
     {
         return EventClassroomTypeEnum::getReversedEnumArray()[$object->getClassroom()];
     }
 
     /**
-     * @param Invoice $object
+     * @param Invoice|Receipt $object
      *
      * @return string
      */
@@ -243,7 +247,7 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param Invoice $object
+     * @param mixed $object
      *
      * @return string
      */
@@ -261,6 +265,45 @@ class AppExtension extends AbstractExtension
         }
 
         return $result;
+    }
+
+    /**
+     * @param PreRegister $object
+     *
+     * @return string
+     */
+    public function drawPreRegisterSeasonType(PreRegister $object)
+    {
+        $span = '';
+        if ($object instanceof PreRegister) {
+            if (PreRegisterSeasonEnum::SEASON_JULY_2020 === $object->getSeason()) {
+                $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+            } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020 == $object->getSeason()) {
+                $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+            } elseif (PreRegisterSeasonEnum::SEASON_JULY_2021 == $object->getSeason()) {
+                $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+            } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2021 == $object->getSeason()) {
+                $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+            } elseif (PreRegisterSeasonEnum::SEASON_JULY_2022 == $object->getSeason()) {
+                $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+            } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2022 == $object->getSeason()) {
+                $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+            }
+        } else {
+            $span = '<span class="label label-success" style="margin-right:10px">---</span>';
+        }
+
+        return $span;
+    }
+
+    /**
+     * @param PreRegister $object
+     *
+     * @return string
+     */
+    public function writePreRegisterSeasonString(PreRegister $object)
+    {
+        return PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()];
     }
 
     /**

@@ -81,12 +81,4 @@ class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
             ->setAction($this->rs->generate('admin_app_receipt_creator'))
         ;
     }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return self::NAME;
-    }
 }

@@ -13,14 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GenerateInvoiceItemType extends GenerateReceiptItemType
 {
     /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'generate_invoice_item';
-    }
-
-    /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)

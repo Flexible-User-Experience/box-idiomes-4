@@ -12,6 +12,9 @@ use App\Repository\EventRepository;
 use App\Repository\ReceiptRepository;
 use App\Repository\StudentRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
@@ -65,9 +68,9 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
      *
      * @return int
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Exception
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
+     * @throws Exception
      */
     private function commonFastGenerateReciptsForYearAndMonth($year, $month, $enableEmailDelivery = false)
     {
@@ -186,9 +189,9 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 $this->em->flush();
                 $phpBinaryFinder = new PhpExecutableFinder();
                 $phpBinaryPath = $phpBinaryFinder->find();
-                $command = 'nohup '.$phpBinaryPath.' '.$this->kernel->getRootDir().DIRECTORY_SEPARATOR.'console app:deliver:receipts:batch '.implode(' ', $ids).' --force --env='.$this->kernel->getEnvironment().' 2>&1 > /dev/null &';
+                $command = 'nohup '.$phpBinaryPath.' '.$this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'console app:deliver:receipts:batch '.implode(' ', $ids).' --force --env='.$this->kernel->getEnvironment().' 2>&1 > /dev/null &';
                 $this->logger->info('[GRFM] '.$command);
-                $process = new Process($command);
+                $process = new Process([$command]);
                 $process->setTimeout(null);
                 $process->run();
             } else {
@@ -206,8 +209,8 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
      *
      * @return int
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
      */
     public function fastGenerateReciptsForYearAndMonth($year, $month)
     {
@@ -220,8 +223,8 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
      *
      * @return int
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
      */
     public function fastGenerateReciptsForYearAndMonthAndDeliverEmail($year, $month)
     {
@@ -234,7 +237,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
      *
      * @return GenerateReceiptModel
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function buildFullModelForm($year, $month)
     {
@@ -390,9 +393,9 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
      *
      * @return int
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Exception
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
+     * @throws Exception
      */
     public function persistFullModelForm(GenerateReceiptModel $generateReceiptModel, $markReceiptAsSended = false)
     {
@@ -492,8 +495,8 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
      *
      * @return int
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws NonUniqueResultException
+     * @throws OptimisticLockException
      */
     public function persistAndDeliverFullModelForm(GenerateReceiptModel $generateReceiptModel)
     {
@@ -521,9 +524,9 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 }
             }
             if (count($ids) > 0) {
-                $command = 'nohup '.$phpBinaryPath.' '.$this->kernel->getRootDir().DIRECTORY_SEPARATOR.'console app:deliver:receipts:batch '.implode(' ', $ids).' --force --env='.$this->kernel->getEnvironment().' 2>&1 > /dev/null &';
+                $command = 'nohup '.$phpBinaryPath.' '.$this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'console app:deliver:receipts:batch '.implode(' ', $ids).' --force --env='.$this->kernel->getEnvironment().' 2>&1 > /dev/null &';
                 $this->logger->info('[GRFM] '.$command);
-                $process = new Process($command);
+                $process = new Process([$command]);
                 $process->setTimeout(null);
                 $process->run();
             }

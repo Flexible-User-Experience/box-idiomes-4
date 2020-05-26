@@ -80,12 +80,4 @@ class ContactMessageAnswerType extends AbstractType
             )
         ;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'contact_message_answer';
-    }
 }

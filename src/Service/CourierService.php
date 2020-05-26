@@ -55,7 +55,7 @@ class CourierService
             ->to(new Address($toEmail, is_null($toName) ? '' : $toName))
             ->html($body);
         if (!is_null($replyAddress)) {
-            $message->replyTo($replyAddress);
+            $message->replyTo(new Address($replyAddress));
         }
 
         return $message;

@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\ContactMessage;
 use App\Entity\Invoice;
 use App\Entity\NewsletterContact;
+use App\Entity\PreRegister;
 use App\Entity\Receipt;
 use App\Entity\StudentAbsence;
 use Exception;
@@ -373,6 +374,35 @@ class NotificationService
                 $this->twig->render('Mails/student_absence_notification.html.twig', array(
                     'studentAbsence' => $studentAbsence,
                 ))
+            );
+        } catch (TransportExceptionInterface $exception) {
+            $result = 0;
+        } catch (Exception $e) {
+            $result = 0;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Send a preregister form notification to admin user.
+     *
+     * @param PreRegister $preRegister
+     *
+     * @return int
+     */
+    public function sendPreRegisterAdminNotification(PreRegister $preRegister)
+    {
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $this->amd,
+                'Registre formulari preinscripció pàgina web '.$this->pub,
+                $this->twig->render('Mails/pre_register_form_admin_notification.html.twig', array(
+                    'preRegister' => $preRegister,
+                )),
+                $preRegister->getEmail()
             );
         } catch (TransportExceptionInterface $exception) {
             $result = 0;
