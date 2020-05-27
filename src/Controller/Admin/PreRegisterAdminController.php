@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\PreRegister;
+use App\Entity\Student;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,16 +38,23 @@ class PreRegisterAdminController extends BaseAdminController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
 
-        $absences = $this->container->get('app.teacher_absence_repository')->getTeacherAbsencesSortedByDate($object);
+        $object->setEnabled(true);
+        // TODO manage name+surname unique exception
+        $student = new Student();
+        $student
+            ->setName($object->getName())
+            ->setSurname($object->getSurname())
+            ->setPhone($object->getPhone())
+            ->setEmail($object->getEmail())
+            ->setComments($object->getComments())
+            ->setBirthDate(new \DateTime())
+        ;
 
-        return $this->renderWithExtraParams(
-            'Admin/Teacher/detail.html.twig',
-            array(
-                'action' => 'show',
-                'object' => $object,
-                'absences' => $absences,
-                'elements' => $this->admin->getShow(),
-            )
-        );
+        $this->getDoctrine()->getManager()->persist($student);
+        $this->getDoctrine()->getManager()->flush();
+
+        $this->addFlash('success', 'S\'ha creat un nou alumne correctament.');
+
+        return $this->redirectToList();
     }
 }
