@@ -19,11 +19,14 @@ use App\Enum\TeacherColorEnum;
 use App\Enum\UserRolesEnum;
 use App\Manager\ReceiptManager;
 use App\Service\SmartAssetsHelperService;
+use ReflectionClass;
+use ReflectionException;
 use Symfony\Component\Translation\Translator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Twig\TwigTest;
 
 /**
  * Class AppExtension.
@@ -63,6 +66,40 @@ class AppExtension extends AbstractExtension
         $this->sahs = $sahs;
         $this->rm = $rm;
         $this->ts = $ts;
+    }
+
+    /**
+     * Twig Tests.
+     */
+
+    /**
+     * @return array
+     */
+    public function getTests()
+    {
+        return array(
+            new TwigTest('instance_of', array($this, 'isInstanceOf')),
+        );
+    }
+
+    /**
+     * Return if a given object is instance of.
+     *
+     * @param object $var
+     * @param string $instance
+     *
+     * @return string
+     */
+    public function isInstanceOf($var, $instance)
+    {
+        try {
+            $reflexionClass = new ReflectionClass($instance);
+            $result = $reflexionClass->isInstance($var);
+        } catch (ReflectionException $e) {
+            $result = false;
+        }
+
+        return $result;
     }
 
     /**

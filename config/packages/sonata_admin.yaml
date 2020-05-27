@@ -16,6 +16,7 @@ sonata_admin:
         list:      'Admin/list.html.twig'
         edit:      'Admin/edit.html.twig'
         show:      'Admin/show.html.twig'
+        batch:     'Admin/batch.html.twig'
     dashboard:
         groups:
             Alumnes:
