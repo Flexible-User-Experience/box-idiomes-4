@@ -1,6 +1,9 @@
 Changelog
 =========
 
+##### Version 4.1.02 (2020-05-27)
+ * make contact message admin management available to ROLE_MANAGER
+
 ##### Version 4.1.01 (2020-05-27)
  * finish new pre register form feature
 
