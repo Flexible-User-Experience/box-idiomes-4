@@ -61,9 +61,12 @@ class PreRegisterType extends AbstractType
                 TextType::class,
                 array(
                     'label' => 'frontend.forms.preregister.phone',
-                    'required' => false,
+                    'required' => true,
                     'attr' => array(
                         'tabindex' => 3,
+                    ),
+                    'constraints' => array(
+                        new Assert\NotBlank(),
                     ),
                 )
             )

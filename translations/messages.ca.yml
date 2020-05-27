@@ -100,7 +100,7 @@ frontend:
             name: "Nom de l'alumne/a*"
             surname: "Cognoms de l'alumne/a*"
             email: "Email de contacte*"
-            phone: "Telèfon de contacte"
+            phone: "Telèfon de contacte*"
             age: "Edat"
             course_level: "Nivell o curs escolar"
             preferred_timetable: "Horari preferit"
