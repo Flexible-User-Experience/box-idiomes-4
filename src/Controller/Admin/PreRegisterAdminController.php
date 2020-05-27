@@ -2,21 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Teacher;
+use App\Entity\PreRegister;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class TeacherAdminController.
+ * Class PreRegisterAdminController.
  *
  * @category Controller
  */
-class TeacherAdminController extends BaseAdminController
+class PreRegisterAdminController extends BaseAdminController
 {
     /**
-     * Detail action.
+     * Create new Student from PreRegister record action.
      *
      * @param Request $request
      *
@@ -25,12 +25,12 @@ class TeacherAdminController extends BaseAdminController
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
      */
-    public function detailAction(Request $request = null)
+    public function studentAction(Request $request = null)
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
 
-        /** @var Teacher $object */
+        /** @var PreRegister $object */
         $object = $this->admin->getObject($id);
 
         if (!$object) {

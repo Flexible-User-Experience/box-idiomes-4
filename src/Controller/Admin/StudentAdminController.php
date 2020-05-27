@@ -37,7 +37,7 @@ class StudentAdminController extends BaseAdminController
         $object = $this->admin->getObject($id);
 
         if (!$object) {
-            throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
+            throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
 
         /** @var StudentImageRightsBuilderPdf $sirps */
@@ -66,7 +66,7 @@ class StudentAdminController extends BaseAdminController
         $object = $this->admin->getObject($id);
 
         if (!$object) {
-            throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
+            throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
 
         /** @var SepaAgreementBuilderPdf $saps */

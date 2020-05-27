@@ -320,7 +320,7 @@ class ReceiptAdminController extends BaseAdminController
         /** @var Receipt $object */
         $object = $this->admin->getObject($id);
         if (!$object) {
-            throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
+            throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
 
         /** @var XmlSepaBuilderService $xsbs */

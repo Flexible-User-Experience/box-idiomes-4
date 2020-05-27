@@ -36,7 +36,7 @@ class ContactMessageAdminController extends BaseAdminController
         $object = $this->admin->getObject($id);
 
         if (!$object) {
-            throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
+            throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
 
         $object->setChecked(true);
@@ -82,7 +82,7 @@ class ContactMessageAdminController extends BaseAdminController
         $object = $this->admin->getObject($id);
 
         if (!$object) {
-            throw $this->createNotFoundException(sprintf('unable to find the object with id : %s', $id));
+            throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
 
         $form = $this->createForm(ContactMessageAnswerType::class, $object);

@@ -314,6 +314,8 @@ backend:
             city: Ciutat
             payment: Pagament
             bank: Banc
+        pre_register:
+            create_action: "Crear nou alumne"
         receipt_reminder:
             list_button: "Recordatori pagament"
             batch_action: "Generar recordatoris de pagament del elements seleccionats"
