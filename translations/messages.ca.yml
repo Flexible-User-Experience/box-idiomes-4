@@ -107,6 +107,7 @@ frontend:
             comments: "Comentaris"
             previous_academy: "Acadèmia anterior"
             season: "Temporada"
+            enabled: "Alumne creat"
             submit: "Registrar"
 
 backend:

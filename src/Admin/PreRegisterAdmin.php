@@ -5,11 +5,9 @@ namespace App\Admin;
 use App\Enum\PreRegisterSeasonEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
@@ -34,61 +32,10 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection
+            ->add('student', $this->getRouterIdParameter().'/create-student')
             ->remove('create')
             ->remove('edit')
             ->remove('delete')
-        ;
-    }
-
-    /**
-     * @param FormMapper $formMapper
-     */
-    protected function configureFormFields(FormMapper $formMapper)
-    {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
-            ->add(
-                'name',
-                null,
-                array(
-                    'label' => 'frontend.forms.preregister.name',
-                )
-            )
-            ->add(
-                'surname',
-                null,
-                array(
-                    'label' => 'frontend.forms.preregister.surname',
-                )
-            )
-            ->end()
-            ->with('backend.admin.contact.contact', $this->getFormMdSuccessBoxArray(3))
-            ->add(
-                'phone',
-                null,
-                array(
-                    'label' => 'frontend.forms.preregister.phone',
-                )
-            )
-            ->add(
-                'email',
-                null,
-                array(
-                    'label' => 'frontend.forms.preregister.email',
-                    'required' => false,
-                )
-            )
-            ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
-            ->add(
-                'enabled',
-                CheckboxType::class,
-                array(
-                    'label' => 'backend.admin.enabled',
-                    'required' => false,
-                )
-            )
-            ->end()
         ;
     }
 
@@ -190,6 +137,13 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                     'label' => 'frontend.forms.preregister.comments',
                 )
             )
+            ->add(
+                'enabled',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.enabled',
+                )
+            )
         ;
     }
 
@@ -277,6 +231,13 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                     'label' => 'frontend.forms.preregister.comments',
                 )
             )
+            ->add(
+                'enabled',
+                null,
+                array(
+                    'label' => 'frontend.forms.preregister.enabled',
+                )
+            )
         ;
     }
 
@@ -337,18 +298,10 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
-                'age',
+                'enabled',
                 null,
                 array(
-                    'label' => 'frontend.forms.preregister.age',
-                    'editable' => false,
-                )
-            )
-            ->add(
-                'courseLevel',
-                null,
-                array(
-                    'label' => 'frontend.forms.preregister.course_level',
+                    'label' => 'frontend.forms.preregister.enabled',
                     'editable' => false,
                 )
             )
@@ -382,6 +335,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
             'preferredTimetable',
             'previousAcademy',
             'comments',
+            'enabled',
         );
     }
 }
