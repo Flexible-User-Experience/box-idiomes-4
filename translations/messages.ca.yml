@@ -82,7 +82,7 @@ frontend:
         credits: crèdits
     preregister:
         main_title: "Preinscripcions"
-        title_summer: "Juliol 2020"
+        title_summer: "Estiu 2020"
         description_summer: "Reserva la teva plaça al curs estiu 2020"
         title_winter: "Setembre 2020"
         description_winter: "Formulari de preinscripció per al curs escolar 2020-2021"
@@ -100,13 +100,14 @@ frontend:
             name: "Nom de l'alumne/a*"
             surname: "Cognoms de l'alumne/a*"
             email: "Email de contacte*"
-            phone: "Telèfon de contacte"
+            phone: "Telèfon de contacte*"
             age: "Edat"
             course_level: "Nivell o curs escolar"
             preferred_timetable: "Horari preferit"
             comments: "Comentaris"
             previous_academy: "Acadèmia anterior"
             season: "Temporada"
+            enabled: "Alumne creat"
             submit: "Registrar"
 
 backend:
@@ -313,6 +314,9 @@ backend:
             city: Ciutat
             payment: Pagament
             bank: Banc
+        pre_register:
+            create_action: "Crear nou alumne"
+            batch_action: "Crear nous alumnes de les preinscripcions seleccionades"
         receipt_reminder:
             list_button: "Recordatori pagament"
             batch_action: "Generar recordatoris de pagament del elements seleccionats"
@@ -466,11 +470,11 @@ month:
     december: desembre
 
 seasons:
-    july_2020: "juny 2020"
+    july_2020: "estiu 2020"
     september_2020: "septembre 2020"
-    july_2021: "juny 2021"
+    july_2021: "estiu 2021"
     september_2021: "septembre 2021"
-    july_2022: "juny 2022"
+    july_2022: "estiu 2022"
     september_2022: "septembre 2022"
 
 color:

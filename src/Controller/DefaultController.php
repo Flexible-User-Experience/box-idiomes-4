@@ -183,6 +183,7 @@ class DefaultController extends AbstractController
         if ($preRegisterForm->isSubmitted() && $preRegisterForm->isValid()) {
             // Persist new pre-register record into DB
             $em = $this->getDoctrine()->getManager();
+            $preRegister->setEnabled(false);
             $em->persist($preRegister);
             $em->flush();
             if (0 != $messenger->sendPreRegisterAdminNotification($preRegister)) {

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ClassGroup;
+use App\Entity\PreRegister;
 use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
@@ -409,5 +410,39 @@ class StudentRepository extends ServiceEntityRepository
     public function getStudentsInClassGroupSortedByName(ClassGroup $classGroup)
     {
         return $this->getStudentsInClassGroupSortedByNameQ($classGroup)->getResult();
+    }
+
+    /**
+     * @param PreRegister $preRegister
+     *
+     * @return QueryBuilder
+     */
+    public function getPreviouslyStoredStudentsFromPreRegisterQB(PreRegister $preRegister)
+    {
+        return $this->getAllSortedBySurnameQB()
+            ->where('s.name = :name')
+            ->andWhere('s.surname = :surname')
+            ->setParameter('name', $preRegister->getName())
+            ->setParameter('surname', $preRegister->getSurname());
+    }
+
+    /**
+     * @param PreRegister $preRegister
+     *
+     * @return Query
+     */
+    public function getPreviouslyStoredStudentsFromPreRegisterQ(PreRegister $preRegister)
+    {
+        return $this->getPreviouslyStoredStudentsFromPreRegisterQB($preRegister)->getQuery();
+    }
+
+    /**
+     * @param PreRegister $preRegister
+     *
+     * @return array
+     */
+    public function getPreviouslyStoredStudentsFromPreRegister(PreRegister $preRegister)
+    {
+        return $this->getPreviouslyStoredStudentsFromPreRegisterQ($preRegister)->getResult();
     }
 }

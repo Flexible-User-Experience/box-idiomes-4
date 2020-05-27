@@ -1,0 +1,3 @@
+{% if admin.isGranted('VIEW', object) and admin.hasRoute('show') and not object.enabled %}
+    <a href="{{ admin.generateObjectUrl('student', object) }}" class="btn btn-sm btn-default edit_link" title="{{ 'backend.admin.pre_register.create_action' | trans }}"><i class="fa fa-user-plus"></i></a>
+{% endif %}

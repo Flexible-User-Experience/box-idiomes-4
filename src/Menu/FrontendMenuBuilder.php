@@ -84,6 +84,19 @@ class FrontendMenuBuilder
                 'route' => 'app_contact',
             )
         );
+        $menu->addChild(
+            'app_pre_register',
+            array(
+                'label' => 'frontend.menu.preregisters',
+                'route' => 'app_pre_register',
+                'attributes' => array(
+                    'class' => 'violet-background',
+                ),
+                'linkAttributes' => array(
+                    'class' => 'c-white',
+                ),
+            )
+        );
 
         return $menu;
     }
