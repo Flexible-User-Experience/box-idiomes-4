@@ -8,6 +8,8 @@ use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Enum\InvoiceYearMonthEnum;
 use App\Enum\StudentPaymentEnum;
+use DateTime;
+use Exception;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -90,11 +92,11 @@ class InvoiceAdmin extends AbstractBaseAdmin
     /**
      * @param FormMapper $formMapper
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $currentYear = $now->format('Y');
 
         $formMapper

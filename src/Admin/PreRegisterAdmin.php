@@ -40,6 +40,24 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     }
 
     /**
+     * @param array $actions
+     *
+     * @return array
+     */
+    public function configureBatchActions($actions)
+    {
+        if ($this->hasRoute('show') && $this->hasAccess('show')) {
+            $actions['generatestudents'] = array(
+                'label' => 'backend.admin.pre_register.batch_action',
+                'translation_domain' => 'messages',
+                'ask_confirmation' => false,
+            );
+        }
+
+        return $actions;
+    }
+
+    /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void

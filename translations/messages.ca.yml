@@ -316,6 +316,7 @@ backend:
             bank: Banc
         pre_register:
             create_action: "Crear nou alumne"
+            batch_action: "Crear nous alumnes de les preinscripcions seleccionades"
         receipt_reminder:
             list_button: "Recordatori pagament"
             batch_action: "Generar recordatoris de pagament del elements seleccionats"
