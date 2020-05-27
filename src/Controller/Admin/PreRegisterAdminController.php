@@ -37,23 +37,27 @@ class PreRegisterAdminController extends BaseAdminController
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-
         $object->setEnabled(true);
-        // TODO manage name+surname unique exception
-        $student = new Student();
-        $student
-            ->setName($object->getName())
-            ->setSurname($object->getSurname())
-            ->setPhone($object->getPhone())
-            ->setEmail($object->getEmail())
-            ->setComments($object->getComments())
-            ->setBirthDate(new \DateTime())
-        ;
+        $previouslyStoredStudents = $this->getDoctrine()->getRepository(Student::class)->getPreviouslyStoredStudentsFromPreRegister($object);
 
-        $this->getDoctrine()->getManager()->persist($student);
+        if (count($previouslyStoredStudents) > 0) {
+            // there are a previous Student with same name & surname
+            $this->addFlash('warning', 'Ja existeix un alumne prèviament creat amb el mateix nom i cognoms. No s\'ha creat cap alumne nou.');
+        } else {
+            // brand new student
+            $student = new Student();
+            $student
+                ->setName($object->getName())
+                ->setSurname($object->getSurname())
+                ->setPhone($object->getPhone())
+                ->setEmail($object->getEmail())
+                ->setComments($object->getComments())
+                ->setBirthDate(new \DateTime())
+            ;
+            $this->getDoctrine()->getManager()->persist($student);
+            $this->addFlash('success', 'S\'ha creat un nou alumne correctament.');
+        }
         $this->getDoctrine()->getManager()->flush();
-
-        $this->addFlash('success', 'S\'ha creat un nou alumne correctament.');
 
         return $this->redirectToList();
     }
