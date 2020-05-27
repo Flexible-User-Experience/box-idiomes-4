@@ -82,7 +82,7 @@ frontend:
         credits: crèdits
     preregister:
         main_title: "Preinscripcions"
-        title_summer: "Juliol 2020"
+        title_summer: "Estiu 2020"
         description_summer: "Reserva la teva plaça al curs estiu 2020"
         title_winter: "Setembre 2020"
         description_winter: "Formulari de preinscripció per al curs escolar 2020-2021"
@@ -466,11 +466,11 @@ month:
     december: desembre
 
 seasons:
-    july_2020: "juny 2020"
+    july_2020: "estiu 2020"
     september_2020: "septembre 2020"
-    july_2021: "juny 2021"
+    july_2021: "estiu 2021"
     september_2021: "septembre 2021"
-    july_2022: "juny 2022"
+    july_2022: "estiu 2022"
     september_2022: "septembre 2022"
 
 color:
