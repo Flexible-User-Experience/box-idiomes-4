@@ -35,7 +35,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
             ->add('student', $this->getRouterIdParameter().'/create-student')
             ->remove('create')
             ->remove('edit')
-            ->remove('delete')
         ;
     }
 
@@ -330,6 +329,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                     'actions' => array(
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                         'student' => array('template' => 'Admin/Buttons/list__action_create_student_from_pre_register_button.html.twig'),
+                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
                     'label' => 'Accions',
                 )
