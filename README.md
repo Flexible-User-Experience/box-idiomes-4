@@ -12,6 +12,7 @@ A Symfony 4.4 LTS project to manage [Box Idiomes](http://www.boxidiomes.cat) web
 * Git
 * Composer
 * Yarn
+* set php.ini config max_input_vars > 10.000
 
 #### Installation instructions
 

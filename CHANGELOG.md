@@ -1,6 +1,13 @@
 Changelog
 =========
 
+##### Version 4.1.04 (2020-06-06)
+ * vendors update
+ * annotate Receipt batch action problem on large input forms
+
+##### Version 4.1.03 (2020-06-01)
+ * remove frontend PreRegister september tab
+
 ##### Version 4.1.02 (2020-05-27)
  * make contact message admin management available to ROLE_MANAGER
 

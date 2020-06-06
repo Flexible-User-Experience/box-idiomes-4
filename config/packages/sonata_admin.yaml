@@ -6,6 +6,7 @@ sonata_admin:
         html5_validate:             true
         confirm_exit:               true
         use_select2:                true
+        use_icheck:                 true
         legacy_twig_text_extension: false
         pager_links:                10
     security:
