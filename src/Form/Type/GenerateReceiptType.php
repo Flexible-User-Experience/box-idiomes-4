@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use Exception;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,13 +38,16 @@ class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
+     *
+     * @throws Exception
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
         $builder
             ->remove('preview')
+            // warning: this collection can produce a large input form fields, consider to increase max_input_vars PHP config
             ->add(
                 'items',
                 CollectionType::class,
