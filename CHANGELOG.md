@@ -1,6 +1,10 @@
 Changelog
 =========
 
+##### Version 4.1.05 (2020-06-08)
+ * yarn upgrade
+ * fix mailer config problem
+
 ##### Version 4.1.04 (2020-06-06)
  * vendors update
  * annotate Receipt batch action problem on large input forms
