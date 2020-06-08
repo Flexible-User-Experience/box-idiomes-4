@@ -35,33 +35,6 @@ class CourierService
     }
 
     /**
-     * Build an email.
-     *
-     * @param string      $from
-     * @param string      $toEmail
-     * @param string      $subject
-     * @param string      $body
-     * @param string|null $replyAddress
-     * @param string|null $toName
-     *
-     * @return Email
-     */
-    private function buildEmail($from, $toEmail, $subject, $body, $replyAddress = null, $toName = null)
-    {
-        $message = new Email();
-        $message
-            ->subject($subject)
-            ->from(new Address($from))
-            ->to(new Address($toEmail, is_null($toName) ? '' : $toName))
-            ->html($body);
-        if (!is_null($replyAddress)) {
-            $message->replyTo(new Address($replyAddress));
-        }
-
-        return $message;
-    }
-
-    /**
      * Send an email.
      *
      * @param string $from
@@ -99,10 +72,38 @@ class CourierService
      */
     public function sendEmailWithPdfAttached($from, $toEmail, $toName, $subject, $body, $pdfFilename, TCPDF $pdf)
     {
-        $swiftAttatchment = new \Swift_Attachment($pdf->Output($pdfFilename, 'S'), $pdfFilename, 'application/pdf');
         $message = $this->buildEmail($from, $toEmail, $subject, $body, null, $toName);
-        $message->attach($swiftAttatchment);
+        $pathToTemporaryStoredPdfFile = DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pdfFilename;
+        $pdf->Output($pathToTemporaryStoredPdfFile, 'F');
+        $message->attachFromPath($pathToTemporaryStoredPdfFile, $pdfFilename, 'application/pdf');
 
         $this->mailer->send($message);
+    }
+
+    /**
+     * Build an email.
+     *
+     * @param string      $from
+     * @param string      $toEmail
+     * @param string      $subject
+     * @param string      $body
+     * @param string|null $replyAddress
+     * @param string|null $toName
+     *
+     * @return Email
+     */
+    private function buildEmail($from, $toEmail, $subject, $body, $replyAddress = null, $toName = null)
+    {
+        $message = new Email();
+        $message
+            ->subject($subject)
+            ->from(new Address($from))
+            ->to(new Address($toEmail, is_null($toName) ? '' : $toName))
+            ->html($body);
+        if (!is_null($replyAddress)) {
+            $message->replyTo(new Address($replyAddress));
+        }
+
+        return $message;
     }
 }
