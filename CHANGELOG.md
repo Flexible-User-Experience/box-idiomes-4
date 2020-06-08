@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 4.1.05 (2020-06-08)
  * yarn upgrade
+ * fix Invoice mailer notification problem
  * fix mailer config problem
 
 ##### Version 4.1.04 (2020-06-06)
