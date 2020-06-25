@@ -1,6 +1,10 @@
 Changelog
 =========
 
+##### Version 4.1.06 (2020-06-25)
+ * remove frontend PreRegister summer tab
+ * enable frontend PreRegister september tab
+
 ##### Version 4.1.05 (2020-06-08)
  * yarn upgrade
  * fix Invoice mailer notification problem
