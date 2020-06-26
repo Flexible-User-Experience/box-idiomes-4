@@ -112,7 +112,7 @@ class Spending extends AbstractBase
      */
     public function getDateString()
     {
-        return $this->getDate() ? $this->getDate()->format('d/m/Y') : '--/--/----';
+        return $this->getDate() ? $this->getDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -248,7 +248,7 @@ class Spending extends AbstractBase
      */
     public function getPaymentDateString()
     {
-        return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : '--/--/----';
+        return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -341,6 +341,6 @@ class Spending extends AbstractBase
      */
     public function __toString()
     {
-        return $this->id ? $this->getDate()->format('d/m/Y').' · '.$this->getProvider().' · '.$this->getBaseAmountString() : '---';
+        return $this->id ? $this->getDateString().' · '.$this->getProvider().' · '.$this->getBaseAmountString() : '---';
     }
 }

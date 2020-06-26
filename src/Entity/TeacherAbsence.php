@@ -104,7 +104,7 @@ class TeacherAbsence extends AbstractBase
      */
     public function getDayString()
     {
-        return $this->getDay()->format('d/m/Y');
+        return $this->getDay() ? $this->getDay()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -132,6 +132,6 @@ class TeacherAbsence extends AbstractBase
      */
     public function __toString()
     {
-        return $this->id ? $this->getDay()->format('d/m/Y').' · '.$this->getTypeString().' · '.$this->getTeacher() : '---';
+        return $this->id ? $this->getDayString().' · '.$this->getTypeString().' · '.$this->getTeacher() : '---';
     }
 }

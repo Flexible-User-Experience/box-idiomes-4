@@ -15,6 +15,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 abstract class AbstractBase
 {
+    const DEFAULT_NULL_DATE_STRING = '--/--/----';
+
     /**
      * @var int
      *
@@ -91,7 +93,7 @@ abstract class AbstractBase
      */
     public function getCreatedAtString()
     {
-        return $this->getCreatedAt()->format('d/m/Y');
+        return $this->getCreatedAt() ? $this->getCreatedAt()->format('d/m/Y') : self::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -119,7 +121,7 @@ abstract class AbstractBase
      */
     public function getUpdatedAtString()
     {
-        return $this->getUpdatedAt()->format('d/m/Y');
+        return $this->getUpdatedAt() ? $this->getUpdatedAt()->format('d/m/Y') : self::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -147,7 +149,7 @@ abstract class AbstractBase
      */
     public function getRemovedAtString()
     {
-        return $this->getRemovedAt()->format('d/m/Y');
+        return $this->getRemovedAt() ? $this->getRemovedAt()->format('d/m/Y') : self::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -207,6 +209,6 @@ abstract class AbstractBase
      */
     public function __toString()
     {
-        return $this->id ? $this->getId().' · '.$this->getCreatedAt()->format('d/m/Y') : '---';
+        return $this->id ? $this->getId().' · '.$this->getCreatedAtString() : '---';
     }
 }
