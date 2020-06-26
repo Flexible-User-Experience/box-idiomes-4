@@ -122,7 +122,7 @@ class Student extends AbstractPerson
      */
     public function getBirthDateString()
     {
-        return $this->getBirthDate()->format('d/m/Y');
+        return $this->getBirthDate() ? $this->getBirthDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**

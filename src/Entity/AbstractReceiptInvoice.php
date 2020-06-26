@@ -169,7 +169,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
      */
     public function getDateString()
     {
-        return $this->getDate() ? $this->getDate()->format('d/m/Y') : '--/--/----';
+        return $this->getDate() ? $this->getDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -225,7 +225,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
      */
     public function getPaymentDateString()
     {
-        return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : '--/--/----';
+        return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -281,7 +281,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
      */
     public function getSendDateString()
     {
-        return $this->getSendDate() ? $this->getSendDate()->format('d/m/Y') : '--/--/----';
+        return $this->getSendDate() ? $this->getSendDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -337,7 +337,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
      */
     public function getSepaXmlGeneratedDateString()
     {
-        return $this->getSepaXmlGeneratedDate() ? $this->getSepaXmlGeneratedDate()->format('d/m/Y') : '--/--/----';
+        return $this->getSepaXmlGeneratedDate() ? $this->getSepaXmlGeneratedDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**

@@ -242,6 +242,6 @@ class ContactMessage extends AbstractBase
      */
     public function __toString()
     {
-        return $this->id ? $this->getCreatedAt()->format('d/m/Y').' · '.$this->getEmail() : '---';
+        return $this->id ? $this->getCreatedAtString().' · '.$this->getEmail() : '---';
     }
 }

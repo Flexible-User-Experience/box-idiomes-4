@@ -118,7 +118,7 @@ class Event extends AbstractBase
      */
     public function getBeginString()
     {
-        return $this->getBegin()->format('d/m/Y H:i');
+        return $this->getBegin() ? $this->getBegin()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -146,7 +146,7 @@ class Event extends AbstractBase
      */
     public function getEndString()
     {
-        return $this->getEnd()->format('d/m/Y H:i');
+        return $this->getEnd() ? $this->getEnd()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     /**
@@ -254,7 +254,7 @@ class Event extends AbstractBase
     }
 
     /**
-     * @return ArrayCollection
+     * @return string
      */
     public function getStudentsString()
     {
