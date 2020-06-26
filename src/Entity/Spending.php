@@ -112,7 +112,7 @@ class Spending extends AbstractBase
      */
     public function getDateString()
     {
-        return $this->getDate()->format('d/m/Y');
+        return $this->getDate() ? $this->getDate()->format('d/m/Y') : '--/--/----';
     }
 
     /**
@@ -248,7 +248,7 @@ class Spending extends AbstractBase
      */
     public function getPaymentDateString()
     {
-        return $this->getPaymentDate()->format('d/m/Y');
+        return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : '--/--/----';
     }
 
     /**
