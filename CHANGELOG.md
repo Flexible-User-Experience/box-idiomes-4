@@ -1,6 +1,9 @@
 Changelog
 =========
 
+##### Version 4.1.07 (2020-06-26)
+ * fix problem with null dates converted to string
+
 ##### Version 4.1.06 (2020-06-25)
  * remove frontend PreRegister summer tab
  * enable frontend PreRegister september tab
