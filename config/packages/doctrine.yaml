@@ -1,7 +1,7 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
-        charset: 'UTF8'
+        url:     '%env(resolve:DATABASE_URL)%'
+        charset: 'utf8mb4'
         types:
             json: Sonata\Doctrine\Types\JsonType
     orm:
