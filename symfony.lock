@@ -370,9 +370,6 @@
     "sonata-project/doctrine-orm-admin-bundle": {
         "version": "3.17.1"
     },
-    "sonata-project/easy-extends-bundle": {
-        "version": "2.5.0"
-    },
     "sonata-project/exporter": {
         "version": "2.2.0"
     },

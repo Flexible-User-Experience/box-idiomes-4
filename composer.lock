@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "115945318ef10311c4c32e9eacd66171",
+    "content-hash": "67c27598e45c0edad97b5eb29d36f1b3",
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
@@ -5203,66 +5203,6 @@
             "time": "2020-02-04T20:40:21+00:00"
         },
         {
-            "name": "sonata-project/easy-extends-bundle",
-            "version": "2.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sonata-project/SonataEasyExtendsBundle.git",
-                "reference": "c62fb4f7e74f7fc5f32f122ffa8131d7cf05a1db"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataEasyExtendsBundle/zipball/c62fb4f7e74f7fc5f32f122ffa8131d7cf05a1db",
-                "reference": "c62fb4f7e74f7fc5f32f122ffa8131d7cf05a1db",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0",
-                "symfony/console": "^2.8 || ^3.2 || ^4.0",
-                "symfony/dependency-injection": "^2.8 || ^3.2 || ^4.0",
-                "symfony/finder": "^2.8 || ^3.2 || ^4.0",
-                "symfony/framework-bundle": "^2.8 || ^3.2 || ^4.0",
-                "symfony/http-kernel": "^2.8 || ^3.2 || ^4.0"
-            },
-            "require-dev": {
-                "doctrine/orm": "^2.2",
-                "symfony/phpunit-bridge": "^4.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Sonata\\EasyExtendsBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sonata Community",
-                    "homepage": "https://github.com/sonata-project/SonataEasyExtendsBundle/contributors"
-                },
-                {
-                    "name": "Thomas Rabaix",
-                    "email": "thomas.rabaix@sonata-project.org",
-                    "homepage": "https://sonata-project.org"
-                }
-            ],
-            "description": "Symfony SonataEasyExtendsBundle",
-            "homepage": "https://sonata-project.org/bundles/easy-extends",
-            "keywords": [
-                "Easy Extends",
-                "sonata"
-            ],
-            "time": "2018-02-11T12:21:41+00:00"
-        },
-        {
             "name": "sonata-project/exporter",
             "version": "2.3.0",
             "source": {
@@ -5488,25 +5428,24 @@
         },
         {
             "name": "sonata-project/user-bundle",
-            "version": "4.6.0",
+            "version": "4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "c651248a0b4adcfae007a3a7bdc501e95eedea61"
+                "reference": "782cdcd7b9e73270784ff00e34df85fa18c463d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/c651248a0b4adcfae007a3a7bdc501e95eedea61",
-                "reference": "c651248a0b4adcfae007a3a7bdc501e95eedea61",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/782cdcd7b9e73270784ff00e34df85fa18c463d3",
+                "reference": "782cdcd7b9e73270784ff00e34df85fa18c463d3",
                 "shasum": ""
             },
             "require": {
                 "friendsofsymfony/user-bundle": "^2.0",
-                "php": "^7.1",
+                "php": "^7.2",
                 "sonata-project/admin-bundle": "^3.34",
                 "sonata-project/datagrid-bundle": "^2.4.0",
-                "sonata-project/doctrine-extensions": "^1.5.1",
-                "sonata-project/easy-extends-bundle": "^2.2",
+                "sonata-project/doctrine-extensions": "^1.8",
                 "sonata-project/form-extensions": "^0.1 || ^1.4",
                 "swiftmailer/swiftmailer": "^4.3 || ^5.0 || ^6.0",
                 "symfony/config": "^4.4",
@@ -5538,11 +5477,10 @@
                 "matthiasnoback/symfony-config-test": "^4.0",
                 "matthiasnoback/symfony-dependency-injection-test": "^4.0",
                 "nelmio/api-doc-bundle": "^2.4",
-                "sensio/framework-extra-bundle": "^5.5",
                 "sonata-project/doctrine-orm-admin-bundle": "^3.18",
                 "sonata-project/google-authenticator": "^1.0 || ^2.0",
                 "symfony/browser-kit": "^4.4 || ^5.1",
-                "symfony/phpunit-bridge": "^5.1"
+                "symfony/phpunit-bridge": "^5.1.1"
             },
             "suggest": {
                 "friendsofsymfony/rest-bundle": "For using the public API methods.",
@@ -5584,7 +5522,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2020-06-29T16:55:05+00:00"
+            "time": "2020-07-30T16:41:36+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
