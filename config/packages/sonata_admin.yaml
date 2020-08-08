@@ -3,12 +3,11 @@ sonata_admin:
     title_logo:      '/build/img/login-logo.png'
     persist_filters: true
     options:
-        html5_validate:             true
-        confirm_exit:               true
-        use_select2:                true
-        use_icheck:                 true
-        legacy_twig_text_extension: false
-        pager_links:                10
+        html5_validate: true
+        confirm_exit:   true
+        use_select2:    true
+        use_icheck:     true
+        pager_links:    10
     security:
         handler: sonata.admin.security.handler.role
     templates:

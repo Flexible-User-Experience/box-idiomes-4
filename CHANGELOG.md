@@ -1,6 +1,10 @@
 Changelog
 =========
 
+##### Version 4.1.08 (2020-08-08)
+ * Symfony 4.4.11 update
+ * fix problem to avoid problem storing emoji unicodes into MySQL
+
 ##### Version 4.1.07 (2020-06-26)
  * fix problem with null dates converted to string
  * fix typo
