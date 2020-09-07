@@ -1,6 +1,13 @@
 Changelog
 =========
 
+##### Version 4.1.10 (WIP)
+ * fix minor bugs
+
+##### Version 4.1.09 (2020-09-07)
+ * Symfony 4.4.13 security update
+ * Remove deprecated SonataCore bundle
+
 ##### Version 4.1.08 (2020-08-08)
  * Symfony 4.4.11 update
  * SonataUserBundle 4.7.0 update
