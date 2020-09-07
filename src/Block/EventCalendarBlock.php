@@ -7,24 +7,10 @@ use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class EventCalendarBlock.
- *
- * @category Block
- */
 class EventCalendarBlock extends AbstractBlockService
 {
-    /**
-     * Execute.
-     *
-     * @param BlockContextInterface $blockContext
-     * @param Response|null         $response
-     *
-     * @return Response
-     */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
-        // merge settings
         $settings = $blockContext->getSettings();
 
         return $this->renderResponse(
@@ -38,20 +24,7 @@ class EventCalendarBlock extends AbstractBlockService
         );
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'event_calendar';
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'title' => 'Calendar',

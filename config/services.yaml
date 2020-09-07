@@ -47,15 +47,13 @@ services:
         class: App\Block\EventCalendarBlock
         public: true
         arguments:
-            - 'app.block.event_calendar'
-            - '@templating'
+            - '@twig'
         tags:
             - { name: sonata.block }
     app.block.charts:
         class: App\Block\ChartsBlock
         arguments:
-            - 'app.block.charts'
-            - '@templating'
+            - '@twig'
             - '@app.charts_factory_service'
         tags:
             - { name: sonata.block }

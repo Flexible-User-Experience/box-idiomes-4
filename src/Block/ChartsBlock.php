@@ -3,51 +3,24 @@
 namespace App\Block;
 
 use App\Service\ChartsFactoryService;
-use SaadTazi\GChartBundle\DataTable\Exception\InvalidColumnTypeException;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Twig\Environment;
 
-/**
- * Class ChartsBlock.
- *
- * @category Block
- */
 class ChartsBlock extends AbstractBlockService
 {
-    /**
-     * @var ChartsFactoryService
-     */
-    private $cfs;
+    private ChartsFactoryService $cfs;
 
-    /**
-     * ChartsBlock constructor.
-     *
-     * @param string|null               $name
-     * @param EngineInterface|null      $templating
-     * @param ChartsFactoryService|null $cfs
-     */
-    public function __construct($name = null, ?EngineInterface $templating = null, $cfs = null)
+    public function __construct(Environment $templating, ChartsFactoryService $cfs)
     {
-        parent::__construct($name, $templating);
+        parent::__construct($templating);
         $this->cfs = $cfs;
     }
 
-    /**
-     * Execute.
-     *
-     * @param BlockContextInterface $blockContext
-     * @param Response|null $response
-     *
-     * @return Response
-     *
-     * @throws InvalidColumnTypeException
-     */
-    public function execute(BlockContextInterface $blockContext, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
-        // merge settings
         $settings = $blockContext->getSettings();
 
         return $this->renderResponse(
@@ -62,17 +35,7 @@ class ChartsBlock extends AbstractBlockService
         );
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'charts';
-    }
-
-    public function configureSettings(OptionsResolver $resolver)
+    public function configureSettings(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'title' => 'Charts',
