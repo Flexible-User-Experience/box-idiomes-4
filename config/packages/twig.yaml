@@ -7,6 +7,7 @@ twig:
         - 'bootstrap_3_layout.html.twig'
         - '@SonataForm/Form/datepicker.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+        - '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig'
     globals:
         google_analytics_enabled: '%google_analytics_enabled%'
         google_analytics_account: '%google_analytics_account%'
