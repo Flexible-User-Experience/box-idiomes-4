@@ -12,7 +12,7 @@ class FrontendControllerTest extends WebTestCase
      * @dataProvider provideSuccessfulUrls
      * @param string $url
      */
-    public function testPagesAreSuccessful($url)
+    public function testPagesAreSuccessful(string $url)
     {
         $client = WebTestCase::createClient();
         $client->request('GET', $url);
@@ -45,7 +45,7 @@ class FrontendControllerTest extends WebTestCase
      * @dataProvider provideNotFoundUrls
      * @param string $url
      */
-    public function testPagesAreNotFound($url)
+    public function testPagesAreNotFound(string $url)
     {
         $client = WebTestCase::createClient();
         $client->request('GET', $url);

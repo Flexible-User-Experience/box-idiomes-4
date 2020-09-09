@@ -32,7 +32,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    public function testAdminPagesAreSuccessful($url)
+    public function testAdminPagesAreSuccessful(string $url)
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
@@ -142,7 +142,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    public function testAdminPagesAreNotFound($url)
+    public function testAdminPagesAreNotFound(string $url)
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
