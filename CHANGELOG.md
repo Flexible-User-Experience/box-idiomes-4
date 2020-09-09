@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.1.10 (WIP)
+##### Version 4.1.11 (WIP)
  * fix minor bugs
+
+##### Version 4.1.10 (2020-09-09)
+ * fix missing EWZRecaptcha Twig form template config
+ * fix broken testing suite
 
 ##### Version 4.1.09 (2020-09-07)
  * Symfony 4.4.13 security update
