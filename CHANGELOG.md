@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.1.11 (WIP)
+##### Version 4.2.01 (WIP)
  * fix minor bugs
+
+##### Version 4.2.00 (2020-09-13)
+ * add admin conditonal delete student button & action
 
 ##### Version 4.1.10 (2020-09-09)
  * fix missing EWZRecaptcha Twig form template config

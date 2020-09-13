@@ -443,4 +443,14 @@ class Student extends AbstractPerson
 
         return $email;
     }
+
+    public function canBeDeletedSafely()
+    {
+        $result = false;
+        if (is_null($this->getParent()) && count($this->getEvents()) === 0) {
+            $result = true;
+        }
+
+        return $result;
+    }
 }
