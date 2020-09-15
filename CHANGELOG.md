@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.2.01 (WIP)
+##### Version 4.2.02 (WIP)
  * fix minor bugs
+
+##### Version 4.2.01 (2020-09-15)
+ * fix SonataUser role admin problem
+ * vendors & node vendors upgrade
 
 ##### Version 4.2.00 (2020-09-13)
  * add admin conditonal delete student button & action
