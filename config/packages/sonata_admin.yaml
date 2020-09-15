@@ -10,6 +10,8 @@ sonata_admin:
         pager_links:    10
     security:
         handler: sonata.admin.security.handler.role
+        role_admin:       ROLE_ADMIN
+        role_super_admin: ROLE_ADMIN
     templates:
         layout:    'Admin/layout.html.twig'
         dashboard: 'Admin/dashboard.html.twig'
