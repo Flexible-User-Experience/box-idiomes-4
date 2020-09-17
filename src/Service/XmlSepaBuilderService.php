@@ -2,71 +2,29 @@
 
 namespace App\Service;
 
-use App\Entity\AbstractReceiptInvoice;
 use App\Entity\AbstractReceiptInvoiceLine;
-use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Invoice;
-use App\Entity\Student;
-use App\Enum\StudentPaymentEnum;
-use Digitick\Sepa\Exception\InvalidArgumentException;
-use Digitick\Sepa\Exception\InvalidPaymentMethodException;
+use DateTimeInterface;
 use Digitick\Sepa\TransferFile\Facade\CustomerDirectDebitFacade;
 use Digitick\Sepa\TransferFile\Factory\TransferFileFacadeFactory;
 use Digitick\Sepa\PaymentInformation;
 use Digitick\Sepa\GroupHeader;
 use Digitick\Sepa\Util\StringHelper;
 
-/**
- * Class XmlSepaBuilderService.
- *
- * @category Service
- */
 class XmlSepaBuilderService
 {
-    const DIRECT_DEBIT_PAIN_CODE = 'pain.008.001.02';
-    const DIRECT_DEBIT_LI_CODE = 'CORE';
-    const DEFAULT_REMITANCE_INFORMATION = 'Import mensual';
+    public const DIRECT_DEBIT_PAIN_CODE = 'pain.008.001.02';
+    public const DIRECT_DEBIT_LI_CODE = 'CORE';
+    public const DEFAULT_REMITANCE_INFORMATION = 'Import mensual';
 
-    /**
-     * @var SpanishSepaHelperService
-     */
-    private $sshs;
+    private SpanishSepaHelperService $sshs;
+    private string $bn;
+    private string $bd;
+    private string $ib;
+    private string $bic;
 
-    /**
-     * @var string fiscal name
-     */
-    private $bn;
-
-    /**
-     * @var string fiscal identification code (NIF/CIF/DNI)
-     */
-    private $bd;
-
-    /**
-     * @var string IBAN code
-     */
-    private $ib;
-
-    /**
-     * @var string BIC number
-     */
-    private $bic;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * XmlSepaBuilderService constructor.
-     *
-     * @param SpanishSepaHelperService $sshs
-     * @param string                   $bn
-     * @param string                   $bd
-     * @param string                   $ib
-     * @param string                   $bic
-     */
-    public function __construct(SpanishSepaHelperService $sshs, $bn, $bd, $ib, $bic)
+    public function __construct(SpanishSepaHelperService $sshs, string $bn, string $bd, string $ib, string $bic)
     {
         $this->sshs = $sshs;
         $this->bn = $bn;
@@ -75,44 +33,24 @@ class XmlSepaBuilderService
         $this->bic = $this->removeSpacesFrom($bic);
     }
 
-    /**
-     * @param string    $paymentId
-     * @param \DateTime $dueDate
-     * @param Receipt   $recepit
-     *
-     * @return string
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidPaymentMethodException
-     */
-    public function buildDirectDebitSingleReceiptXml($paymentId, \DateTime $dueDate, Receipt $recepit)
+    public function buildDirectDebitSingleReceiptXml(string $paymentId, DateTimeInterface $dueDate, Receipt $recepit): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
-        $this->validate($recepit);
-        $this->addTransfer($directDebit, $paymentId, $recepit);
+        if ($recepit->isReadyToGenerateSepa()) {
+            $this->addTransfer($directDebit, $paymentId, $recepit);
+        }
 
         return $directDebit->asXML();
     }
 
-    /**
-     * @param string          $paymentId
-     * @param \DateTime       $dueDate
-     * @param Receipt[]|array $receipts
-     *
-     * @return string
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidPaymentMethodException
-     */
-    public function buildDirectDebitReceiptsXml($paymentId, \DateTime $dueDate, $receipts)
+    public function buildDirectDebitReceiptsXml(string $paymentId, DateTimeInterface $dueDate, $receipts): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
         /** @var Receipt $receipt */
         foreach ($receipts as $receipt) {
-            if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $receipt->getMainSubject()->getPayment() && !$receipt->getStudent()->getIsPaymentExempt()) {
-                $this->validate($receipt);
+            if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()->getIsPaymentExempt()) {
                 $this->addTransfer($directDebit, $paymentId, $receipt);
             }
         }
@@ -120,44 +58,24 @@ class XmlSepaBuilderService
         return $directDebit->asXML();
     }
 
-    /**
-     * @param string    $paymentId
-     * @param \DateTime $dueDate
-     * @param Invoice   $invoice
-     *
-     * @return string
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidPaymentMethodException
-     */
-    public function buildDirectDebitSingleInvoiceXml($paymentId, \DateTime $dueDate, Invoice $invoice)
+    public function buildDirectDebitSingleInvoiceXml(string $paymentId, DateTimeInterface $dueDate, Invoice $invoice): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
-        $this->validate($invoice);
-        $this->addTransfer($directDebit, $paymentId, $invoice);
+        if ($invoice->isReadyToGenerateSepa()) {
+            $this->addTransfer($directDebit, $paymentId, $invoice);
+        }
 
         return $directDebit->asXML();
     }
 
-    /**
-     * @param string          $paymentId
-     * @param \DateTime       $dueDate
-     * @param Invoice[]|array $invoices
-     *
-     * @return string
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidPaymentMethodException
-     */
-    public function buildDirectDebitInvoicesXml($paymentId, \DateTime $dueDate, $invoices)
+    public function buildDirectDebitInvoicesXml(string $paymentId, DateTimeInterface $dueDate, $invoices): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
         /** @var Invoice $invoice */
         foreach ($invoices as $invoice) {
-            if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $invoice->getMainSubject()->getPayment() && !$invoice->getStudent()->getIsPaymentExempt()) {
-                $this->validate($invoice);
+            if ($invoice->isReadyToGenerateSepa() && !$invoice->getStudent()->getIsPaymentExempt()) {
                 $this->addTransfer($directDebit, $paymentId, $invoice);
             }
         }
@@ -165,13 +83,7 @@ class XmlSepaBuilderService
         return $directDebit->asXML();
     }
 
-    /**
-     * @param string $paymentId
-     * @param bool   $isTest
-     *
-     * @return CustomerDirectDebitFacade
-     */
-    private function buildDirectDebit($paymentId, $isTest = false)
+    private function buildDirectDebit(string $paymentId, bool $isTest = false): CustomerDirectDebitFacade
     {
         $msgId = 'MID'.StringHelper::sanitizeString($paymentId);
         $header = new GroupHeader($msgId, strtoupper(StringHelper::sanitizeString($this->bn)), $isTest);
@@ -181,16 +93,9 @@ class XmlSepaBuilderService
         return TransferFileFacadeFactory::createDirectDebitWithGroupHeader($header, self::DIRECT_DEBIT_PAIN_CODE);
     }
 
-    /**
-     * @param CustomerDirectDebitFacade $directDebit
-     * @param string                    $paymentId
-     * @param \DateTime                 $dueDate
-     *
-     * @throws InvalidArgumentException
-     */
-    private function addPaymentInfo(CustomerDirectDebitFacade &$directDebit, $paymentId, \DateTime $dueDate)
+    private function addPaymentInfo(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate): void
     {
-        $directDebit->addPaymentInfo($paymentId, array(
+        $directDebit->addPaymentInfo($paymentId, [
             'id' => StringHelper::sanitizeString($paymentId),
             'dueDate' => $dueDate,
             'creditorName' => strtoupper(StringHelper::sanitizeString($this->bn)),
@@ -199,17 +104,10 @@ class XmlSepaBuilderService
             'seqType' => PaymentInformation::S_ONEOFF,
             'creditorId' => $this->sshs->getSpanishCreditorIdFromNif($this->bd),
             'localInstrumentCode' => self::DIRECT_DEBIT_LI_CODE,
-        ));
+        ]);
     }
 
-    /**
-     * @param CustomerDirectDebitFacade $directDebit
-     * @param string                    $paymentId
-     * @param Receipt|Invoice           $ari
-     *
-     * @throws InvalidArgumentException
-     */
-    private function addTransfer(CustomerDirectDebitFacade &$directDebit, $paymentId, $ari)
+    private function addTransfer(CustomerDirectDebitFacade $directDebit, string $paymentId, $ari): void
     {
         $remitanceInformation = self::DEFAULT_REMITANCE_INFORMATION;
         if (count($ari->getLines()) > 0) {
@@ -228,7 +126,7 @@ class XmlSepaBuilderService
             $amount = $ari->getTotalAmount();
         }
 
-        $transferInformation = array(
+        $transferInformation = [
             'amount' => $amount,
             'debtorIban' => $this->removeSpacesFrom($ari->getMainBank()->getAccountNumber()),
             'debtorName' => $ari->getMainEmailName(),
@@ -236,7 +134,7 @@ class XmlSepaBuilderService
             'debtorMandateSignDate' => $ari->getDebtorMandateSignDate(),
             'remittanceInformation' => $remitanceInformation,
             'endToEndId' => StringHelper::sanitizeString($endToEndId),
-        );
+        ];
 
         if ($ari->getMainBank()->getSwiftCode()) {
             $transferInformation['debtorBic'] = $this->removeSpacesFrom($ari->getMainBank()->getSwiftCode());
@@ -245,30 +143,8 @@ class XmlSepaBuilderService
         $directDebit->addTransfer($paymentId, $transferInformation);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    private function removeSpacesFrom($value)
+    private function removeSpacesFrom(string $value): string
     {
         return str_replace(' ', '', $value);
-    }
-
-    /**
-     * @param AbstractReceiptInvoice $ari
-     *
-     * @throws InvalidPaymentMethodException
-     */
-    private function validate($ari)
-    {
-        /** @var Student|Person $subject */
-        $subject = $ari->getMainSubject();
-        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER != $subject->getPayment()) {
-            throw new InvalidPaymentMethodException('Forma de pagament invàlida al '.($subject instanceof Student ? 'alumne' : 'pare/mare').' '.$subject->getFullName());
-        }
-        if (!$subject->getBank()->getAccountNumber()) {
-            throw new InvalidPaymentMethodException('No s\'ha trobat cap IBAN al '.($subject instanceof Student ? 'alumne' : 'pare/mare').' '.$subject->getFullName());
-        }
     }
 }
