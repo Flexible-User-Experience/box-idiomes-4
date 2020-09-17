@@ -2,15 +2,10 @@
 
 namespace App\Service;
 
-use App\Entity\AbstractReceiptInvoice;
 use App\Entity\AbstractReceiptInvoiceLine;
-use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Invoice;
-use App\Entity\Student;
-use App\Enum\StudentPaymentEnum;
 use DateTimeInterface;
-use Digitick\Sepa\Exception\InvalidPaymentMethodException;
 use Digitick\Sepa\TransferFile\Facade\CustomerDirectDebitFacade;
 use Digitick\Sepa\TransferFile\Factory\TransferFileFacadeFactory;
 use Digitick\Sepa\PaymentInformation;
@@ -42,8 +37,9 @@ class XmlSepaBuilderService
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
-        $this->validate($recepit);
-        $this->addTransfer($directDebit, $paymentId, $recepit);
+        if ($recepit->isReadyToGenerateSepa()) {
+            $this->addTransfer($directDebit, $paymentId, $recepit);
+        }
 
         return $directDebit->asXML();
     }
@@ -54,8 +50,7 @@ class XmlSepaBuilderService
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
         /** @var Receipt $receipt */
         foreach ($receipts as $receipt) {
-            if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $receipt->getMainSubject()->getPayment() && !$receipt->getStudent()->getIsPaymentExempt()) {
-                $this->validate($receipt);
+            if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()->getIsPaymentExempt()) {
                 $this->addTransfer($directDebit, $paymentId, $receipt);
             }
         }
@@ -67,8 +62,9 @@ class XmlSepaBuilderService
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
-        $this->validate($invoice);
-        $this->addTransfer($directDebit, $paymentId, $invoice);
+        if ($invoice->isReadyToGenerateSepa()) {
+            $this->addTransfer($directDebit, $paymentId, $invoice);
+        }
 
         return $directDebit->asXML();
     }
@@ -79,8 +75,7 @@ class XmlSepaBuilderService
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
         /** @var Invoice $invoice */
         foreach ($invoices as $invoice) {
-            if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $invoice->getMainSubject()->getPayment() && !$invoice->getStudent()->getIsPaymentExempt()) {
-                $this->validate($invoice);
+            if ($invoice->isReadyToGenerateSepa() && !$invoice->getStudent()->getIsPaymentExempt()) {
                 $this->addTransfer($directDebit, $paymentId, $invoice);
             }
         }
@@ -131,7 +126,7 @@ class XmlSepaBuilderService
             $amount = $ari->getTotalAmount();
         }
 
-        $transferInformation = array(
+        $transferInformation = [
             'amount' => $amount,
             'debtorIban' => $this->removeSpacesFrom($ari->getMainBank()->getAccountNumber()),
             'debtorName' => $ari->getMainEmailName(),
@@ -139,7 +134,7 @@ class XmlSepaBuilderService
             'debtorMandateSignDate' => $ari->getDebtorMandateSignDate(),
             'remittanceInformation' => $remitanceInformation,
             'endToEndId' => StringHelper::sanitizeString($endToEndId),
-        );
+        ];
 
         if ($ari->getMainBank()->getSwiftCode()) {
             $transferInformation['debtorBic'] = $this->removeSpacesFrom($ari->getMainBank()->getSwiftCode());
@@ -151,17 +146,5 @@ class XmlSepaBuilderService
     private function removeSpacesFrom(string $value): string
     {
         return str_replace(' ', '', $value);
-    }
-
-    private function validate(AbstractReceiptInvoice $ari): void
-    {
-        /** @var Student|Person $subject */
-        $subject = $ari->getMainSubject();
-        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER !== $subject->getPayment()) {
-            throw new InvalidPaymentMethodException('Forma de pagament invàlida al '.($subject instanceof Student ? 'alumne' : 'pare/mare').' '.$subject->getFullName());
-        }
-        if (!$subject->getBank()->getAccountNumber()) {
-            throw new InvalidPaymentMethodException('No s\'ha trobat cap IBAN al '.($subject instanceof Student ? 'alumne' : 'pare/mare').' '.$subject->getFullName());
-        }
     }
 }
