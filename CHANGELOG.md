@@ -4,6 +4,9 @@ Changelog
 ##### Version 4.2.02 (WIP)
  * fix minor bugs
 
+##### Version 4.2.02 (2020-09-17)
+ * make XML SEPA generation less strict
+
 ##### Version 4.2.01 (2020-09-15)
  * fix SonataUser role admin problem
  * vendors & node vendors upgrade
