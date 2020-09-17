@@ -325,7 +325,7 @@ class ReceiptAdminController extends BaseAdminController
 
         /** @var XmlSepaBuilderService $xsbs */
         $xsbs = $this->container->get('app.xml_sepa_builder');
-        $paymentUniqueId = uniqid();
+        $paymentUniqueId = uniqid('', true);
         $xml = $xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new \DateTime('now + 3 days'), $object);
 
         $object
@@ -402,12 +402,12 @@ class ReceiptAdminController extends BaseAdminController
         try {
             /** @var XmlSepaBuilderService $xsbs */
             $xsbs = $this->container->get('app.xml_sepa_builder');
-            $paymentUniqueId = uniqid();
+            $paymentUniqueId = uniqid('', true);
             $xmls = $xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new \DateTime('now + 3 days'), $selectedModels);
 
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
-                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
+                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
                     $selectedModel
                         ->setIsSepaXmlGenerated(true)
                         ->setSepaXmlGeneratedDate(new \DateTime())
@@ -416,7 +416,7 @@ class ReceiptAdminController extends BaseAdminController
             }
             $em->flush();
 
-            if (DefaultController::ENV_DEV == $this->getParameter('kernel.environment')) {
+            if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, array('Content-type' => 'application/xml'));
             }
 

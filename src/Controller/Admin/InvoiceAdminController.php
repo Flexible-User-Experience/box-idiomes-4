@@ -213,7 +213,7 @@ class InvoiceAdminController extends BaseAdminController
 
         /** @var XmlSepaBuilderService $xsbs */
         $xsbs = $this->container->get('app.xml_sepa_builder');
-        $paymentUniqueId = uniqid();
+        $paymentUniqueId = uniqid('', true);
         $xml = $xsbs->buildDirectDebitSingleInvoiceXml($paymentUniqueId, new \DateTime('now + 3 days'), $object);
 
         $object
@@ -253,7 +253,7 @@ class InvoiceAdminController extends BaseAdminController
         try {
             /** @var XmlSepaBuilderService $xsbs */
             $xsbs = $this->container->get('app.xml_sepa_builder');
-            $paymentUniqueId = uniqid();
+            $paymentUniqueId = uniqid('', true);
             $xmls = $xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new \DateTime('now + 3 days'), $selectedModels);
 
             /** @var Invoice $selectedModel */

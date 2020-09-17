@@ -61,7 +61,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
      *
      * @return array
      */
-    public function configureBatchActions($actions)
+    public function configureBatchActions($actions): array
     {
         if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
             $actions['generatereminderspdf'] = array(
