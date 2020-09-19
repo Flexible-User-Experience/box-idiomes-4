@@ -245,9 +245,6 @@
             "config/packages/test/nelmio_alice.yaml"
         ]
     },
-    "nikic/php-parser": {
-        "version": "v4.4.0"
-    },
     "ocramius/package-versions": {
         "version": "1.8.0"
     },
@@ -525,15 +522,6 @@
         "files": [
             "config/packages/mailer.yaml"
         ]
-    },
-    "symfony/maker-bundle": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
-        }
     },
     "symfony/mime": {
         "version": "v4.4.8"
