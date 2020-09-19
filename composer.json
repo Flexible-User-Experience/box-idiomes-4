@@ -17,7 +17,6 @@
         "friendsofsymfony/ckeditor-bundle": "^2.2",
         "friendsofsymfony/jsrouting-bundle": "^2.5",
         "gremo/zurb-ink-bundle": "^4.1",
-        "hautelook/alice-bundle": "^2.7",
         "knplabs/knp-menu-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^3.0",
         "kunicmarko/color-picker-bundle": "^1.1",
@@ -59,9 +58,9 @@
         "vich/uploader-bundle": "1.13.1"
     },
     "require-dev": {
+        "hautelook/alice-bundle": "^2.7",
         "sensiolabs/security-checker": "^6.0",
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*"
     },

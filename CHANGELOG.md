@@ -1,15 +1,16 @@
 Changelog
 =========
 
-##### Version 4.2.02 (WIP)
+##### Version 4.2.03 (WIP)
  * fix minor bugs
 
-##### Version 4.2.02 (2020-09-17)
+##### Version 4.2.02 (2020-09-19)
  * make XML SEPA generation less strict
+ * remove unnecessary maker bundle
 
 ##### Version 4.2.01 (2020-09-15)
  * fix SonataUser role admin problem
- * vendors & node vendors upgrade
+ * composer & node vendors update
 
 ##### Version 4.2.00 (2020-09-13)
  * add admin conditonal delete student button & action
