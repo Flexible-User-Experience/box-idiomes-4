@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.2.03 (WIP)
+##### Version 4.2.04 (WIP)
  * fix minor bugs
+
+##### Version 4.2.03 (2020-09-25)
+ * fix Students admin remove to erase previously related receipt and invoice relations
 
 ##### Version 4.2.02 (2020-09-19)
  * make XML SEPA generation less strict
