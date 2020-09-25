@@ -3,7 +3,9 @@
 namespace App\Admin;
 
 use App\Entity\City;
+use App\Entity\Invoice;
 use App\Entity\Person;
+use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\Tariff;
 use App\Enum\StudentPaymentEnum;
@@ -543,6 +545,27 @@ class StudentAdmin extends AbstractBaseAdmin
             'hasAcceptedInternalRegulations',
             'enabled',
         );
+    }
+
+    /**
+     * @param Student $object
+     */
+    public function preRemove($object)
+    {
+        $relatedReceipts = $this->getModelManager()->findBy(Receipt::class, [
+            'student' => $object,
+        ]);
+        /** @var Receipt $relatedReceipt */
+        foreach ($relatedReceipts as $relatedReceipt) {
+            $this->getModelManager()->delete($relatedReceipt);
+        }
+        $relatedInvoices = $this->getModelManager()->findBy(Invoice::class, [
+            'student' => $object,
+        ]);
+        /** @var Invoice $relatedInvoice */
+        foreach ($relatedInvoices as $relatedInvoice) {
+            $this->getModelManager()->delete($relatedInvoice);
+        }
     }
 
     /**
