@@ -756,30 +756,30 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "2.10.4",
+            "version": "2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "47433196b6390d14409a33885ee42b6208160643"
+                "reference": "0d4e1a8b29dd987704842f0465aded378f441dca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/47433196b6390d14409a33885ee42b6208160643",
-                "reference": "47433196b6390d14409a33885ee42b6208160643",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/0d4e1a8b29dd987704842f0465aded378f441dca",
+                "reference": "0d4e1a8b29dd987704842f0465aded378f441dca",
                 "shasum": ""
             },
             "require": {
                 "doctrine/cache": "^1.0",
                 "doctrine/event-manager": "^1.0",
                 "ext-pdo": "*",
-                "php": "^7.2"
+                "php": "^7.3"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^8.1",
                 "jetbrains/phpstorm-stubs": "^2019.1",
                 "nikic/php-parser": "^4.4",
                 "phpstan/phpstan": "^0.12.40",
-                "phpunit/phpunit": "^8.5.5",
+                "phpunit/phpunit": "^9.3",
                 "psalm/plugin-phpunit": "^0.10.0",
                 "symfony/console": "^2.0.5|^3.0|^4.0|^5.0",
                 "vimeo/psalm": "^3.14.2"
@@ -793,8 +793,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.10.x-dev",
-                    "dev-develop": "3.0.x-dev"
+                    "dev-master": "4.0.x-dev"
                 }
             },
             "autoload": {
@@ -861,7 +860,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-12T21:20:41+00:00"
+            "time": "2020-09-20T23:24:53+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -1838,16 +1837,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.20",
+            "version": "2.1.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "f46887bc48db66c7f38f668eb7d6ae54583617ff"
+                "reference": "563d0cdde5d862235ffe24a158497f4d490191b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/f46887bc48db66c7f38f668eb7d6ae54583617ff",
-                "reference": "f46887bc48db66c7f38f668eb7d6ae54583617ff",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/563d0cdde5d862235ffe24a158497f4d490191b5",
+                "reference": "563d0cdde5d862235ffe24a158497f4d490191b5",
                 "shasum": ""
             },
             "require": {
@@ -1892,7 +1891,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2020-09-06T13:44:32+00:00"
+            "time": "2020-09-19T14:37:56+00:00"
         },
         {
             "name": "excelwebzone/recaptcha-bundle",
@@ -3807,16 +3806,16 @@
         },
         {
             "name": "qipsius/tcpdf-bundle",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Qipsius/QipsiusTCPDFBundle.git",
-                "reference": "1b1816f5e133dbc3860b3aab4420cc486eed2300"
+                "reference": "270667cb258b2d2a6b2b906f436765e51570e661"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Qipsius/QipsiusTCPDFBundle/zipball/1b1816f5e133dbc3860b3aab4420cc486eed2300",
-                "reference": "1b1816f5e133dbc3860b3aab4420cc486eed2300",
+                "url": "https://api.github.com/repos/Qipsius/QipsiusTCPDFBundle/zipball/270667cb258b2d2a6b2b906f436765e51570e661",
+                "reference": "270667cb258b2d2a6b2b906f436765e51570e661",
                 "shasum": ""
             },
             "require": {
@@ -3846,7 +3845,7 @@
                 "TCPDF",
                 "pdf"
             ],
-            "time": "2019-12-06T11:11:25+00:00"
+            "time": "2020-09-22T19:00:11+00:00"
         },
         {
             "name": "saad-tazi/g-chart-bundle",
@@ -11085,16 +11084,16 @@
         },
         {
             "name": "hautelook/alice-bundle",
-            "version": "2.7.2",
+            "version": "2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hautelook/AliceBundle.git",
-                "reference": "2f2005fcdb1a6181ba6db07db702ca3a3d8b47bc"
+                "reference": "0fb5cefc3efc3a120be0458ac68b974fa124bfb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hautelook/AliceBundle/zipball/2f2005fcdb1a6181ba6db07db702ca3a3d8b47bc",
-                "reference": "2f2005fcdb1a6181ba6db07db702ca3a3d8b47bc",
+                "url": "https://api.github.com/repos/hautelook/AliceBundle/zipball/0fb5cefc3efc3a120be0458ac68b974fa124bfb3",
+                "reference": "0fb5cefc3efc3a120be0458ac68b974fa124bfb3",
                 "shasum": ""
             },
             "require": {
@@ -11155,7 +11154,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-03-15T10:07:54+00:00"
+            "time": "2020-09-24T20:52:16+00:00"
         },
         {
             "name": "myclabs/deep-copy",
