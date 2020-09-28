@@ -7,6 +7,7 @@
 /public/uploads/images/*
 !/public/uploads/images/.gitkeep
 !.travis.yml
+/src/.preload.php
 ###< app/bundle ###
 
 ###> symfony/framework-bundle ###
