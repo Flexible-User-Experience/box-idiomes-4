@@ -14,20 +14,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
  */
 class FrontendMenuBuilder
 {
-    /**
-     * @var FactoryInterface
-     */
-    private $factory;
-
-    /**
-     * @var AuthorizationChecker
-     */
-    private $ac;
-
-    /**
-     * @var TokenStorageInterface
-     */
-    private $ts;
+    private FactoryInterface $factory;
+    private AuthorizationChecker $ac;
+    private TokenStorageInterface $ts;
+    private string $ppo;
 
     /**
      * Methods.
@@ -40,11 +30,12 @@ class FrontendMenuBuilder
      * @param AuthorizationChecker  $ac
      * @param TokenStorageInterface $ts
      */
-    public function __construct(FactoryInterface $factory, AuthorizationChecker $ac, TokenStorageInterface $ts)
+    public function __construct(FactoryInterface $factory, AuthorizationChecker $ac, TokenStorageInterface $ts, string $ppo)
     {
         $this->factory = $factory;
         $this->ac = $ac;
         $this->ts = $ts;
+        $this->ppo = $ppo;
     }
 
     /**
@@ -84,19 +75,22 @@ class FrontendMenuBuilder
                 'route' => 'app_contact',
             )
         );
-        $menu->addChild(
-            'app_pre_register',
-            array(
-                'label' => 'frontend.menu.preregisters',
-                'route' => 'app_pre_register',
-                'attributes' => array(
-                    'class' => 'violet-background',
-                ),
-                'linkAttributes' => array(
-                    'class' => 'c-white',
-                ),
-            )
-        );
+        // activate Preregister top menu option conditionally
+        if ($this->ppo) {
+            $menu->addChild(
+                'app_pre_register',
+                array(
+                    'label' => 'frontend.menu.preregisters',
+                    'route' => 'app_pre_register',
+                    'attributes' => array(
+                        'class' => 'violet-background',
+                    ),
+                    'linkAttributes' => array(
+                        'class' => 'c-white',
+                    ),
+                )
+            );
+        }
 
         return $menu;
     }
