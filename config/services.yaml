@@ -3,27 +3,28 @@ imports:
     - { resource: 'services/admins.yaml' }
 
 parameters:
-    default_locale:            '%env(string:DEFAULT_LOCALE)%'
-    database_server_version:   '%env(resolve:DATABASE_SERVER_VERSION)%'
-    project_web_title:         '%env(string:PROJECT_WEB_TITLE)%'
-    project_url_base:          '%env(string:PROJECT_BASE_URL)%'
-    project_backend_title:     '%env(string:PROJECT_BACKEND_TITLE)%'
-    google_analytics_enabled:  '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
-    google_analytics_account:  '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
-    google_maps_api_key:       '%env(string:GOOGLE_MAPS_API_KEY)%'
-    facebook_pixel_enabled:    '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
-    facebook_pixel_id:         '%env(string:FACEBOOK_PIXEL_ID)%'
-    mailchimp_api_key:         '%env(string:MAILCHIMP_API_KEY)%'
-    mailchimp_list_id:         '%env(string:MAILCHIMP_LIST_ID)%'
-    boss_name:                 '%env(string:BOSS_NAME)%'
-    boss_dni:                  '%env(string:BOSS_DNI)%'
-    boss_address:              '%env(string:BOSS_ADDRESS)%'
-    boss_city:                 '%env(string:BOSS_CITY)%'
-    iban_business:             '%env(string:IBAN_BUSINESS)%'
-    bic_number:                '%env(string:BIC_NUMBER)%'
-    mailer_destination:        '%env(string:MAILER_DESTINATION)%'
-    delivery_dev_address:      '%env(string:DEV_DELIVERY_ADDRESS)%'
-    google_recaptcha_site_key: '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
+    default_locale:              '%env(string:DEFAULT_LOCALE)%'
+    database_server_version:     '%env(resolve:DATABASE_SERVER_VERSION)%'
+    project_web_title:           '%env(string:PROJECT_WEB_TITLE)%'
+    project_url_base:            '%env(string:PROJECT_BASE_URL)%'
+    project_backend_title:       '%env(string:PROJECT_BACKEND_TITLE)%'
+    google_analytics_enabled:    '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
+    google_analytics_account:    '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
+    google_maps_api_key:         '%env(string:GOOGLE_MAPS_API_KEY)%'
+    facebook_pixel_enabled:      '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
+    facebook_pixel_id:           '%env(string:FACEBOOK_PIXEL_ID)%'
+    mailchimp_api_key:           '%env(string:MAILCHIMP_API_KEY)%'
+    mailchimp_list_id:           '%env(string:MAILCHIMP_LIST_ID)%'
+    boss_name:                   '%env(string:BOSS_NAME)%'
+    boss_dni:                    '%env(string:BOSS_DNI)%'
+    boss_address:                '%env(string:BOSS_ADDRESS)%'
+    boss_city:                   '%env(string:BOSS_CITY)%'
+    iban_business:               '%env(string:IBAN_BUSINESS)%'
+    bic_number:                  '%env(string:BIC_NUMBER)%'
+    mailer_destination:          '%env(string:MAILER_DESTINATION)%'
+    delivery_dev_address:        '%env(string:DEV_DELIVERY_ADDRESS)%'
+    google_recaptcha_site_key:   '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
+    preregister_peridod_is_open: false
 
 services:
     _defaults:
@@ -33,6 +34,7 @@ services:
             $amd: '%mailer_destination%'
             $pub: '%project_url_base%'
             $mak: '%mailchimp_api_key%'
+            $ppo: '%preregister_peridod_is_open%'
     # Commons
     App\:
         resource: '../src/*'
@@ -126,6 +128,7 @@ services:
             - '@knp_menu.factory'
             - '@security.authorization_checker'
             - '@security.token_storage'
+            - '%preregister_peridod_is_open%'
     app.frontend_top_menu:
         class: Knp\Menu\MenuItem
         factory: [ '@app.frontend_menu_builder', createTopMenu ]

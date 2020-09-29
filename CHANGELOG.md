@@ -5,7 +5,7 @@ Changelog
  * fix minor bugs
 
 ##### Version 4.2.05 (2020-09-29)
- * remove preregister module from frontend top menu
+ * remove preregister module from frontend top menu conditionally
 
 ##### Version 4.2.04 (2020-09-29)
  * Symfony 4.4.13 update
