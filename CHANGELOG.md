@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.2.06 (WIP)
+##### Version 4.2.07 (WIP)
  * fix minor bugs
+
+##### Version 4.2.06 (2020-10-04)
+ * composer update
+ * yarn upgrade
 
 ##### Version 4.2.05 (2020-09-29)
  * remove preregister module from frontend top menu conditionally
