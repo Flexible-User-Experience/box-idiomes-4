@@ -7,6 +7,7 @@ Changelog
 ##### Version 4.2.06 (2020-10-04)
  * composer update
  * yarn upgrade
+ * fix chart overflow in admin dashboard panel
 
 ##### Version 4.2.05 (2020-09-29)
  * remove preregister module from frontend top menu conditionally
