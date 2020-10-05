@@ -112,6 +112,7 @@ class ProviderAdmin extends AbstractBaseAdmin
                 TextType::class,
                 array(
                     'label' => 'backend.admin.customer.iban_for_bank_draft_payment',
+                    'help' => 'backend.admin.customer.iban_for_bank_draft_payment_help',
                     'required' => false,
                 )
             )

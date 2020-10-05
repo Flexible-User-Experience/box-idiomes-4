@@ -59,7 +59,7 @@ class BankAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'IBAN',
                     'required' => true,
-                    'help' => 'Ex. ES0011112222333344445555',
+                    'help' => 'backend.admin.bank.accountNumber_help',
                 )
             )
             ->end()

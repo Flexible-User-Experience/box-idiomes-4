@@ -78,6 +78,7 @@ class Provider extends AbstractBase
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Iban()
      */
     private $ibanForBankDraftPayment;
 
