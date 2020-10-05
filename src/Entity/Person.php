@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Person.
@@ -33,6 +34,7 @@ class Person extends AbstractPerson
      * @var Bank
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
+     * @Assert\Valid
      */
     protected $bank;
 

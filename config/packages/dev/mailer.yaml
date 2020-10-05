@@ -1,0 +1,4 @@
+framework:
+    mailer:
+        envelope:
+            recipients: [ '%delivery_dev_address%' ]

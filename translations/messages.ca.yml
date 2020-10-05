@@ -301,6 +301,7 @@ backend:
         bank:
             name: Entitat bancària
             accountNumber: Núm. de compte
+            accountNumber_help: "Exemple: ES11 2222 3333 4444 5555 6666"
             swiftCode: BIC/Swift
             parent: Pare, mare o tutor
         parent:
@@ -436,6 +437,7 @@ backend:
             invoices_language: Idioma factura
             payment_method: Forma de pagament
             iban_for_bank_draft_payment: Número de compte gir bancari
+            iban_for_bank_draft_payment_help: "Exemple: ES11 2222 3333 4444 5555 6666"
         spending_category:
             name: Nom
         spending:
