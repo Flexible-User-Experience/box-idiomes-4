@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 4.2.07 (WIP)
+##### Version 4.3.01 (WIP)
  * fix minor bugs
+
+##### Version 4.3.00 (2020-10-05)
+ * enable Bank account number validation
+ * remove some hardcoded customer brand data
+ * improve dev mailer config
 
 ##### Version 4.2.06 (2020-10-04)
  * composer update
