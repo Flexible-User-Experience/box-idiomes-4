@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 4.3.02 (WIP)
  * fix minor bugs
+ * remove white spaces from callto number in frontend layout
 
 ##### Version 4.3.01 (2020-10-11)
  * remove removeAt default attr in all entities
