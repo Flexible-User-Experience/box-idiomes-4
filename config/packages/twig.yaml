@@ -17,4 +17,6 @@ twig:
         main_brand_title:         '%project_web_title%'
         main_brand_address:       '%boss_address%'
         main_brand_city:          '%boss_city%'
-        admin_tag_version:        'v4.3.00'
+        main_brand_phone_1:       '%boss_phone_number_1%'
+        main_brand_phone_2:       '%boss_phone_number_2%'
+        admin_tag_version:        'v4.3.01'
