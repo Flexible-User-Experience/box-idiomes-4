@@ -3,11 +3,12 @@ Changelog
 
 ##### Version 4.3.02 (WIP)
  * fix minor bugs
- * remove white spaces from callto number in frontend layout
 
 ##### Version 4.3.01 (2020-10-11)
  * remove removeAt default attr in all entities
  * decouple hardcoded brand phone numbers
+ * remove white spaces from callto number in frontend layout
+ * fix broken PDF generator
 
 ##### Version 4.3.00 (2020-10-05)
  * enable Bank account number validation
