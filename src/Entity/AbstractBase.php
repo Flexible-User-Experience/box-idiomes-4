@@ -43,13 +43,6 @@ abstract class AbstractBase
     protected $updatedAt;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $removedAt;
-
-    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
