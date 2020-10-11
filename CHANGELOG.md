@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 4.3.01 (WIP)
  * fix minor bugs
+ * remove removeAt default attr in all entities
 
 ##### Version 4.3.00 (2020-10-05)
  * enable Bank account number validation
