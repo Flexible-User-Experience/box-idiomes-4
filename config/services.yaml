@@ -17,6 +17,8 @@ parameters:
     mailchimp_list_id:           '%env(string:MAILCHIMP_LIST_ID)%'
     boss_name:                   '%env(string:BOSS_NAME)%'
     boss_dni:                    '%env(string:BOSS_DNI)%'
+    boss_phone_number_1:         '%env(string:BOSS_PHONE_NUMBER_1)%'
+    boss_phone_number_2:         '%env(string:BOSS_PHONE_NUMBER_2)%'
     boss_address:                '%env(string:BOSS_ADDRESS)%'
     boss_city:                   '%env(string:BOSS_CITY)%'
     iban_business:               '%env(string:IBAN_BUSINESS)%'
@@ -35,6 +37,8 @@ services:
             $pub: '%project_url_base%'
             $mak: '%mailchimp_api_key%'
             $ppo: '%preregister_peridod_is_open%'
+            $bba: '%boss_address%'
+            $bpn: '%boss_phone_number_1%'
     # Commons
     App\:
         resource: '../src/*'
@@ -187,6 +191,9 @@ services:
         class: App\Pdf\BaseTcpdf
         arguments:
             - '@app.smart_assets_helper'
+            - '%mailer_destination%'
+            - '%boss_address%'
+            - '%boss_phone_number_1%'
     app.student_image_rights_pdf_builder:
         class: App\Pdf\StudentImageRightsBuilderPdf
         public: true

@@ -4,11 +4,6 @@ namespace App\Pdf;
 
 use App\Service\SmartAssetsHelperService;
 
-/**
- * Class BaseTcpdf.
- *
- * @category Pdf
- */
 class BaseTcpdf extends \TCPDF
 {
     const PDF_WIDTH = 210;
@@ -23,29 +18,20 @@ class BaseTcpdf extends \TCPDF
     const MARGIN_VERTICAL_SMALL = 3;
     const MARGIN_VERTICAL_BIG = 8;
 
-    /**
-     * @var SmartAssetsHelperService
-     */
-    private $sahs;
+    private SmartAssetsHelperService $sahs;
+    private string $amd;
+    private string $bba;
+    private string $bpn;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * BaseTcpdf constructor.
-     *
-     * @param SmartAssetsHelperService $sahs
-     */
-    public function __construct(SmartAssetsHelperService $sahs)
+    public function __construct(SmartAssetsHelperService $sahs, string $amd, string $bba, string $bpn)
     {
         parent::__construct();
         $this->sahs = $sahs;
+        $this->amd = $amd;
+        $this->bba = $bba;
+        $this->bpn = $bpn;
     }
 
-    /**
-     * Page header.
-     */
     public function header()
     {
         // logo
@@ -54,25 +40,17 @@ class BaseTcpdf extends \TCPDF
         $this->setFontStyle(null, 'I', 8);
     }
 
-    /**
-     * Page header.
-     */
     public function footer()
     {
         // logo
         $this->SetXY(self::PDF_MARGIN_LEFT, 297 - self::PDF_MARGIN_BOTTOM + self::MARGIN_VERTICAL_BIG);
         $this->SetTextColor(128, 128, 128);
         $this->setFontStyle(null, '', 8);
-        $this->Write(0, 'C. Góngora, 40 · 43870 Amposta', '', false, 'C', true);
-        $this->Write(0, 'info@boxidiomes.cat', '', false, 'C', true);
-        $this->Write(0, '650 539 324', '', false, 'C', false);
+        $this->Write(0, $this->bba.' · 43870 Amposta', '', false, 'C', true);
+        $this->Write(0, $this->amd, '', false, 'C', true);
+        $this->Write(0, $this->bpn, '', false, 'C', false);
     }
 
-    /**
-     * @param string $font
-     * @param string $style
-     * @param int    $size
-     */
     public function setFontStyle($font = 'dejavusans', $style = '', $size = 12)
     {
         // dejavusans is a UTF-8 Unicode font, if you only need to
@@ -81,9 +59,6 @@ class BaseTcpdf extends \TCPDF
         $this->SetFont($font, $style, $size, '', true);
     }
 
-    /**
-     * @param float $y
-     */
     public function drawInvoiceLineSeparator($y)
     {
         $this->Line(
@@ -101,13 +76,6 @@ class BaseTcpdf extends \TCPDF
         );
     }
 
-    /**
-     * @param string       $file
-     * @param float|string $x
-     * @param float|string $y
-     * @param float|int    $w
-     * @param float|int    $h
-     */
     public function drawSvg($file, $x = '', $y = '', $w = 0, $h = 0)
     {
         $this->ImageSVG($file, $x, $y, $w, $h);
