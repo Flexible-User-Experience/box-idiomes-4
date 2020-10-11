@@ -23,13 +23,13 @@ class BaseTcpdf extends \TCPDF
     private string $bba;
     private string $bpn;
 
-    public function __construct(SmartAssetsHelperService $sahs, string $amd, string $bba, string $bpn)
+    public function __construct(SmartAssetsHelperService $sahs)
     {
         parent::__construct();
         $this->sahs = $sahs;
-        $this->amd = $amd;
-        $this->bba = $bba;
-        $this->bpn = $bpn;
+        $this->amd = $this->sahs->getAmd();
+        $this->bba = $this->sahs->getBba();
+        $this->bpn = $this->sahs->getBpn();
     }
 
     public function header()
