@@ -147,6 +147,9 @@ services:
         arguments:
             - '@kernel'
             - '%project_url_base%'
+            - '%mailer_destination%'
+            - '%boss_address%'
+            - '%boss_phone_number_1%'
     app.mailchimp_manager:
         class: App\Manager\MailchimpManager
         public: true
@@ -187,13 +190,6 @@ services:
             - '@app.event_repository'
             - '@app.invoice_repository'
     # PDF Builders
-    app.base_tcpdf:
-        class: App\Pdf\BaseTcpdf
-        arguments:
-            - '@app.smart_assets_helper'
-            - '%mailer_destination%'
-            - '%boss_address%'
-            - '%boss_phone_number_1%'
     app.student_image_rights_pdf_builder:
         class: App\Pdf\StudentImageRightsBuilderPdf
         public: true

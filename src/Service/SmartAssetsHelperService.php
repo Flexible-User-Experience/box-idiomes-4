@@ -6,46 +6,43 @@ use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * Class SmartAssetsHelperService.
- *
- * @category Service
- */
 class SmartAssetsHelperService
 {
     const HTTP_PROTOCOL = 'https://';
     const PHP_SERVER_API_CLI_CONTEXT = 'cli';
 
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
+    private KernelInterface $kernel;
+    private string $pub;
+    private string $amd;
+    private string $bba;
+    private string $bpn;
 
-    /**
-     * @var string Project URL base
-     */
-    private $pub;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * SmartAssetsHelperService constructor.
-     *
-     * @param KernelInterface $kernel
-     * @param string          $pub
-     */
-    public function __construct(KernelInterface $kernel, $pub)
+    public function __construct(KernelInterface $kernel, string $pub, string $amd, string $bba, string $bpn)
     {
         $this->kernel = $kernel;
         $this->pub = $pub;
+        $this->amd = $amd;
+        $this->bba = $bba;
+        $this->bpn = $bpn;
+    }
+
+    public function getAmd(): string
+    {
+        return $this->amd;
+    }
+
+    public function getBba(): string
+    {
+        return $this->bba;
+    }
+
+    public function getBpn(): string
+    {
+        return $this->bpn;
     }
 
     /**
      * Determine if this PHP script is executed under a CLI context.
-     *
-     * @return bool
      */
     public function isCliContext()
     {
@@ -54,10 +51,6 @@ class SmartAssetsHelperService
 
     /**
      * Always return absolute URL path, even in CLI contexts.
-     *
-     * @param string $assetPath
-     *
-     * @return string
      */
     public function getAbsoluteAssetPathContextIndependent($assetPath)
     {
@@ -68,10 +61,6 @@ class SmartAssetsHelperService
 
     /**
      * If is CLI context returns absolute file path, otherwise returns absolute URL path.
-     *
-     * @param string $assetPath
-     *
-     * @return string
      */
     public function getAbsoluteAssetPathByContext($assetPath)
     {
@@ -85,10 +74,6 @@ class SmartAssetsHelperService
 
     /**
      * Always return relative URL path, even in CLI contexts.
-     *
-     * @param string $assetPath
-     *
-     * @return string
      */
     public function getRelativeAssetPathContextIndependent($assetPath)
     {
@@ -99,10 +84,6 @@ class SmartAssetsHelperService
 
     /**
      * If is CLI context returns absolute file path, otherwise returns relative URL path.
-     *
-     * @param string $assetPath
-     *
-     * @return string
      */
     public function getRelativeAssetPathByContext($assetPath)
     {
@@ -116,10 +97,6 @@ class SmartAssetsHelperService
 
     /**
      * Returns absolute file path.
-     *
-     * @param string $assetPath
-     *
-     * @return string
      */
     public function getAbsoluteAssetFilePath($assetPath)
     {
