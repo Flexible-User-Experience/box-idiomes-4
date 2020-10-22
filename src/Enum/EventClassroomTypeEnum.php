@@ -2,31 +2,21 @@
 
 namespace App\Enum;
 
-/**
- * Class EventClassroomTypeEnum.
- *
- * @category Enum
- */
 class EventClassroomTypeEnum
 {
-    const CLASSROOM_1 = 0;
-    const CLASSROOM_2 = 1;
-    const CLASSROOM_3 = 2;
-    const CLASSROOM_4 = 3;
-    const CLASSROOM_5 = 4;
+    public const CLASSROOM_1 = 0;
+    public const CLASSROOM_2 = 1;
+    public const CLASSROOM_3 = 2;
+    public const CLASSROOM_4 = 3;
+    public const CLASSROOM_5 = 4;
+    public const CLASSROOM_6 = 5;
 
-    /**
-     * @return array
-     */
-    public static function getEnumArray()
+    public static function getEnumArray(): array
     {
         return array_flip(self::getReversedEnumArray());
     }
 
-    /**
-     * @return array
-     */
-    public static function getReversedEnumArray()
+    public static function getReversedEnumArray(): array
     {
         return array(
             self::CLASSROOM_1 => 'backend.admin.event.classroom_1',
@@ -34,13 +24,11 @@ class EventClassroomTypeEnum
             self::CLASSROOM_3 => 'backend.admin.event.classroom_3',
             self::CLASSROOM_4 => 'backend.admin.event.classroom_4',
             self::CLASSROOM_5 => 'backend.admin.event.classroom_5',
+            self::CLASSROOM_6 => 'backend.admin.event.classroom_6',
         );
     }
 
-    /**
-     * @return array
-     */
-    public static function getTranslatedEnumArray()
+    public static function getTranslatedEnumArray(): array
     {
         return array(
             self::CLASSROOM_1 => 'Aula 1',
@@ -48,13 +36,11 @@ class EventClassroomTypeEnum
             self::CLASSROOM_3 => 'Aula 3',
             self::CLASSROOM_4 => 'Aula 4',
             self::CLASSROOM_5 => 'Aula 5',
+            self::CLASSROOM_6 => 'Aula Online',
         );
     }
 
-    /**
-     * @return array
-     */
-    public static function getShortTranslatedEnumArray()
+    public static function getShortTranslatedEnumArray(): array
     {
         return array(
             self::CLASSROOM_1 => '1',
@@ -62,6 +48,7 @@ class EventClassroomTypeEnum
             self::CLASSROOM_3 => '3',
             self::CLASSROOM_4 => '4',
             self::CLASSROOM_5 => '5',
+            self::CLASSROOM_6 => 'Online',
         );
     }
 }
