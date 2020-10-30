@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.3.03 (WIP)
+##### Version 4.3.04 (WIP)
  * fix minor bugs
+
+##### Version 4.3.03 (2020-10-30)
+ * Symfony 4.4.16 update
+ * add new special TariffType enum
 
 ##### Version 4.3.02 (2020-10-22)
  * remove white spaces from callto number in frontend layout
