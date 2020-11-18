@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 4.3.04 (WIP)
+##### Version 4.4.01 (WIP)
  * fix minor bugs
+
+##### Version 4.4.00 (2020-11-18)
+ * remove some deprecations
+ * add reCaptcha in newsletter contact form
+ * vendors update
 
 ##### Version 4.3.03 (2020-10-30)
  * Symfony 4.4.16 update
