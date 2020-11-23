@@ -18,6 +18,11 @@ class BankCreditorSepa extends AbstractBase
     /**
      * @ORM\Column(type="string", nullable=false)
      */
+    private string $name;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
     private string $organizationId;
 
     /**
@@ -40,6 +45,26 @@ class BankCreditorSepa extends AbstractBase
     /**
      * Methods.
      */
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return BankCreditorSepa
+     */
+    public function setName(string $name): BankCreditorSepa
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 
     /**
      * @return string
@@ -126,6 +151,6 @@ class BankCreditorSepa extends AbstractBase
      */
     public function __toString()
     {
-        return $this->id ? $this->getIban() : '---';
+        return $this->id ? $this->getName().' ('.$this->getIban().')' : '---';
     }
 }

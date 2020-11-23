@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\BankCreditorSepa;
 use App\Entity\City;
 use App\Entity\Person;
 use App\Enum\StudentPaymentEnum;
@@ -119,6 +120,17 @@ class PersonAdmin extends AbstractBaseAdmin
                     'required' => false,
                     'btn_add' => false,
                     'by_reference' => false,
+                )
+            )
+            ->add(
+                'bankCreditorSepa',
+                EntityType::class,
+                array(
+                    'label' => 'backend.admin.parent.bank_creditor_sepa',
+                    'required' => false,
+                    'class' => BankCreditorSepa::class,
+                    'choice_label' => 'iban',
+//                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.city_repository')->getEnabledSortedByNameQB(),
                 )
             )
             ->end()

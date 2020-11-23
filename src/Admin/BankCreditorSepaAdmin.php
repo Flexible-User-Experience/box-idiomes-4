@@ -17,22 +17,31 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
     protected $classnameLabel = 'BankCreditorSepa';
     protected $baseRoutePattern = 'administrations/bank-creditor-sepa';
     protected $datagridValues = array(
-        '_sort_by' => 'iban',
+        '_sort_by' => 'name',
         '_sort_order' => 'asc',
     );
 
     /**
      * @param FormMapper $formMapper
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
+            ->add(
+                'name',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.name',
+                    'required' => true,
+                )
+            )
             ->add(
                 'organizationId',
                 null,
                 array(
                     'label' => 'backend.admin.bank.organization_id',
+                    'required' => true,
                 )
             )
             ->add(
@@ -40,6 +49,7 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.bank.creditor_name',
+                    'required' => true,
                 )
             )
             ->add(
@@ -77,6 +87,13 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
+            ->add(
+                'name',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.name',
+                )
+            )
             ->add(
                 'organizationId',
                 null,
@@ -121,6 +138,14 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
+            ->add(
+                'name',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.name',
+                    'editable' => true,
+                )
+            )
             ->add(
                 'organizationId',
                 null,
