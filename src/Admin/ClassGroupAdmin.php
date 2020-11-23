@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
  */
 class ClassGroupAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Grups';
+    protected $classnameLabel = 'ClassGroup';
     protected $baseRoutePattern = 'classrooms/group';
     protected $datagridValues = array(
         '_sort_by' => 'code',

@@ -15,7 +15,7 @@ use Sonata\Form\Type\DatePickerType;
  */
 class ContactMessageAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Contact Message';
+    protected $classnameLabel = 'ContactMessage';
     protected $baseRoutePattern = 'contacts/message';
     protected $datagridValues = array(
         '_sort_by' => 'createdAt',

@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class EventAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Timetable';
+    protected $classnameLabel = 'Event';
     protected $baseRoutePattern = 'classrooms/timetable';
     protected $maxPerPage = 400;
     protected $datagridValues = array(

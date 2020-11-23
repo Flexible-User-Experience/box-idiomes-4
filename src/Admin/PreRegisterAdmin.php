@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class PreRegisterAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Preregisters';
+    protected $classnameLabel = 'PreRegister';
     protected $baseRoutePattern = 'students/pre-register';
     protected $datagridValues = array(
         '_sort_by' => 'createdAt',

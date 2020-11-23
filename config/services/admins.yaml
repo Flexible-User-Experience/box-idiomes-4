@@ -34,7 +34,7 @@ services:
         class: App\Admin\TeacherAbsenceAdmin
         arguments: [ ~, App\Entity\TeacherAbsence, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: "Absència", group: "Professors" }
+            - { name: sonata.admin, manager_type: orm, label: "Absència professor", group: "Professors" }
     # Classrooms
     admin.class_group:
         class: App\Admin\ClassGroupAdmin

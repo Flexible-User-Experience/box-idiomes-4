@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class TeacherAbsenceAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Absence';
+    protected $classnameLabel = 'TeacherAbsence';
     protected $baseRoutePattern = 'teachers/absence';
     protected $datagridValues = array(
         '_sort_by' => 'day',

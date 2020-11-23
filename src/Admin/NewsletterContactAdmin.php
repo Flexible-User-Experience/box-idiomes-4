@@ -14,7 +14,7 @@ use Sonata\Form\Type\DateTimePickerType;
  */
 class NewsletterContactAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Newsletter Contact';
+    protected $classnameLabel = 'NewsletterContact';
     protected $baseRoutePattern = 'contacts/newsletter';
     protected $datagridValues = array(
         '_sort_by' => 'createdAt',

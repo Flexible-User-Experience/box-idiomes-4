@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
  */
 class InvoiceLineAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Invoice Line';
+    protected $classnameLabel = 'InvoiceLine';
     protected $baseRoutePattern = 'billings/invoice-line';
     protected $datagridValues = array(
         '_sort_by' => 'description',

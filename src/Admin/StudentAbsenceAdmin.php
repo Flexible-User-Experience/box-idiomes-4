@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
  */
 class StudentAbsenceAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Absence';
+    protected $classnameLabel = 'StudentAbsence';
     protected $baseRoutePattern = 'students/absence';
     protected $datagridValues = array(
         '_sort_by' => 'day',

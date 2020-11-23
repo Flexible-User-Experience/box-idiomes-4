@@ -17,12 +17,12 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     /**
      * @var UploaderHelper
      */
-    private $vus;
+    private UploaderHelper $vus;
 
     /**
      * @var CacheManager
      */
-    private $lis;
+    private CacheManager $lis;
 
     /**
      * @param string         $code
