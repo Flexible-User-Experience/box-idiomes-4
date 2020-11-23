@@ -5,6 +5,7 @@ Changelog
  * fix minor bugs
 
 ##### Version 4.5.00 (WIP)
+ * fix bad title in admin dashboard balance amounts
  * add multiple SEPA bank accounts
 
 ##### Version 4.4.00 (2020-11-18)
