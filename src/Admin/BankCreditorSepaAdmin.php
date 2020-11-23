@@ -92,7 +92,31 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
     {
         $listMapper
             ->add(
-                'name',
+                'organizationId',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.name',
+                    'editable' => true,
+                )
+            )
+            ->add(
+                'creditorName',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.name',
+                    'editable' => true,
+                )
+            )
+            ->add(
+                'iban',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.name',
+                    'editable' => true,
+                )
+            )
+            ->add(
+                'bic',
                 null,
                 array(
                     'label' => 'backend.admin.bank.name',
@@ -111,6 +135,8 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),

@@ -536,6 +536,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'reminder' => array('template' => 'Admin/Buttons/list__action_receipt_reminder_button.html.twig'),

@@ -214,6 +214,8 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'show' => array(
                             'template' => 'Admin/Buttons/list__action_show_button.html.twig',
