@@ -5,6 +5,12 @@ services:
         factory: [ '@doctrine', getRepository ]
         arguments:
             - 'App:Bank'
+    app.bank_creditor_sepa_repository:
+        class: App\Repository\BankCreditorSepaRepository
+        public: true
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'App:BankCreditorSepa'
     app.parent_repository:
         class: App\Repository\PersonRepository
         public: true
