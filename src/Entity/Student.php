@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\BankCreditorSepaTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -18,7 +19,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Student extends AbstractPerson
 {
-    const DISCOUNT_PER_EXTRA_SON = 5;
+    use BankCreditorSepaTrait;
+
+    public const DISCOUNT_PER_EXTRA_SON = 5;
 
     /**
      * @var \DateTime
