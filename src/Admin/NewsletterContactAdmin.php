@@ -79,6 +79,8 @@ class NewsletterContactAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.contact.date',
                     'format' => 'd/m/Y H:i',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

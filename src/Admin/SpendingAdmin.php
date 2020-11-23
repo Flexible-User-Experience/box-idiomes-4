@@ -249,6 +249,8 @@ class SpendingAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.spending.date',
                     'format' => 'd/m/Y',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -290,6 +292,8 @@ class SpendingAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.baseAmount',
                     'template' => 'Admin/Cells/list__cell_invoice_base_amount.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -298,6 +302,8 @@ class SpendingAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.invoice.isPayed',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

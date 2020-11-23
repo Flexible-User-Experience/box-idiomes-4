@@ -460,6 +460,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.receipt.date',
                     'template' => 'Admin/Cells/list__cell_receipt_date.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -498,6 +500,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.baseAmount',
                     'template' => 'Admin/Cells/list__cell_receipt_amount.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -506,6 +510,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.is_for_private_lessons',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -514,6 +520,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.receipt.isSepaXmlGenerated',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -522,6 +530,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.receipt.isSended',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -530,6 +540,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.receipt.isPayed',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

@@ -155,6 +155,8 @@ class TeacherAbsenceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.teacher_absence.day',
                     'format' => 'd/m/Y',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

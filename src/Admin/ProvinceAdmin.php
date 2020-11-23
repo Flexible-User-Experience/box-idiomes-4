@@ -134,6 +134,8 @@ class ProvinceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.province.country',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -142,6 +144,8 @@ class ProvinceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

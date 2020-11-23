@@ -179,6 +179,8 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.contact.checked',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -187,6 +189,8 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.contact.date',
                     'format' => 'd/m/Y',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -208,6 +212,8 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.contact.answered',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

@@ -517,6 +517,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.receipt.date',
                     'template' => 'Admin/Cells/list__cell_receipt_date.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -567,6 +569,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.baseAmount',
                     'template' => 'Admin/Cells/list__cell_invoice_base_amount.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -576,6 +580,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.totalAmount',
                     'template' => 'Admin/Cells/list__cell_invoice_total_amount.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -584,6 +590,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.receipt.isSepaXmlGenerated',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -592,6 +600,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.invoice.isSended',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -600,6 +610,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.invoice.isPayed',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

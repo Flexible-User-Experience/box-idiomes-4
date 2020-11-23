@@ -473,6 +473,8 @@ class StudentAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.imagerigths.checkbox_label',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -481,6 +483,8 @@ class StudentAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.sepaagreement.checkbox_label',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -489,6 +493,8 @@ class StudentAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.internalregulations.checkbox_label',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -497,6 +503,8 @@ class StudentAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

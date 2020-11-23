@@ -139,6 +139,8 @@ class TariffAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.tariff.year',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(

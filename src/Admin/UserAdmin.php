@@ -183,6 +183,8 @@ class UserAdmin extends ParentUserAdmin
                 array(
                     'label' => 'backend.admin.user.roles',
                     'template' => 'Admin/Cells/list__cell_user_roles.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -191,6 +193,8 @@ class UserAdmin extends ParentUserAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

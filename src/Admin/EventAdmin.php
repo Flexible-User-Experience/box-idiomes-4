@@ -247,6 +247,8 @@ class EventAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.event.begin',
                     'format' => 'd/m/Y H:i',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -256,6 +258,8 @@ class EventAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.event.end',
                     'format' => 'd/m/Y H:i',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

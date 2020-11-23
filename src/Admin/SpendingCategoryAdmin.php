@@ -93,6 +93,8 @@ class SpendingCategoryAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

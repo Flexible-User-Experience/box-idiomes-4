@@ -168,6 +168,8 @@ class StudentAbsenceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.teacher_absence.day',
                     'format' => 'd/m/Y',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -176,6 +178,8 @@ class StudentAbsenceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.student.has_been_notified',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -185,6 +189,8 @@ class StudentAbsenceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.student.notification_date',
                     'format' => 'd/m/Y H:i',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

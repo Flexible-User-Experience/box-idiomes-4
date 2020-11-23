@@ -185,6 +185,8 @@ class TeacherAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.teacher.color',
                     'template' => 'Admin/Cells/list__cell_teacher_color.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -193,6 +195,8 @@ class TeacherAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.teacher.showInHomepage',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -201,6 +205,8 @@ class TeacherAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
