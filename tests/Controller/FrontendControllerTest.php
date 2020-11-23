@@ -12,12 +12,12 @@ class FrontendControllerTest extends WebTestCase
      * @dataProvider provideSuccessfulUrls
      * @param string $url
      */
-    public function testPagesAreSuccessful(string $url)
+    public function testPagesAreSuccessful(string $url): void
     {
         $client = WebTestCase::createClient();
         $client->request('GET', $url);
 
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
     }
 
     /**
@@ -25,7 +25,7 @@ class FrontendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideSuccessfulUrls()
+    public function provideSuccessfulUrls(): array
     {
         return array(
             array('/'),
@@ -45,12 +45,12 @@ class FrontendControllerTest extends WebTestCase
      * @dataProvider provideNotFoundUrls
      * @param string $url
      */
-    public function testPagesAreNotFound(string $url)
+    public function testPagesAreNotFound(string $url): void
     {
         $client = WebTestCase::createClient();
         $client->request('GET', $url);
 
-        $this->assertResponseStatusCodeSame(404);
+        self::assertResponseStatusCodeSame(404);
     }
 
     /**
@@ -58,7 +58,7 @@ class FrontendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideNotFoundUrls()
+    public function provideNotFoundUrls(): array
     {
         return array(
             array('/ca/pagina-trenacada'),

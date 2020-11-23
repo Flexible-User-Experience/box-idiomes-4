@@ -5,6 +5,7 @@ namespace App\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
  * Class BankCreditorSepaAdmin.
@@ -28,27 +29,42 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
             ->add(
-                'name',
+                'organizationId',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.name',
+                    'label' => 'backend.admin.bank.organization_id',
                 )
             )
             ->add(
-                'swiftCode',
+                'creditorName',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.swiftCode',
-                    'required' => false,
+                    'label' => 'backend.admin.bank.creditor_name',
                 )
             )
             ->add(
-                'accountNumber',
+                'iban',
                 null,
                 array(
                     'label' => 'IBAN',
                     'required' => true,
                     'help' => 'backend.admin.bank.accountNumber_help',
+                )
+            )
+            ->add(
+                'bic',
+                null,
+                array(
+                    'label' => 'BIC',
+                    'required' => true,
+                )
+            )
+            ->add(
+                'enabled',
+                CheckboxType::class,
+                array(
+                    'label' => 'backend.admin.enabled',
+                    'required' => false,
                 )
             )
             ->end()
@@ -62,17 +78,31 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
     {
         $datagridMapper
             ->add(
-                'name',
+                'organizationId',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.name',
+                    'label' => 'backend.admin.bank.organization_id',
                 )
             )
             ->add(
-                'accountNumber',
+                'creditorName',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.accountNumber',
+                    'label' => 'backend.admin.bank.creditor_name',
+                )
+            )
+            ->add(
+                'iban',
+                null,
+                array(
+                    'label' => 'IBAN',
+                )
+            )
+            ->add(
+                'bic',
+                null,
+                array(
+                    'label' => 'BIC',
                 )
             )
             ->add(
@@ -95,7 +125,7 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 'organizationId',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.name',
+                    'label' => 'backend.admin.bank.organization_id',
                     'editable' => true,
                 )
             )
@@ -103,7 +133,7 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 'creditorName',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.name',
+                    'label' => 'backend.admin.bank.creditor_name',
                     'editable' => true,
                 )
             )
@@ -111,7 +141,7 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 'iban',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.name',
+                    'label' => 'IBAN',
                     'editable' => true,
                 )
             )
@@ -119,7 +149,7 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 'bic',
                 null,
                 array(
-                    'label' => 'backend.admin.bank.name',
+                    'label' => 'BIC',
                     'editable' => true,
                 )
             )
