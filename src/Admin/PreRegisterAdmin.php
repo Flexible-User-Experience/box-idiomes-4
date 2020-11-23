@@ -29,7 +29,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
             ->add('student', $this->getRouterIdParameter().'/create-student')
@@ -43,7 +43,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
      *
      * @return array
      */
-    public function configureBatchActions($actions)
+    public function configureBatchActions($actions): array
     {
         if ($this->hasRoute('show') && $this->hasAccess('show')) {
             $actions['generatestudents'] = array(
@@ -263,7 +263,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'createdAt',
@@ -340,7 +339,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function configureExportFields(): array
     {
         return array(
             'createdAtString',

@@ -41,7 +41,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
             ->add('generate')
@@ -84,7 +84,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
      *
      * @return array
      */
-    public function getDashboardActions()
+    public function getDashboardActions(): array
     {
         $actions = parent::getDashboardActions();
         $actions['generate'] = array(
@@ -102,7 +102,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
      *
      * @throws \Exception
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $now = new \DateTime();
         $currentYear = $now->format('Y');
@@ -444,7 +444,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'id',
@@ -555,7 +554,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function configureExportFields(): array
     {
         return array(
             'receiptNumber',
@@ -580,7 +579,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
     /**
      * @param Receipt $object
      */
-    public function prePersist($object)
+    public function prePersist($object): void
     {
         $this->commonPreActions($object);
     }
@@ -588,7 +587,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
     /**
      * @param Receipt $object
      */
-    public function preUpdate($object)
+    public function preUpdate($object): void
     {
         $this->commonPreActions($object);
     }
@@ -596,7 +595,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
     /**
      * @param Receipt $object
      */
-    private function commonPreActions($object)
+    private function commonPreActions($object): void
     {
         if ($object->getStudent()->getParent()) {
             $object->setPerson($object->getStudent()->getParent());

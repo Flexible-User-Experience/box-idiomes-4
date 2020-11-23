@@ -115,6 +115,11 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Butlletí de contacte", group: "Contactes" }
     # Configurations
+    admin.bank_creditor_sepa:
+        class: App\Admin\BankCreditorSepaAdmin
+        arguments: [ ~, App\Entity\BankCreditorSepa, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Banc", group: "Configuració" }
     admin.province:
         class: App\Admin\ProvinceAdmin
         arguments: [ ~, App\Entity\Province, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]

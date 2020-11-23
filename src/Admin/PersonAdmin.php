@@ -35,7 +35,7 @@ class PersonAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         parent::configureRoutes($collection);
         $collection->remove('delete');
@@ -44,7 +44,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param FormMapper $formMapper
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
@@ -283,7 +283,6 @@ class PersonAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'name',
@@ -341,7 +340,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function configureExportFields(): array
     {
         return array(
             'dni',
@@ -363,7 +362,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param Person $object
      */
-    public function prePersist($object)
+    public function prePersist($object): void
     {
         $this->commonPreActions($object);
     }
@@ -371,7 +370,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param Person $object
      */
-    public function preUpdate($object)
+    public function preUpdate($object): void
     {
         $this->commonPreActions($object);
     }
@@ -379,7 +378,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param Person $object
      */
-    private function commonPreActions($object)
+    private function commonPreActions($object): void
     {
         if ($object->getBank()->getAccountNumber()) {
             $object->getBank()->setAccountNumber(strtoupper($object->getBank()->getAccountNumber()));

@@ -34,7 +34,7 @@ class SpendingAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         parent::configureRoutes($collection);
         $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
@@ -45,7 +45,7 @@ class SpendingAdmin extends AbstractBaseAdmin
      *
      * @throws \Twig\Error\Error
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(5))
@@ -241,7 +241,6 @@ class SpendingAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'date',
@@ -320,7 +319,7 @@ class SpendingAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function configureExportFields(): array
     {
         return array(
             'dateString',
