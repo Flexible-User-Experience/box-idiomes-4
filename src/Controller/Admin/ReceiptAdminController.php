@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\DefaultController;
+use App\Entity\BankCreditorSepa;
 use App\Entity\Invoice;
 use App\Entity\Receipt;
 use App\Enum\StudentPaymentEnum;
@@ -15,9 +16,11 @@ use App\Service\NotificationService;
 use App\Pdf\ReceiptBuilderPdf;
 use App\Service\XmlSepaBuilderService;
 use DateTime;
+use Digitick\Sepa\Util\StringHelper;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Exception;
+use PhpZip\ZipFile;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as Controller;
 use Symfony\Component\Filesystem\Filesystem;
@@ -399,7 +402,12 @@ class ReceiptAdminController extends BaseAdminController
             /** @var XmlSepaBuilderService $xsbs */
             $xsbs = $this->container->get('app.xml_sepa_builder');
             $paymentUniqueId = uniqid('', true);
-            $xmls = $xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
+            $xmlsArray = [];
+            $banksCreditorSepa = $this->container->get('app.bank_creditor_sepa_repository')->getEnabledSortedByName();
+            /** @var BankCreditorSepa $bankCreditorSepa */
+            foreach ($banksCreditorSepa as $bankCreditorSepa) {
+                $xmlsArray[] = $xsbs->buildDirectDebitReceiptsXmlForBankCreditorSepa($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels, $bankCreditorSepa);
+            }
 
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
@@ -411,17 +419,17 @@ class ReceiptAdminController extends BaseAdminController
                 }
             }
             $em->flush();
-
-            if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
-                return new Response($xmls, 200, array('Content-type' => 'application/xml'));
-            }
-
             $now = new DateTime();
-            $fileSystem = new Filesystem();
-            $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_receipts_'.$now->format('Y-m-d_H-i').'.xml';
-            $fileSystem->touch($fileNamePath);
-            $fileSystem->dumpFile($fileNamePath, $xmls);
-
+            $fileName = 'SEPA_receipts_'.$now->format('Y-m-d_H-i').'.zip';
+            $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$fileName;
+            $zipFile = new ZipFile();
+            $index = 0;
+            /** @var BankCreditorSepa $bankCreditorSepa */
+            foreach ($banksCreditorSepa as $bankCreditorSepa) {
+                $zipFile->addFromString('SEPA_'.StringHelper::sanitizeString($bankCreditorSepa->getName()).'.xml', $xmlsArray[$index]);
+                ++$index;
+            }
+            $zipFile->saveAsFile($fileNamePath)->close();
             $response = new BinaryFileResponse($fileNamePath, 200, array('Content-type' => 'application/xml'));
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 

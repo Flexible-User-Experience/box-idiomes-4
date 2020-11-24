@@ -2,7 +2,6 @@
 
 namespace App\Admin;
 
-use App\Entity\BankCreditorSepa;
 use App\Entity\Invoice;
 use App\Entity\Person;
 use App\Entity\Receipt;
@@ -62,25 +61,11 @@ class InvoiceAdmin extends AbstractBaseAdmin
     public function configureBatchActions($actions): array
     {
         if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
-            $banksCreditorSepa = $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getEnabledSortedByName();
-            if (count($banksCreditorSepa) === 2) {
-                /** @var BankCreditorSepa $bankCreditorSepa */
-                $index = 1;
-                foreach ($banksCreditorSepa as $bankCreditorSepa) {
-                    $actions['generatesepaxmlscreditorbank'.$index] = array(
-                        'label' => 'Generar gir bancari SEPA del elements seleccionats amb '.$bankCreditorSepa->getName(),
-                        'translation_domain' => 'messages',
-                        'ask_confirmation' => false,
-                    );
-                    ++$index;
-                }
-            } else {
-                $actions['generatesepaxmls'] = array(
-                    'label' => 'backend.admin.invoice.batch_action',
-                    'translation_domain' => 'messages',
-                    'ask_confirmation' => false,
-                );
-            }
+            $actions['generatesepaxmls'] = array(
+                'label' => 'backend.admin.invoice.batch_action',
+                'translation_domain' => 'messages',
+                'ask_confirmation' => false,
+            );
         }
 
         return $actions;

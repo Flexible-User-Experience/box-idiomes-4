@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\AbstractReceiptInvoiceLine;
+use App\Entity\BankCreditorSepa;
 use App\Entity\Receipt;
 use App\Entity\Invoice;
 use DateTimeInterface;
@@ -33,12 +34,16 @@ class XmlSepaBuilderService
         $this->bic = $this->removeSpacesFrom($bic);
     }
 
-    public function buildDirectDebitSingleReceiptXml(string $paymentId, DateTimeInterface $dueDate, Receipt $recepit): string
+    public function buildDirectDebitSingleReceiptXml(string $paymentId, DateTimeInterface $dueDate, Receipt $receipt): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
-        $this->addPaymentInfoReceipt($directDebit, $paymentId, $dueDate, $recepit);
-        if ($recepit->isReadyToGenerateSepa()) {
-            $this->addTransfer($directDebit, $paymentId, $recepit);
+        if ($receipt->getMainSubject()->getBankCreditorSepa()) {
+            $this->addPaymentInfoForBankCreditorSepa($directDebit, $paymentId, $dueDate, $receipt->getMainSubject()->getBankCreditorSepa());
+        } else {
+            $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
+        }
+        if ($receipt->isReadyToGenerateSepa()) {
+            $this->addTransfer($directDebit, $paymentId, $receipt);
         }
 
         return $directDebit->asXML();
@@ -51,6 +56,20 @@ class XmlSepaBuilderService
         /** @var Receipt $receipt */
         foreach ($receipts as $receipt) {
             if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()->getIsPaymentExempt()) {
+                $this->addTransfer($directDebit, $paymentId, $receipt);
+            }
+        }
+
+        return $directDebit->asXML();
+    }
+
+    public function buildDirectDebitReceiptsXmlForBankCreditorSepa(string $paymentId, DateTimeInterface $dueDate, $receipts, BankCreditorSepa $bankCreditorSepa): string
+    {
+        $directDebit = $this->buildDirectDebit($paymentId);
+        $this->addPaymentInfoForBankCreditorSepa($directDebit, $paymentId, $dueDate, $bankCreditorSepa);
+        /** @var Receipt $receipt */
+        foreach ($receipts as $receipt) {
+            if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()->getIsPaymentExempt() && $receipt->getMainSubject()->getBankCreditorSepa() && $receipt->getMainSubject()->getBankCreditorSepa()->getId() === $bankCreditorSepa->getId()) {
                 $this->addTransfer($directDebit, $paymentId, $receipt);
             }
         }
@@ -107,22 +126,18 @@ class XmlSepaBuilderService
         ]);
     }
 
-    private function addPaymentInfoReceipt(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate, Receipt $receipt): void
+    private function addPaymentInfoForBankCreditorSepa(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate, BankCreditorSepa $bankCreditorSepa): void
     {
-        if ($receipt->getMainSubject()->getBankCreditorSepa()) {
-            $directDebit->addPaymentInfo($paymentId, [
-                'id' => StringHelper::sanitizeString($paymentId),
-                'dueDate' => $dueDate,
-                'creditorName' => strtoupper(StringHelper::sanitizeString($receipt->getMainSubject()->getBankCreditorSepa()->getCreditorName())),
-                'creditorAccountIBAN' => $receipt->getMainSubject()->getBankCreditorSepa()->getIban(),
-                'creditorAgentBIC' => $receipt->getMainSubject()->getBankCreditorSepa()->getBic(),
-                'seqType' => PaymentInformation::S_ONEOFF,
-                'creditorId' => $this->sshs->getSpanishCreditorIdFromNif($receipt->getMainSubject()->getBankCreditorSepa()->getOrganizationId()),
-                'localInstrumentCode' => self::DIRECT_DEBIT_LI_CODE,
-            ]);
-        } else {
-            $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
-        }
+        $directDebit->addPaymentInfo($paymentId, [
+            'id' => StringHelper::sanitizeString($paymentId),
+            'dueDate' => $dueDate,
+            'creditorName' => strtoupper(StringHelper::sanitizeString($bankCreditorSepa->getCreditorName())),
+            'creditorAccountIBAN' => $bankCreditorSepa->getIban(),
+            'creditorAgentBIC' => $bankCreditorSepa->getBic(),
+            'seqType' => PaymentInformation::S_ONEOFF,
+            'creditorId' => $this->sshs->getSpanishCreditorIdFromNif($bankCreditorSepa->getOrganizationId()),
+            'localInstrumentCode' => self::DIRECT_DEBIT_LI_CODE,
+        ]);
     }
 
     private function addPaymentInfoInvoice(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate, Invoice $invoice): void
