@@ -80,7 +80,11 @@ class XmlSepaBuilderService
     public function buildDirectDebitSingleInvoiceXml(string $paymentId, DateTimeInterface $dueDate, Invoice $invoice): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
-        $this->addPaymentInfoInvoice($directDebit, $paymentId, $dueDate, $invoice);
+        if ($invoice->getMainSubject()->getBankCreditorSepa()) {
+            $this->addPaymentInfoForBankCreditorSepa($directDebit, $paymentId, $dueDate, $invoice->getMainSubject()->getBankCreditorSepa());
+        } else {
+            $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
+        }
         if ($invoice->isReadyToGenerateSepa()) {
             $this->addTransfer($directDebit, $paymentId, $invoice);
         }
@@ -138,24 +142,6 @@ class XmlSepaBuilderService
             'creditorId' => $this->sshs->getSpanishCreditorIdFromNif($bankCreditorSepa->getOrganizationId()),
             'localInstrumentCode' => self::DIRECT_DEBIT_LI_CODE,
         ]);
-    }
-
-    private function addPaymentInfoInvoice(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate, Invoice $invoice): void
-    {
-        if ($invoice->getMainSubject()->getBankCreditorSepa()) {
-            $directDebit->addPaymentInfo($paymentId, [
-                'id' => StringHelper::sanitizeString($paymentId),
-                'dueDate' => $dueDate,
-                'creditorName' => strtoupper(StringHelper::sanitizeString($invoice->getMainSubject()->getBankCreditorSepa()->getCreditorName())),
-                'creditorAccountIBAN' => $invoice->getMainSubject()->getBankCreditorSepa()->getIban(),
-                'creditorAgentBIC' => $invoice->getMainSubject()->getBankCreditorSepa()->getBic(),
-                'seqType' => PaymentInformation::S_ONEOFF,
-                'creditorId' => $this->sshs->getSpanishCreditorIdFromNif($invoice->getMainSubject()->getBankCreditorSepa()->getOrganizationId()),
-                'localInstrumentCode' => self::DIRECT_DEBIT_LI_CODE,
-            ]);
-        } else {
-            $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
-        }
     }
 
     private function addTransfer(CustomerDirectDebitFacade $directDebit, string $paymentId, $ari): void
