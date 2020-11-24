@@ -14,8 +14,7 @@ use App\Pdf\ReceiptReminderBuilderPdf;
 use App\Service\NotificationService;
 use App\Pdf\ReceiptBuilderPdf;
 use App\Service\XmlSepaBuilderService;
-use Digitick\Sepa\Exception\InvalidArgumentException;
-use Digitick\Sepa\Exception\InvalidPaymentMethodException;
+use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Exception;
@@ -92,12 +91,12 @@ class ReceiptAdminController extends BaseAdminController
      *
      * @return RedirectResponse
      *
-     * @throws NotFoundHttpException                 If the object does not exist
-     * @throws AccessDeniedException                 If access is not granted
+     * @throws NotFoundHttpException
+     * @throws AccessDeniedException
      * @throws NonUniqueResultException
      * @throws OptimisticLockException
      */
-    public function creatorAction(Request $request)
+    public function creatorAction(Request $request): RedirectResponse
     {
         /** @var TranslatorInterface $translator */
         $translator = $this->container->get('translator');
@@ -127,13 +126,13 @@ class ReceiptAdminController extends BaseAdminController
      *
      * @param Request $request
      *
-     * @return Response
+     * @return RedirectResponse
      *
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
      * @throws Exception
      */
-    public function createInvoiceAction(Request $request)
+    public function createInvoiceAction(Request $request): RedirectResponse
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -165,7 +164,7 @@ class ReceiptAdminController extends BaseAdminController
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
      */
-    public function reminderAction(Request $request)
+    public function reminderAction(Request $request): Response
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -175,7 +174,7 @@ class ReceiptAdminController extends BaseAdminController
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $object->getMainSubject()->getPayment()) {
+        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $object->getMainSubject()->getPayment()) {
             throw $this->createNotFoundException(sprintf('invalid payment type for object with id: %s', $id));
         }
 
@@ -195,7 +194,7 @@ class ReceiptAdminController extends BaseAdminController
      *
      * @throws NotFoundHttpException If the object does not exist
      */
-    public function sendReminderAction(Request $request)
+    public function sendReminderAction(Request $request): RedirectResponse
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -205,7 +204,7 @@ class ReceiptAdminController extends BaseAdminController
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $object->getMainSubject()->getPayment()) {
+        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $object->getMainSubject()->getPayment()) {
             throw $this->createNotFoundException(sprintf('invalid payment type for object with id: %s', $id));
         }
 
@@ -238,7 +237,7 @@ class ReceiptAdminController extends BaseAdminController
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
      */
-    public function pdfAction(Request $request)
+    public function pdfAction(Request $request): Response
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -265,7 +264,7 @@ class ReceiptAdminController extends BaseAdminController
      *
      * @throws NotFoundHttpException If the object does not exist
      */
-    public function sendAction(Request $request)
+    public function sendAction(Request $request): RedirectResponse
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -278,7 +277,7 @@ class ReceiptAdminController extends BaseAdminController
 
         $object
             ->setIsSended(true)
-            ->setSendDate(new \DateTime())
+            ->setSendDate(new DateTime())
         ;
         $em = $this->container->get('doctrine')->getManager();
         $em->flush();
@@ -308,9 +307,6 @@ class ReceiptAdminController extends BaseAdminController
      * @param Request $request
      *
      * @return Response|BinaryFileResponse
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidPaymentMethodException
      */
     public function generateDirectDebitAction(Request $request)
     {
@@ -326,20 +322,20 @@ class ReceiptAdminController extends BaseAdminController
         /** @var XmlSepaBuilderService $xsbs */
         $xsbs = $this->container->get('app.xml_sepa_builder');
         $paymentUniqueId = uniqid('', true);
-        $xml = $xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new \DateTime('now + 3 days'), $object);
+        $xml = $xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
 
         $object
             ->setIsSepaXmlGenerated(true)
-            ->setSepaXmlGeneratedDate(new \DateTime())
+            ->setSepaXmlGeneratedDate(new DateTime())
         ;
         $em = $this->container->get('doctrine')->getManager();
         $em->flush();
 
-        if (DefaultController::ENV_DEV == $this->getParameter('kernel.environment')) {
+        if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, array('Content-type' => 'application/xml'));
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
         $fileSystem = new Filesystem();
         $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_receipt_'.$now->format('Y-m-d_H-i').'.xml';
         $fileSystem->touch($fileNamePath);
@@ -368,7 +364,7 @@ class ReceiptAdminController extends BaseAdminController
 
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
-                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER != $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
+                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER !== $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
                     // add page
                     $pdf->AddPage('L', 'A5', true, true);
                     $rrps->buildReceiptRemainderPageForItem($pdf, $selectedModel);
@@ -403,14 +399,14 @@ class ReceiptAdminController extends BaseAdminController
             /** @var XmlSepaBuilderService $xsbs */
             $xsbs = $this->container->get('app.xml_sepa_builder');
             $paymentUniqueId = uniqid('', true);
-            $xmls = $xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new \DateTime('now + 3 days'), $selectedModels);
+            $xmls = $xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
 
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
                     $selectedModel
                         ->setIsSepaXmlGenerated(true)
-                        ->setSepaXmlGeneratedDate(new \DateTime())
+                        ->setSepaXmlGeneratedDate(new DateTime())
                     ;
                 }
             }
@@ -420,7 +416,7 @@ class ReceiptAdminController extends BaseAdminController
                 return new Response($xmls, 200, array('Content-type' => 'application/xml'));
             }
 
-            $now = new \DateTime();
+            $now = new DateTime();
             $fileSystem = new Filesystem();
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_receipts_'.$now->format('Y-m-d_H-i').'.xml';
             $fileSystem->touch($fileNamePath);

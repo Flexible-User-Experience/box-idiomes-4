@@ -12,8 +12,7 @@ use App\Manager\GenerateInvoiceFormManager;
 use App\Pdf\InvoiceBuilderPdf;
 use App\Service\NotificationService;
 use App\Service\XmlSepaBuilderService;
-use Digitick\Sepa\Exception\InvalidArgumentException;
-use Digitick\Sepa\Exception\InvalidPaymentMethodException;
+use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Exception;
@@ -47,7 +46,7 @@ class InvoiceAdminController extends BaseAdminController
      * @throws AccessDeniedException    If access is not granted
      * @throws NonUniqueResultException If problem with unique entities
      */
-    public function generateAction(Request $request)
+    public function generateAction(Request $request): Response
     {
         /** @var GenerateInvoiceFormManager $gifm */
         $gifm = $this->container->get('app.generate_invoice_form_manager');
@@ -91,12 +90,12 @@ class InvoiceAdminController extends BaseAdminController
      *
      * @return RedirectResponse
      *
-     * @throws NotFoundHttpException                 If the object does not exist
-     * @throws AccessDeniedException                 If access is not granted
+     * @throws NotFoundHttpException
+     * @throws AccessDeniedException
      * @throws NonUniqueResultException
      * @throws OptimisticLockException
      */
-    public function creatorAction(Request $request)
+    public function creatorAction(Request $request): RedirectResponse
     {
         /** @var TranslatorInterface $translator */
         $translator = $this->container->get('translator');
@@ -125,7 +124,7 @@ class InvoiceAdminController extends BaseAdminController
      * @throws AccessDeniedException If access is not granted
      * @throws Exception
      */
-    public function pdfAction(Request $request)
+    public function pdfAction(Request $request): Response
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -153,7 +152,7 @@ class InvoiceAdminController extends BaseAdminController
      * @throws NotFoundHttpException If the object does not exist
      * @throws Exception
      */
-    public function sendAction(Request $request)
+    public function sendAction(Request $request): RedirectResponse
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -166,7 +165,7 @@ class InvoiceAdminController extends BaseAdminController
 
         $object
             ->setIsSended(true)
-            ->setSendDate(new \DateTime())
+            ->setSendDate(new DateTime())
         ;
         $em = $this->container->get('doctrine')->getManager();
         $em->flush();
@@ -196,11 +195,8 @@ class InvoiceAdminController extends BaseAdminController
      * @param Request $request
      *
      * @return Response|BinaryFileResponse
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidPaymentMethodException
      */
-    public function generateDirectDebitAction(Request $request)
+    public function generateDirectDebitAction(Request $request): BinaryFileResponse
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
@@ -214,20 +210,20 @@ class InvoiceAdminController extends BaseAdminController
         /** @var XmlSepaBuilderService $xsbs */
         $xsbs = $this->container->get('app.xml_sepa_builder');
         $paymentUniqueId = uniqid('', true);
-        $xml = $xsbs->buildDirectDebitSingleInvoiceXml($paymentUniqueId, new \DateTime('now + 3 days'), $object);
+        $xml = $xsbs->buildDirectDebitSingleInvoiceXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
 
         $object
             ->setIsSepaXmlGenerated(true)
-            ->setSepaXmlGeneratedDate(new \DateTime())
+            ->setSepaXmlGeneratedDate(new DateTime())
         ;
         $em = $this->container->get('doctrine')->getManager();
         $em->flush();
 
-        if (DefaultController::ENV_DEV == $this->getParameter('kernel.environment')) {
+        if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, array('Content-type' => 'application/xml'));
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
         $fileSystem = new Filesystem();
         $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoice_'.$now->format('Y-m-d_H-i').'.xml';
         $fileSystem->touch($fileNamePath);
@@ -254,24 +250,24 @@ class InvoiceAdminController extends BaseAdminController
             /** @var XmlSepaBuilderService $xsbs */
             $xsbs = $this->container->get('app.xml_sepa_builder');
             $paymentUniqueId = uniqid('', true);
-            $xmls = $xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new \DateTime('now + 3 days'), $selectedModels);
+            $xmls = $xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
 
             /** @var Invoice $selectedModel */
             foreach ($selectedModels as $selectedModel) {
-                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
+                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
                     $selectedModel
                         ->setIsSepaXmlGenerated(true)
-                        ->setSepaXmlGeneratedDate(new \DateTime())
+                        ->setSepaXmlGeneratedDate(new DateTime())
                     ;
                 }
             }
             $em->flush();
 
-            if (DefaultController::ENV_DEV == $this->getParameter('kernel.environment')) {
+            if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, array('Content-type' => 'application/xml'));
             }
 
-            $now = new \DateTime();
+            $now = new DateTime();
             $fileSystem = new Filesystem();
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoices_'.$now->format('Y-m-d_H-i').'.xml';
             $fileSystem->touch($fileNamePath);

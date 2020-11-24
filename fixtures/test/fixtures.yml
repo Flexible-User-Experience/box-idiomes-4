@@ -117,6 +117,7 @@ App\Entity\City:
 # BankCreditorSepa
 App\Entity\BankCreditorSepa:
   bankCreditorSepa{1..2}:
+    name: <name()>
     organizationId: <bothify('########?')>
     creditorName: <company()>
     iban: <iban('ES')>
