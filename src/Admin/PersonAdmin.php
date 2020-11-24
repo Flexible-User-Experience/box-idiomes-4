@@ -126,11 +126,11 @@ class PersonAdmin extends AbstractBaseAdmin
                 'bankCreditorSepa',
                 EntityType::class,
                 array(
-                    'label' => 'backend.admin.parent.bank_creditor_sepa',
+                    'label' => 'backend.admin.bank.creditor_bank_name',
+                    'help' => 'backend.admin.bank.creditor_bank_name_help',
                     'required' => false,
                     'class' => BankCreditorSepa::class,
-                    'choice_label' => 'iban',
-//                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.city_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getEnabledSortedByNameQB(),
                 )
             )
             ->end()

@@ -151,6 +151,6 @@ class BankCreditorSepa extends AbstractBase
      */
     public function __toString()
     {
-        return $this->id ? $this->getName().' ('.$this->getIban().')' : '---';
+        return $this->id ? $this->getName().' · '.$this->getIban() : '---';
     }
 }

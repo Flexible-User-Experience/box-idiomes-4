@@ -314,6 +314,8 @@ backend:
             accountNumber_help: "Exemple: ES11 2222 3333 4444 5555 6666"
             swiftCode: BIC/Swift
             parent: Pare, mare o tutor
+            creditor_bank_name: Banc creditor
+            creditor_bank_name_help: Banc on s'ingressarà el rebut SEPA
         parent:
             students: Fills
             dni: DNI/CIF o NIF
