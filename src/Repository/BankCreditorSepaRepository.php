@@ -17,10 +17,9 @@ class BankCreditorSepaRepository extends ServiceEntityRepository
 
     public function getEnabledSortedByNameQB(): QueryBuilder
     {
-        return $this->createQueryBuilder('c')
+        return $this->getAllSortedByNameQB()
             ->where('c.enabled = :enabled')
-            ->setParameter('enabled', true)
-            ->orderBy('c.name', 'ASC');
+            ->setParameter('enabled', true);
     }
 
     public function getEnabledSortedByNameQ(): Query
@@ -31,5 +30,21 @@ class BankCreditorSepaRepository extends ServiceEntityRepository
     public function getEnabledSortedByName(): array
     {
         return $this->getEnabledSortedByNameQ()->getResult();
+    }
+
+    public function getAllSortedByNameQB(): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.name', 'ASC');
+    }
+
+    public function getAllSortedByNameQ(): Query
+    {
+        return $this->getAllSortedByNameQB()->getQuery();
+    }
+
+    public function getAllSortedByName(): array
+    {
+        return $this->getAllSortedByNameQ()->getResult();
     }
 }

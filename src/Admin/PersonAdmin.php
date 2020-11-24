@@ -267,6 +267,19 @@ class PersonAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'bankCreditorSepa',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.creditor_bank_name',
+                ),
+                EntityType::class,
+                array(
+                    'required' => false,
+                    'class' => BankCreditorSepa::class,
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getAllSortedByNameQB(),
+                )
+            )
+            ->add(
                 'dischargeDate',
                 'doctrine_orm_date',
                 array(
@@ -356,7 +369,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function configureExportFields(): array
+    public function getExportFields(): array
     {
         return array(
             'dni',

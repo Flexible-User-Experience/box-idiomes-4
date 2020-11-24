@@ -185,7 +185,7 @@ class TariffAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function configureExportFields(): array
+    public function getExportFields(): array
     {
         return array(
             'year',

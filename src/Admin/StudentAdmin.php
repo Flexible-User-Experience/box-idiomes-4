@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\BankCreditorSepa;
 use App\Entity\City;
 use App\Entity\Invoice;
 use App\Entity\Person;
@@ -151,6 +152,17 @@ class StudentAdmin extends AbstractBaseAdmin
                     'required' => false,
                     'btn_add' => false,
                     'by_reference' => false,
+                )
+            )
+            ->add(
+                'bankCreditorSepa',
+                EntityType::class,
+                array(
+                    'label' => 'backend.admin.bank.creditor_bank_name',
+                    'help' => 'backend.admin.bank.creditor_bank_name_help',
+                    'required' => false,
+                    'class' => BankCreditorSepa::class,
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getEnabledSortedByNameQB(),
                 )
             )
             ->end()
@@ -350,6 +362,19 @@ class StudentAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'bankCreditorSepa',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.creditor_bank_name',
+                ),
+                EntityType::class,
+                array(
+                    'required' => false,
+                    'class' => BankCreditorSepa::class,
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getAllSortedByNameQB(),
+                )
+            )
+            ->add(
                 'birthDate',
                 'doctrine_orm_date',
                 array(
@@ -529,7 +554,7 @@ class StudentAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function configureExportFields(): array
+    public function getExportFields(): array
     {
         return array(
             'dni',
@@ -559,7 +584,7 @@ class StudentAdmin extends AbstractBaseAdmin
     /**
      * @param Student $object
      */
-    public function preRemove($object)
+    public function preRemove($object): void
     {
         $relatedReceipts = $this->getModelManager()->findBy(Receipt::class, [
             'student' => $object,
@@ -580,7 +605,7 @@ class StudentAdmin extends AbstractBaseAdmin
     /**
      * @param Student $object
      */
-    public function prePersist($object)
+    public function prePersist($object): void
     {
         $this->commonPreActions($object);
     }
@@ -588,7 +613,7 @@ class StudentAdmin extends AbstractBaseAdmin
     /**
      * @param Student $object
      */
-    public function preUpdate($object)
+    public function preUpdate($object): void
     {
         $this->commonPreActions($object);
     }
@@ -596,7 +621,7 @@ class StudentAdmin extends AbstractBaseAdmin
     /**
      * @param Student $object
      */
-    private function commonPreActions($object)
+    private function commonPreActions($object): void
     {
         if ($object->getBank()->getAccountNumber()) {
             $object->getBank()->setAccountNumber(strtoupper($object->getBank()->getAccountNumber()));

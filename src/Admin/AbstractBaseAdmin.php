@@ -14,14 +14,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
  */
 abstract class AbstractBaseAdmin extends AbstractAdmin
 {
-    /**
-     * @var UploaderHelper
-     */
     private UploaderHelper $vus;
-
-    /**
-     * @var CacheManager
-     */
     private CacheManager $lis;
 
     /**
@@ -78,7 +71,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @return array
      */
-    public function configureExportFields(): array
+    public function getExportFormats(): array
     {
         return array(
             'csv',
