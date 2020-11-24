@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
  */
 class InvoiceLineAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Invoice Line';
+    protected $classnameLabel = 'InvoiceLine';
     protected $baseRoutePattern = 'billings/invoice-line';
     protected $datagridValues = array(
         '_sort_by' => 'description',
@@ -147,7 +147,6 @@ class InvoiceLineAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'invoice',
@@ -209,6 +208,8 @@ class InvoiceLineAdmin extends AbstractBaseAdmin
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),

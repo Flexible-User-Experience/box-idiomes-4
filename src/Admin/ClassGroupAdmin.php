@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
  */
 class ClassGroupAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Grups';
+    protected $classnameLabel = 'ClassGroup';
     protected $baseRoutePattern = 'classrooms/group';
     protected $datagridValues = array(
         '_sort_by' => 'code',
@@ -28,7 +28,7 @@ class ClassGroupAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         parent::configureRoutes($collection);
         $collection
@@ -40,7 +40,7 @@ class ClassGroupAdmin extends AbstractBaseAdmin
     /**
      * @param FormMapper $formMapper
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
@@ -146,7 +146,6 @@ class ClassGroupAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'code',
@@ -186,6 +185,8 @@ class ClassGroupAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.is_for_private_lessons',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -194,12 +195,16 @@ class ClassGroupAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'emails' => array('template' => 'Admin/Cells/list__action_group_emails.html.twig'),
@@ -213,7 +218,7 @@ class ClassGroupAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function getExportFields(): array
     {
         return array(
             'code',

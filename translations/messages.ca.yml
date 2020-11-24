@@ -1,62 +1,69 @@
-Teacher List: Professors
-Teacher Create: Crear
-Absence List: Absències
-Absence Create: Crear
-Teacher Delete: Esborrar
-Student List: Alumnes
-Student Create: Crear
-Student Delete: Esborrar
-Grups List: Grups
-Grups Create: Crear
-Grups Delete: Esborrar
-Receipt List: Rebuts
-Receipt Create: Crear
-Receipt Generate: Generar rebuts mensual
-Receipt Delete: Esborrar
-Invoice List: Factures
-Invoice Create: Crear
-Invoice Generate: Generar facturació mensual
-Invoice Delete: Esborrar
-Tarriff List: Tarifes
-Tarriff Create: Crear
-Tarriff Delete: Esborrar
-Timetable List: Horaris
-Timetable Create: Crear
-Timetable Delete: Esborrar
-Person List: Pares
-Person Create: Crear
-Person Delete: Esborrar
-Service List: Serveis
-Service Create: Crear
-Service Delete: Esborrar
-Contact Message List: Missatges de contacte
-Contact Message Delete: Esborrar
-Newsletter Contact List: Butlletins de contacte
-Province List: Províncies
-Province Create: Crear
-Province Delete: Esborrar
-City List: Ciutats
-City Create: Crear
-City Delete: Esborrar
-User List: Usuaris
-User Create: Crear
-User Delete: Esborrar
-Provider List: Proveïdors
-Provider Create: Crear
-Provider Delete: Esborrar
-"Spending Category List": Tipus de Despeses
+"Teacher List": Professors
+"Teacher Create": Crear
+"Teacher Absence List": Absències professor
+"Teacher Absence Create": Crear
+"Teacher Teacher Delete": Esborrar
+"Student List": Alumnes
+"Student Create": Crear
+"Student Delete": Esborrar
+"Student Absence List": Absències alumne
+"Student Absence Create": Crear
+"Student Absence Delete": Esborrar
+"Class Group List": Grups
+"Class Group Create": Crear
+"Class Group Delete": Esborrar
+"Receipt List": Rebuts
+"Receipt Create": Crear
+"Receipt Generate": Generar rebuts mensual
+"Receipt Delete": Esborrar
+"Invoice List": Factures
+"Invoice Create": Crear
+"Invoice Generate": Generar facturació mensual
+"Invoice Delete": Esborrar
+"Tarriff List": Tarifes
+"Tarriff Create": Crear
+"Tarriff Delete": Esborrar
+"Event List": Horaris
+"Event Create": Crear
+"Event Delete": Esborrar
+"Person List": Pares, mares o tutors
+"Person Create": Crear
+"Person Delete": Esborrar
+"Service List": Serveis
+"Service Create": Crear
+"Service Delete": Esborrar
+"Contact Message List": Missatges de contacte
+"Contact Message Delete": Esborrar
+"Newsletter Contact List": Butlletins de contacte
+"Province List": Províncies
+"Province Create": Crear
+"Province Delete": Esborrar
+"City List": Ciutats
+"City Create": Crear
+"City Delete": Esborrar
+"User List": Usuaris
+"User Create": Crear
+"User Delete": Esborrar
+"Provider List": Proveïdors
+"Provider Create": Crear
+"Provider Delete": Esborrar
+"Spending Category List": Tipus de despeses
 "Spending Category Create": Crear
 "Spending Category Delete": Esborrar
 "Spending List": Despeses
 "Spending Create": Crear
 "Spending Delete": Esborrar
-"Preregisters List": Preinscripcions
-"Preregisters Create": Crear
-"Preregisters Delete": Esborrar
-File List: Fitxers
-File Show: Gestor de Documents
+"Pre Register List": Preinscripcions
+"Pre Register Create": Crear
+"Pre Register Delete": Esborrar
+"Bank Creditor Sepa List": Bancs
+"Bank Creditor Sepa Create": Crear
+"Bank Creditor Sepa Delete": Esborrar
+"File Dummy List": Fitxers
+"File Dummy Show": Gestor de Documents
 
 IBAN: IBAN
+BIC: BIC
 Client: Client
 Usuari: Usuari
 Alumne: Alumne
@@ -173,7 +180,7 @@ backend:
             address: Adreça
             city: Ciutat
             payment: Pagament
-            payment_no_parent_help: "vàlid sempre i quan l'alumne no tingui un pare assignat"
+            payment_no_parent_help: "Vàlid sempre que l'alumne no tingui un pare assignat"
             is_payment_excempt: Exempt de pagament
             schedule: Horari
             comments: Comentaris
@@ -300,11 +307,15 @@ backend:
             bank_account: "Compte bancari:"
             end_text: "D'acord amb el que estableix la llei orgànica 15/1999, li fem saber que les seves dades seran incorporades a un fitxer autoritzat sota la responsabilitat de Ester Escrihuela Simó amb la finalitat de poder atendre els compromisos derivats de la relació que mantenim amb vostès."
         bank:
+            organization_id: Identificador
+            creditor_name: Nom del creditor
             name: Entitat bancària
             accountNumber: Núm. de compte
             accountNumber_help: "Exemple: ES11 2222 3333 4444 5555 6666"
             swiftCode: BIC/Swift
             parent: Pare, mare o tutor
+            creditor_bank_name: Banc creditor
+            creditor_bank_name_help: Banc on s'ingressarà el rebut SEPA
         parent:
             students: Fills
             dni: DNI/CIF o NIF

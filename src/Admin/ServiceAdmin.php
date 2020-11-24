@@ -29,7 +29,7 @@ class ServiceAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
             ->remove('batch');
@@ -38,7 +38,7 @@ class ServiceAdmin extends AbstractBaseAdmin
     /**
      * @param FormMapper $formMapper
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
@@ -127,7 +127,6 @@ class ServiceAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'position',
@@ -159,12 +158,16 @@ class ServiceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
@@ -178,7 +181,7 @@ class ServiceAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function getExportFields(): array
     {
         return array(
             'position',

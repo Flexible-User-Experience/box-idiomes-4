@@ -34,7 +34,7 @@ class SpendingAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         parent::configureRoutes($collection);
         $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
@@ -45,7 +45,7 @@ class SpendingAdmin extends AbstractBaseAdmin
      *
      * @throws \Twig\Error\Error
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(5))
@@ -241,7 +241,6 @@ class SpendingAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'date',
@@ -250,6 +249,8 @@ class SpendingAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.spending.date',
                     'format' => 'd/m/Y',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -291,6 +292,8 @@ class SpendingAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.baseAmount',
                     'template' => 'Admin/Cells/list__cell_invoice_base_amount.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -299,12 +302,16 @@ class SpendingAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.invoice.isPayed',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'label' => 'backend.admin.actions',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
@@ -320,7 +327,7 @@ class SpendingAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function getExportFields(): array
     {
         return array(
             'dateString',

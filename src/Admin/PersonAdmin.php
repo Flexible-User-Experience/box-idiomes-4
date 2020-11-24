@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\BankCreditorSepa;
 use App\Entity\City;
 use App\Entity\Person;
 use App\Enum\StudentPaymentEnum;
@@ -35,7 +36,7 @@ class PersonAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         parent::configureRoutes($collection);
         $collection->remove('delete');
@@ -44,7 +45,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param FormMapper $formMapper
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
@@ -119,6 +120,17 @@ class PersonAdmin extends AbstractBaseAdmin
                     'required' => false,
                     'btn_add' => false,
                     'by_reference' => false,
+                )
+            )
+            ->add(
+                'bankCreditorSepa',
+                EntityType::class,
+                array(
+                    'label' => 'backend.admin.bank.creditor_bank_name',
+                    'help' => 'backend.admin.bank.creditor_bank_name_help',
+                    'required' => false,
+                    'class' => BankCreditorSepa::class,
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getEnabledSortedByNameQB(),
                 )
             )
             ->end()
@@ -255,6 +267,19 @@ class PersonAdmin extends AbstractBaseAdmin
                 )
             )
             ->add(
+                'bankCreditorSepa',
+                null,
+                array(
+                    'label' => 'backend.admin.bank.creditor_bank_name',
+                ),
+                EntityType::class,
+                array(
+                    'required' => false,
+                    'class' => BankCreditorSepa::class,
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getAllSortedByNameQB(),
+                )
+            )
+            ->add(
                 'dischargeDate',
                 'doctrine_orm_date',
                 array(
@@ -283,7 +308,6 @@ class PersonAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'name',
@@ -323,12 +347,16 @@ class PersonAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                     ),
@@ -341,7 +369,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function getExportFields(): array
     {
         return array(
             'dni',
@@ -355,6 +383,8 @@ class PersonAdmin extends AbstractBaseAdmin
             'bank.name',
             'bank.swiftCode',
             'bank.accountNumber',
+            'bankCreditorSepa.name',
+            'bankCreditorSepa.iban',
             'dischargeDateString',
             'enabled',
         );
@@ -363,7 +393,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param Person $object
      */
-    public function prePersist($object)
+    public function prePersist($object): void
     {
         $this->commonPreActions($object);
     }
@@ -371,7 +401,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param Person $object
      */
-    public function preUpdate($object)
+    public function preUpdate($object): void
     {
         $this->commonPreActions($object);
     }
@@ -379,7 +409,7 @@ class PersonAdmin extends AbstractBaseAdmin
     /**
      * @param Person $object
      */
-    private function commonPreActions($object)
+    private function commonPreActions($object): void
     {
         if ($object->getBank()->getAccountNumber()) {
             $object->getBank()->setAccountNumber(strtoupper($object->getBank()->getAccountNumber()));

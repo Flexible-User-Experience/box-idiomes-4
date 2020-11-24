@@ -14,7 +14,7 @@ use Sonata\Form\Type\DateTimePickerType;
  */
 class NewsletterContactAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Newsletter Contact';
+    protected $classnameLabel = 'NewsletterContact';
     protected $baseRoutePattern = 'contacts/newsletter';
     protected $datagridValues = array(
         '_sort_by' => 'createdAt',
@@ -72,7 +72,6 @@ class NewsletterContactAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'createdAt',
@@ -80,6 +79,8 @@ class NewsletterContactAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.contact.date',
                     'format' => 'd/m/Y H:i',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(

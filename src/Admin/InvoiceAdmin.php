@@ -43,7 +43,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
             ->add('pdf', $this->getRouterIdParameter().'/pdf')
@@ -58,7 +58,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
      *
      * @return array
      */
-    public function configureBatchActions($actions)
+    public function configureBatchActions($actions): array
     {
         if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
             $actions['generatesepaxmls'] = array(
@@ -76,7 +76,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
      *
      * @return array
      */
-    public function getDashboardActions()
+    public function getDashboardActions(): array
     {
         $actions = parent::getDashboardActions();
         $actions['generate'] = array(
@@ -94,7 +94,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
      *
      * @throws Exception
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $now = new DateTime();
         $currentYear = $now->format('Y');
@@ -501,7 +501,6 @@ class InvoiceAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'id',
@@ -518,6 +517,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.receipt.date',
                     'template' => 'Admin/Cells/list__cell_receipt_date.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -568,6 +569,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.baseAmount',
                     'template' => 'Admin/Cells/list__cell_invoice_base_amount.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -577,6 +580,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.totalAmount',
                     'template' => 'Admin/Cells/list__cell_invoice_total_amount.html.twig',
                     'editable' => false,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 )
             )
             ->add(
@@ -585,6 +590,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.receipt.isSepaXmlGenerated',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -593,6 +600,8 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.invoice.isSended',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -601,12 +610,16 @@ class InvoiceAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.invoice.isPayed',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'invoice' => array('template' => 'Admin/Buttons/list__action_invoice_pdf_button.html.twig'),
@@ -622,7 +635,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function getExportFields(): array
     {
         return array(
             'invoiceNumber',
@@ -651,7 +664,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
     /**
      * @param Invoice $object
      */
-    public function prePersist($object)
+    public function prePersist($object): void
     {
         $this->commonPreActions($object);
     }
@@ -659,7 +672,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
     /**
      * @param Invoice $object
      */
-    public function preUpdate($object)
+    public function preUpdate($object): void
     {
         $this->commonPreActions($object);
     }
@@ -667,7 +680,7 @@ class InvoiceAdmin extends AbstractBaseAdmin
     /**
      * @param Invoice $object
      */
-    private function commonPreActions($object)
+    private function commonPreActions($object): void
     {
         if ($object->getStudent()->getParent()) {
             $object->setPerson($object->getStudent()->getParent());

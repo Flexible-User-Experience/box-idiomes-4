@@ -11,7 +11,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
  */
 class FileDummyAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'File';
+    protected $classnameLabel = 'FileDummy';
     protected $baseRoutePattern = 'fitxers';
     protected $datagridValues = array(
         '_sort_by' => 'name',
@@ -23,7 +23,7 @@ class FileDummyAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
             ->add('handler', 'gestor')

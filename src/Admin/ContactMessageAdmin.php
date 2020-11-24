@@ -15,7 +15,7 @@ use Sonata\Form\Type\DatePickerType;
  */
 class ContactMessageAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Contact Message';
+    protected $classnameLabel = 'ContactMessage';
     protected $baseRoutePattern = 'contacts/message';
     protected $datagridValues = array(
         '_sort_by' => 'createdAt',
@@ -27,7 +27,7 @@ class ContactMessageAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
             ->remove('create')
@@ -110,7 +110,7 @@ class ContactMessageAdmin extends AbstractBaseAdmin
     /**
      * @param ShowMapper $showMapper
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper): void
     {
         $showMapper
             ->add(
@@ -173,13 +173,14 @@ class ContactMessageAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'checked',
                 null,
                 array(
                     'label' => 'backend.admin.contact.checked',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -188,6 +189,8 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.contact.date',
                     'format' => 'd/m/Y',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -209,12 +212,16 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 null,
                 array(
                     'label' => 'backend.admin.contact.answered',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'show' => array(
                             'template' => 'Admin/Buttons/list__action_show_button.html.twig',
@@ -234,7 +241,7 @@ class ContactMessageAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function getExportFields(): array
     {
         return array(
             'checked',

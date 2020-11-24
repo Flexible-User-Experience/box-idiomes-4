@@ -17,12 +17,12 @@ class BackendControllerTest extends WebTestCase
     /**
      * Test admin login request is successful.
      */
-    public function testAdminLoginPageIsSuccessful()
+    public function testAdminLoginPageIsSuccessful(): void
     {
         $client = WebTestCase::createClient();
         $client->request('GET', '/admin/login');
 
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
     }
 
     /**
@@ -32,12 +32,12 @@ class BackendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    public function testAdminPagesAreSuccessful(string $url)
+    public function testAdminPagesAreSuccessful(string $url): void
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
 
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
     }
 
     /**
@@ -45,7 +45,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideSuccessfulUrls()
+    public function provideSuccessfulUrls(): array
     {
         return array(
             array('/admin/dashboard'),
@@ -90,6 +90,10 @@ class BackendControllerTest extends WebTestCase
             array('/admin/administrations/bank/create'),
             array('/admin/administrations/bank/1/delete'),
             array('/admin/administrations/bank/1/edit'),
+            array('/admin/administrations/bank-creditor-sepa/list'),
+            array('/admin/administrations/bank-creditor-sepa/create'),
+            array('/admin/administrations/bank-creditor-sepa/1/delete'),
+            array('/admin/administrations/bank-creditor-sepa/1/edit'),
             array('/admin/classrooms/group/list'),
             array('/admin/classrooms/group/create'),
             array('/admin/classrooms/group/1/edit'),
@@ -143,12 +147,12 @@ class BackendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    public function testAdminPagesAreNotFound(string $url)
+    public function testAdminPagesAreNotFound(string $url): void
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
 
-        $this->assertResponseStatusCodeSame(404);
+        self::assertResponseStatusCodeSame(404);
     }
 
     /**
@@ -156,7 +160,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideNotFoundUrls()
+    public function provideNotFoundUrls(): array
     {
         return array(
             array('/admin/contacts/message/create'),
@@ -177,6 +181,8 @@ class BackendControllerTest extends WebTestCase
             array('/admin/administrations/province/batch'),
             array('/admin/administrations/province/1/delete'),
             array('/admin/administrations/city/1/delete'),
+            array('/admin/administrations/bank-creditor-sepa/batch'),
+            array('/admin/administrations/bank-creditor-sepa/1/show'),
             array('/admin/classrooms/group/1/delete'),
             array('/admin/classrooms/tariff/1/delete'),
             array('/admin/classrooms/timetable/1/delete'),
@@ -194,7 +200,7 @@ class BackendControllerTest extends WebTestCase
     /**
      * @return KernelBrowser
      */
-    private function getAuthenticatedClient()
+    private function getAuthenticatedClient(): KernelBrowser
     {
         return WebTestCase::createClient([], [
             'PHP_AUTH_USER' => 'admin',

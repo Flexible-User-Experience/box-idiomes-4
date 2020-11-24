@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  */
 class PreRegisterAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Preregisters';
+    protected $classnameLabel = 'PreRegister';
     protected $baseRoutePattern = 'students/pre-register';
     protected $datagridValues = array(
         '_sort_by' => 'createdAt',
@@ -29,7 +29,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
      *
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
             ->add('student', $this->getRouterIdParameter().'/create-student')
@@ -43,7 +43,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
      *
      * @return array
      */
-    public function configureBatchActions($actions)
+    public function configureBatchActions($actions): array
     {
         if ($this->hasRoute('show') && $this->hasAccess('show')) {
             $actions['generatestudents'] = array(
@@ -263,7 +263,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
      */
     protected function configureListFields(ListMapper $listMapper): void
     {
-        unset($this->listModes['mosaic']);
         $listMapper
             ->add(
                 'createdAt',
@@ -271,7 +270,9 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'frontend.forms.preregister.date',
                     'editable' => false,
-                    'format' => 'd/m/Y H:i'
+                    'format' => 'd/m/Y H:i',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -280,6 +281,8 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'frontend.forms.preregister.season',
                     'template' => 'Admin/Cells/list__cell_pre_register_season.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
@@ -320,12 +323,16 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'frontend.forms.preregister.enabled',
                     'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 )
             )
             ->add(
                 '_action',
                 'actions',
                 array(
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => array(
                         'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                         'student' => array('template' => 'Admin/Buttons/list__action_create_student_from_pre_register_button.html.twig'),
@@ -340,7 +347,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
     /**
      * @return array
      */
-    public function getExportFields()
+    public function getExportFields(): array
     {
         return array(
             'createdAtString',

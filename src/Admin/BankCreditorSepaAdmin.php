@@ -8,64 +8,65 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
- * Class ReceiptLineAdmin.
+ * Class BankCreditorSepaAdmin.
  *
  * @category Admin
  */
-class ReceiptLineAdmin extends AbstractBaseAdmin
+class BankCreditorSepaAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'ReceiptLine';
-    protected $baseRoutePattern = 'billings/receipt-line';
+    protected $classnameLabel = 'BankCreditorSepa';
+    protected $baseRoutePattern = 'administrations/bank-creditor-sepa';
     protected $datagridValues = array(
-        '_sort_by' => 'description',
+        '_sort_by' => 'name',
         '_sort_order' => 'asc',
     );
 
     /**
      * @param FormMapper $formMapper
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
             ->add(
-                'description',
+                'name',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.description',
+                    'label' => 'backend.admin.bank.name',
+                    'required' => true,
                 )
             )
             ->add(
-                'units',
+                'organizationId',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.units',
+                    'label' => 'backend.admin.bank.organization_id',
+                    'required' => true,
+                    'help' => 'Exemple DNI: 12345678A',
                 )
             )
             ->add(
-                'priceUnit',
+                'creditorName',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.priceUnit',
+                    'label' => 'backend.admin.bank.creditor_name',
+                    'required' => true,
                 )
             )
             ->add(
-                'discount',
+                'iban',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.discount',
+                    'label' => 'IBAN',
+                    'required' => true,
+                    'help' => 'backend.admin.bank.accountNumber_help',
                 )
             )
-            ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(6))
             ->add(
-                'receipt',
+                'bic',
                 null,
                 array(
-                    'label' => 'backend.admin.receiptLine.receipt',
-                    'attr' => array(
-                        'hidden' => true,
-                    ),
+                    'label' => 'BIC',
                     'required' => true,
                 )
             )
@@ -75,9 +76,6 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.enabled',
                     'required' => false,
-                    'attr' => array(
-                        'hidden' => true,
-                    ),
                 )
             )
             ->end()
@@ -91,45 +89,38 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
     {
         $datagridMapper
             ->add(
-                'receipt',
+                'name',
                 null,
                 array(
-                    'label' => 'backend.admin.receiptLine.receipt',
+                    'label' => 'backend.admin.bank.name',
                 )
             )
             ->add(
-                'description',
+                'organizationId',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.description',
+                    'label' => 'backend.admin.bank.organization_id',
                 )
             )
             ->add(
-                'units',
+                'creditorName',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.units',
+                    'label' => 'backend.admin.bank.creditor_name',
                 )
             )
             ->add(
-                'priceUnit',
+                'iban',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.priceUnit',
+                    'label' => 'IBAN',
                 )
             )
             ->add(
-                'discount',
+                'bic',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.discount',
-                )
-            )
-            ->add(
-                'total',
-                null,
-                array(
-                    'label' => 'backend.admin.invoiceLine.total',
+                    'label' => 'BIC',
                 )
             )
             ->add(
@@ -149,50 +140,42 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
     {
         $listMapper
             ->add(
-                'receipt',
+                'name',
                 null,
                 array(
-                    'label' => 'backend.admin.receiptLine.receipt',
+                    'label' => 'backend.admin.bank.name',
                     'editable' => true,
                 )
             )
             ->add(
-                'description',
+                'organizationId',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.description',
+                    'label' => 'backend.admin.bank.organization_id',
                     'editable' => true,
                 )
             )
             ->add(
-                'units',
+                'creditorName',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.units',
+                    'label' => 'backend.admin.bank.creditor_name',
                     'editable' => true,
                 )
             )
             ->add(
-                'priceUnit',
+                'iban',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.priceUnit',
+                    'label' => 'IBAN',
                     'editable' => true,
                 )
             )
             ->add(
-                'discount',
+                'bic',
                 null,
                 array(
-                    'label' => 'backend.admin.invoiceLine.discount',
-                    'editable' => true,
-                )
-            )
-            ->add(
-                'total',
-                null,
-                array(
-                    'label' => 'backend.admin.invoiceLine.total',
+                    'label' => 'BIC',
                     'editable' => true,
                 )
             )
@@ -211,11 +194,10 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => array(
-                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
                         'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
                         'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
                     ),
-                    'label' => 'backend.admin.actions',
+                    'label' => 'Accions',
                 )
             )
         ;

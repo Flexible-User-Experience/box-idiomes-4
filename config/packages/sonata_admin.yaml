@@ -1,7 +1,8 @@
 sonata_admin:
-    title:           '%project_backend_title%'
-    title_logo:      '/build/img/login-logo.png'
-    persist_filters: true
+    title:              '%project_backend_title%'
+    title_logo:         '/build/img/login-logo.png'
+    persist_filters:    true
+    show_mosaic_button: false
     options:
         html5_validate: true
         confirm_exit:   true

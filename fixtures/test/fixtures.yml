@@ -114,6 +114,18 @@ App\Entity\City:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
+# BankCreditorSepa
+App\Entity\BankCreditorSepa:
+  bankCreditorSepa{1..2}:
+    name: <name()>
+    organizationId: <bothify('########?')>
+    creditorName: <company()>
+    iban: <iban('ES')>
+    bic: <swiftBicNumber()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
 # Bank
 App\Entity\Bank:
   bank{1..2}:

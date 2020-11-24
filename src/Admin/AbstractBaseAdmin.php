@@ -14,15 +14,8 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
  */
 abstract class AbstractBaseAdmin extends AbstractAdmin
 {
-    /**
-     * @var UploaderHelper
-     */
-    private $vus;
-
-    /**
-     * @var CacheManager
-     */
-    private $lis;
+    private UploaderHelper $vus;
+    private CacheManager $lis;
 
     /**
      * @param string         $code
@@ -65,7 +58,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @return array
      */
-    public function getBatchActions()
+    public function getBatchActions(): array
     {
         $actions = parent::getBatchActions();
         unset($actions['delete']);
@@ -78,7 +71,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @return array
      */
-    public function getExportFormats()
+    public function getExportFormats(): array
     {
         return array(
             'csv',
@@ -93,7 +86,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @return array
      */
-    protected function getDefaultFormBoxArray($bootstrapGrid = 'md', $bootstrapSize = '6', $boxClass = 'primary')
+    protected function getDefaultFormBoxArray($bootstrapGrid = 'md', $bootstrapSize = '6', $boxClass = 'primary'): array
     {
         return array(
             'class' => 'col-'.$bootstrapGrid.'-'.$bootstrapSize,
@@ -106,7 +99,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @return array
      */
-    protected function getFormMdSuccessBoxArray($bootstrapColSize = '6')
+    protected function getFormMdSuccessBoxArray($bootstrapColSize = '6'): array
     {
         return $this->getDefaultFormBoxArray('md', $bootstrapColSize, 'success');
     }
@@ -116,7 +109,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @return string
      */
-    protected function getImageHelperFormMapperWithThumbnail()
+    protected function getImageHelperFormMapperWithThumbnail(): string
     {
         return ($this->getSubject() ? $this->getSubject()->getImageName() ? '<img src="'.$this->lis->getBrowserPath(
                 $this->vus->asset($this->getSubject(), 'imageFile'),
@@ -129,7 +122,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @return string
      */
-    protected function getImageHelperFormMapperWithThumbnailBW()
+    protected function getImageHelperFormMapperWithThumbnailBW(): string
     {
         return ($this->getSubject() ? $this->getSubject()->getImageNameBW() ? '<img src="'.$this->lis->getBrowserPath(
                 $this->vus->asset($this->getSubject(), 'imageFileBW'),
@@ -140,7 +133,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     /**
      * @return string
      */
-    protected function getImageHelperFormMapperWithThumbnailGif()
+    protected function getImageHelperFormMapperWithThumbnailGif(): string
     {
         return ($this->getSubject() ? $this->getSubject()->getGifName() ? '<img src="'.$this->lis->getBrowserPath(
                 $this->vus->asset($this->getSubject(), 'gifFile'),
@@ -151,7 +144,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     /**
      * @return string
      */
-    protected function getImageHelperFormMapperWithThumbnailAspectRatio()
+    protected function getImageHelperFormMapperWithThumbnailAspectRatio(): string
     {
         return ($this->getSubject() ? $this->getSubject()->getImageName() ? '<img src="'.$this->lis->getBrowserPath(
                     $this->vus->asset($this->getSubject(), 'imageFile'),
@@ -169,7 +162,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @throws \Twig\Error\Error
      */
-    protected function getSmartHelper($attribute, $uploaderMapping)
+    protected function getSmartHelper($attribute, $uploaderMapping): string
     {
         $fs = $this->getConfigurationPool()->getContainer()->get('app.file_service');
         $tes = $this->getConfigurationPool()->getContainer()->get('twig');
