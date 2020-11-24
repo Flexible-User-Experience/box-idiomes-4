@@ -42,6 +42,7 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 array(
                     'label' => 'backend.admin.bank.organization_id',
                     'required' => true,
+                    'help' => 'Exemple DNI: 12345678A',
                 )
             )
             ->add(

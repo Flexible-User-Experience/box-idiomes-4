@@ -308,7 +308,7 @@ class ReceiptAdminController extends BaseAdminController
      *
      * @return Response|BinaryFileResponse
      */
-    public function generateDirectDebitAction(Request $request)
+    public function generateDirectDebitAction(Request $request): Response
     {
         $request = $this->resolveRequest($request);
         $id = $request->get($this->admin->getIdParameter());
