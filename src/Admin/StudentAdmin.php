@@ -570,6 +570,8 @@ class StudentAdmin extends AbstractBaseAdmin
             'bank.name',
             'bank.swiftCode',
             'bank.accountNumber',
+            'bankCreditorSepa.name',
+            'bankCreditorSepa.iban',
             'birthDateString',
             'dischargeDateString',
             'schedule',

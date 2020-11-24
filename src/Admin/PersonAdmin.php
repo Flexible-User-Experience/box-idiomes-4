@@ -383,6 +383,8 @@ class PersonAdmin extends AbstractBaseAdmin
             'bank.name',
             'bank.swiftCode',
             'bank.accountNumber',
+            'bankCreditorSepa.name',
+            'bankCreditorSepa.iban',
             'dischargeDateString',
             'enabled',
         );
