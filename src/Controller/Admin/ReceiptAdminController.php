@@ -324,7 +324,7 @@ class ReceiptAdminController extends BaseAdminController
 
         /** @var XmlSepaBuilderService $xsbs */
         $xsbs = $this->container->get('app.xml_sepa_builder');
-        $paymentUniqueId = uniqid('', true);
+        $paymentUniqueId = uniqid('', false);
         $xml = $xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
 
         $object
@@ -401,7 +401,7 @@ class ReceiptAdminController extends BaseAdminController
         try {
             /** @var XmlSepaBuilderService $xsbs */
             $xsbs = $this->container->get('app.xml_sepa_builder');
-            $paymentUniqueId = uniqid('', true);
+            $paymentUniqueId = uniqid('', false);
             $xmlsArray = [];
             $banksCreditorSepa = $this->container->get('app.bank_creditor_sepa_repository')->getEnabledSortedByName();
             /** @var BankCreditorSepa $bankCreditorSepa */
