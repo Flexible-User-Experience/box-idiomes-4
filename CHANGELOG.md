@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.5.01 (WIP)
+##### Version 4.5.02 (WIP)
  * fix minor bugs
+
+##### Version 4.5.01 (2020-11-30)
+ * Symfony 4.4.17 update
 
 ##### Version 4.5.00 (2020-11-24)
  * fix bad title in admin dashboard balance amounts
