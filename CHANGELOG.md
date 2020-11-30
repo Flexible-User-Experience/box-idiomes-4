@@ -6,6 +6,7 @@ Changelog
 
 ##### Version 4.5.01 (2020-11-30)
  * Symfony 4.4.17 update
+ * change IBAN business .env.prod parameter
 
 ##### Version 4.5.00 (2020-11-24)
  * fix bad title in admin dashboard balance amounts
