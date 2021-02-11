@@ -5,7 +5,8 @@ Changelog
  * fix minor bugs
 
 ##### Version 4.5.05 (2021-02-11)
- * make bankCreditorSepa always required in Student and Parent admin edit views
+ * make bankCreditorSepa attr always required in Student and Parent admin edit views
+ * remove local-php-security-checker from Travis setup
 
 ##### Version 4.5.04 (2021-02-11)
  * add php-cs-fixer precommit git hook
