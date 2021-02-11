@@ -6,8 +6,8 @@ use App\Entity\Bank;
 use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class BankRepository.
@@ -18,8 +18,6 @@ class BankRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
@@ -27,8 +25,6 @@ class BankRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student|null $student
-     *
      * @return QueryBuilder
      */
     public function getStudentRelatedItemsQB(Student $student = null)
@@ -50,8 +46,6 @@ class BankRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student|null $student
-     *
      * @return Query
      */
     public function getStudentRelatedItemsQ(Student $student = null)
@@ -60,8 +54,6 @@ class BankRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student|null $student
-     *
      * @return array
      */
     public function getStudentRelatedItems(Student $student = null)

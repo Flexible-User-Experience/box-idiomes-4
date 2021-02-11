@@ -26,8 +26,6 @@ class CourierService
 
     /**
      * CourierService constructor.
-     *
-     * @param MailerInterface $mailer
      */
     public function __construct(MailerInterface $mailer)
     {
@@ -37,10 +35,10 @@ class CourierService
     /**
      * Send an email.
      *
-     * @param string $from
-     * @param string $toEmail
-     * @param string $subject
-     * @param string $body
+     * @param string      $from
+     * @param string      $toEmail
+     * @param string      $subject
+     * @param string      $body
      * @param string|null $replyAddress
      * @param string|null $toName
      *
@@ -64,7 +62,6 @@ class CourierService
      * @param string $subject
      * @param string $body
      * @param string $pdfFilename
-     * @param TCPDF  $pdf
      *
      * @return void
      *

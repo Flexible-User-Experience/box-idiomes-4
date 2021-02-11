@@ -55,11 +55,11 @@ class ContactMessageAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             $this->admin->getTemplate('show'),
-            array(
+            [
                 'action' => 'show',
                 'object' => $object,
                 'elements' => $this->admin->getShow(),
-            )
+            ]
         );
     }
 
@@ -105,12 +105,12 @@ class ContactMessageAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/ContactMessage/answer_form.html.twig',
-            array(
+            [
                 'action' => 'answer',
                 'object' => $object,
                 'form' => $form->createView(),
                 'elements' => $this->admin->getShow(),
-            )
+            ]
         );
     }
 }

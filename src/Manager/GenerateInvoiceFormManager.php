@@ -34,14 +34,6 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
 
     /**
      * GenerateInvoiceFormManager constructor.
-     *
-     * @param LoggerInterface     $logger
-     * @param KernelInterface     $kernel
-     * @param EntityManager       $em
-     * @param TranslatorInterface $ts
-     * @param StudentRepository   $sr
-     * @param EventRepository     $er
-     * @param InvoiceRepository   $ir
      */
     public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManager $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, InvoiceRepository $ir)
     {
@@ -150,8 +142,6 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
     }
 
     /**
-     * @param GenerateInvoiceModel $generateInvoiceModel
-     *
      * @return int
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -174,7 +164,7 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
                         $invoiceLine = $previousInvoice->getLines()[0];
                         $invoiceLine
                             ->setStudent($student)
-                            ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.line', array('%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()), 'messages'))
+                            ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.line', ['%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()], 'messages'))
                             ->setUnits($generateInvoiceItemModel->getUnits())
                             ->setPriceUnit($generateInvoiceItemModel->getUnitPrice())
                             ->setDiscount($generateInvoiceItemModel->getDiscount())
@@ -193,7 +183,7 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $invoiceLine = new InvoiceLine();
                     $invoiceLine
                         ->setStudent($student)
-                        ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.line', array('%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()), 'messages'))
+                        ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.line', ['%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()], 'messages'))
                         ->setUnits($generateInvoiceItemModel->getUnits())
                         ->setPriceUnit($generateInvoiceItemModel->getUnitPrice())
                         ->setDiscount($generateInvoiceItemModel->getDiscount())

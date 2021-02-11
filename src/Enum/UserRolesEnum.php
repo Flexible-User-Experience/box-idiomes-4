@@ -28,12 +28,12 @@ class UserRolesEnum
      */
     public static function getReversedEnumArray()
     {
-        return array(
+        return [
             self::ROLE_USER => 'backend.admin.user.user',
             self::ROLE_CMS => 'backend.admin.user.editor',
             self::ROLE_MANAGER => 'backend.admin.user.manager',
             self::ROLE_ADMIN => 'backend.admin.user.admin',
             self::ROLE_SUPER_ADMIN => 'backend.admin.user.superadmin',
-        );
+        ];
     }
 }

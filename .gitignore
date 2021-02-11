@@ -8,6 +8,7 @@
 !/public/uploads/images/.gitkeep
 !.travis.yml
 /src/.preload.php
+.php_cs.cache
 ###< app/bundle ###
 
 ###> symfony/framework-bundle ###

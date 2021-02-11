@@ -25,8 +25,6 @@ class EventManager
 
     /**
      * EventManager constructor.
-     *
-     * @param TariffRepository $tr
      */
     public function __construct(TariffRepository $tr)
     {
@@ -34,8 +32,6 @@ class EventManager
     }
 
     /**
-     * @param Event $event
-     *
      * @return Event|null
      */
     public function getFirstEventOf(Event $event)
@@ -52,8 +48,6 @@ class EventManager
     }
 
     /**
-     * @param Event $event
-     *
      * @return Event|null
      */
     public function getLastEventOf(Event $event)
@@ -70,8 +64,6 @@ class EventManager
     }
 
     /**
-     * @param Event $event
-     *
      * @return int
      */
     public function getRelatedEventsAmountOf(Event $event)
@@ -90,8 +82,6 @@ class EventManager
     }
 
     /**
-     * @param Event $event
-     *
      * @return int
      */
     public function getTotalRelatedEventsAmountOf(Event $event)
@@ -113,13 +103,11 @@ class EventManager
     }
 
     /**
-     * @param Event $event
-     *
      * @return array
      */
     public function getProgressBarPercentilesOf(Event $event)
     {
-        $progressBarPercentiles = array();
+        $progressBarPercentiles = [];
         $total = $this->getTotalRelatedEventsAmountOf($event);
         $involved = $this->getRelatedEventsAmountOf($event);
         if (0 != $total) {
@@ -134,13 +122,11 @@ class EventManager
     }
 
     /**
-     * @param Event $event
-     *
      * @return array
      */
     public function getRangeChoices(Event $event)
     {
-        $result = array();
+        $result = [];
         if (!is_null($event->getNext())) {
             $iteratedEvent = $event;
             while (!is_null($iteratedEvent->getNext())) {
@@ -153,13 +139,11 @@ class EventManager
     }
 
     /**
-     * @param Event $event
-     *
      * @return array
      */
     public function getInclusiveRangeChoices(Event $event)
     {
-        $result = array();
+        $result = [];
         $result[$event->getId()] = $event->getBegin()->format('d/m/Y H:i');
         if (!is_null($event->getNext())) {
             $iteratedEvent = $event;

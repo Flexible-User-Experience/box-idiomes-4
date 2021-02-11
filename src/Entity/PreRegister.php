@@ -67,18 +67,12 @@ class PreRegister extends AbstractPerson
     /**
      * Methods.
      */
-
-    /**
-     * @return string|null
-     */
     public function getAge(): ?string
     {
         return $this->age;
     }
 
     /**
-     * @param string|null $age
-     *
      * @return $this
      */
     public function setAge(?string $age): PreRegister
@@ -88,19 +82,11 @@ class PreRegister extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCourseLevel(): ?string
     {
         return $this->courseLevel;
     }
 
-    /**
-     * @param string|null $courseLevel
-     *
-     * @return PreRegister
-     */
     public function setCourseLevel(?string $courseLevel): PreRegister
     {
         $this->courseLevel = $courseLevel;
@@ -108,19 +94,11 @@ class PreRegister extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPreferredTimetable(): ?string
     {
         return $this->preferredTimetable;
     }
 
-    /**
-     * @param string|null $preferredTimetable
-     *
-     * @return PreRegister
-     */
     public function setPreferredTimetable(?string $preferredTimetable): PreRegister
     {
         $this->preferredTimetable = $preferredTimetable;
@@ -128,19 +106,11 @@ class PreRegister extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPreviousAcademy(): ?string
     {
         return $this->previousAcademy;
     }
 
-    /**
-     * @param string|null $previousAcademy
-     *
-     * @return PreRegister
-     */
     public function setPreviousAcademy(?string $previousAcademy): PreRegister
     {
         $this->previousAcademy = $previousAcademy;
@@ -148,19 +118,11 @@ class PreRegister extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getComments(): ?string
     {
         return $this->comments;
     }
 
-    /**
-     * @param string|null $comments
-     *
-     * @return PreRegister
-     */
     public function setComments(?string $comments): PreRegister
     {
         $this->comments = $comments;
@@ -168,25 +130,17 @@ class PreRegister extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getSeason(): int
     {
         return $this->season;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSeasonString(): ?string
     {
         return PreRegisterSeasonEnum::getReversedEnumArray()[$this->getSeason()];
     }
 
     /**
-     * @param int $season
-     *
      * @return $this
      */
     public function setSeason(int $season): PreRegister
@@ -196,17 +150,12 @@ class PreRegister extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return ClassGroup|null
-     */
     public function getClassGroup(): ?ClassGroup
     {
         return $this->classGroup;
     }
 
     /**
-     * @param ClassGroup|null $classGroup
-     *
      * @return $this
      */
     public function setClassGroup(?ClassGroup $classGroup): PreRegister

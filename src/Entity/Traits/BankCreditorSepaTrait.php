@@ -6,13 +6,13 @@ use App\Entity\BankCreditorSepa;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BankCreditorSepaTrait trait
+ * BankCreditorSepaTrait trait.
  *
  * @category Trait
- * @package  App\Entity\Traits
+ *
  * @author   David Romaní <david@flux.cat>
  */
-Trait BankCreditorSepaTrait
+trait BankCreditorSepaTrait
 {
     /**
      * @var BankCreditorSepa
@@ -22,17 +22,12 @@ Trait BankCreditorSepaTrait
      */
     private $bankCreditorSepa;
 
-    /**
-     * @return BankCreditorSepa|null
-     */
     public function getBankCreditorSepa(): ?BankCreditorSepa
     {
         return $this->bankCreditorSepa;
     }
 
     /**
-     * @param BankCreditorSepa|null $bankCreditorSepa
-     *
      * @return $this|null
      */
     public function setBankCreditorSepa(?BankCreditorSepa $bankCreditorSepa)

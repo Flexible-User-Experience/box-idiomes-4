@@ -116,8 +116,6 @@ class Spending extends AbstractBase
     }
 
     /**
-     * @param \DateTime $date
-     *
      * @return $this
      */
     public function setDate(\DateTime $date)

@@ -122,8 +122,6 @@ class Event extends AbstractBase
     }
 
     /**
-     * @param DateTime $begin
-     *
      * @return Event
      */
     public function setBegin(DateTime $begin)
@@ -150,8 +148,6 @@ class Event extends AbstractBase
     }
 
     /**
-     * @param DateTime $end
-     *
      * @return Event
      */
     public function setEnd(DateTime $end)
@@ -258,7 +254,7 @@ class Event extends AbstractBase
      */
     public function getStudentsString()
     {
-        $result = array();
+        $result = [];
         /** @var Student $student */
         foreach ($this->getStudents() as $student) {
             $result[] = $student->getFullName();
@@ -280,8 +276,6 @@ class Event extends AbstractBase
     }
 
     /**
-     * @param Student $student
-     *
      * @return $this
      */
     public function addStudent(Student $student)
@@ -294,8 +288,6 @@ class Event extends AbstractBase
     }
 
     /**
-     * @param Student $student
-     *
      * @return $this
      */
     public function removeStudent(Student $student)
@@ -389,8 +381,6 @@ class Event extends AbstractBase
 
     /**
      * @Assert\Callback
-     *
-     * @param ExecutionContextInterface $context
      */
     public function validateEnd(ExecutionContextInterface $context)
     {
@@ -404,8 +394,6 @@ class Event extends AbstractBase
 
     /**
      * @Assert\Callback
-     *
-     * @param ExecutionContextInterface $context
      */
     public function validateUntil(ExecutionContextInterface $context)
     {

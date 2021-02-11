@@ -17,8 +17,6 @@ class SpendingAdminController extends BaseAdminController
     /**
      * Duplicate a spending record action.
      *
-     * @param Request $request
-     *
      * @return Response
      *
      * @throws NotFoundHttpException If the object does not exist

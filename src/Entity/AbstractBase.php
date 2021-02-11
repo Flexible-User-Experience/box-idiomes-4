@@ -62,8 +62,6 @@ abstract class AbstractBase
     }
 
     /**
-     * @param DateTime $createdAt
-     *
      * @return $this
      */
     public function setCreatedAt(DateTime $createdAt)
@@ -90,8 +88,6 @@ abstract class AbstractBase
     }
 
     /**
-     * @param DateTime $updatedAt
-     *
      * @return $this
      */
     public function setUpdatedAt(DateTime $updatedAt)
@@ -118,8 +114,6 @@ abstract class AbstractBase
     }
 
     /**
-     * @param DateTime $removedAt
-     *
      * @return $this
      */
     public function setRemovedAt(DateTime $removedAt)

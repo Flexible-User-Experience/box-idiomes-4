@@ -25,8 +25,6 @@ class ReceiptManager
 
     /**
      * ReceiptManager constructor.
-     *
-     * @param InvoiceRepository $ir
      */
     public function __construct(InvoiceRepository $ir)
     {
@@ -34,8 +32,6 @@ class ReceiptManager
     }
 
     /**
-     * @param Receipt $receipt
-     *
      * @return Invoice
      */
     public function createInvoiceFromReceipt(Receipt $receipt)
@@ -77,16 +73,14 @@ class ReceiptManager
     }
 
     /**
-     * @param Receipt $receipt
-     *
      * @return bool
      */
     public function isReceiptInvoiced(Receipt $receipt)
     {
         $searchedInvoice = $this->ir->findOneBy(
-            array(
+            [
                 'receipt' => $receipt,
-            )
+            ]
         );
 
         return is_null($searchedInvoice) ? false : true;

@@ -10,10 +10,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Class SitemapListener
+ * Class SitemapListener.
  *
  * @category Listener
- * @package  App\Listener
+ *
  * @author   Anton Serra <aserratorta@gmail.com>
  */
 class SitemapListener implements EventSubscriberInterface
@@ -29,14 +29,11 @@ class SitemapListener implements EventSubscriberInterface
     private $em;
 
     /**
-     * Methods
+     * Methods.
      */
 
     /**
-     * SitemapListener constructor
-     *
-     * @param RouterInterface $router
-     * @param EntityManagerInterface $em
+     * SitemapListener constructor.
      */
     public function __construct(RouterInterface $router, EntityManagerInterface $em)
     {
@@ -45,7 +42,7 @@ class SitemapListener implements EventSubscriberInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -54,13 +51,10 @@ class SitemapListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param SitemapPopulateEvent $event
-     */
     public function populateSitemap(SitemapPopulateEvent $event)
     {
         $section = $event->getSection();
-        if (is_null($section) || $section == 'default') {
+        if (is_null($section) || 'default' == $section) {
             // Homepage
             $url = $this->makeUrl('app_homepage');
             $event
@@ -102,7 +96,7 @@ class SitemapListener implements EventSubscriberInterface
     private function makeUrl($routeName)
     {
         return $this->router->generate(
-            $routeName, array(), UrlGeneratorInterface::ABSOLUTE_URL
+            $routeName, [], UrlGeneratorInterface::ABSOLUTE_URL
         );
     }
 
@@ -117,7 +111,7 @@ class SitemapListener implements EventSubscriberInterface
     {
         return new UrlConcrete(
             $url,
-            $date === null ? new \DateTime() : $date,
+            null === $date ? new \DateTime() : $date,
             UrlConcrete::CHANGEFREQ_WEEKLY,
             $priority
         );

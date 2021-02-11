@@ -44,13 +44,11 @@ class StudentAdminController extends BaseAdminController
         $sirps = $this->get('app.student_image_rights_pdf_builder');
         $pdf = $sirps->build($object);
 
-        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
     /**
      * Sepa agreement pdf action.
-     *
-     * @param Request $request
      *
      * @return Response
      *
@@ -73,7 +71,7 @@ class StudentAdminController extends BaseAdminController
         $saps = $this->get('app.sepa_agreement_pdf_builder');
         $pdf = $saps->build($object);
 
-        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
     /**
@@ -102,11 +100,11 @@ class StudentAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/Student/show.html.twig',
-            array(
+            [
                 'action' => 'show',
                 'object' => $object,
                 'elements' => $this->admin->getShow(),
-            )
+            ]
         );
     }
 }

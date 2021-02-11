@@ -35,8 +35,6 @@ class ReceiptLine extends AbstractReceiptInvoiceLine
     }
 
     /**
-     * @param Receipt $receipt
-     *
      * @return $this
      */
     public function setReceipt(Receipt $receipt)

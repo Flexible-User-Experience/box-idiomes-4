@@ -37,7 +37,7 @@ class ReceiptYearMonthEnum
      */
     public static function getReversedMonthEnumArray()
     {
-        return array(
+        return [
             self::JANUARY => 'month.january',
             self::FEBRAURY => 'month.febraury',
             self::MARCH => 'month.march',
@@ -50,7 +50,7 @@ class ReceiptYearMonthEnum
             self::OCTOBER => 'month.october',
             self::NOVEMBER => 'month.november',
             self::DECEMBER => 'month.december',
-        );
+        ];
     }
 
     /**
@@ -58,7 +58,7 @@ class ReceiptYearMonthEnum
      */
     public static function getTranslatedMonthEnumArray()
     {
-        return array(
+        return [
             self::JANUARY => 'gener',
             self::FEBRAURY => 'febrer',
             self::MARCH => 'març',
@@ -71,7 +71,7 @@ class ReceiptYearMonthEnum
             self::OCTOBER => 'octubre',
             self::NOVEMBER => 'novembre',
             self::DECEMBER => 'desembre',
-        );
+        ];
     }
 
     /**
@@ -79,7 +79,7 @@ class ReceiptYearMonthEnum
      */
     public static function getShortTranslatedMonthEnumArray()
     {
-        return array(
+        return [
             self::JANUARY => 'gen',
             self::FEBRAURY => 'feb',
             self::MARCH => 'mar',
@@ -92,7 +92,7 @@ class ReceiptYearMonthEnum
             self::OCTOBER => 'oct',
             self::NOVEMBER => 'nov',
             self::DECEMBER => 'des',
-        );
+        ];
     }
 
     /**
@@ -112,7 +112,7 @@ class ReceiptYearMonthEnum
      */
     public static function getReversedYearEnumArray()
     {
-        $result = array();
+        $result = [];
         $now = new \DateTime();
         $currentYear = intval($now->format('Y'));
         if (12 == intval($now->format('m')) && 15 < intval($now->format('d'))) {

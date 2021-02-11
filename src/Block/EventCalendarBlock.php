@@ -15,21 +15,21 @@ class EventCalendarBlock extends AbstractBlockService
 
         return $this->renderResponse(
             $blockContext->getTemplate(),
-            array(
+            [
                 'block' => $blockContext->getBlock(),
                 'settings' => $settings,
                 'title' => 'Calendar',
-            ),
+            ],
             $response
         );
     }
 
     public function configureSettings(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'title' => 'Calendar',
             'content' => 'Default content',
             'template' => 'Admin/Block/calendar.html.twig',
-        ));
+        ]);
     }
 }

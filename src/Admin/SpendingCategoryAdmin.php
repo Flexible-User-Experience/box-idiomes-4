@@ -2,8 +2,8 @@
 
 namespace App\Admin;
 
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
@@ -16,14 +16,11 @@ class SpendingCategoryAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'SpendingCategory';
     protected $baseRoutePattern = 'purchases/spending-category';
-    protected $datagridValues = array(
+    protected $datagridValues = [
         '_sort_by' => 'name',
         '_sort_order' => 'asc',
-    );
+    ];
 
-    /**
-     * @param FormMapper $formMapper
-     */
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
@@ -31,96 +28,87 @@ class SpendingCategoryAdmin extends AbstractBaseAdmin
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.spending_category.name',
-                )
+                ]
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'enabled',
                 CheckboxType::class,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
                     'required' => false,
-                )
+                ]
             )
             ->end()
         ;
     }
 
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.spending_category.name',
-                )
+                ]
             )
             ->add(
                 'enabled',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * @param ListMapper $listMapper
-     */
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.spending_category.name',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'enabled',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
-                )
+                ]
             )
             ->add(
                 '_action',
                 'actions',
-                array(
+                [
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'label' => 'backend.admin.actions',
-                    'actions' => array(
-                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
-                    ),
-                )
+                    'actions' => [
+                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
+                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
+                    ],
+                ]
             )
         ;
     }
 
-    /**
-     * @return array
-     */
     public function getExportFields(): array
     {
-        return array(
+        return [
             'name',
             'enabled',
-        );
+        ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Admin;
 
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
@@ -18,11 +18,9 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     private CacheManager $lis;
 
     /**
-     * @param string         $code
-     * @param string         $class
-     * @param string         $baseControllerName
-     * @param UploaderHelper $vus
-     * @param CacheManager   $lis
+     * @param string $code
+     * @param string $class
+     * @param string $baseControllerName
      */
     public function __construct($code, $class, $baseControllerName, UploaderHelper $vus, CacheManager $lis)
     {
@@ -34,7 +32,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     /**
      * @var array
      */
-    protected $perPageOptions = array(25, 50, 100, 200, 400);
+    protected $perPageOptions = [25, 50, 100, 200, 400];
 
     /**
      * @var int
@@ -43,8 +41,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     /**
      * Configure route collection.
-     *
-     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -55,8 +51,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     /**
      * Remove batch action list view first column.
-     *
-     * @return array
      */
     public function getBatchActions(): array
     {
@@ -68,36 +62,30 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     /**
      * Get export formats.
-     *
-     * @return array
      */
     public function getExportFormats(): array
     {
-        return array(
+        return [
             'csv',
             'xls',
-        );
+        ];
     }
 
     /**
      * @param string $bootstrapGrid
      * @param string $bootstrapSize
      * @param string $boxClass
-     *
-     * @return array
      */
     protected function getDefaultFormBoxArray($bootstrapGrid = 'md', $bootstrapSize = '6', $boxClass = 'primary'): array
     {
-        return array(
+        return [
             'class' => 'col-'.$bootstrapGrid.'-'.$bootstrapSize,
             'box_class' => 'box box-'.$boxClass,
-        );
+        ];
     }
 
     /**
      * @param string $bootstrapColSize
-     *
-     * @return array
      */
     protected function getFormMdSuccessBoxArray($bootstrapColSize = '6'): array
     {
@@ -106,8 +94,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     /**
      * Get image helper form mapper with thumbnail.
-     *
-     * @return string
      */
     protected function getImageHelperFormMapperWithThumbnail(): string
     {
@@ -119,8 +105,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     /**
      * Get image helper form mapper with thumbnail for black&white.
-     *
-     * @return string
      */
     protected function getImageHelperFormMapperWithThumbnailBW(): string
     {
@@ -130,9 +114,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
             ).'" class="admin-preview img-responsive" alt="thumbnail"/>' : '' : '').'<span style="width:100%;display:block;">amplada mínima 1200px (màx. 10MB amb JPG o PNG)</span>';
     }
 
-    /**
-     * @return string
-     */
     protected function getImageHelperFormMapperWithThumbnailGif(): string
     {
         return ($this->getSubject() ? $this->getSubject()->getGifName() ? '<img src="'.$this->lis->getBrowserPath(
@@ -141,9 +122,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
             ).'" class="admin-preview img-responsive" alt="thumbnail"/>' : '' : '').'<span style="width:100%;display:block;">mida 780x1168px (màx. 10MB amb GIF)</span>';
     }
 
-    /**
-     * @return string
-     */
     protected function getImageHelperFormMapperWithThumbnailAspectRatio(): string
     {
         return ($this->getSubject() ? $this->getSubject()->getImageName() ? '<img src="'.$this->lis->getBrowserPath(
@@ -157,8 +135,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
      *
      * @param string $attribute
      * @param string $uploaderMapping
-     *
-     * @return string
      *
      * @throws \Twig\Error\Error
      */

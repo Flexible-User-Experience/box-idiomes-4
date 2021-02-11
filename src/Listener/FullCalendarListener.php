@@ -59,13 +59,6 @@ class FullCalendarListener implements EventSubscriberInterface
 
     /**
      * FullcalendarListener constructor.
-     *
-     * @param EventRepository                $ers
-     * @param TeacherAbsenceRepository       $tars
-     * @param StudentRepository              $srs
-     * @param EventTrasnformerFactoryService $etfs
-     * @param RequestStack                   $rss
-     * @param RouterInterface                $router
      */
     public function __construct(EventRepository $ers, TeacherAbsenceRepository $tars, StudentRepository $srs, EventTrasnformerFactoryService $etfs, RequestStack $rss, RouterInterface $router)
     {
@@ -87,9 +80,6 @@ class FullCalendarListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param CalendarEvent $calendarEvent
-     */
     public function loadData(CalendarEvent $calendarEvent)
     {
         $startDate = $calendarEvent->getStart();

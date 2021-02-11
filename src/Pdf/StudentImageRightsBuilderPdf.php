@@ -42,10 +42,7 @@ class StudentImageRightsBuilderPdf
     /**
      * StudentImageRightsBuilderPdf constructor.
      *
-     * @param TCPDFController          $tcpdf
-     * @param SmartAssetsHelperService $sahs
-     * @param Translator               $ts
-     * @param string                   $pwt
+     * @param string $pwt
      */
     public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt)
     {
@@ -56,8 +53,6 @@ class StudentImageRightsBuilderPdf
     }
 
     /**
-     * @param Student $student
-     *
      * @return \TCPDF
      *
      * @throws \Exception
@@ -102,23 +97,23 @@ class StudentImageRightsBuilderPdf
             $contactName = $student->getParent()->getName().' '.$student->getParent()->getSurname();
             $contactDni = $student->getParent()->getDni();
         }
-        $pdf->Write(0, $this->ts->trans(($student->getParent() ? 'backend.admin.imagerigths.contact_name_with_parent' : 'backend.admin.imagerigths.contact_name_without_parent'), array('%name%' => $contactName)), '', false, 'L', true);
+        $pdf->Write(0, $this->ts->trans(($student->getParent() ? 'backend.admin.imagerigths.contact_name_with_parent' : 'backend.admin.imagerigths.contact_name_without_parent'), ['%name%' => $contactName]), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
-        $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.contact_dni', array('%contact_dni%' => $contactDni)), '', false, 'L', true);
-        $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
-        $pdf->SetX(55);
-        $pdf->Rect(51, $pdf->GetY() + 1, 3, 3);
-        $pdf->MultiCell(125, 0, $this->ts->trans('backend.admin.imagerigths.autortization1', array('%student_name%' => $student->getName(), '%years_old%' => $student->getYearsOld())), 0, 'L', false, 1);
+        $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.contact_dni', ['%contact_dni%' => $contactDni]), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
         $pdf->SetX(55);
         $pdf->Rect(51, $pdf->GetY() + 1, 3, 3);
-        $pdf->MultiCell(125, 0, $this->ts->trans('backend.admin.imagerigths.autortization2', array('%student_name%' => $student->getName(), '%years_old%' => $student->getYearsOld())), 0, 'L', false, 1);
+        $pdf->MultiCell(125, 0, $this->ts->trans('backend.admin.imagerigths.autortization1', ['%student_name%' => $student->getName(), '%years_old%' => $student->getYearsOld()]), 0, 'L', false, 1);
+        $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
+        $pdf->SetX(55);
+        $pdf->Rect(51, $pdf->GetY() + 1, 3, 3);
+        $pdf->MultiCell(125, 0, $this->ts->trans('backend.admin.imagerigths.autortization2', ['%student_name%' => $student->getName(), '%years_old%' => $student->getYearsOld()]), 0, 'L', false, 1);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         // Registration date
         $today = new \DateTime();
         $df = new IntlDateFormatter('ca_ES', IntlDateFormatter::SHORT, IntlDateFormatter::NONE);
         $df->setPattern('MMMM');
-        $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.registration_date', array('%day%' => $today->format('j'), '%month%' => $df->format($today), '%year%' => $today->format('Y'))), '', false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.registration_date', ['%day%' => $today->format('j'), '%month%' => $df->format($today), '%year%' => $today->format('Y')]), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         $pdf->setFontStyle(null, 'B', 11);
         $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.sign'), '', false, 'L', true);

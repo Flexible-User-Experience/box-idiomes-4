@@ -36,7 +36,7 @@ class TariffTypeEnum
      */
     public static function getReversedEnumArray()
     {
-        return array(
+        return [
             self::TARIFF_ONE_HOUR_PER_WEEK => 'backend.admin.tariff.tariff_1',
             self::TARIFF_ONE_AND_A_HALF_HOUR_PER_WEEK => 'backend.admin.tariff.tariff_4',
             self::TARIFF_TWO_HOUR_PER_WEEK => 'backend.admin.tariff.tariff_2',
@@ -50,7 +50,7 @@ class TariffTypeEnum
             self::TARIFF_PRIVATE_LESSON_PER_HOUR => 'backend.admin.tariff.tariff_5',
             self::TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR => 'backend.admin.tariff.tariff_6',
             self::TARIFF_SPECIAL_TYPE => 'backend.admin.tariff.tariff_12',
-        );
+        ];
     }
 
     /**
@@ -58,7 +58,7 @@ class TariffTypeEnum
      */
     public static function getTranslatedEnumArray()
     {
-        return array(
+        return [
             self::TARIFF_ONE_HOUR_PER_WEEK => '1h /setmana',
             self::TARIFF_ONE_AND_A_HALF_HOUR_PER_WEEK => '1,5h / setmana',
             self::TARIFF_TWO_HOUR_PER_WEEK => '2h / setmana',
@@ -72,6 +72,6 @@ class TariffTypeEnum
             self::TARIFF_PRIVATE_LESSON_PER_HOUR => 'hora particular',
             self::TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR => 'hora particular compartida',
             self::TARIFF_SPECIAL_TYPE => 'preu especial',
-        );
+        ];
     }
 }

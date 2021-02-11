@@ -10,10 +10,10 @@ use DateInterval;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\NonUniqueResultException;
-use SaadTazi\GChartBundle\DataTable\DataRow;
 use SaadTazi\GChartBundle\DataTable\DataCell;
-use SaadTazi\GChartBundle\DataTable\DataTable;
 use SaadTazi\GChartBundle\DataTable\DataColumn;
+use SaadTazi\GChartBundle\DataTable\DataRow;
+use SaadTazi\GChartBundle\DataTable\DataTable;
 use SaadTazi\GChartBundle\DataTable\Exception\InvalidColumnTypeException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -33,8 +33,6 @@ class ChartsFactoryService
     }
 
     /**
-     * @return DataTable
-     *
      * @throws InvalidColumnTypeException
      * @throws NonUniqueResultException
      */
@@ -42,9 +40,9 @@ class ChartsFactoryService
     {
         $dt = new DataTable();
         $dt->addColumnObject(new DataColumn('id1', 'title', 'string'));
-        $dt->addColumnObject(new DataColumn('id2', $this->ts->trans('backend.admin.block.charts.sales', array(), 'messages'), 'number'));
-        $dt->addColumnObject(new DataColumn('id3', $this->ts->trans('backend.admin.block.charts.expenses', array(), 'messages'), 'number'));
-        $dt->addColumnObject(new DataColumn('id4', $this->ts->trans('backend.admin.block.charts.results', array(), 'messages'), 'number'));
+        $dt->addColumnObject(new DataColumn('id2', $this->ts->trans('backend.admin.block.charts.sales', [], 'messages'), 'number'));
+        $dt->addColumnObject(new DataColumn('id3', $this->ts->trans('backend.admin.block.charts.expenses', [], 'messages'), 'number'));
+        $dt->addColumnObject(new DataColumn('id4', $this->ts->trans('backend.admin.block.charts.results', [], 'messages'), 'number'));
 
         $date = new DateTime();
         $date->sub(new DateInterval('P12M'));
@@ -63,12 +61,12 @@ class ChartsFactoryService
 
     private function buildResultsCellsRow(DateTimeInterface $key, $sales, $expenses, $results): DataRow
     {
-        return new DataRow(array(
+        return new DataRow([
                 new DataCell(ReceiptYearMonthEnum::getShortTranslatedMonthEnumArray()[(int) $key->format('n')].'. '.$key->format('y')),
                 new DataCell($sales, number_format($sales, 0, ',', '.').'€'),
                 new DataCell($expenses, number_format($expenses, 0, ',', '.').'€'),
                 new DataCell($results, number_format($results, 0, ',', '.').'€'),
-            )
+            ]
         );
     }
 }

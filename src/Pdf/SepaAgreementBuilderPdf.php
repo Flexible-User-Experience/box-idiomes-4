@@ -46,11 +46,8 @@ class SepaAgreementBuilderPdf
     /**
      * SepaAgreementBuilderPdf constructor.
      *
-     * @param TCPDFController          $tcpdf
-     * @param SmartAssetsHelperService $sahs
-     * @param Translator               $ts
-     * @param string                   $pwt
-     * @param string                   $bn
+     * @param string $pwt
+     * @param string $bn
      */
     public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn)
     {
@@ -62,8 +59,6 @@ class SepaAgreementBuilderPdf
     }
 
     /**
-     * @param Student $student
-     *
      * @return \TCPDF
      */
     public function build(Student $student)

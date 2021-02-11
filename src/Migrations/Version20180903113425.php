@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20180903113425 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -22,9 +19,6 @@ class Version20180903113425 extends AbstractMigration
         $this->addSql('ALTER TABLE receipt ADD is_sepa_xml_generated TINYINT(1) DEFAULT NULL, ADD sepa_xml_generated_date DATE DEFAULT NULL');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

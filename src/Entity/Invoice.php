@@ -109,8 +109,6 @@ class Invoice extends AbstractReceiptInvoice
     }
 
     /**
-     * @param InvoiceLine $line
-     *
      * @return $this
      */
     public function basicAddLine(InvoiceLine $line)
@@ -121,8 +119,6 @@ class Invoice extends AbstractReceiptInvoice
     }
 
     /**
-     * @param InvoiceLine $line
-     *
      * @return $this
      */
     public function addLine(InvoiceLine $line)
@@ -138,8 +134,6 @@ class Invoice extends AbstractReceiptInvoice
     }
 
     /**
-     * @param InvoiceLine $line
-     *
      * @return $this
      */
     public function removeLine(InvoiceLine $line)

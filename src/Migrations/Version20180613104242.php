@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20180613104242 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -26,9 +23,6 @@ class Version20180613104242 extends AbstractMigration
         $this->addSql('ALTER TABLE receipt_line ADD CONSTRAINT FK_476F8F7ACB944F1A FOREIGN KEY (student_id) REFERENCES student (id)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

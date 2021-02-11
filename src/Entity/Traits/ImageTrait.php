@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Image trait
+ * Image trait.
  *
  * @category Trait
- * @package  App\Entity\Traits
+ *
  * @author   David Romaní <david@flux.cat>
  */
-Trait ImageTrait
+trait ImageTrait
 {
     /**
      * @var string
@@ -23,7 +23,7 @@ Trait ImageTrait
     private $imageName;
 
     /**
-     * Set imageFile
+     * Set imageFile.
      *
      * @param File|UploadedFile $imageFile
      *
@@ -42,7 +42,7 @@ Trait ImageTrait
     }
 
     /**
-     * Get imageFile
+     * Get imageFile.
      *
      * @return File|UploadedFile
      */
@@ -52,7 +52,7 @@ Trait ImageTrait
     }
 
     /**
-     * Set imageName
+     * Set imageName.
      *
      * @param string $imageName
      *
@@ -66,7 +66,7 @@ Trait ImageTrait
     }
 
     /**
-     * Get imageName
+     * Get imageName.
      *
      * @return string
      */

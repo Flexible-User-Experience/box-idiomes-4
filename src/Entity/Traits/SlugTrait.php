@@ -3,16 +3,16 @@
 namespace App\Entity\Traits;
 
 /**
- * Slug trait
+ * Slug trait.
  *
  * @category Trait
- * @package  App\Entity\Traits
+ *
  * @author   David Romaní <david@flux.cat>
  */
-Trait SlugTrait
+trait SlugTrait
 {
     /**
-     * Set slug
+     * Set slug.
      *
      * @param string $slug
      *
@@ -26,7 +26,7 @@ Trait SlugTrait
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
      * @return string
      */

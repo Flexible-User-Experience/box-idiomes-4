@@ -4,16 +4,16 @@ namespace App\Command;
 
 use App\Entity\Receipt;
 use App\Enum\StudentPaymentEnum;
-use App\Service\NotificationService;
 use App\Pdf\ReceiptBuilderPdf;
 use App\Pdf\ReceiptReminderBuilderPdf;
+use App\Service\NotificationService;
 use Exception;
 use Symfony\Bridge\Monolog\Logger;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 /**
  * Class DeliverReceiptsBatchByEmailCommand.
@@ -47,10 +47,7 @@ class DeliverReceiptsBatchByEmailCommand extends ContainerAwareCommand
     /**
      * Execute command.
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @return int|void|null
      *
      * @throws Exception
      */

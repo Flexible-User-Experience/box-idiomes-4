@@ -10,13 +10,10 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171030145844 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE bank DROP FOREIGN KEY FK_D860BF7A727ACA70');
         $this->addSql('DROP INDEX UNIQ_D860BF7A727ACA70 ON bank');
@@ -25,13 +22,10 @@ class Version20171030145844 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_D860BF7A217BBB47 ON bank (person_id)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE bank DROP FOREIGN KEY FK_D860BF7A217BBB47');
         $this->addSql('DROP INDEX UNIQ_D860BF7A217BBB47 ON bank');

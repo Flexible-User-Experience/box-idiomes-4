@@ -18,15 +18,13 @@ class ProvinceAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Province';
     protected $baseRoutePattern = 'administrations/province';
-    protected $datagridValues = array(
+    protected $datagridValues = [
         '_sort_by' => 'name',
         '_sort_order' => 'asc',
-    );
+    ];
 
     /**
      * Configure route collection.
-     *
-     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -34,9 +32,6 @@ class ProvinceAdmin extends AbstractBaseAdmin
         $collection->remove('delete');
     }
 
-    /**
-     * @param FormMapper $formMapper
-     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -44,121 +39,115 @@ class ProvinceAdmin extends AbstractBaseAdmin
             ->add(
                 'code',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.code',
-                )
+                ]
             )
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.name',
-                )
+                ]
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'enabled',
                 CheckboxType::class,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
                     'required' => false,
-                )
+                ]
             )
             ->end()
         ;
     }
 
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add(
                 'code',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.code',
-                )
+                ]
             )
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.name',
-                )
+                ]
             )
             ->add(
                 'country',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.country',
-                )
+                ]
             )
             ->add(
                 'enabled',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * @param ListMapper $listMapper
-     */
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->add(
                 'code',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.code',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.name',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'country',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.province.country',
                     'editable' => false,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
-                )
+                ]
             )
             ->add(
                 'enabled',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
-                )
+                ]
             )
             ->add(
                 '_action',
                 'actions',
-                array(
+                [
                     'header_class' => 'text-right',
                     'row_align' => 'right',
-                    'actions' => array(
-                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-                    ),
+                    'actions' => [
+                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
+                    ],
                     'label' => 'Accions',
-                )
+                ]
             )
         ;
     }

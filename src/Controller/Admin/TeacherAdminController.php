@@ -41,12 +41,12 @@ class TeacherAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/Teacher/detail.html.twig',
-            array(
+            [
                 'action' => 'show',
                 'object' => $object,
                 'absences' => $absences,
                 'elements' => $this->admin->getShow(),
-            )
+            ]
         );
     }
 }

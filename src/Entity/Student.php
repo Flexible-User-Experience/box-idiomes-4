@@ -131,8 +131,6 @@ class Student extends AbstractPerson
     }
 
     /**
-     * @param \DateTime $birthDate
-     *
      * @return Student
      */
     public function setBirthDate(\DateTime $birthDate)
@@ -255,9 +253,6 @@ class Student extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @param Event $event
-     */
     public function addEvent(Event $event)
     {
         if (!$this->events->contains($event)) {
@@ -265,9 +260,6 @@ class Student extends AbstractPerson
         }
     }
 
-    /**
-     * @param Event $event
-     */
     public function removeEvent(Event $event)
     {
         if ($this->events->contains($event)) {
@@ -452,7 +444,7 @@ class Student extends AbstractPerson
     public function canBeDeletedSafely()
     {
         $result = false;
-        if (is_null($this->getParent()) && count($this->getEvents()) === 0) {
+        if (is_null($this->getParent()) && 0 === count($this->getEvents())) {
             $result = true;
         }
 

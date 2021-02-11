@@ -19,8 +19,6 @@ class InvoiceRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
@@ -28,9 +26,8 @@ class InvoiceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return QueryBuilder
      */
@@ -51,9 +48,8 @@ class InvoiceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Query
      */
@@ -63,9 +59,8 @@ class InvoiceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Invoice|null
      *
@@ -126,8 +121,6 @@ class InvoiceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \DateTime $date
-     *
      * @return int
      *
      * @throws \Doctrine\ORM\NonUniqueResultException

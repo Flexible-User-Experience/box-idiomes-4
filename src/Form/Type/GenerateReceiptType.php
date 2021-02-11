@@ -28,8 +28,6 @@ class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
 
     /**
      * GenerateReceiptType constructor.
-     *
-     * @param RouterInterface $rs
      */
     public function __construct(RouterInterface $rs)
     {
@@ -37,9 +35,6 @@ class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     *
      * @throws Exception
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -51,36 +46,36 @@ class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
             ->add(
                 'items',
                 CollectionType::class,
-                array(
+                [
                     'label' => 'backend.admin.invoice.items',
                     'allow_extra_fields' => true,
                     'required' => false,
                     'entry_type' => GenerateReceiptItemType::class,
                     'by_reference' => false,
-                    'entry_options' => array(
+                    'entry_options' => [
                         'label' => false,
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'generate',
                 SubmitType::class,
-                array(
+                [
                     'label' => 'backend.admin.receipt.generate',
-                    'attr' => array(
+                    'attr' => [
                         'class' => 'btn btn-success',
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'generate_and_send',
                 SubmitType::class,
-                array(
+                [
                     'label' => 'backend.admin.receipt.generate_and_send',
-                    'attr' => array(
+                    'attr' => [
                         'class' => 'btn btn-success',
-                    ),
-                )
+                    ],
+                ]
             )
             ->setAction($this->rs->generate('admin_app_receipt_creator'))
         ;

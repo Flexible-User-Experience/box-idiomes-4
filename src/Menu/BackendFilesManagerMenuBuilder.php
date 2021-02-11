@@ -24,8 +24,6 @@ class BackendFilesManagerMenuBuilder
 
     /**
      * Constructor.
-     *
-     * @param FactoryInterface $factory
      */
     public function __construct(FactoryInterface $factory)
     {
@@ -33,8 +31,6 @@ class BackendFilesManagerMenuBuilder
     }
 
     /**
-     * @param RequestStack $requestStack
-     *
      * @return ItemInterface
      */
     public function createSideMenu(RequestStack $requestStack)
@@ -44,11 +40,11 @@ class BackendFilesManagerMenuBuilder
         $menu
             ->addChild(
                 'files',
-                array(
+                [
                     'label' => 'backend.admin.files',
                     'route' => 'admin_app_filedummy_handler',
                     'current' => 'admin_app_filedummy_handler' == $route || 'file_manager' == $route || 'file_manager_rename' == $route || 'file_manager_upload' == $route,
-                )
+                ]
             )
         ;
 

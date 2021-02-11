@@ -7,8 +7,8 @@ use App\Entity\PreRegister;
 use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class StudentRepository.
@@ -19,8 +19,6 @@ class StudentRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
@@ -347,8 +345,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ClassGroup $classGroup
-     *
      * @return QueryBuilder
      */
     public function getStudentsInClassGroupQB(ClassGroup $classGroup)
@@ -361,8 +357,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ClassGroup $classGroup
-     *
      * @return Query
      */
     public function getStudentsInClassGroupQ(ClassGroup $classGroup)
@@ -371,8 +365,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ClassGroup $classGroup
-     *
      * @return array
      */
     public function getStudentsInClassGroup(ClassGroup $classGroup)
@@ -381,8 +373,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ClassGroup $classGroup
-     *
      * @return QueryBuilder
      */
     public function getStudentsInClassGroupSortedByNameQB(ClassGroup $classGroup)
@@ -393,8 +383,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ClassGroup $classGroup
-     *
      * @return Query
      */
     public function getStudentsInClassGroupSortedByNameQ(ClassGroup $classGroup)
@@ -403,8 +391,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param ClassGroup $classGroup
-     *
      * @return array
      */
     public function getStudentsInClassGroupSortedByName(ClassGroup $classGroup)
@@ -413,8 +399,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param PreRegister $preRegister
-     *
      * @return QueryBuilder
      */
     public function getPreviouslyStoredStudentsFromPreRegisterQB(PreRegister $preRegister)
@@ -427,8 +411,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param PreRegister $preRegister
-     *
      * @return Query
      */
     public function getPreviouslyStoredStudentsFromPreRegisterQ(PreRegister $preRegister)
@@ -437,8 +419,6 @@ class StudentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param PreRegister $preRegister
-     *
      * @return array
      */
     public function getPreviouslyStoredStudentsFromPreRegister(PreRegister $preRegister)
