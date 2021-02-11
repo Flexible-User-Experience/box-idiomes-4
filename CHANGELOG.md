@@ -1,10 +1,13 @@
 Changelog
 =========
 
-##### Version 4.5.04 (WIP)
+##### Version 4.5.05 (WIP)
  * fix minor bugs
+
+##### Version 4.5.04 (2021-02-11)
  * add php-cs-fixer precommit git hook
  * update S8 Ansible host configuration
+ * apply php-cs-fixer
 
 ##### Version 4.5.03 (2021-02-11)
  * Symfony 4.4.19 update
