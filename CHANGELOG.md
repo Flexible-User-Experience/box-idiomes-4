@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 4.5.06 (WIP)
  * fix minor bugs
+ * fix broken Travis tests
 
 ##### Version 4.5.05 (2021-02-11)
  * make bankCreditorSepa attr always required in Student and Parent admin edit views
