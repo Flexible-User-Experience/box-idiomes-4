@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.5.05 (WIP)
+##### Version 4.5.06 (WIP)
  * fix minor bugs
+
+##### Version 4.5.05 (2021-02-11)
+ * make bankCreditorSepa always required in Student and Parent admin edit views
 
 ##### Version 4.5.04 (2021-02-11)
  * add php-cs-fixer precommit git hook
