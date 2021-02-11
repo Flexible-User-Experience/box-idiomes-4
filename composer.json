@@ -61,7 +61,6 @@
     },
     "require-dev": {
         "hautelook/alice-bundle": "^2.7",
-        "sensiolabs/security-checker": "^6.0",
         "symfony/debug-pack": "*",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*"
@@ -94,7 +93,7 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "security-checker security:check": "script"
+            "local-php-security-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
