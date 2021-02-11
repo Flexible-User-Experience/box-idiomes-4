@@ -24,6 +24,7 @@ services:
 before_install:
   - cp env.travis .env
   - cp env.travis .env.test
+  - sed -i '/local-php-security-checker/d' composer.json
 
 install:
   - composer install

@@ -123,7 +123,7 @@ class PersonAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.bank.creditor_bank_name',
                     'help' => 'backend.admin.bank.creditor_bank_name_help',
-                    'required' => false,
+                    'required' => true,
                     'class' => BankCreditorSepa::class,
                     'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getEnabledSortedByNameQB(),
                 ]
