@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.5.03 (WIP)
+##### Version 4.5.04 (WIP)
  * fix minor bugs
+
+##### Version 4.5.03 (2021-02-11)
+ * Symfony 4.4.19 update
+ * Yarn vendors update
 
 ##### Version 4.5.02 (2020-11-30)
  * fix exceeds the allowed maximum length in SEPA XML MndtId field
