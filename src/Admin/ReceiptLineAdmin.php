@@ -16,14 +16,11 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ReceiptLine';
     protected $baseRoutePattern = 'billings/receipt-line';
-    protected $datagridValues = array(
+    protected $datagridValues = [
         '_sort_by' => 'description',
         '_sort_order' => 'asc',
-    );
+    ];
 
-    /**
-     * @param FormMapper $formMapper
-     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -31,192 +28,186 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
             ->add(
                 'description',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.description',
-                )
+                ]
             )
             ->add(
                 'units',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.units',
-                )
+                ]
             )
             ->add(
                 'priceUnit',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.priceUnit',
-                )
+                ]
             )
             ->add(
                 'discount',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.discount',
-                )
+                ]
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(6))
             ->add(
                 'receipt',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.receiptLine.receipt',
-                    'attr' => array(
+                    'attr' => [
                         'hidden' => true,
-                    ),
+                    ],
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'enabled',
                 CheckboxType::class,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
                     'required' => false,
-                    'attr' => array(
+                    'attr' => [
                         'hidden' => true,
-                    ),
-                )
+                    ],
+                ]
             )
             ->end()
         ;
     }
 
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add(
                 'receipt',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.receiptLine.receipt',
-                )
+                ]
             )
             ->add(
                 'description',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.description',
-                )
+                ]
             )
             ->add(
                 'units',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.units',
-                )
+                ]
             )
             ->add(
                 'priceUnit',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.priceUnit',
-                )
+                ]
             )
             ->add(
                 'discount',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.discount',
-                )
+                ]
             )
             ->add(
                 'total',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.total',
-                )
+                ]
             )
             ->add(
                 'enabled',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * @param ListMapper $listMapper
-     */
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->add(
                 'receipt',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.receiptLine.receipt',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'description',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.description',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'units',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.units',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'priceUnit',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.priceUnit',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'discount',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.discount',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'total',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.invoiceLine.total',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'enabled',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 '_action',
                 'actions',
-                array(
+                [
                     'header_class' => 'text-right',
                     'row_align' => 'right',
-                    'actions' => array(
-                        'show' => array('template' => 'Admin/Buttons/list__action_show_button.html.twig'),
-                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-                        'delete' => array('template' => 'Admin/Buttons/list__action_delete_button.html.twig'),
-                    ),
+                    'actions' => [
+                        'show' => ['template' => 'Admin/Buttons/list__action_show_button.html.twig'],
+                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
+                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
+                    ],
                     'label' => 'backend.admin.actions',
-                )
+                ]
             )
         ;
     }

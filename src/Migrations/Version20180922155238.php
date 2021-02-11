@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20180922155238 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -26,9 +23,6 @@ class Version20180922155238 extends AbstractMigration
         $this->addSql('ALTER TABLE spending ADD CONSTRAINT FK_E44ECDDA53A8AA FOREIGN KEY (provider_id) REFERENCES provider (id)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

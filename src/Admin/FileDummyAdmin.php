@@ -13,15 +13,13 @@ class FileDummyAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'FileDummy';
     protected $baseRoutePattern = 'fitxers';
-    protected $datagridValues = array(
+    protected $datagridValues = [
         '_sort_by' => 'name',
         '_sort_order' => 'asc',
-    );
+    ];
 
     /**
      * Configure route collection.
-     *
-     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection): void
     {

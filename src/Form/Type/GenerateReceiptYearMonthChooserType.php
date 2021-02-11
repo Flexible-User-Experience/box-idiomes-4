@@ -19,9 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GenerateReceiptYearMonthChooserType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     *
      * @throws Exception
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,43 +27,40 @@ class GenerateReceiptYearMonthChooserType extends AbstractType
             ->add(
                 'year',
                 ChoiceType::class,
-                array(
+                [
                     'label' => 'backend.admin.invoice.year',
                     'required' => true,
                     'choices' => ReceiptYearMonthEnum::getYearEnumArray(),
-                )
+                ]
             )
             ->add(
                 'month',
                 ChoiceType::class,
-                array(
+                [
                     'label' => 'backend.admin.invoice.month',
                     'required' => true,
                     'choices' => ReceiptYearMonthEnum::getMonthEnumArray(),
-                )
+                ]
             )
             ->add(
                 'preview',
                 SubmitType::class,
-                array(
+                [
                     'label' => 'backend.admin.receipt.preview_invoice',
-                    'attr' => array(
+                    'attr' => [
                         'class' => 'btn btn-warning',
-                    ),
-                )
+                    ],
+                ]
             )
         ;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => GenerateReceiptModel::class,
-            )
+            ]
         );
     }
 }

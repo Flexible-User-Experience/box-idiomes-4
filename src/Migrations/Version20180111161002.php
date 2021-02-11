@@ -10,13 +10,10 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20180111161002 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE student ADD tariff_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE student ADD CONSTRAINT FK_B723AF3392348FD2 FOREIGN KEY (tariff_id) REFERENCES tariff (id)');
@@ -26,13 +23,10 @@ class Version20180111161002 extends AbstractMigration
         $this->addSql('ALTER TABLE tariff DROP student_id');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE student DROP FOREIGN KEY FK_B723AF3392348FD2');
         $this->addSql('DROP INDEX IDX_B723AF3392348FD2 ON student');

@@ -7,8 +7,8 @@ use App\Entity\TeacherAbsence;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class TeacherAbsenceRepository.
@@ -19,8 +19,6 @@ class TeacherAbsenceRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
@@ -28,8 +26,6 @@ class TeacherAbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Teacher $teacher
-     *
      * @return QueryBuilder
      */
     public function getTeacherAbsencesSortedByDateQB(Teacher $teacher)
@@ -42,8 +38,6 @@ class TeacherAbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Teacher $teacher
-     *
      * @return Query
      */
     public function getTeacherAbsencesSortedByDateQ(Teacher $teacher)
@@ -52,8 +46,6 @@ class TeacherAbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Teacher $teacher
-     *
      * @return array
      */
     public function getTeacherAbsencesSortedByDate(Teacher $teacher)
@@ -62,9 +54,6 @@ class TeacherAbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return QueryBuilder
      */
     public function getFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -76,9 +65,6 @@ class TeacherAbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return Query
      */
     public function getFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -87,9 +73,6 @@ class TeacherAbsenceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return array
      */
     public function getFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate)

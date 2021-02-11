@@ -35,8 +35,7 @@ class MailchimpManager
     /**
      * MailchimpManager constructor.
      *
-     * @param NotificationService $messenger
-     * @param string              $mak       Mailchimp API key
+     * @param string $mak Mailchimp API key
      *
      * @throws Exception
      */
@@ -49,18 +48,17 @@ class MailchimpManager
     /**
      * Mailchimp Manager.
      *
-     * @param NewsletterContact $newsletterContact
-     * @param string            $listId
+     * @param string $listId
      *
      * @return bool $result = false if everything goes well
      */
     public function subscribeContactToList(NewsletterContact $newsletterContact, $listId)
     {
         // make HTTP API request
-        $result = $this->mailChimp->post('lists/'.$listId.'/members', array(
+        $result = $this->mailChimp->post('lists/'.$listId.'/members', [
             'email_address' => $newsletterContact->getEmail(),
             'status' => self::SUBSCRIBED,
-        ));
+        ]);
 
         // check error
         if (is_array($result) && array_key_exists('status', $result) && ((!array_key_exists('title', $result) && self::SUBSCRIBED === $result['status']) || ((array_key_exists('title', $result) && 'Member Exists' === $result['title'] && 400 === $result['status'])))) {

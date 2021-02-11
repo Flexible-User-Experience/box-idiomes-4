@@ -56,10 +56,6 @@ class AppExtension extends AbstractExtension
 
     /**
      * AppExtension constructor.
-     *
-     * @param SmartAssetsHelperService $sahs
-     * @param ReceiptManager           $rm
-     * @param TranslatorInterface      $ts
      */
     public function __construct(SmartAssetsHelperService $sahs, ReceiptManager $rm, TranslatorInterface $ts)
     {
@@ -77,9 +73,9 @@ class AppExtension extends AbstractExtension
      */
     public function getTests()
     {
-        return array(
-            new TwigTest('instance_of', array($this, 'isInstanceOf')),
-        );
+        return [
+            new TwigTest('instance_of', [$this, 'isInstanceOf']),
+        ];
     }
 
     /**
@@ -111,11 +107,11 @@ class AppExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('generate_random_error_text', array($this, 'generateRandomErrorText')),
-            new TwigFunction('is_receipt_invoiced', array($this, 'isReceiptInvoicedFunction')),
-            new TwigFunction('get_absolute_asset_path_context_independent', array($this, 'getAbsoluteAssetPathContextIndependent')),
-        );
+        return [
+            new TwigFunction('generate_random_error_text', [$this, 'generateRandomErrorText']),
+            new TwigFunction('is_receipt_invoiced', [$this, 'isReceiptInvoicedFunction']),
+            new TwigFunction('get_absolute_asset_path_context_independent', [$this, 'getAbsoluteAssetPathContextIndependent']),
+        ];
     }
 
     /**
@@ -135,8 +131,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param Receipt $receipt
-     *
      * @return bool
      */
     public function isReceiptInvoicedFunction(Receipt $receipt)
@@ -165,23 +159,21 @@ class AppExtension extends AbstractExtension
      */
     public function getFilters()
     {
-        return array(
-            new TwigFilter('draw_role_span', array($this, 'drawRoleSpan')),
-            new TwigFilter('draw_teacher_color', array($this, 'drawTeacherColorSpan')),
-            new TwigFilter('draw_teacher_absence_type', array($this, 'drawTeacherAbsenceType')),
-            new TwigFilter('draw_class_group_color', array($this, 'drawClassGroupColorSpan')),
-            new TwigFilter('draw_tariff_type', array($this, 'drawTariffType')),
-            new TwigFilter('draw_event_classroom_type', array($this, 'drawEventClassroomType')),
-            new TwigFilter('draw_invoice_month', array($this, 'drawInvoiceMonth')),
-            new TwigFilter('draw_money', array($this, 'drawMoney')),
-            new TwigFilter('draw_pre_register_season_type', array($this, 'drawPreRegisterSeasonType')),
-            new TwigFilter('write_pre_register_season_string', array($this, 'writePreRegisterSeasonString')),
-        );
+        return [
+            new TwigFilter('draw_role_span', [$this, 'drawRoleSpan']),
+            new TwigFilter('draw_teacher_color', [$this, 'drawTeacherColorSpan']),
+            new TwigFilter('draw_teacher_absence_type', [$this, 'drawTeacherAbsenceType']),
+            new TwigFilter('draw_class_group_color', [$this, 'drawClassGroupColorSpan']),
+            new TwigFilter('draw_tariff_type', [$this, 'drawTariffType']),
+            new TwigFilter('draw_event_classroom_type', [$this, 'drawEventClassroomType']),
+            new TwigFilter('draw_invoice_month', [$this, 'drawInvoiceMonth']),
+            new TwigFilter('draw_money', [$this, 'drawMoney']),
+            new TwigFilter('draw_pre_register_season_type', [$this, 'drawPreRegisterSeasonType']),
+            new TwigFilter('write_pre_register_season_string', [$this, 'writePreRegisterSeasonString']),
+        ];
     }
 
     /**
-     * @param User $object
-     *
      * @return string
      */
     public function drawRoleSpan(User $object)
@@ -209,8 +201,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param Teacher $object
-     *
      * @return string
      */
     public function drawTeacherColorSpan(Teacher $object)
@@ -234,8 +224,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param ClassGroup $object
-     *
      * @return string
      */
     public function drawClassGroupColorSpan(ClassGroup $object)
@@ -244,8 +232,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param TeacherAbsence $object
-     *
      * @return string
      */
     public function drawTeacherAbsenceType(TeacherAbsence $object)
@@ -254,8 +240,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param Tariff $object
-     *
      * @return string
      */
     public function drawTariffType(Tariff $object)
@@ -264,8 +248,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param Event $object
-     *
      * @return string
      */
     public function drawEventClassroomType(Event $object)
@@ -305,8 +287,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param PreRegister $object
-     *
      * @return string
      */
     public function drawPreRegisterSeasonType(PreRegister $object)
@@ -334,8 +314,6 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     * @param PreRegister $object
-     *
      * @return string
      */
     public function writePreRegisterSeasonString(PreRegister $object)

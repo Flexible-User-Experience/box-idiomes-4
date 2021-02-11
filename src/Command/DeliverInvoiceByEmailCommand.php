@@ -3,8 +3,8 @@
 namespace App\Command;
 
 use App\Entity\Invoice;
-use App\Service\NotificationService;
 use App\Pdf\InvoiceBuilderPdf;
+use App\Service\NotificationService;
 use Exception;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
@@ -45,10 +45,7 @@ class DeliverInvoiceByEmailCommand extends Command
     /**
      * Execute command.
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @return int|void|null
      *
      * @throws Exception
      */

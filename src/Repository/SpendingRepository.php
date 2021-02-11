@@ -18,8 +18,6 @@ class SpendingRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
@@ -27,8 +25,6 @@ class SpendingRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $date
-     *
      * @return int
      *
      * @throws NonUniqueResultException

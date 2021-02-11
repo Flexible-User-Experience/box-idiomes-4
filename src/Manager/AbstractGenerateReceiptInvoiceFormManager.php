@@ -52,13 +52,6 @@ abstract class AbstractGenerateReceiptInvoiceFormManager
 
     /**
      * AbstractGenerateReceiptInvoiceFormManager constructor.
-     *
-     * @param LoggerInterface     $logger
-     * @param KernelInterface     $kernel
-     * @param EntityManager       $em
-     * @param TranslatorInterface $ts
-     * @param StudentRepository   $sr
-     * @param EventRepository     $er
      */
     public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManager $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er)
     {

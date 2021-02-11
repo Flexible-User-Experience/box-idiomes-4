@@ -28,12 +28,12 @@ class TeacherAbsenceTypeEnum
      */
     public static function getReversedEnumArray()
     {
-        return array(
+        return [
             self::PERSONAL_ISSUES => 'Assumptes personals',
             self::TRAINING => 'Formació',
             self::OTHER_ISSUES => 'Altres motius',
             self::HOLIDAYS => 'Vacances',
             self::SICK_LEAVE => 'Baixa laboral',
-        );
+        ];
     }
 }

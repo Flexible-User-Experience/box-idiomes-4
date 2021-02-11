@@ -47,10 +47,8 @@ class NotificationService
     /**
      * NotificationService constructor.
      *
-     * @param CourierService $messenger
-     * @param Environment    $twig
-     * @param string         $amd
-     * @param string         $pub
+     * @param string $amd
+     * @param string $pub
      */
     public function __construct(CourierService $messenger, Environment $twig, $amd, $pub)
     {
@@ -63,10 +61,7 @@ class NotificationService
     /**
      * Send a common notification mail to frontend user.
      *
-     * @param ContactMessage $contactMessage
-     *
      * @return int If is 0 failure otherwise amount of recipients
-     *
      * @return int
      */
     public function sendCommonUserNotification(ContactMessage $contactMessage)
@@ -77,9 +72,9 @@ class NotificationService
                 $this->amd,
                 $contactMessage->getEmail(),
                 'Notificació pàgina web '.$this->pub,
-                $this->twig->render('Mails/common_user_notification.html.twig', array(
+                $this->twig->render('Mails/common_user_notification.html.twig', [
                     'contact' => $contactMessage,
-                ))
+                ])
             );
         } catch (TransportExceptionInterface $exception) {
             $result = 0;
@@ -93,8 +88,6 @@ class NotificationService
     /**
      * Send a contact form notification to administrator.
      *
-     * @param ContactMessage $contactMessage
-     *
      * @return int
      */
     public function sendAdminNotification(ContactMessage $contactMessage)
@@ -105,9 +98,9 @@ class NotificationService
                 $contactMessage->getEmail(),
                 $this->amd,
                 $this->pub.' contact form received',
-                $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
+                $this->twig->render('Mails/contact_form_admin_notification.html.twig', [
                     'contact' => $contactMessage,
-                ))
+                ])
             );
         } catch (TransportExceptionInterface $exception) {
             $result = 0;
@@ -121,8 +114,6 @@ class NotificationService
     /**
      * Send a contact form notification to admin user.
      *
-     * @param ContactMessage $contactMessage
-     *
      * @return int
      */
     public function sendContactAdminNotification(ContactMessage $contactMessage)
@@ -133,9 +124,9 @@ class NotificationService
                 $this->amd,
                 $this->amd,
                 'Missatge de contacte pàgina web '.$this->pub,
-                $this->twig->render('Mails/contact_form_admin_notification.html.twig', array(
+                $this->twig->render('Mails/contact_form_admin_notification.html.twig', [
                     'contact' => $contactMessage,
-                ))
+                ])
             );
         } catch (TransportExceptionInterface $exception) {
             $result = 0;
@@ -149,8 +140,6 @@ class NotificationService
     /**
      * Send backend answer notification to web user.
      *
-     * @param ContactMessage $contactMessage
-     *
      * @return int
      */
     public function sendUserBackendNotification(ContactMessage $contactMessage)
@@ -161,9 +150,9 @@ class NotificationService
                 $this->amd,
                 $contactMessage->getEmail(),
                 $this->pub.' contact form answer',
-                $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', array(
+                $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', [
                     'contact' => $contactMessage,
-                ))
+                ])
             );
         } catch (TransportExceptionInterface $exception) {
             $result = 0;
@@ -177,8 +166,6 @@ class NotificationService
     /**
      * Send a newsletter subscription form notification to admin user.
      *
-     * @param NewsletterContact $newsletterContact
-     *
      * @return int
      */
     public function sendNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact)
@@ -189,9 +176,9 @@ class NotificationService
                 $this->amd,
                 $this->amd,
                 'Missatge de newsletter pàgina web '.$this->pub,
-                $this->twig->render('Mails/newsletter_form_admin_notification.html.twig', array(
+                $this->twig->render('Mails/newsletter_form_admin_notification.html.twig', [
                     'contact' => $newsletterContact,
-                )),
+                ]),
                 $newsletterContact->getEmail()
             );
         } catch (TransportExceptionInterface $exception) {
@@ -206,8 +193,6 @@ class NotificationService
     /**
      * Send a newsletter subscription form notification to admin user on Mailchimp failure.
      *
-     * @param NewsletterContact $newsletterContact
-     *
      * @return int
      */
     public function sendFailureNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact)
@@ -218,9 +203,9 @@ class NotificationService
                 $this->amd,
                 $this->amd,
                 'Missatge de newsletter pàgina web '.$this->pub,
-                $this->twig->render('Mails/newsletter_failure_admin_notification.html.twig', array(
+                $this->twig->render('Mails/newsletter_failure_admin_notification.html.twig', [
                     'contact' => $newsletterContact,
-                )),
+                ]),
                 $newsletterContact->getEmail()
             );
         } catch (TransportExceptionInterface $exception) {
@@ -235,8 +220,6 @@ class NotificationService
     /**
      * Send a common notification mail to frontend user.
      *
-     * @param NewsletterContact $newsletterContact
-     *
      * @return int If is 0 failure otherwise amount of recipients
      */
     public function sendCommonNewsletterUserNotification(NewsletterContact $newsletterContact)
@@ -247,9 +230,9 @@ class NotificationService
                 $this->amd,
                 $newsletterContact->getEmail(),
                 'Notificació newsletter pàgina web '.$this->pub,
-                $this->twig->render('Mails/common_newsletter_user_notification.html.twig', array(
+                $this->twig->render('Mails/common_newsletter_user_notification.html.twig', [
                     'contact' => $newsletterContact,
-                ))
+                ])
             );
         } catch (TransportExceptionInterface $exception) {
             $result = 0;
@@ -263,9 +246,6 @@ class NotificationService
     /**
      * Send attached remainder receipt PDF to customer.
      *
-     * @param Receipt $receipt
-     * @param TCPDF   $pdf
-     *
      * @return int If is 0 failure otherwise amount of recipients
      */
     public function sendReceiptReminderPdfNotification(Receipt $receipt, TCPDF $pdf)
@@ -277,9 +257,9 @@ class NotificationService
                 $receipt->getMainEmail(),
                 $receipt->getMainEmailName(),
                 'Recordatori de pagament rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
-                $this->twig->render('Mails/receipt_reminder_pdf_notification.html.twig', array(
+                $this->twig->render('Mails/receipt_reminder_pdf_notification.html.twig', [
                     'receipt' => $receipt,
-                )),
+                ]),
                 'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
                 $pdf
             );
@@ -295,9 +275,6 @@ class NotificationService
     /**
      * Send attached receipt PDF to customer.
      *
-     * @param Receipt $receipt
-     * @param TCPDF   $pdf
-     *
      * @return int If is 0 failure otherwise amount of recipients
      */
     public function sendReceiptPdfNotification(Receipt $receipt, TCPDF $pdf)
@@ -309,9 +286,9 @@ class NotificationService
                 $receipt->getMainEmail(),
                 $receipt->getMainEmailName(),
                 'Rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
-                $this->twig->render('Mails/receipt_pdf_notification.html.twig', array(
+                $this->twig->render('Mails/receipt_pdf_notification.html.twig', [
                     'receipt' => $receipt,
-                )),
+                ]),
                 'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
                 $pdf
             );
@@ -327,9 +304,6 @@ class NotificationService
     /**
      * Send attached invoice PDF to customer.
      *
-     * @param Invoice $invoice
-     * @param TCPDF   $pdf
-     *
      * @return int If is 0 failure otherwise amount of recipients
      */
     public function sendInvoicePdfNotification(Invoice $invoice, TCPDF $pdf)
@@ -341,9 +315,9 @@ class NotificationService
                 $invoice->getMainEmail(),
                 $invoice->getMainEmailName(),
                 'Factura Box Idiomes núm. '.$invoice->getInvoiceNumber(),
-                $this->twig->render('Mails/invoice_pdf_notification.html.twig', array(
+                $this->twig->render('Mails/invoice_pdf_notification.html.twig', [
                     'invoice' => $invoice,
-                )),
+                ]),
                 'invoice_'.$invoice->getSluggedInvoiceNumber().'.pdf',
                 $pdf
             );
@@ -359,8 +333,6 @@ class NotificationService
     /**
      * Send a student absence notification mail to student or parent email.
      *
-     * @param StudentAbsence $studentAbsence
-     *
      * @return int If is 0 failure otherwise amount of recipients
      */
     public function sendStudentAbsenceNotification(StudentAbsence $studentAbsence)
@@ -371,9 +343,9 @@ class NotificationService
                 $this->amd,
                 $studentAbsence->getStudent()->getMainEmailSubject(),
                 'Falta a classe el dia '.$studentAbsence->getDayString(),
-                $this->twig->render('Mails/student_absence_notification.html.twig', array(
+                $this->twig->render('Mails/student_absence_notification.html.twig', [
                     'studentAbsence' => $studentAbsence,
-                ))
+                ])
             );
         } catch (TransportExceptionInterface $exception) {
             $result = 0;
@@ -387,8 +359,6 @@ class NotificationService
     /**
      * Send a preregister form notification to admin user.
      *
-     * @param PreRegister $preRegister
-     *
      * @return int
      */
     public function sendPreRegisterAdminNotification(PreRegister $preRegister)
@@ -399,9 +369,9 @@ class NotificationService
                 $this->amd,
                 $this->amd,
                 'Registre formulari preinscripció pàgina web '.$this->pub,
-                $this->twig->render('Mails/pre_register_form_admin_notification.html.twig', array(
+                $this->twig->render('Mails/pre_register_form_admin_notification.html.twig', [
                     'preRegister' => $preRegister,
-                )),
+                ]),
                 $preRegister->getEmail()
             );
         } catch (TransportExceptionInterface $exception) {

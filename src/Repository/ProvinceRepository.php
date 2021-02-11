@@ -5,8 +5,8 @@ namespace App\Repository;
 use App\Entity\Province;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class ProvinceRepository.
@@ -17,8 +17,6 @@ class ProvinceRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {

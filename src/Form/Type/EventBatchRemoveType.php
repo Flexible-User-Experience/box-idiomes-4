@@ -27,18 +27,12 @@ class EventBatchRemoveType extends AbstractType
 
     /**
      * EventBatchRemoveType constructor.
-     *
-     * @param EventManager $em
      */
     public function __construct(EventManager $em)
     {
         $this->em = $em;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var Event $event */
@@ -49,27 +43,24 @@ class EventBatchRemoveType extends AbstractType
             ->add(
                 'range',
                 ChoiceType::class,
-                array(
+                [
                     'mapped' => false,
                     'label' => 'backend.admin.event.batch_delete.range',
                     'required' => true,
                     'choices' => $this->em->getInclusiveRangeChoices($event),
                     'data' => is_null($lastEvent) ? $event->getId() : $this->em->getLastEventOf($event)->getId(),
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => Event::class,
                 'event' => null,
-            )
+            ]
         );
     }
 }

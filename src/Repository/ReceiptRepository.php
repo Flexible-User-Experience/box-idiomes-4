@@ -20,8 +20,6 @@ class ReceiptRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
@@ -29,9 +27,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return QueryBuilder
      */
@@ -52,9 +49,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Query
      */
@@ -64,9 +60,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Invoice|null
      *
@@ -127,9 +122,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return QueryBuilder
      */
@@ -145,9 +139,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Query
      */
@@ -157,9 +150,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Invoice|null
      *
@@ -215,9 +207,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return QueryBuilder
      */
@@ -233,9 +224,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Query
      */
@@ -245,9 +235,8 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Invoice|null
      *
@@ -368,8 +357,6 @@ class ReceiptRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \DateTime $date
-     *
      * @return int
      *
      * @throws \Doctrine\ORM\NonUniqueResultException

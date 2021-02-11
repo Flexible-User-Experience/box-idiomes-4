@@ -30,8 +30,7 @@ class FileService
     /**
      * Constructor.
      *
-     * @param UploaderHelper $uhs
-     * @param string         $krd
+     * @param string $krd
      */
     public function __construct(UploaderHelper $uhs, $krd)
     {

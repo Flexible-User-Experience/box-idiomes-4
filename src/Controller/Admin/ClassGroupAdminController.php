@@ -21,8 +21,6 @@ class ClassGroupAdminController extends BaseAdminController
     /**
      * Get group emails list in PDF action.
      *
-     * @param Request $request
-     *
      * @return Response
      *
      * @throws NotFoundHttpException If the object does not exist
@@ -54,6 +52,6 @@ class ClassGroupAdminController extends BaseAdminController
         $cgpbs = $this->container->get('app.class_group_pdf_builder');
         $pdf = $cgpbs->build($object, $students);
 
-        return new Response($pdf->Output('box_idiomes_class_group_'.$object->getId().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+        return new Response($pdf->Output('box_idiomes_class_group_'.$object->getId().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 }

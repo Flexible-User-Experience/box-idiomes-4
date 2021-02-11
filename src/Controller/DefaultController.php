@@ -30,10 +30,6 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="app_homepage")
      *
-     * @param Request             $request
-     * @param MailchimpManager    $mailchimpManager
-     * @param NotificationService $messenger
-     *
      * @return Response
      */
     public function indexAction(Request $request, MailchimpManager $mailchimpManager, NotificationService $messenger)
@@ -75,10 +71,6 @@ class DefaultController extends AbstractController
         );
     }
 
-    /**
-     * @param NotificationService $messenger
-     * @param NewsletterContact   $newsletterContact
-     */
     private function setFlashMessageAndEmailNotifications(NotificationService $messenger, NewsletterContact $newsletterContact)
     {
         // Send email notifications
@@ -125,9 +117,6 @@ class DefaultController extends AbstractController
     /**
      * @Route("/contacte", name="app_contact")
      *
-     * @param Request             $request
-     * @param NotificationService $messenger
-     *
      * @return Response
      */
     public function contactAction(Request $request, NotificationService $messenger)
@@ -168,9 +157,6 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/preinscripcions", name="app_pre_register")
-     *
-     * @param Request             $request
-     * @param NotificationService $messenger
      *
      * @return Response
      */
@@ -216,7 +202,7 @@ class DefaultController extends AbstractController
      */
     public function privacyPolicyAction()
     {
-        return $this->render('Front/privacy_policy.html.twig', array());
+        return $this->render('Front/privacy_policy.html.twig', []);
     }
 
     /**
@@ -232,20 +218,18 @@ class DefaultController extends AbstractController
     /**
      * @Route("/test-email", name="app_test_email")
      *
-     * @param KernelInterface $kernel
-     *
      * @return Response
      */
     public function testEmailAction(KernelInterface $kernel)
     {
-        if ($kernel->getEnvironment() === 'prod') {
+        if ('prod' === $kernel->getEnvironment()) {
             throw new AccessDeniedHttpException();
         }
 
         $invoice = $this->getDoctrine()->getRepository(Invoice::class)->find(8);
 
-        return $this->render('Mails/invoice_pdf_notification.html.twig', array(
+        return $this->render('Mails/invoice_pdf_notification.html.twig', [
             'invoice' => $invoice,
-        ));
+        ]);
     }
 }

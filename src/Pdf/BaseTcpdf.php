@@ -66,13 +66,13 @@ class BaseTcpdf extends \TCPDF
             $y,
             self::PDF_WIDTH - self::PDF_MARGIN_RIGHT,
             $y,
-            array(
+            [
                 'width' => 5,
                 'cap' => 'butt',
                 'join' => 'miter',
                 'dash' => 0,
-                'color' => array(179, 110, 171),
-            )
+                'color' => [179, 110, 171],
+            ]
         );
     }
 

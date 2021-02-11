@@ -18,15 +18,13 @@ class TariffAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Tarriff';
     protected $baseRoutePattern = 'billings/tariff';
-    protected $datagridValues = array(
+    protected $datagridValues = [
         '_sort_by' => 'year',
         '_sort_order' => 'desc',
-    );
+    ];
 
     /**
      * Configure route collection.
-     *
-     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection): void
     {
@@ -36,9 +34,6 @@ class TariffAdmin extends AbstractBaseAdmin
         ;
     }
 
-    /**
-     * @param FormMapper $formMapper
-     */
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
@@ -46,152 +41,143 @@ class TariffAdmin extends AbstractBaseAdmin
             ->add(
                 'year',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.year',
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.name',
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'price',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.price',
                     'required' => true,
-                )
+                ]
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'type',
                 ChoiceType::class,
-                array(
+                [
                     'label' => 'backend.admin.teacher_absence.type',
                     'choices' => TariffTypeEnum::getEnumArray(),
                     'multiple' => false,
                     'expanded' => false,
                     'required' => true,
-                )
+                ]
             )
             ->end()
         ;
     }
 
-    /**
-     * @param DatagridMapper $datagridMapper
-     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add(
                 'year',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.year',
-                )
+                ]
             )
             ->add(
                 'type',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.type',
-                ),
+                ],
                 ChoiceType::class,
-                array(
+                [
                     'expanded' => false,
                     'multiple' => false,
                     'choices' => TariffTypeEnum::getEnumArray(),
-                )
+                ]
             )
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.name',
-                )
+                ]
             )
             ->add(
                 'price',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.price',
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * @param ListMapper $listMapper
-     */
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->add(
                 'year',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.year',
                     'editable' => true,
                     'header_class' => 'text-right',
                     'row_align' => 'right',
-                )
+                ]
             )
             ->add(
                 'type',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.type',
                     'template' => 'Admin/Cells/list__cell_tariff_type.html.twig',
-                )
+                ]
             )
             ->add(
                 'name',
                 null,
-                array(
+                [
                     'label' => 'backend.admin.tariff.name',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 'price',
                 'decimal',
-                array(
+                [
                     'label' => 'backend.admin.tariff.price',
                     'editable' => true,
-                )
+                ]
             )
             ->add(
                 '_action',
                 'actions',
-                array(
+                [
                     'header_class' => 'text-right',
                     'row_align' => 'right',
-                    'actions' => array(
-                        'edit' => array('template' => 'Admin/Buttons/list__action_edit_button.html.twig'),
-                    ),
+                    'actions' => [
+                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
+                    ],
                     'label' => 'backend.admin.actions',
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * @return array
-     */
     public function getExportFields(): array
     {
-        return array(
+        return [
             'year',
             'name',
             'price',
             'typeString',
-        );
+        ];
     }
 }

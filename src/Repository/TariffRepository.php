@@ -6,8 +6,8 @@ use App\Entity\Tariff;
 use App\Enum\TariffTypeEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class TariffRepository.
@@ -18,8 +18,6 @@ class TariffRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {

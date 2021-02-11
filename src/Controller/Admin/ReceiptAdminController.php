@@ -11,9 +11,9 @@ use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
 use App\Manager\GenerateReceiptFormManager;
+use App\Pdf\ReceiptBuilderPdf;
 use App\Pdf\ReceiptReminderBuilderPdf;
 use App\Service\NotificationService;
-use App\Pdf\ReceiptBuilderPdf;
 use App\Service\XmlSepaBuilderService;
 use DateTime;
 use Digitick\Sepa\Util\StringHelper;
@@ -42,8 +42,6 @@ class ReceiptAdminController extends BaseAdminController
 {
     /**
      * Generate receipt action.
-     *
-     * @param Request $request
      *
      * @return Response|RedirectResponse
      *
@@ -79,20 +77,16 @@ class ReceiptAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/Receipt/generate_receipt_form.html.twig',
-            array(
+            [
                 'action' => 'generate',
                 'year_month_form' => $yearMonthForm->createView(),
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
     /**
      * Creator receipt action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
@@ -118,7 +112,7 @@ class ReceiptAdminController extends BaseAdminController
         if (0 === $recordsParsed) {
             $this->addFlash('danger', $translator->trans('backend.admin.receipt.generator.no_records_presisted'));
         } else {
-            $this->addFlash('success', $translator->trans('backend.admin.receipt.generator.flash_success', array('%amount%' => $recordsParsed), 'messages'));
+            $this->addFlash('success', $translator->trans('backend.admin.receipt.generator.flash_success', ['%amount%' => $recordsParsed], 'messages'));
         }
 
         return $this->redirectToList();
@@ -126,10 +120,6 @@ class ReceiptAdminController extends BaseAdminController
 
     /**
      * Create an Invoice from a Receipt action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      *
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
@@ -160,10 +150,6 @@ class ReceiptAdminController extends BaseAdminController
     /**
      * Generate PDF reminder receipt action.
      *
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
      */
@@ -185,15 +171,11 @@ class ReceiptAdminController extends BaseAdminController
         $rps = $this->container->get('app.receipt_reminder_pdf_builder');
         $pdf = $rps->build($object);
 
-        return new Response($pdf->Output('box_idiomes_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+        return new Response($pdf->Output('box_idiomes_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
     /**
      * Send PDF reminder receipt action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      *
      * @throws NotFoundHttpException If the object does not exist
      */
@@ -233,10 +215,6 @@ class ReceiptAdminController extends BaseAdminController
     /**
      * Generate PDF receipt action.
      *
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
      */
@@ -255,15 +233,11 @@ class ReceiptAdminController extends BaseAdminController
         $rps = $this->container->get('app.receipt_pdf_builder');
         $pdf = $rps->build($object);
 
-        return new Response($pdf->Output('box_idiomes_receipt_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+        return new Response($pdf->Output('box_idiomes_receipt_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
     /**
      * Send PDF receipt action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      *
      * @throws NotFoundHttpException If the object does not exist
      */
@@ -307,8 +281,6 @@ class ReceiptAdminController extends BaseAdminController
     /**
      * Generate SEPA direct debit XML action.
      *
-     * @param Request $request
-     *
      * @return Response|BinaryFileResponse
      */
     public function generateDirectDebitAction(Request $request): Response
@@ -335,7 +307,7 @@ class ReceiptAdminController extends BaseAdminController
         $em->flush();
 
         if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
-            return new Response($xml, 200, array('Content-type' => 'application/xml'));
+            return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
 
         $now = new DateTime();
@@ -344,15 +316,13 @@ class ReceiptAdminController extends BaseAdminController
         $fileSystem->touch($fileNamePath);
         $fileSystem->dumpFile($fileNamePath, $xml);
 
-        $response = new BinaryFileResponse($fileNamePath, 200, array('Content-type' => 'application/xml'));
+        $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
         return $response;
     }
 
     /**
-     * @param ProxyQueryInterface $selectedModelQuery
-     *
      * @return Response|RedirectResponse
      */
     public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery)
@@ -374,7 +344,7 @@ class ReceiptAdminController extends BaseAdminController
                 }
             }
 
-            return new Response($pdf->Output('box_idiomes_receipt_reminders.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+            return new Response($pdf->Output('box_idiomes_receipt_reminders.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
         } catch (\Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu de recordatoris de pagaments de rebut amb format PDF. Revisa els rebuts seleccionats.');
             $this->addFlash('error', $e->getMessage());
@@ -388,8 +358,6 @@ class ReceiptAdminController extends BaseAdminController
     }
 
     /**
-     * @param ProxyQueryInterface $selectedModelQuery
-     *
      * @return Response|RedirectResponse
      */
     public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery)
@@ -430,7 +398,7 @@ class ReceiptAdminController extends BaseAdminController
                 ++$index;
             }
             $zipFile->saveAsFile($fileNamePath)->close();
-            $response = new BinaryFileResponse($fileNamePath, 200, array('Content-type' => 'application/xml'));
+            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;

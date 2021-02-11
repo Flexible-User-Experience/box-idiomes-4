@@ -5,23 +5,23 @@ namespace App\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Position trait
+ * Position trait.
  *
  * @category Trait
- * @package  App\Entity\Traits
+ *
  * @author   Anton Serra <aserratorta@gmail.com>
  */
-Trait PositionTrait
+trait PositionTrait
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private $position;
 
     /**
-     * Set position
+     * Set position.
      *
      * @param string $position
      *
@@ -35,7 +35,7 @@ Trait PositionTrait
     }
 
     /**
-     * Get position
+     * Get position.
      *
      * @return string
      */

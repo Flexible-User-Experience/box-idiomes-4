@@ -25,10 +25,6 @@ class FrontendMenuBuilder
 
     /**
      * Constructor.
-     *
-     * @param FactoryInterface      $factory
-     * @param AuthorizationChecker  $ac
-     * @param TokenStorageInterface $ts
      */
     public function __construct(FactoryInterface $factory, AuthorizationChecker $ac, TokenStorageInterface $ts, string $ppo)
     {
@@ -48,47 +44,47 @@ class FrontendMenuBuilder
         if ($this->ts->getToken() && $this->ac->isGranted('ROLE_CMS')) {
             $menu->addChild(
                 'admin',
-                array(
+                [
                     'label' => 'frontend.menu.cms',
                     'route' => 'sonata_admin_dashboard',
-                )
+                ]
             );
         }
         $menu->addChild(
             'app_services',
-            array(
+            [
                 'label' => 'frontend.menu.services',
                 'route' => 'app_services',
-            )
+            ]
         );
         $menu->addChild(
             'app_academy',
-            array(
+            [
                 'label' => 'frontend.menu.academy',
                 'route' => 'app_academy',
-            )
+            ]
         );
         $menu->addChild(
             'app_contact',
-            array(
+            [
                 'label' => 'frontend.menu.contact',
                 'route' => 'app_contact',
-            )
+            ]
         );
         // activate Preregister top menu option conditionally
         if ($this->ppo) {
             $menu->addChild(
                 'app_pre_register',
-                array(
+                [
                     'label' => 'frontend.menu.preregisters',
                     'route' => 'app_pre_register',
-                    'attributes' => array(
+                    'attributes' => [
                         'class' => 'violet-background',
-                    ),
-                    'linkAttributes' => array(
+                    ],
+                    'linkAttributes' => [
                         'class' => 'c-white',
-                    ),
-                )
+                    ],
+                ]
             );
         }
 

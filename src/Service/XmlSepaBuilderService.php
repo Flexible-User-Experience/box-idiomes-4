@@ -4,13 +4,13 @@ namespace App\Service;
 
 use App\Entity\AbstractReceiptInvoiceLine;
 use App\Entity\BankCreditorSepa;
-use App\Entity\Receipt;
 use App\Entity\Invoice;
+use App\Entity\Receipt;
 use DateTimeInterface;
+use Digitick\Sepa\GroupHeader;
+use Digitick\Sepa\PaymentInformation;
 use Digitick\Sepa\TransferFile\Facade\CustomerDirectDebitFacade;
 use Digitick\Sepa\TransferFile\Factory\TransferFileFacadeFactory;
-use Digitick\Sepa\PaymentInformation;
-use Digitick\Sepa\GroupHeader;
 use Digitick\Sepa\Util\StringHelper;
 
 class XmlSepaBuilderService

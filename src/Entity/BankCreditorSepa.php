@@ -45,20 +45,11 @@ class BankCreditorSepa extends AbstractBase
     /**
      * Methods.
      */
-
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return BankCreditorSepa
-     */
     public function setName(string $name): BankCreditorSepa
     {
         $this->name = $name;
@@ -66,19 +57,11 @@ class BankCreditorSepa extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getOrganizationId(): string
     {
         return $this->organizationId;
     }
 
-    /**
-     * @param string $organizationId
-     *
-     * @return BankCreditorSepa
-     */
     public function setOrganizationId(string $organizationId): BankCreditorSepa
     {
         $this->organizationId = $organizationId;
@@ -86,19 +69,11 @@ class BankCreditorSepa extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCreditorName(): string
     {
         return $this->creditorName;
     }
 
-    /**
-     * @param string $creditorName
-     *
-     * @return BankCreditorSepa
-     */
     public function setCreditorName(string $creditorName): BankCreditorSepa
     {
         $this->creditorName = $creditorName;
@@ -106,19 +81,11 @@ class BankCreditorSepa extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getIban(): string
     {
         return $this->iban;
     }
 
-    /**
-     * @param string $iban
-     *
-     * @return BankCreditorSepa
-     */
     public function setIban(string $iban): BankCreditorSepa
     {
         $this->iban = $iban;
@@ -126,19 +93,11 @@ class BankCreditorSepa extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getBic(): string
     {
         return $this->bic;
     }
 
-    /**
-     * @param string $bic
-     *
-     * @return BankCreditorSepa
-     */
     public function setBic(string $bic): BankCreditorSepa
     {
         $this->bic = $bic;

@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EventAdminController extends BaseAdminController
 {
     /**
-     * @param null|int|string $id
+     * @param int|string|null $id
      *
      * @return RedirectResponse|Response
      */
@@ -47,8 +47,6 @@ class EventAdminController extends BaseAdminController
 
     /**
      * Edit event and all the next related events action.
-     *
-     * @param Request $request
      *
      * @return Response
      *
@@ -81,7 +79,7 @@ class EventAdminController extends BaseAdminController
         $lastEvent = $eventsManager->getLastEventOf($object);
 
         /** @var Form $form */
-        $form = $this->createForm(EventType::class, $object, array('event' => $object));
+        $form = $this->createForm(EventType::class, $object, ['event' => $object]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -121,21 +119,19 @@ class EventAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/Event/batch_edit_form.html.twig',
-            array(
+            [
                 'action' => 'batchedit',
                 'object' => $object,
                 'firstEvent' => $firstEvent,
                 'lastEvent' => $lastEvent,
                 'progressBarPercentiles' => $eventsManager->getProgressBarPercentilesOf($object),
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
     /**
      * Delete event and all the next related events action.
-     *
-     * @param Request $request
      *
      * @return Response
      *
@@ -165,7 +161,7 @@ class EventAdminController extends BaseAdminController
         $lastEvent = $eventsManager->getLastEventOf($object);
 
         /** @var Form $form */
-        $form = $this->createForm(EventBatchRemoveType::class, $object, array('event' => $object));
+        $form = $this->createForm(EventBatchRemoveType::class, $object, ['event' => $object]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -263,14 +259,14 @@ class EventAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/Event/batch_delete_form.html.twig',
-            array(
+            [
                 'action' => 'batchdelete',
                 'object' => $object,
                 'firstEvent' => $firstEvent,
                 'lastEvent' => $lastEvent,
                 'progressBarPercentiles' => $eventsManager->getProgressBarPercentilesOf($object),
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 }

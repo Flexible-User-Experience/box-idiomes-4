@@ -22,124 +22,117 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ContactMessageType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
                 'name',
                 TextType::class,
-                array(
+                [
                     'label' => false,
                     'required' => true,
-                    'attr' => array(
+                    'attr' => [
                         'placeholder' => 'frontend.forms.name',
                         'class' => 'common-fields',
-                    ),
-                    'constraints' => array(
+                    ],
+                    'constraints' => [
                         new Assert\NotBlank(),
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'email',
                 EmailType::class,
-                array(
+                [
                     'label' => false,
                     'required' => true,
-                    'attr' => array(
+                    'attr' => [
                         'placeholder' => 'frontend.forms.email',
                         'class' => 'common-fields',
-                    ),
-                    'constraints' => array(
+                    ],
+                    'constraints' => [
                         new Assert\NotBlank(),
-                        new Assert\Email(array(
+                        new Assert\Email([
                             'strict' => true,
                             'checkMX' => true,
                             'checkHost' => true,
-                        )),
-                    ),
-                )
+                        ]),
+                    ],
+                ]
             )
             ->add(
                 'phone',
                 TextType::class,
-                array(
+                [
                     'label' => false,
                     'required' => false,
-                    'attr' => array(
+                    'attr' => [
                         'placeholder' => 'frontend.forms.phone',
                         'class' => 'common-fields',
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'message',
                 TextareaType::class,
-                array(
+                [
                     'label' => 'frontend.forms.message',
                     'required' => true,
-                    'attr' => array(
+                    'attr' => [
                         'rows' => 5,
                         'class' => 'message-field',
-                    ),
-                    'constraints' => array(
+                    ],
+                    'constraints' => [
                         new Assert\NotBlank(),
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'privacy',
                 CheckboxType::class,
-                array(
+                [
                     'required' => true,
                     'label' => 'frontend.forms.privacy',
                     'mapped' => false,
-                )
+                ]
             )
             ->add(
                 'captcha',
                 EWZRecaptchaType::class,
-                array(
+                [
                     'label' => ' ',
-                    'attr' => array(
-                        'options' => array(
+                    'attr' => [
+                        'options' => [
                             'theme' => 'light',
                             'type' => 'image',
                             'size' => 'normal',
-                        ),
-                    ),
+                        ],
+                    ],
                     'mapped' => false,
-                    'constraints' => array(
+                    'constraints' => [
                         new RecaptchaTrue(),
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'send',
                 SubmitType::class,
-                array(
+                [
                     'label' => 'frontend.forms.send',
-                    'attr' => array(
+                    'attr' => [
                         'class' => 'btn-newsletter',
-                    ),
-                )
+                    ],
+                ]
             )
         ;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => ContactMessage::class,
-            )
+            ]
         );
     }
 }

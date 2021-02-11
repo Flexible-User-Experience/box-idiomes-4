@@ -67,8 +67,6 @@ abstract class AbstractReceiptInvoiceLine extends AbstractBase
     }
 
     /**
-     * @param Student $student
-     *
      * @return $this
      */
     public function setStudent(Student $student)

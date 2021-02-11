@@ -12,15 +12,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class GenerateInvoiceItemType extends GenerateReceiptItemType
 {
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'data_class' => GenerateInvoiceItemModel::class,
-            )
+            ]
         );
     }
 }

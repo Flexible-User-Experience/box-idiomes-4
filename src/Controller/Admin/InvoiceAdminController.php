@@ -41,10 +41,6 @@ class InvoiceAdminController extends BaseAdminController
     /**
      * Generate invoice action.
      *
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @throws NotFoundHttpException    If the object does not exist
      * @throws AccessDeniedException    If access is not granted
      * @throws NonUniqueResultException If problem with unique entities
@@ -77,21 +73,17 @@ class InvoiceAdminController extends BaseAdminController
 
         return $this->renderWithExtraParams(
             'Admin/Invoice/generate_invoice_form.html.twig',
-            array(
+            [
                 'action' => 'generate',
                 'year_month_form' => $yearMonthForm->createView(),
                 'form' => $form->createView(),
                 'generate_invoice' => $generateInvoice,
-            )
+            ]
         );
     }
 
     /**
      * Creator invoice action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
@@ -110,7 +102,7 @@ class InvoiceAdminController extends BaseAdminController
         if (0 === $recordsParsed) {
             $this->addFlash('warning', $translator->trans('backend.admin.invoice.generator.no_records_presisted'));
         } else {
-            $this->addFlash('success', $translator->trans('backend.admin.invoice.generator.flash_success', array('%amount%' => $recordsParsed), 'messages'));
+            $this->addFlash('success', $translator->trans('backend.admin.invoice.generator.flash_success', ['%amount%' => $recordsParsed], 'messages'));
         }
 
         return $this->redirectToList();
@@ -118,10 +110,6 @@ class InvoiceAdminController extends BaseAdminController
 
     /**
      * Generate PDF invoice action.
-     *
-     * @param Request $request
-     *
-     * @return Response
      *
      * @throws NotFoundHttpException If the object does not exist
      * @throws AccessDeniedException If access is not granted
@@ -142,15 +130,11 @@ class InvoiceAdminController extends BaseAdminController
         $ips = $this->container->get('app.invoice_pdf_builder');
         $pdf = $ips->build($object);
 
-        return new Response($pdf->Output('box_idiomes_invoice_'.$object->getSluggedInvoiceNumber().'.pdf', 'I'), 200, array('Content-type' => 'application/pdf'));
+        return new Response($pdf->Output('box_idiomes_invoice_'.$object->getSluggedInvoiceNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
     /**
      * Send PDF invoice action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      *
      * @throws NotFoundHttpException If the object does not exist
      * @throws Exception
@@ -195,8 +179,6 @@ class InvoiceAdminController extends BaseAdminController
     /**
      * Generate SEPA direct debit XML action.
      *
-     * @param Request $request
-     *
      * @return Response|BinaryFileResponse
      */
     public function generateDirectDebitAction(Request $request): Response
@@ -223,7 +205,7 @@ class InvoiceAdminController extends BaseAdminController
         $em->flush();
 
         if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
-            return new Response($xml, 200, array('Content-type' => 'application/xml'));
+            return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
 
         $now = new DateTime();
@@ -232,15 +214,13 @@ class InvoiceAdminController extends BaseAdminController
         $fileSystem->touch($fileNamePath);
         $fileSystem->dumpFile($fileNamePath, $xml);
 
-        $response = new BinaryFileResponse($fileNamePath, 200, array('Content-type' => 'application/xml'));
+        $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
         return $response;
     }
 
     /**
-     * @param ProxyQueryInterface $selectedModelQuery
-     *
      * @return Response|RedirectResponse
      */
     public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery)
@@ -281,7 +261,7 @@ class InvoiceAdminController extends BaseAdminController
                 ++$index;
             }
             $zipFile->saveAsFile($fileNamePath)->close();
-            $response = new BinaryFileResponse($fileNamePath, 200, array('Content-type' => 'application/xml'));
+            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;

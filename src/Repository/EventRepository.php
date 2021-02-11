@@ -7,8 +7,8 @@ use App\Entity\Student;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class EventRepository.
@@ -19,8 +19,6 @@ class EventRepository extends ServiceEntityRepository
 {
     /**
      * Constructor.
-     *
-     * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
@@ -28,9 +26,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return QueryBuilder
      */
     public function getFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -42,9 +37,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return Query
      */
     public function getFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -53,9 +45,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return array
      */
     public function getFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -64,9 +53,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return QueryBuilder
      */
     public function getEnabledFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -77,9 +63,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return Query
      */
     public function getEnabledFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -88,9 +71,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     *
      * @return array
      */
     public function getEnabledFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate)
@@ -99,10 +79,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     * @param Student   $student
-     *
      * @return QueryBuilder
      */
     public function getEnabledFilteredByBeginEndAndStudentQB(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student)
@@ -115,10 +91,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     * @param Student   $student
-     *
      * @return Query
      */
     public function getEnabledFilteredByBeginEndAndStudentQ(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student)
@@ -127,10 +99,6 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param DateTimeInterface $startDate
-     * @param DateTimeInterface $endDate
-     * @param Student   $student
-     *
      * @return array
      */
     public function getEnabledFilteredByBeginEndAndStudent(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student)
@@ -139,9 +107,8 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return QueryBuilder
      */
@@ -163,9 +130,8 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return Query
      */
@@ -175,9 +141,8 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return array
      */
@@ -187,9 +152,8 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Student $student
-     * @param int     $year
-     * @param int     $month
+     * @param int $year
+     * @param int $month
      *
      * @return float
      */

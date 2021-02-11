@@ -49,8 +49,6 @@ class GenerateInvoiceModel extends AbstractGenerateReceiptInvoiceModel
     }
 
     /**
-     * @param GenerateInvoiceItemModel $item
-     *
      * @return $this
      */
     public function addItem(GenerateInvoiceItemModel $item)
@@ -61,8 +59,6 @@ class GenerateInvoiceModel extends AbstractGenerateReceiptInvoiceModel
     }
 
     /**
-     * @param GenerateInvoiceItemModel $item
-     *
      * @return $this
      */
     public function removeItem(GenerateInvoiceItemModel $item)

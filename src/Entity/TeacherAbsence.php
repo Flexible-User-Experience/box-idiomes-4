@@ -108,8 +108,6 @@ class TeacherAbsence extends AbstractBase
     }
 
     /**
-     * @param DateTime $day
-     *
      * @return TeacherAbsence
      */
     public function setDay(DateTime $day)

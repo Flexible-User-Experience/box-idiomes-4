@@ -2,18 +2,13 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\DefaultController;
 use App\Entity\PreRegister;
 use App\Entity\Student;
-use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -69,10 +64,7 @@ class PreRegisterAdminController extends BaseAdminController
         return $this->redirectToList();
     }
 
-
     /**
-     * @param ProxyQueryInterface $selectedModelQuery
-     *
      * @return Response|RedirectResponse
      */
     public function batchActionGeneratestudents(ProxyQueryInterface $selectedModelQuery)
@@ -87,7 +79,7 @@ class PreRegisterAdminController extends BaseAdminController
             /** @var PreRegister $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 $previouslyStoredStudents = $prrs->getPreviouslyStoredStudentsFromPreRegister($selectedModel);
-                if (count($previouslyStoredStudents) == 0) {
+                if (0 == count($previouslyStoredStudents)) {
                     // brand new student
                     $student = new Student();
                     $student
@@ -104,7 +96,7 @@ class PreRegisterAdminController extends BaseAdminController
                 ++$totalItemsIterated;
             }
             $em->flush();
-            if ($newStudentsCreated == 0) {
+            if (0 == $newStudentsCreated) {
                 $this->addFlash('warning', 'No s\'han creat cap alumne nou, totes les inscripcions seleccionades es corresponen amb alumnes existents.');
             } elseif ($newStudentsCreated < $totalItemsIterated) {
                 $this->addFlash('warning', 'S\'han creat '.$newStudentsCreated.' alumnes nous, però '.($totalItemsIterated - $newStudentsCreated).' preinscripcions es corresponen amb alumnes ja existents.');
