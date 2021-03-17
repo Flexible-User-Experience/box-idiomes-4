@@ -1,4 +1,6 @@
 {
+    "name": "flux/box-idiomes",
+    "description": "A Symfony 4.4 LTS project to manage Box Idiomes enterprise",
     "type": "project",
     "license": "proprietary",
     "require": {
