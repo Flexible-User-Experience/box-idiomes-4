@@ -1,9 +1,13 @@
 Changelog
 =========
 
-##### Version 4.5.06 (WIP)
+##### Version 4.6.01 (WIP)
  * fix minor bugs
+
+##### Version 4.6.00 (WIP)
  * fix broken Travis tests
+ * add new search Student by age datagrid filter
+ * add Calendar to PDF export action
 
 ##### Version 4.5.05 (2021-02-11)
  * make bankCreditorSepa attr always required in Student and Parent admin edit views
