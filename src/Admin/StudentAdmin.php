@@ -9,12 +9,14 @@ use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\Tariff;
+use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
 use Sonata\Form\Type\DatePickerType;
@@ -360,6 +362,20 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'age',
+                CallbackFilter::class,
+                [
+                    'label' => 'backend.admin.student.age',
+                    'callback' => [$this, 'buildDatagridAgesFilter'],
+                ],
+                ChoiceType::class,
+                [
+                    'choices' => StudentAgesEnum::getReversedEnumTranslatedArray(),
+                    'expanded' => false,
+                    'multiple' => false,
+                ]
+            )
+            ->add(
                 'birthDate',
                 DateFilter::class,
                 [
@@ -437,6 +453,16 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
         ;
+    }
+
+    public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value)
+    {
+        if (!$value) {
+            return;
+        }
+//        $queryBuilder->leftJoin(sprintf('%s.codes', $alias), 'c');
+        $queryBuilder->andWhere($alias.'.name = :code');
+        $queryBuilder->setParameter('code', $value['value']);
     }
 
     protected function configureListFields(ListMapper $listMapper): void

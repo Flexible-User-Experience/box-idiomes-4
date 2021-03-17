@@ -169,6 +169,7 @@ backend:
             payment_information: Dades de pagament
             name: Nom
             surname: Cognoms
+            age: Edat
             birthDate: Data naixement
             dischargeDate: Data alta
             bank: Rebut bancari
