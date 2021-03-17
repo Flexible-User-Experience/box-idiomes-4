@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,11 +23,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-/**
- * Class StudentAdmin.
- *
- * @category Admin
- */
 class StudentAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Student';
@@ -36,9 +32,6 @@ class StudentAdmin extends AbstractBaseAdmin
         '_sort_order' => 'asc',
     ];
 
-    /**
-     * Configure route collection.
-     */
     protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
@@ -368,7 +361,7 @@ class StudentAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'birthDate',
-                'doctrine_orm_date',
+                DateFilter::class,
                 [
                     'label' => 'backend.admin.student.birthDate',
                     'field_type' => DatePickerType::class,
@@ -382,7 +375,7 @@ class StudentAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'dischargeDate',
-                'doctrine_orm_date',
+                DateFilter::class,
                 [
                     'label' => 'backend.admin.student.dischargeDate',
                     'field_type' => DatePickerType::class,

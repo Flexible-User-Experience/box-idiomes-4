@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -273,7 +274,7 @@ class PersonAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'dischargeDate',
-                'doctrine_orm_date',
+                DateFilter::class,
                 [
                     'label' => 'backend.admin.student.dischargeDate',
                     'field_type' => DatePickerType::class,
