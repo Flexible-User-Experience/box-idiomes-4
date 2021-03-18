@@ -137,6 +137,7 @@ class BackendControllerTest extends WebTestCase
             array('/admin/users/1/delete'),
             array('/admin/fitxers/gestor'),
             array('/admin/fitxers/gestor/handler/?conf=default'),
+            array('/admin/extras/export-calendar-pdf-list'),
         );
     }
 
