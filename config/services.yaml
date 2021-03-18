@@ -166,6 +166,7 @@ services:
         class: App\Manager\EventManager
         public: true
         arguments:
+            - '@app.event_repository'
             - '@app.tariff_repository'
     app.generate_receipt_form_manager:
         class: App\Manager\GenerateReceiptFormManager

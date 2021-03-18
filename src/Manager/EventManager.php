@@ -4,15 +4,21 @@ namespace App\Manager;
 
 use App\Entity\Event;
 use App\Entity\Tariff;
+use App\Model\ExportCalendarToList;
+use App\Model\ExportCalendarToListDayItem;
+use App\Repository\EventRepository;
 use App\Repository\TariffRepository;
+use DateTimeInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
 class EventManager
 {
+    private EventRepository $er;
     private TariffRepository $tr;
 
-    public function __construct(TariffRepository $tr)
+    public function __construct(EventRepository $er, TariffRepository $tr)
     {
+        $this->er = $er;
         $this->tr = $tr;
     }
 
@@ -150,5 +156,19 @@ class EventManager
     public function getCurrentPrivateLessonsTariffForEvents(array $events): Tariff
     {
         return $this->decidePrivateLessonsTariff($events) ? $this->tr->findCurrentPrivateLessonTariff() : $this->tr->findCurrentSharedPrivateLessonTariff();
+    }
+
+    public function getCalendarEventsListFromDates(DateTimeInterface $start, DateTimeInterface $end): ExportCalendarToList
+    {
+        $calendarEventsList = new ExportCalendarToList();
+        do {
+            $events = $this->er->getEnabledFilteredByBeginAndEnd($start, $start);
+            $calendarEventsListDayItem = new ExportCalendarToListDayItem('weekday', $start);
+            $calendarEventsListDayItem->setEvents($events);
+            $calendarEventsList->addDay($calendarEventsListDayItem);
+            $start->addOneDay();
+        } while ($start->format('Y-m-d') <= $end->format('Y-m-d'));
+
+        return $calendarEventsList;
     }
 }

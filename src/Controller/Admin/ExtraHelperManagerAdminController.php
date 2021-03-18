@@ -2,24 +2,24 @@
 
 namespace App\Controller\Admin;
 
+use App\Manager\EventManager;
 use App\Pdf\ExportCalendarToListBuilderPdf;
-use App\Repository\EventRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ExtraHelperManagerAdminController extends BaseAdminController
 {
-    public function exportCalendarPdfListAction(EventRepository $er, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, string $start, string $end): Response
+    public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, string $start, string $end): Response
     {
         $startDate = DateTime::createFromFormat('Y-m-d', $start);
         $endDate = DateTime::createFromFormat('Y-m-d', $end);
         if ($startDate && $endDate) {
             if ($endDate->format('Y-m-d') >= $startDate->format('Y-m-d')) {
-                $events = $er->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
-                if (count($events) > 0) {
-                    $pdf = $eclb->build($events);
-                    $this->addFlash('success', count($events).' found.');
+                $exportCalendarList = $ems->getCalendarEventsListFromDates($startDate, $endDate);
+                if ($exportCalendarList->hasDays()) {
+                    $pdf = $eclb->build($exportCalendarList);
+                    $this->addFlash('success', $exportCalendarList->getDaysAmount().' found.');
 
                     return new Response($pdf->Output('box_idiomes_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
                 }

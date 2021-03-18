@@ -23,8 +23,20 @@ class ExportCalendarToList
         return $this;
     }
 
-    public function addDay(ExportCalendarToListDayItem $dayItem)
+    public function addDay(ExportCalendarToListDayItem $dayItem): self
     {
         $this->days[] = $dayItem;
+
+        return $this;
+    }
+
+    public function getDaysAmount(): int
+    {
+        return count($this->getDays());
+    }
+
+    public function hasDays(): int
+    {
+        return $this->getDaysAmount() > 0;
     }
 }

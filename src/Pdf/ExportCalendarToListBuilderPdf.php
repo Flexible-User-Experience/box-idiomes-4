@@ -2,6 +2,7 @@
 
 namespace App\Pdf;
 
+use App\Model\ExportCalendarToList;
 use App\Service\SmartAssetsHelperService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -22,7 +23,7 @@ class ExportCalendarToListBuilderPdf
         $this->pwt = $pwt;
     }
 
-    public function build(array $events): TCPDF
+    public function build(ExportCalendarToList $calendarEventsList): TCPDF
     {
         /** @var BaseTcpdf $pdf */
         $pdf = $this->tcpdf->create($this->sahs);
