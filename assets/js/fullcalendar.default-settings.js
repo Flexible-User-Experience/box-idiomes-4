@@ -4,11 +4,15 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import caLocale from "@fullcalendar/core/locales/ca";
+import Routing from '../../public/bundles/fosjsrouting/js/router.min';
 
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
+
+const routes = require('../../public/js/fos_js_routes.json');
+Routing.setRoutingData(routes);
 
 document.addEventListener('DOMContentLoaded', () => {
     let calendarEl = document.getElementById('calendar-holder');
@@ -71,10 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 let exportCalendarPdfListAnchorNode = jQuery('#export_calendar_pdf_list_anchor');
                 let start = calendar.view.props.dateProfile.currentRange.start;
                 let end = calendar.view.props.dateProfile.currentRange.end;
-                console.log(calendar.view.props.dateProfile, start, end);
                 exportCalendarPdfListAnchorNode.attr('data-scope', calendar.view.props.dateProfile.currentRangeUnit);
-                exportCalendarPdfListAnchorNode.attr('data-start', start.getFullYear()+'-'+twoDigitsPadWithZeros(start.getMonth())+'-'+twoDigitsPadWithZeros(start.getDate()));
-                exportCalendarPdfListAnchorNode.attr('data-end', end.getFullYear()+'-'+twoDigitsPadWithZeros(end.getMonth())+'-'+twoDigitsPadWithZeros(end.getDate()));
+                exportCalendarPdfListAnchorNode.attr('data-start', start.getFullYear() + '-' + twoDigitsPadWithZeros(start.getMonth() + 1) + '-' + twoDigitsPadWithZeros(start.getDate()));
+                exportCalendarPdfListAnchorNode.attr('data-end', end.getFullYear() + '-' + twoDigitsPadWithZeros(end.getMonth() + 1) + '-' + twoDigitsPadWithZeros(end.getDate()));
+                let route = Routing.generate('admin_app_filedummy_exportCalendarPdfList', {start: start.getFullYear() + '-' + twoDigitsPadWithZeros(start.getMonth() + 1) + '-' + twoDigitsPadWithZeros(start.getDate()), end: end.getFullYear() + '-' + twoDigitsPadWithZeros(end.getMonth() + 1) + '-' + twoDigitsPadWithZeros(end.getDate())});
+                exportCalendarPdfListAnchorNode.attr('href', route);
             }
         }
     });

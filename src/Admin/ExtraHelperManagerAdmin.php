@@ -16,7 +16,7 @@ class ExtraHelperManagerAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
-            ->add('exportCalendarPdfList', 'export-calendar-pdf-list/{start}/{end}')
+            ->add('exportCalendarPdfList', 'export-calendar-pdf-list/from/{start}/to/{end}')
             ->remove('list')
             ->remove('create')
             ->remove('edit')

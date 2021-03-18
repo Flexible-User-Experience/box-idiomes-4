@@ -4,11 +4,15 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from '@fullcalendar/list';
 import caLocale from '@fullcalendar/core/locales/ca';
+import Routing from '../../public/bundles/fosjsrouting/js/router.min';
 
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
+
+const routes = require('../../public/js/fos_js_routes.json');
+Routing.setRoutingData(routes);
 
 document.addEventListener('DOMContentLoaded', () => {
     let calendarEl = document.getElementById('calendar-holder');
