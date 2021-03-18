@@ -4,77 +4,22 @@ namespace App\Pdf;
 
 use App\Service\SmartAssetsHelperService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Abstract class AbstractReceiptInvoiceBuilderPdf.
- *
- * @category Service
- */
 abstract class AbstractReceiptInvoiceBuilderPdf
 {
-    /**
-     * @var TCPDFController
-     */
-    protected $tcpdf;
+    protected TCPDFController $tcpdf;
+    protected SmartAssetsHelperService $sahs;
+    protected TranslatorInterface $ts;
+    protected string $pwt;    // project web title
+    protected string $bn;     // boss name
+    protected string $bd;     // boss dni
+    protected string $ba;     // boss address
+    protected string $bc;     // boss city
+    protected string $ib;     // IBAN bussines
+    protected string $locale; // default locale useful in CLI
 
-    /**
-     * @var SmartAssetsHelperService
-     */
-    protected $sahs;
-
-    /**
-     * @var Translator
-     */
-    protected $ts;
-
-    /**
-     * @var string project web title
-     */
-    protected $pwt;
-
-    /**
-     * @var string boss name
-     */
-    protected $bn;
-
-    /**
-     * @var string boss DNI
-     */
-    protected $bd;
-
-    /**
-     * @var string boss address
-     */
-    protected $ba;
-
-    /**
-     * @var string boss city
-     */
-    protected $bc;
-
-    /**
-     * @var string IBAN bussines
-     */
-    protected $ib;
-
-    /**
-     * @var string default locale useful in CLI
-     */
-    protected $locale;
-
-    /**
-     * AbstractReceiptInvoiceBuilderPdf constructor.
-     *
-     * @param string $pwt
-     * @param string $bn
-     * @param string $bd
-     * @param string $ba
-     * @param string $bc
-     * @param string $ib
-     * @param string $locale
-     */
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, string $pwt, string $bn, string $bd, string $ba, string $bc, string $ib, string $locale)
     {
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
@@ -88,28 +33,18 @@ abstract class AbstractReceiptInvoiceBuilderPdf
         $this->locale = $locale;
     }
 
-    /**
-     * @param float $val
-     *
-     * @return string
-     */
-    protected function floatStringFormat($val)
+    protected function floatStringFormat($val): string
     {
         return number_format($val, 2, ',', '.');
     }
 
-    /**
-     * @param float $val
-     *
-     * @return string
-     */
-    protected function floatMoneyFormat($val)
+    protected function floatMoneyFormat($val): string
     {
         return $this->floatStringFormat($val).' €';
     }
 
     /**
-     * Convert a hexa decimal color code to its RGB equivalent.
+     * Convert an hexadecimal color code to its RGB equivalent.
      *
      * @param string $hexStr         (hexadecimal color value)
      * @param bool   $returnAsString (if set true, returns the value separated by the separator character. Otherwise returns associative array)
@@ -117,21 +52,21 @@ abstract class AbstractReceiptInvoiceBuilderPdf
      *
      * @return array|string|bool (depending on second parameter. Returns False if invalid hex color value)
      */
-    protected function hex2RGBarray($hexStr, $returnAsString = false, $seperator = ',')
+    protected function hex2RGBarray(string $hexStr, bool $returnAsString = false, string $seperator = ',')
     {
         $hexStr = preg_replace('/[^0-9A-Fa-f]/', '', $hexStr); // Gets a proper hex string
         $rgbArray = [];
-        if (6 == strlen($hexStr)) { //If a proper hex code, convert using bitwise operation. No overhead... faster
+        if (6 === strlen($hexStr)) { // if a proper hex code, convert using bitwise operation. No overhead... faster
             $colorVal = hexdec($hexStr);
             $rgbArray[] = 0xFF & ($colorVal >> 0x10);
             $rgbArray[] = 0xFF & ($colorVal >> 0x8);
             $rgbArray[] = 0xFF & $colorVal;
-        } elseif (3 == strlen($hexStr)) { //if shorthand notation, need some string manipulations
-            $rgbArray[] = hexdec(str_repeat(substr($hexStr, 0, 1), 2));
-            $rgbArray[] = hexdec(str_repeat(substr($hexStr, 1, 1), 2));
-            $rgbArray[] = hexdec(str_repeat(substr($hexStr, 2, 1), 2));
+        } elseif (3 === strlen($hexStr)) { // if shorthand notation, need some string manipulations
+            $rgbArray[] = hexdec(str_repeat($hexStr[0], 2));
+            $rgbArray[] = hexdec(str_repeat($hexStr[1], 2));
+            $rgbArray[] = hexdec(str_repeat($hexStr[2], 2));
         } else {
-            return false; //Invalid hex color code
+            return false; // invalid hex color code
         }
 
         return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray;

@@ -8,34 +8,16 @@ use App\Enum\StudentPaymentEnum;
 use App\Service\SmartAssetsHelperService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use TCPDF;
 
-/**
- * Class ReceiptBuilderPdf.
- *
- * @category Service
- */
 class ReceiptBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    /**
-     * ReceiptBuilderPdf constructor.
-     *
-     * @param string $pwt    project web title
-     * @param string $bn     boss name
-     * @param string $bd     boss DNI
-     * @param string $ba     boss address
-     * @param string $bc     boss city
-     * @param string $ib     IBAN bussines
-     * @param string $locale default locale useful in CLI
-     */
     public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale)
     {
         parent::__construct($tcpdf, $sahs, $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale);
     }
 
-    /**
-     * @return \TCPDF
-     */
-    public function build(Receipt $receipt)
+    public function build(Receipt $receipt): TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);
@@ -143,13 +125,10 @@ class ReceiptBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 
         // payment method
         $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment_type').' '.strtoupper($this->ts->trans(StudentPaymentEnum::getReversedEnumArray()[$subject->getPayment()])), '', false, 'L', true);
-        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $subject->getPayment()) {
+        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $subject->getPayment()) {
             // SEPA direct debit
             $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment.account_number').' '.$subject->getBank()->getAccountNumber(), '', false, 'L', true);
-//        } elseif (StudentPaymentEnum::CASH == $subject->getPayment()) {
-            // cash
-//            $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment.cash'), '', false, 'L', true);
-        } elseif (StudentPaymentEnum::BANK_TRANSFER == $subject->getPayment()) {
+        } elseif (StudentPaymentEnum::BANK_TRANSFER === $subject->getPayment()) {
             // bank transfer
             $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment.bank_transfer').' '.$this->ib, '', false, 'L', true);
         }

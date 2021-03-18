@@ -5,38 +5,19 @@ namespace App\Pdf;
 use App\Entity\ClassGroup;
 use App\Entity\Student;
 use App\Service\SmartAssetsHelperService;
+use DateTimeImmutable;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use TCPDF;
 
-/**
- * Class ClassGroupBuilderPdf.
- *
- * @category Service
- */
 class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    /**
-     * ClassGroupBuilderPdf constructor.
-     *
-     * @param string $pwt    project web title
-     * @param string $bn     boss name
-     * @param string $bd     boss DNI
-     * @param string $ba     boss address
-     * @param string $bc     boss city
-     * @param string $ib     IBAN bussines
-     * @param string $locale default locale useful in CLI
-     */
     public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale)
     {
         parent::__construct($tcpdf, $sahs, $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale);
     }
 
-    /**
-     * @param Student[]|array $students
-     *
-     * @return \TCPDF
-     */
-    public function build(ClassGroup $classGroup, $students)
+    public function build(ClassGroup $classGroup, $students): TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);
@@ -73,7 +54,7 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $verticalTableGap = 10;
 
         // today
-        $today = new \DateTimeImmutable();
+        $today = new DateTimeImmutable();
 
         // invoice header
         $retainedYForGlobes = $pdf->GetY() - 4;
