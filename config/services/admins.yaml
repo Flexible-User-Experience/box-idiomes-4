@@ -140,9 +140,14 @@ services:
         arguments: [ ~, App\Entity\Bank, ~, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Bank", group: "Configuració", show_in_dashboard: false }
-    # Dummies
+    # Extra Helper (admins without a related entity, for extra features like file manager or calendar)
     admin.file_manager_dummy:
         class: App\Admin\FileDummyAdmin
         arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\FileManagerAdminController, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "File Manager", group: "Dummy", show_in_dashboard: false }
+    admin.extra_helper_manager_dummy:
+        class: App\Admin\ExtraHelperManagerAdmin
+        arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\ExtraHelperManagerAdminController, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "File Manager", group: "Dummy", show_in_dashboard: false }
