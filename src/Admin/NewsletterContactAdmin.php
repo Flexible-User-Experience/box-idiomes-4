@@ -5,6 +5,7 @@ namespace App\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\DoctrineORMAdminBundle\Filter\DateTimeFilter;
 use Sonata\Form\Type\DateTimePickerType;
 
 /**
@@ -40,7 +41,7 @@ class NewsletterContactAdmin extends AbstractBaseAdmin
         $datagridMapper
             ->add(
                 'createdAt',
-                'doctrine_orm_datetime',
+                DateTimeFilter::class,
                 [
                     'label' => 'backend.admin.date',
                     'field_type' => DateTimePickerType::class,

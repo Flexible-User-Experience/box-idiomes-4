@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -57,7 +58,7 @@ class PreRegisterAdmin extends AbstractBaseAdmin
         $datagridMapper
             ->add(
                 'createdAt',
-                'doctrine_orm_date',
+                DateFilter::class,
                 [
                     'label' => 'frontend.forms.preregister.date',
                     'field_type' => DatePickerType::class,

@@ -7,34 +7,16 @@ use App\Entity\Tariff;
 use App\Repository\TariffRepository;
 use Doctrine\ORM\NonUniqueResultException;
 
-/**
- * Class EventManager.
- *
- * @category Manager
- */
 class EventManager
 {
-    /**
-     * @var TariffRepository
-     */
-    private $tr;
+    private TariffRepository $tr;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * EventManager constructor.
-     */
     public function __construct(TariffRepository $tr)
     {
         $this->tr = $tr;
     }
 
-    /**
-     * @return Event|null
-     */
-    public function getFirstEventOf(Event $event)
+    public function getFirstEventOf(Event $event): ?Event
     {
         $iteratedEvent = null;
         if (!is_null($event->getPrevious())) {
@@ -47,10 +29,7 @@ class EventManager
         return $iteratedEvent;
     }
 
-    /**
-     * @return Event|null
-     */
-    public function getLastEventOf(Event $event)
+    public function getLastEventOf(Event $event): ?Event
     {
         $iteratedEvent = null;
         if (!is_null($event->getNext())) {
@@ -63,10 +42,7 @@ class EventManager
         return $iteratedEvent;
     }
 
-    /**
-     * @return int
-     */
-    public function getRelatedEventsAmountOf(Event $event)
+    public function getRelatedEventsAmountOf(Event $event): int
     {
         $amount = 0;
         $iteratedEvent = null;
@@ -81,10 +57,7 @@ class EventManager
         return $amount;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalRelatedEventsAmountOf(Event $event)
+    public function getTotalRelatedEventsAmountOf(Event $event): int
     {
         $amount = 0;
         if (!is_null($event->getPrevious())) {
@@ -102,15 +75,12 @@ class EventManager
         return $amount;
     }
 
-    /**
-     * @return array
-     */
-    public function getProgressBarPercentilesOf(Event $event)
+    public function getProgressBarPercentilesOf(Event $event): array
     {
         $progressBarPercentiles = [];
         $total = $this->getTotalRelatedEventsAmountOf($event);
         $involved = $this->getRelatedEventsAmountOf($event);
-        if (0 != $total) {
+        if (0 !== $total) {
             $progressBarPercentiles['last'] = round(($involved * 55) / $total, 0) + 15;
             $progressBarPercentiles['first'] = 85 - $progressBarPercentiles['last'];
         } else {
@@ -121,10 +91,7 @@ class EventManager
         return $progressBarPercentiles;
     }
 
-    /**
-     * @return array
-     */
-    public function getRangeChoices(Event $event)
+    public function getRangeChoices(Event $event): array
     {
         $result = [];
         if (!is_null($event->getNext())) {
@@ -138,10 +105,7 @@ class EventManager
         return array_flip($result);
     }
 
-    /**
-     * @return array
-     */
-    public function getInclusiveRangeChoices(Event $event)
+    public function getInclusiveRangeChoices(Event $event): array
     {
         $result = [];
         $result[$event->getId()] = $event->getBegin()->format('d/m/Y H:i');
@@ -161,12 +125,12 @@ class EventManager
      *
      * @return bool true if there is at least one event with only one student in class, false elsewhere because is a shared private class
      */
-    public function decidePrivateLessonsTariff($events)
+    public function decidePrivateLessonsTariff($events): bool
     {
         $isPrivateLesson = false;
         /** @var Event $event */
         foreach ($events as $event) {
-            if (1 == count($event->getStudents())) {
+            if (1 === count($event->getStudents())) {
                 $isPrivateLesson = true;
 
                 break;
@@ -183,7 +147,7 @@ class EventManager
      *
      * @throws NonUniqueResultException
      */
-    public function getCurrentPrivateLessonsTariffForEvents($events)
+    public function getCurrentPrivateLessonsTariffForEvents($events): Tariff
     {
         return $this->decidePrivateLessonsTariff($events) ? $this->tr->findCurrentPrivateLessonTariff() : $this->tr->findCurrentSharedPrivateLessonTariff();
     }

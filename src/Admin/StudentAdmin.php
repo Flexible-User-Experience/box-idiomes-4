@@ -4,17 +4,21 @@ namespace App\Admin;
 
 use App\Entity\BankCreditorSepa;
 use App\Entity\City;
+use App\Entity\ClassGroup;
 use App\Entity\Invoice;
 use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\Tariff;
+use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,11 +26,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-/**
- * Class StudentAdmin.
- *
- * @category Admin
- */
 class StudentAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Student';
@@ -36,9 +35,6 @@ class StudentAdmin extends AbstractBaseAdmin
         '_sort_order' => 'asc',
     ];
 
-    /**
-     * Configure route collection.
-     */
     protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
@@ -367,8 +363,34 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'events.group',
+                null,
+                [
+                    'label' => 'backend.admin.event.group',
+                ],
+                EntityType::class,
+                [
+                    'class' => ClassGroup::class,
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.class_group_repository')->getEnabledSortedByCodeQB(),
+                ]
+            )
+            ->add(
+                'age',
+                CallbackFilter::class,
+                [
+                    'label' => 'backend.admin.student.age',
+                    'callback' => [$this, 'buildDatagridAgesFilter'],
+                ],
+                ChoiceType::class,
+                [
+                    'choices' => StudentAgesEnum::getReversedEnumTranslatedArray(),
+                    'expanded' => false,
+                    'multiple' => false,
+                ]
+            )
+            ->add(
                 'birthDate',
-                'doctrine_orm_date',
+                DateFilter::class,
                 [
                     'label' => 'backend.admin.student.birthDate',
                     'field_type' => DatePickerType::class,
@@ -382,7 +404,7 @@ class StudentAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'dischargeDate',
-                'doctrine_orm_date',
+                DateFilter::class,
                 [
                     'label' => 'backend.admin.student.dischargeDate',
                     'field_type' => DatePickerType::class,
@@ -444,6 +466,20 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
         ;
+    }
+
+    public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value)
+    {
+        if ($value) {
+            $queryBuilder
+                ->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age')
+                ->setParameter('age', $value['value'])
+            ;
+
+            return true;
+        }
+
+        return false;
     }
 
     protected function configureListFields(ListMapper $listMapper): void

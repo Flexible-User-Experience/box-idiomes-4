@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\DoctrineORMAdminBundle\Filter\DateTimeFilter;
 use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -147,7 +148,7 @@ class EventAdmin extends AbstractBaseAdmin
         $datagridMapper
             ->add(
                 'begin',
-                'doctrine_orm_datetime',
+                DateTimeFilter::class,
                 [
                     'label' => 'backend.admin.event.begin',
                     'field_type' => DateTimePickerType::class,
@@ -161,7 +162,7 @@ class EventAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'end',
-                'doctrine_orm_datetime',
+                DateTimeFilter::class,
                 [
                     'label' => 'backend.admin.event.end',
                     'field_type' => DateTimePickerType::class,

@@ -17,5 +17,7 @@ doctrine:
                 alias:     App
         dql:
             datetime_functions:
-                year:  DoctrineExtensions\Query\Mysql\Year
-                month: DoctrineExtensions\Query\Mysql\Month
+                timestampdiff: DoctrineExtensions\Query\Mysql\TimestampDiff
+                year:          DoctrineExtensions\Query\Mysql\Year
+                month:         DoctrineExtensions\Query\Mysql\Month
+                now:           DoctrineExtensions\Query\Mysql\Now

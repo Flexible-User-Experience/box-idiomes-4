@@ -1,4 +1,6 @@
 {
+    "name": "flux/box-idiomes",
+    "description": "A Symfony 4.4 LTS project to manage Box Idiomes enterprise",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -91,9 +93,9 @@
     },
     "scripts": {
         "auto-scripts": {
+            "local-php-security-checker": "script",
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "local-php-security-checker": "script"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

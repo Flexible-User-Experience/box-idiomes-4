@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -91,7 +92,7 @@ class StudentAbsenceAdmin extends AbstractBaseAdmin
         $datagridMapper
             ->add(
                 'day',
-                'doctrine_orm_date',
+                DateFilter::class,
                 [
                     'label' => 'backend.admin.teacher_absence.day',
                     'field_type' => DatePickerType::class,
