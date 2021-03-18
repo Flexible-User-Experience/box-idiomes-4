@@ -20,12 +20,13 @@ class ExtraHelperManagerAdminController extends BaseAdminController
                 if (count($events) > 0) {
                     $pdf = $eclb->build($events);
                     $this->addFlash('success', count($events).' found.');
-                } else {
-                    $this->addFlash('warning', $ts->trans('backend.admin.calendar.export.error.no_items_found', [
-                        '%start%' => $startDate->format('d/m/Y'),
-                        '%end%' => $endDate->format('d/m/Y'),
-                    ]));
+
+                    return new Response($pdf->Output('box_idiomes_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
                 }
+                $this->addFlash('warning', $ts->trans('backend.admin.calendar.export.error.no_items_found', [
+                    '%start%' => $startDate->format('d/m/Y'),
+                    '%end%' => $endDate->format('d/m/Y'),
+                ]));
             } else {
                 $this->addFlash('danger', $ts->trans('backend.admin.calendar.export.error.end_date_period'));
             }
