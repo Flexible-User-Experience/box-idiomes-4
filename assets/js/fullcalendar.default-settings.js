@@ -2,8 +2,8 @@ import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import listPlugin from '@fullcalendar/list';
-import caLocale from '@fullcalendar/core/locales/ca';
+import listPlugin from "@fullcalendar/list";
+import caLocale from "@fullcalendar/core/locales/ca";
 
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
