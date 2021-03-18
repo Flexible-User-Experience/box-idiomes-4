@@ -10,25 +10,14 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class EventRepository.
- *
- * @category Repository
- */
 class EventRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Event::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate)
+    public function getFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate): QueryBuilder
     {
         return $this->createQueryBuilder('e')
             ->where('e.begin BETWEEN :startDate AND :endDate')
@@ -36,52 +25,34 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('endDate', $endDate->format('Y-m-d H:i:s'));
     }
 
-    /**
-     * @return Query
-     */
-    public function getFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate)
+    public function getFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate): Query
     {
         return $this->getFilteredByBeginAndEndQB($startDate, $endDate)->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function getFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate)
+    public function getFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate): array
     {
         return $this->getFilteredByBeginAndEndQ($startDate, $endDate)->getResult();
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getEnabledFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate)
+    public function getEnabledFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate): QueryBuilder
     {
         return $this->getFilteredByBeginAndEndQB($startDate, $endDate)
             ->andWhere('e.enabled = :enabled')
             ->setParameter('enabled', true);
     }
 
-    /**
-     * @return Query
-     */
-    public function getEnabledFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate)
+    public function getEnabledFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate): Query
     {
         return $this->getEnabledFilteredByBeginAndEndQB($startDate, $endDate)->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function getEnabledFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate)
+    public function getEnabledFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate): array
     {
         return $this->getEnabledFilteredByBeginAndEndQ($startDate, $endDate)->getResult();
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getEnabledFilteredByBeginEndAndStudentQB(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student)
+    public function getEnabledFilteredByBeginEndAndStudentQB(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student): QueryBuilder
     {
         return $this->getEnabledFilteredByBeginAndEndQB($startDate, $endDate)
             ->join('e.students', 's')
@@ -90,29 +61,17 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
 
-    /**
-     * @return Query
-     */
-    public function getEnabledFilteredByBeginEndAndStudentQ(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student)
+    public function getEnabledFilteredByBeginEndAndStudentQ(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student): Query
     {
         return $this->getEnabledFilteredByBeginEndAndStudentQB($startDate, $endDate, $student)->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function getEnabledFilteredByBeginEndAndStudent(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student)
+    public function getEnabledFilteredByBeginEndAndStudent(DateTimeInterface $startDate, DateTimeInterface $endDate, Student $student): array
     {
         return $this->getEnabledFilteredByBeginEndAndStudentQ($startDate, $endDate, $student)->getResult();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function getPrivateLessonsByStudentYearAndMonthQB(Student $student, $year, $month)
+    public function getPrivateLessonsByStudentYearAndMonthQB(Student $student, $year, $month): QueryBuilder
     {
         return $this->createQueryBuilder('e')
             ->join('e.students', 's')
@@ -129,36 +88,37 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('enabled', true);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function getPrivateLessonsByStudentYearAndMonthQ(Student $student, $year, $month)
+    public function getPrivateLessonsByStudentYearAndMonthQ(Student $student, $year, $month): Query
     {
         return $this->getPrivateLessonsByStudentYearAndMonthQB($student, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return array
-     */
-    public function getPrivateLessonsByStudentYearAndMonth(Student $student, $year, $month)
+    public function getPrivateLessonsByStudentYearAndMonth(Student $student, $year, $month): array
     {
         return $this->getPrivateLessonsByStudentYearAndMonthQ($student, $year, $month)->getResult();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return float
-     */
-    public function getPrivateLessonsAmountByStudentYearAndMonth(Student $student, $year, $month)
+    public function getPrivateLessonsAmountByStudentYearAndMonth(Student $student, $year, $month): int
     {
-        return floatval(count($this->getPrivateLessonsByStudentYearAndMonth($student, $year, $month)));
+        return count($this->getPrivateLessonsByStudentYearAndMonth($student, $year, $month));
+    }
+
+    public function getEnabledFilteredByDateQB(DateTimeInterface $date): QueryBuilder
+    {
+        return $this->createQueryBuilder('e')
+            ->where('DATE(e.begin) = :searchedDate')
+            ->andWhere('e.enabled = :enabled')
+            ->setParameter('searchedDate', $date->format('Y-m-d'))
+            ->setParameter('enabled', true);
+    }
+
+    public function getEnabledFilteredByDateQ(DateTimeInterface $date): Query
+    {
+        return $this->getEnabledFilteredByDateQB($date)->getQuery();
+    }
+
+    public function getEnabledFilteredByDate(DateTimeInterface $date): array
+    {
+        return $this->getEnabledFilteredByDateQ($date)->getResult();
     }
 }

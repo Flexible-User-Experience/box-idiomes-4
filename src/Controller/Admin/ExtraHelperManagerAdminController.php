@@ -19,7 +19,6 @@ class ExtraHelperManagerAdminController extends BaseAdminController
                 $exportCalendarList = $ems->getCalendarEventsListFromDates($startDate, $endDate);
                 if ($exportCalendarList->hasDays()) {
                     $pdf = $eclb->build($exportCalendarList);
-                    $this->addFlash('success', $exportCalendarList->getDaysAmount().' found.');
 
                     return new Response($pdf->Output('box_idiomes_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
                 }

@@ -20,4 +20,5 @@ doctrine:
                 timestampdiff: DoctrineExtensions\Query\Mysql\TimestampDiff
                 year:          DoctrineExtensions\Query\Mysql\Year
                 month:         DoctrineExtensions\Query\Mysql\Month
+                date:           DoctrineExtensions\Query\Mysql\Date
                 now:           DoctrineExtensions\Query\Mysql\Now

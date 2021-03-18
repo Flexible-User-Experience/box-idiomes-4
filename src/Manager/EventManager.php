@@ -8,6 +8,7 @@ use App\Model\ExportCalendarToList;
 use App\Model\ExportCalendarToListDayItem;
 use App\Repository\EventRepository;
 use App\Repository\TariffRepository;
+use DateInterval;
 use DateTimeInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
@@ -162,12 +163,14 @@ class EventManager
     {
         $calendarEventsList = new ExportCalendarToList();
         do {
-            $events = $this->er->getEnabledFilteredByBeginAndEnd($start, $start);
-            $calendarEventsListDayItem = new ExportCalendarToListDayItem('weekday', $start);
+            $iteradedDate = clone $start;
+            $events = $this->er->getEnabledFilteredByDate($iteradedDate);
+            $calendarEventsListDayItem = new ExportCalendarToListDayItem($iteradedDate->format('l'), $iteradedDate);
             $calendarEventsListDayItem->setEvents($events);
             $calendarEventsList->addDay($calendarEventsListDayItem);
-            $start->addOneDay();
-        } while ($start->format('Y-m-d') <= $end->format('Y-m-d'));
+            // iterate $start date one day
+            $start->add(new DateInterval('P1D'));
+        } while ($start->format('Y-m-d') < $end->format('Y-m-d'));
 
         return $calendarEventsList;
     }
