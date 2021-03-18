@@ -4,56 +4,21 @@ namespace App\Manager;
 
 use App\Repository\EventRepository;
 use App\Repository\StudentRepository;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Abstract class AbstractGenerateReceiptInvoiceFormManager.
- *
- * @category Manager
- */
 abstract class AbstractGenerateReceiptInvoiceFormManager
 {
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    protected LoggerInterface $logger;
+    protected KernelInterface $kernel;
+    protected EntityManagerInterface $em;
+    protected TranslatorInterface $ts;
+    protected StudentRepository $sr;
+    protected EventRepository $er;
 
-    /**
-     * @var KernelInterface
-     */
-    protected $kernel;
-
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $ts;
-
-    /**
-     * @var StudentRepository
-     */
-    protected $sr;
-
-    /**
-     * @var EventRepository
-     */
-    protected $er;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * AbstractGenerateReceiptInvoiceFormManager constructor.
-     */
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManager $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er)
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er)
     {
         $this->logger = $logger;
         $this->kernel = $kernel;
@@ -63,16 +28,10 @@ abstract class AbstractGenerateReceiptInvoiceFormManager
         $this->er = $er;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return float
-     */
-    protected function parseStringToFloat($value)
+    protected function parseStringToFloat($value): float
     {
-        $stringParsedValue = str_replace('.', '', $value);
-        $stringParsedValue = str_replace(',', '.', $stringParsedValue);
+        $stringParsedValue = str_replace(['.', ','], ['', '.'], $value);
 
-        return floatval($stringParsedValue);
+        return (float) $stringParsedValue;
     }
 }

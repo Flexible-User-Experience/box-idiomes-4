@@ -11,45 +11,23 @@ use App\Form\Model\GenerateInvoiceModel;
 use App\Repository\EventRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\StudentRepository;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class GenerateInvoiceFormManager.
- *
- * @category Manager
- */
 class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManager
 {
-    /**
-     * @var InvoiceRepository
-     */
-    private $ir;
+    private InvoiceRepository $ir;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * GenerateInvoiceFormManager constructor.
-     */
     public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManager $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, InvoiceRepository $ir)
     {
         parent::__construct($logger, $kernel, $em, $ts, $sr, $er);
         $this->ir = $ir;
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return GenerateInvoiceModel
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function buildFullModelForm($year, $month)
+    public function buildFullModelForm($year, $month): GenerateInvoiceModel
     {
         $generateInvoice = new GenerateInvoiceModel();
         $generateInvoice
@@ -99,26 +77,21 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
         return $generateInvoice;
     }
 
-    /**
-     * @param array $requestArray
-     *
-     * @return GenerateInvoiceModel
-     */
-    public function transformRequestArrayToModel($requestArray)
+    public function transformRequestArrayToModel($requestArray): GenerateInvoiceModel
     {
         $generateInvoice = new GenerateInvoiceModel();
         if (array_key_exists('year', $requestArray)) {
-            $generateInvoice->setYear(intval($requestArray['year']));
+            $generateInvoice->setYear((int) $requestArray['year']);
         }
         if (array_key_exists('month', $requestArray)) {
-            $generateInvoice->setMonth(intval($requestArray['month']));
+            $generateInvoice->setMonth((int) $requestArray['month']);
         }
         if (array_key_exists('items', $requestArray)) {
             $items = $requestArray['items'];
             /** @var array $item */
             foreach ($items as $item) {
                 if (array_key_exists('units', $item) && array_key_exists('unitPrice', $item) && array_key_exists('discount', $item) && array_key_exists('studentId', $item)) {
-                    $studentId = intval($item['studentId']);
+                    $studentId = (int) $item['studentId'];
                     /** @var Student $student */
                     $student = $this->sr->find($studentId);
                     if ($student) {
@@ -141,13 +114,7 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
         return $generateInvoice;
     }
 
-    /**
-     * @return int
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function persistFullModelForm(GenerateInvoiceModel $generateInvoiceModel)
+    public function persistFullModelForm(GenerateInvoiceModel $generateInvoiceModel): int
     {
         $recordsParsed = 0;
         /** @var GenerateInvoiceItemModel $generateInvoiceItemModel */
@@ -164,7 +131,7 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
                         $invoiceLine = $previousInvoice->getLines()[0];
                         $invoiceLine
                             ->setStudent($student)
-                            ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.line', ['%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()], 'messages'))
+                            ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.group_lessons_line', ['%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()], 'messages'))
                             ->setUnits($generateInvoiceItemModel->getUnits())
                             ->setPriceUnit($generateInvoiceItemModel->getUnitPrice())
                             ->setDiscount($generateInvoiceItemModel->getDiscount())
@@ -183,7 +150,7 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $invoiceLine = new InvoiceLine();
                     $invoiceLine
                         ->setStudent($student)
-                        ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.line', ['%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()], 'messages'))
+                        ->setDescription($this->ts->trans('backend.admin.invoiceLine.generator.group_lessons_line', ['%month%' => InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$generateInvoiceModel->getMonth()], '%year%' => $generateInvoiceModel->getYear()], 'messages'))
                         ->setUnits($generateInvoiceItemModel->getUnits())
                         ->setPriceUnit($generateInvoiceItemModel->getUnitPrice())
                         ->setDiscount($generateInvoiceItemModel->getDiscount())
@@ -192,8 +159,8 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $invoice = new Invoice();
                     $invoice
                         ->setStudent($student)
-                        ->setPerson($student->getParent() ? $student->getParent() : null)
-                        ->setDate(new \DateTime())
+                        ->setPerson($student->getParent() ?: null)
+                        ->setDate(new DateTime())
                         ->setIsPayed(false)
                         ->setIsSepaXmlGenerated(false)
                         ->setIsSended(false)
