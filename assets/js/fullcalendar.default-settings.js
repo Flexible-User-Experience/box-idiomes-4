@@ -2,17 +2,21 @@ import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import listPlugin from '@fullcalendar/list';
-import caLocale from '@fullcalendar/core/locales/ca';
+import listPlugin from "@fullcalendar/list";
+import caLocale from "@fullcalendar/core/locales/ca";
+import Routing from '../../public/bundles/fosjsrouting/js/router.min';
 
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
 
+const routes = require('../../public/js/fos_js_routes.json');
+Routing.setRoutingData(routes);
+
 document.addEventListener('DOMContentLoaded', () => {
-    var calendarEl = document.getElementById('calendar-holder');
-    var calendar = new Calendar(calendarEl, {
+    let calendarEl = document.getElementById('calendar-holder');
+    let calendar = new Calendar(calendarEl, {
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
         timeZone: 'UTC',
         header: {
@@ -65,7 +69,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('error!', data.responseText);
                 }
             }
-        ]
+        ],
+        datesRender: function (calendar) {
+            if (calendar.hasOwnProperty('view') && calendar.view.hasOwnProperty('props') && calendar.view.props.hasOwnProperty('dateProfile') && calendar.view.props.dateProfile.hasOwnProperty('currentRangeUnit') && calendar.view.props.dateProfile.hasOwnProperty('currentRange') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('start') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('end') && calendar.view.props.dateProfile.currentRange.start instanceof Date && calendar.view.props.dateProfile.currentRange.end instanceof Date) {
+                let exportCalendarPdfListAnchorNode = jQuery('#export_calendar_pdf_list_anchor');
+                let start = calendar.view.props.dateProfile.currentRange.start;
+                let end = calendar.view.props.dateProfile.currentRange.end;
+                let route = Routing.generate('admin_app_filedummy_exportCalendarPdfList', {start: start.getFullYear() + '-' + twoDigitsPadWithZeros(start.getMonth() + 1) + '-' + twoDigitsPadWithZeros(start.getDate()), end: end.getFullYear() + '-' + twoDigitsPadWithZeros(end.getMonth() + 1) + '-' + twoDigitsPadWithZeros(end.getDate())});
+                exportCalendarPdfListAnchorNode.attr('href', route);
+            }
+        }
     });
     calendar.render();
 });
+
+function twoDigitsPadWithZeros(number) {
+    number = number + '';
+
+    return number.length >= 2 ? number : new Array(2).join('0') + number;
+}

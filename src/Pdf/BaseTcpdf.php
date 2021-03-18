@@ -3,20 +3,21 @@
 namespace App\Pdf;
 
 use App\Service\SmartAssetsHelperService;
+use TCPDF;
 
-class BaseTcpdf extends \TCPDF
+class BaseTcpdf extends TCPDF
 {
-    const PDF_WIDTH = 210;
-    const PDF_MARGIN_LEFT = 30;
-    const PDF_MARGIN_RIGHT = 30;
-    const PDF_MARGIN_TOP = 70;
-    const PDF_MARGIN_BOTTOM = 25;
-    const PDF_A5_MARGIN_LEFT = 25;
-    const PDF_A5_MARGIN_RIGHT = 25;
-    const PDF_A5_MARGIN_TOP = 25;
-    const PDF_A5_MARGIN_BOTTOM = 25;
-    const MARGIN_VERTICAL_SMALL = 3;
-    const MARGIN_VERTICAL_BIG = 8;
+    public const PDF_WIDTH = 210;
+    public const PDF_MARGIN_LEFT = 30;
+    public const PDF_MARGIN_RIGHT = 30;
+    public const PDF_MARGIN_TOP = 70;
+    public const PDF_MARGIN_BOTTOM = 25;
+    public const PDF_A5_MARGIN_LEFT = 25;
+    public const PDF_A5_MARGIN_RIGHT = 25;
+    public const PDF_A5_MARGIN_TOP = 25;
+    public const PDF_A5_MARGIN_BOTTOM = 25;
+    public const MARGIN_VERTICAL_SMALL = 3;
+    public const MARGIN_VERTICAL_BIG = 8;
 
     private SmartAssetsHelperService $sahs;
     private string $amd;
@@ -32,7 +33,7 @@ class BaseTcpdf extends \TCPDF
         $this->bpn = $this->sahs->getBpn();
     }
 
-    public function header()
+    public function header(): void
     {
         // logo
         $this->Image($this->sahs->getAbsoluteAssetFilePath('/build/img/logo-pdf.png'), 75, 20, 60);
@@ -40,7 +41,7 @@ class BaseTcpdf extends \TCPDF
         $this->setFontStyle(null, 'I', 8);
     }
 
-    public function footer()
+    public function footer(): void
     {
         // logo
         $this->SetXY(self::PDF_MARGIN_LEFT, 297 - self::PDF_MARGIN_BOTTOM + self::MARGIN_VERTICAL_BIG);
@@ -51,7 +52,7 @@ class BaseTcpdf extends \TCPDF
         $this->Write(0, $this->bpn, '', false, 'C', false);
     }
 
-    public function setFontStyle($font = 'dejavusans', $style = '', $size = 12)
+    public function setFontStyle(?string $font = 'dejavusans', string $style = '', int $size = 12): void
     {
         // dejavusans is a UTF-8 Unicode font, if you only need to
         // print standard ASCII chars, you can use core fonts like
@@ -59,7 +60,7 @@ class BaseTcpdf extends \TCPDF
         $this->SetFont($font, $style, $size, '', true);
     }
 
-    public function drawInvoiceLineSeparator($y)
+    public function drawInvoiceLineSeparator($y): void
     {
         $this->Line(
             self::PDF_MARGIN_LEFT,
@@ -76,7 +77,7 @@ class BaseTcpdf extends \TCPDF
         );
     }
 
-    public function drawSvg($file, $x = '', $y = '', $w = 0, $h = 0)
+    public function drawSvg($file, $x = '', $y = '', $w = 0, $h = 0): void
     {
         $this->ImageSVG($file, $x, $y, $w, $h);
     }

@@ -4,54 +4,29 @@ namespace App\Model;
 
 /**
  * Dummy class File to use as a faked entity. (Only for FileManager integration backend pourpose).
- *
- * @category Entity
  */
 class FileDummy
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * FileDummy constructor.
-     *
-     * @param $name
-     */
     public function __construct($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return FileDummy
-     */
-    public function setName($name)
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name ? $this->getName() : '---';
     }

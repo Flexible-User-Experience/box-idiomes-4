@@ -6,45 +6,17 @@ use App\Entity\Student;
 use App\Service\SmartAssetsHelperService;
 use IntlDateFormatter;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use TCPDF;
 
-/**
- * Class StudentImageRightsBuilderPdf.
- *
- * @category Service
- */
 class StudentImageRightsBuilderPdf
 {
-    /**
-     * @var TCPDFController
-     */
-    private $tcpdf;
+    private TCPDFController $tcpdf;
+    private SmartAssetsHelperService $sahs;
+    private TranslatorInterface $ts;
+    private string $pwt;
 
-    /**
-     * @var SmartAssetsHelperService
-     */
-    private $sahs;
-
-    /**
-     * @var Translator
-     */
-    private $ts;
-
-    /**
-     * @var string project web title
-     */
-    private $pwt;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * StudentImageRightsBuilderPdf constructor.
-     *
-     * @param string $pwt
-     */
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, $pwt)
     {
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
@@ -52,12 +24,7 @@ class StudentImageRightsBuilderPdf
         $this->pwt = $pwt;
     }
 
-    /**
-     * @return \TCPDF
-     *
-     * @throws \Exception
-     */
-    public function build(Student $student)
+    public function build(Student $student): TCPDF
     {
         /** @var BaseTcpdf $pdf */
         $pdf = $this->tcpdf->create($this->sahs);

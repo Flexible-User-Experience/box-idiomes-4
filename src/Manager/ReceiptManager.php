@@ -6,46 +6,29 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Entity\Receipt;
 use App\Repository\InvoiceRepository;
+use DateTime;
 
-/**
- * Class ReceiptManager.
- *
- * @category Manager
- */
 class ReceiptManager
 {
-    /**
-     * @var InvoiceRepository
-     */
-    private $ir;
+    private InvoiceRepository $ir;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * ReceiptManager constructor.
-     */
     public function __construct(InvoiceRepository $ir)
     {
         $this->ir = $ir;
     }
 
-    /**
-     * @return Invoice
-     */
-    public function createInvoiceFromReceipt(Receipt $receipt)
+    public function createInvoiceFromReceipt(Receipt $receipt): Invoice
     {
         $invoice = new Invoice();
         $invoice
             ->setReceipt($receipt)
             ->setStudent($receipt->getStudent())
             ->setPerson($receipt->getPerson())
-            ->setDate(new \DateTime())
+            ->setDate(new DateTime())
             ->setIrpfPercentage(Invoice::TAX_IRPF)
             ->setTaxPercentage(Invoice::TAX_IVA)
             ->setIsPayed($receipt->getIsPayed())
-            ->setPaymentDate($receipt->getPaymentDate() ? $receipt->getPaymentDate() : null)
+            ->setPaymentDate($receipt->getPaymentDate() ?: null)
             ->setDiscountApplied($receipt->isDiscountApplied())
             ->setMonth($receipt->getMonth())
             ->setYear($receipt->getYear())
@@ -72,10 +55,7 @@ class ReceiptManager
         return $invoice;
     }
 
-    /**
-     * @return bool
-     */
-    public function isReceiptInvoiced(Receipt $receipt)
+    public function isReceiptInvoiced(Receipt $receipt): bool
     {
         $searchedInvoice = $this->ir->findOneBy(
             [

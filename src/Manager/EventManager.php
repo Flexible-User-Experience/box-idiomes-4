@@ -4,15 +4,22 @@ namespace App\Manager;
 
 use App\Entity\Event;
 use App\Entity\Tariff;
+use App\Model\ExportCalendarToList;
+use App\Model\ExportCalendarToListDayItem;
+use App\Repository\EventRepository;
 use App\Repository\TariffRepository;
+use DateInterval;
+use DateTimeInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
 class EventManager
 {
+    private EventRepository $er;
     private TariffRepository $tr;
 
-    public function __construct(TariffRepository $tr)
+    public function __construct(EventRepository $er, TariffRepository $tr)
     {
+        $this->er = $er;
         $this->tr = $tr;
     }
 
@@ -81,7 +88,7 @@ class EventManager
         $total = $this->getTotalRelatedEventsAmountOf($event);
         $involved = $this->getRelatedEventsAmountOf($event);
         if (0 !== $total) {
-            $progressBarPercentiles['last'] = round(($involved * 55) / $total, 0) + 15;
+            $progressBarPercentiles['last'] = round(($involved * 55) / $total) + 15;
             $progressBarPercentiles['first'] = 85 - $progressBarPercentiles['last'];
         } else {
             $progressBarPercentiles['last'] = 15;
@@ -125,7 +132,7 @@ class EventManager
      *
      * @return bool true if there is at least one event with only one student in class, false elsewhere because is a shared private class
      */
-    public function decidePrivateLessonsTariff($events): bool
+    public function decidePrivateLessonsTariff(array $events): bool
     {
         $isPrivateLesson = false;
         /** @var Event $event */
@@ -147,8 +154,24 @@ class EventManager
      *
      * @throws NonUniqueResultException
      */
-    public function getCurrentPrivateLessonsTariffForEvents($events): Tariff
+    public function getCurrentPrivateLessonsTariffForEvents(array $events): Tariff
     {
         return $this->decidePrivateLessonsTariff($events) ? $this->tr->findCurrentPrivateLessonTariff() : $this->tr->findCurrentSharedPrivateLessonTariff();
+    }
+
+    public function getCalendarEventsListFromDates(DateTimeInterface $start, DateTimeInterface $end): ExportCalendarToList
+    {
+        $calendarEventsList = new ExportCalendarToList();
+        do {
+            $iteradedDate = clone $start;
+            $events = $this->er->getEnabledFilteredByDate($iteradedDate);
+            $calendarEventsListDayItem = new ExportCalendarToListDayItem($iteradedDate->format('l'), $iteradedDate);
+            $calendarEventsListDayItem->setEvents($events);
+            $calendarEventsList->addDay($calendarEventsListDayItem);
+            // iterate $start date one day
+            $start->add(new DateInterval('P1D'));
+        } while ($start->format('Y-m-d') < $end->format('Y-m-d'));
+
+        return $calendarEventsList;
     }
 }

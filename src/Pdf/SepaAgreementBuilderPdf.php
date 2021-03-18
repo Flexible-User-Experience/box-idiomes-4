@@ -5,51 +5,18 @@ namespace App\Pdf;
 use App\Entity\Student;
 use App\Service\SmartAssetsHelperService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use TCPDF;
 
-/**
- * Class SepaAgreementBuilderPdf.
- *
- * @category Service
- */
 class SepaAgreementBuilderPdf
 {
-    /**
-     * @var TCPDFController
-     */
-    private $tcpdf;
+    private TCPDFController $tcpdf;
+    private SmartAssetsHelperService $sahs;
+    private TranslatorInterface $ts;
+    private string $pwt;
+    private string $bn;
 
-    /**
-     * @var SmartAssetsHelperService
-     */
-    private $sahs;
-
-    /**
-     * @var Translator
-     */
-    private $ts;
-
-    /**
-     * @var string project web title
-     */
-    private $pwt;
-
-    /**
-     * @var string boss name
-     */
-    private $bn;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * SepaAgreementBuilderPdf constructor.
-     *
-     * @param string $pwt
-     * @param string $bn
-     */
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, string $pwt, string $bn)
     {
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
@@ -58,10 +25,7 @@ class SepaAgreementBuilderPdf
         $this->bn = $bn;
     }
 
-    /**
-     * @return \TCPDF
-     */
-    public function build(Student $student)
+    public function build(Student $student): TCPDF
     {
         /** @var BaseTcpdf $pdf */
         $pdf = $this->tcpdf->create($this->sahs);

@@ -21,30 +21,11 @@ use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class GenerateReceiptFormManager.
- *
- * @category Manager
- */
 class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManager
 {
-    /**
-     * @var ReceiptRepository
-     */
-    private $rr;
+    private ReceiptRepository $rr;
+    private EventManager $eem;
 
-    /**
-     * @var EventManager
-     */
-    private $eem;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * GenerateReceiptFormManager constructor.
-     */
     public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManager $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem)
     {
         parent::__construct($logger, $kernel, $em, $ts, $sr, $er);
@@ -112,10 +93,10 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         // private lessons (in previous month period)
         $oldYear = $year;
         $oldMonth = $month;
-        $month = $month - 1;
-        if (0 == $month) {
+        --$month;
+        if (0 === $month) {
             $month = 12;
-            $year = $year - 1;
+            --$year;
         }
         $studentsInPrivateLessons = $this->sr->getPrivateLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariff($year, $month);
         /** @var Student $student */
@@ -139,7 +120,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 $receipt
                     ->setDate(new \DateTime())
                     ->setStudent($student)
-                    ->setPerson($student->getParent() ? $student->getParent() : null)
+                    ->setPerson($student->getParent() ?: null)
                     ->setIsPayed(false)
                     ->setIsSepaXmlGenerated(false)
                     ->setIsForPrivateLessons(true)
@@ -284,10 +265,10 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         // private lessons (in previous month period)
         $oldYear = $year;
         $oldMonth = $month;
-        $month = $month - 1;
-        if (0 == $month) {
+        --$month;
+        if (0 === $month) {
             $month = 12;
-            $year = $year - 1;
+            --$year;
         }
         $studentsInPrivateLessons = $this->sr->getPrivateLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariff($year, $month);
         /** @var Student $student */
@@ -319,7 +300,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 $generateReceiptItem
                     ->setStudentId($student->getId())
                     ->setStudentName($student->getFullCanonicalName())
-                    ->setUnits(floatval(count($privateLessons)))
+                    ->setUnits((float) count($privateLessons))
                     ->setUnitPrice($this->eem->getCurrentPrivateLessonsTariffForEvents($privateLessons)->getPrice())
                     ->setDiscount(0)
                     ->setIsReadyToGenerate(true)
@@ -344,17 +325,17 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
     {
         $generateReceipt = new GenerateReceiptModel();
         if (array_key_exists('year', $requestArray)) {
-            $generateReceipt->setYear(intval($requestArray['year']));
+            $generateReceipt->setYear((int) $requestArray['year']);
         }
         if (array_key_exists('month', $requestArray)) {
-            $generateReceipt->setMonth(intval($requestArray['month']));
+            $generateReceipt->setMonth((int) $requestArray['month']);
         }
         if (array_key_exists('items', $requestArray)) {
             $items = $requestArray['items'];
             /** @var array $item */
             foreach ($items as $item) {
                 if (array_key_exists('units', $item) && array_key_exists('unitPrice', $item) && array_key_exists('discount', $item) && array_key_exists('studentId', $item)) {
-                    $studentId = intval($item['studentId']);
+                    $studentId = (int) $item['studentId'];
                     /** @var Student $student */
                     $student = $this->sr->find($studentId);
                     if ($student) {
@@ -403,9 +384,9 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     // private lessons
                     $month = $generateReceiptModel->getMonth() - 1;
                     $year = $generateReceiptModel->getYear();
-                    if (0 == $month) {
+                    if (0 === $month) {
                         $month = 12;
-                        $year = $year - 1;
+                        --$year;
                     }
                     /** @var Receipt $previousReceipt */
                     $previousReceipt = $this->rr->findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNull($generateReceiptItemModel->getStudentId(), $generateReceiptModel->getYear(), $generateReceiptModel->getMonth());
@@ -456,7 +437,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $receipt
                         ->setDate(new \DateTime())
                         ->setStudent($student)
-                        ->setPerson($student->getParent() ? $student->getParent() : null)
+                        ->setPerson($student->getParent() ?: null)
                         ->setIsPayed(false)
                         ->setIsSepaXmlGenerated(false)
                         ->setIsSended(false)

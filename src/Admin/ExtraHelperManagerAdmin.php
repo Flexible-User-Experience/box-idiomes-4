@@ -4,10 +4,10 @@ namespace App\Admin;
 
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class FileDummyAdmin extends AbstractBaseAdmin
+class ExtraHelperManagerAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'FileDummy';
-    protected $baseRoutePattern = 'fitxers';
+    protected $classnameLabel = 'ExtraHelper';
+    protected $baseRoutePattern = 'extras';
     protected $datagridValues = [
         '_sort_by' => 'name',
         '_sort_order' => 'asc',
@@ -16,7 +16,7 @@ class FileDummyAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
-            ->add('handler', 'gestor')
+            ->add('exportCalendarPdfList', 'export-calendar-pdf-list/from/{start}/to/{end}')
             ->remove('list')
             ->remove('create')
             ->remove('edit')

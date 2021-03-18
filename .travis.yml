@@ -44,7 +44,6 @@ script:
   - ./bin/console lint:yaml config --env=test
   - ./bin/console lint:twig templates --env=test
   - ./bin/console lint:xliff translations --env=test
-  - ./bin/console security:check --env=test
   # testing
   - yarn install
   - yarn encore prod

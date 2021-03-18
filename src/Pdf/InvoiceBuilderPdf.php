@@ -6,42 +6,18 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Enum\StudentPaymentEnum;
 use App\Service\SmartAssetsHelperService;
-use Exception;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use ReflectionException;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use TCPDF;
 
-/**
- * Class InvoiceBuilderPdf.
- *
- * @category Service
- */
 class InvoiceBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    /**
-     * InvoiceBuilderPdf constructor.
-     *
-     * @param string $pwt    project web title
-     * @param string $bn     boss name
-     * @param string $bd     boss DNI
-     * @param string $ba     boss address
-     * @param string $bc     boss city
-     * @param string $ib     IBAN bussines
-     * @param string $locale default locale useful in CLI
-     */
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, string $pwt, string $bn, string $bd, string $ba, string $bc, string $ib, string $locale)
     {
         parent::__construct($tcpdf, $sahs, $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale);
     }
 
-    /**
-     * @return TCPDF
-     *
-     * @throws ReflectionException
-     * @throws Exception
-     */
-    public function build(Invoice $invoice)
+    public function build(Invoice $invoice): TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);
@@ -169,19 +145,19 @@ class InvoiceBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 
         // payment method
         $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment_type').' '.strtoupper($this->ts->trans(StudentPaymentEnum::getReversedEnumArray()[$subject->getPayment()])), '', false, 'L', true);
-        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $subject->getPayment()) {
+        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $subject->getPayment()) {
             // SEPA direct debit
             $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment.account_number').' '.$subject->getBank()->getAccountNumber(), '', false, 'L', true);
-        } elseif (StudentPaymentEnum::CASH == $subject->getPayment()) {
+        } elseif (StudentPaymentEnum::CASH === $subject->getPayment()) {
             // cash
             $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment.cash'), '', false, 'L', true);
-        } elseif (StudentPaymentEnum::BANK_TRANSFER == $subject->getPayment()) {
+        } elseif (StudentPaymentEnum::BANK_TRANSFER === $subject->getPayment()) {
             // bank transfer
             $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.payment.bank_transfer').' '.$this->ib, '', false, 'L', true);
         }
 
         // IVA exception
-        if (0 == $invoice->getTaxPercentage()) {
+        if (0 === $invoice->getTaxPercentage()) {
             $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
             $pdf->setFontStyle(null, 'I', 9);
             $pdf->Write(7, $this->ts->trans('backend.admin.invoice.pdf.tax_excemption_legal_ad'), '', false, 'L', true);

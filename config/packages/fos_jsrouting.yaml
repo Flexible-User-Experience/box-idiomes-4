@@ -1,5 +1,4 @@
 fos_js_routing:
     routes_to_expose:
         - 'sonata_admin_dashboard'
-#        - 'admin_app_workorder_getWindfarmsFromCustomerId'
-#        - 'admin_app_workorder_getWindmillsFromSelectedWindfarmsIds'
+        - 'admin_app_filedummy_exportCalendarPdfList'

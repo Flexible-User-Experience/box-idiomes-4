@@ -329,27 +329,6 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'bank.name',
-                null,
-                [
-                    'label' => 'backend.admin.bank.name',
-                ]
-            )
-            ->add(
-                'bank.swiftCode',
-                null,
-                [
-                    'label' => 'backend.admin.bank.swiftCode',
-                ]
-            )
-            ->add(
-                'bank.accountNumber',
-                null,
-                [
-                    'label' => 'IBAN',
-                ]
-            )
-            ->add(
                 'bankCreditorSepa',
                 null,
                 [
@@ -470,11 +449,14 @@ class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value)
     {
-        if ($value) {
-            $queryBuilder
-                ->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age')
-                ->setParameter('age', $value['value'])
-            ;
+        if ($value && array_key_exists('value', $value)) {
+            $age = (int) $value['value'];
+            if ($age < StudentAgesEnum::AGE_20_plus) {
+                $queryBuilder->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age');
+            } else {
+                $queryBuilder->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) >= :age');
+            }
+            $queryBuilder->setParameter('age', $age);
 
             return true;
         }

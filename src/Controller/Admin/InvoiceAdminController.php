@@ -15,8 +15,6 @@ use App\Service\NotificationService;
 use App\Service\XmlSepaBuilderService;
 use DateTime;
 use Digitick\Sepa\Util\StringHelper;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\OptimisticLockException;
 use Exception;
 use PhpZip\ZipFile;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
@@ -41,9 +39,8 @@ class InvoiceAdminController extends BaseAdminController
     /**
      * Generate invoice action.
      *
-     * @throws NotFoundHttpException    If the object does not exist
-     * @throws AccessDeniedException    If access is not granted
-     * @throws NonUniqueResultException If problem with unique entities
+     * @throws NotFoundHttpException If the object does not exist
+     * @throws AccessDeniedException If access is not granted
      */
     public function generateAction(Request $request): Response
     {
@@ -87,8 +84,6 @@ class InvoiceAdminController extends BaseAdminController
      *
      * @throws NotFoundHttpException
      * @throws AccessDeniedException
-     * @throws NonUniqueResultException
-     * @throws OptimisticLockException
      */
     public function creatorAction(Request $request): RedirectResponse
     {
