@@ -20,19 +20,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class DefaultController.
- */
 class DefaultController extends AbstractController
 {
-    const ENV_DEV = 'dev';
+    public const ENV_DEV = 'dev';
 
     /**
      * @Route("/", name="app_homepage")
-     *
-     * @return Response
      */
-    public function indexAction(Request $request, MailchimpManager $mailchimpManager, NotificationService $messenger)
+    public function indexAction(Request $request, MailchimpManager $mailchimpManager, NotificationService $messenger): Response
     {
         $teachers = $this->getDoctrine()->getRepository(Teacher::class)->findAllEnabledSortedByPosition();
 
@@ -63,7 +58,8 @@ class DefaultController extends AbstractController
             }
         }
 
-        return $this->render('Front/homepage.html.twig',
+        return $this->render(
+            'Front/homepage.html.twig',
             [
                 'teachers' => $teachers,
                 'newsletterForm' => $newsletterForm->createView(),
@@ -71,10 +67,10 @@ class DefaultController extends AbstractController
         );
     }
 
-    private function setFlashMessageAndEmailNotifications(NotificationService $messenger, NewsletterContact $newsletterContact)
+    private function setFlashMessageAndEmailNotifications(NotificationService $messenger, NewsletterContact $newsletterContact): void
     {
         // Send email notifications
-        if (0 != $messenger->sendCommonNewsletterUserNotification($newsletterContact)) {
+        if (0 !== $messenger->sendCommonNewsletterUserNotification($newsletterContact)) {
             // Set frontend flash message
             $this->addFlash(
                 'notice',
@@ -91,35 +87,31 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/serveis", name="app_services")
-     *
-     * @return Response
      */
-    public function servicesAction()
+    public function servicesAction(): Response
     {
         $services = $this->getDoctrine()->getRepository(Service::class)->findAllEnabledSortedByPosition();
 
         return $this->render(
             'Front/services.html.twig',
-            ['services' => $services]
+            [
+                'services' => $services,
+            ]
         );
     }
 
     /**
      * @Route("/academia", name="app_academy")
-     *
-     * @return Response
      */
-    public function academyAction()
+    public function academyAction(): Response
     {
         return $this->render('Front/academy.html.twig');
     }
 
     /**
      * @Route("/contacte", name="app_contact")
-     *
-     * @return Response
      */
-    public function contactAction(Request $request, NotificationService $messenger)
+    public function contactAction(Request $request, NotificationService $messenger): Response
     {
         $contactMessage = new ContactMessage();
         $contactMessageForm = $this->createForm(ContactMessageType::class, $contactMessage);
@@ -131,7 +123,7 @@ class DefaultController extends AbstractController
             $em->persist($contactMessage);
             $em->flush();
             // Send email notifications
-            if (0 != $messenger->sendCommonUserNotification($contactMessage)) {
+            if (0 !== $messenger->sendCommonUserNotification($contactMessage)) {
                 // Set frontend flash message
                 $this->addFlash(
                     'notice',
@@ -151,16 +143,16 @@ class DefaultController extends AbstractController
 
         return $this->render(
             'Front/contact.html.twig',
-            ['contactMessageForm' => $contactMessageForm->createView()]
+            [
+                'contactMessageForm' => $contactMessageForm->createView(),
+            ]
         );
     }
 
     /**
      * @Route("/preinscripcions", name="app_pre_register")
-     *
-     * @return Response
      */
-    public function preRegistersAction(Request $request, NotificationService $messenger)
+    public function preRegistersAction(Request $request, NotificationService $messenger): Response
     {
         $preRegister = new PreRegister();
         $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
@@ -172,7 +164,7 @@ class DefaultController extends AbstractController
             $preRegister->setEnabled(false);
             $em->persist($preRegister);
             $em->flush();
-            if (0 != $messenger->sendPreRegisterAdminNotification($preRegister)) {
+            if (0 !== $messenger->sendPreRegisterAdminNotification($preRegister)) {
                 // Set frontend flash message
                 $this->addFlash(
                     'notice',
@@ -191,36 +183,32 @@ class DefaultController extends AbstractController
 
         return $this->render(
             'Front/pre_register.html.twig',
-            ['preRegisterForm' => $preRegisterForm->createView()]
+            [
+                'preRegisterForm' => $preRegisterForm->createView(),
+            ]
         );
     }
 
     /**
      * @Route("/politica-de-privacitat", name="app_privacy_policy")
-     *
-     * @return Response
      */
-    public function privacyPolicyAction()
+    public function privacyPolicyAction(): Response
     {
         return $this->render('Front/privacy_policy.html.twig', []);
     }
 
     /**
      * @Route("/credits", name="app_credits")
-     *
-     * @return Response
      */
-    public function creditsAction()
+    public function creditsAction(): Response
     {
         return $this->render('Front/credits.html.twig');
     }
 
     /**
      * @Route("/test-email", name="app_test_email")
-     *
-     * @return Response
      */
-    public function testEmailAction(KernelInterface $kernel)
+    public function testEmailAction(KernelInterface $kernel): Response
     {
         if ('prod' === $kernel->getEnvironment()) {
             throw new AccessDeniedHttpException();
@@ -228,8 +216,11 @@ class DefaultController extends AbstractController
 
         $invoice = $this->getDoctrine()->getRepository(Invoice::class)->find(8);
 
-        return $this->render('Mails/invoice_pdf_notification.html.twig', [
-            'invoice' => $invoice,
-        ]);
+        return $this->render(
+            'Mails/invoice_pdf_notification.html.twig',
+            [
+                'invoice' => $invoice,
+            ]
+        );
     }
 }
