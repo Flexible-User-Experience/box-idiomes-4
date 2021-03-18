@@ -8,12 +8,8 @@ class ExtraHelperManagerAdminController extends BaseAdminController
 {
     public function exportCalendarPdfListAction(): Response
     {
-        return $this->renderWithExtraParams(
-            'Admin/FileManager/show_file_manager.html.twig',
-            [
-                '_sonata_admin' => 'admin.file_manager_dummy',
-                'action' => 'show',
-            ]
-        );
+        $this->addFlash('success', 'HIT');
+
+        return $this->redirectToRoute('sonata_admin_dashboard');
     }
 }

@@ -11,8 +11,8 @@ import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
 
 document.addEventListener('DOMContentLoaded', () => {
-    var calendarEl = document.getElementById('calendar-holder');
-    var calendar = new Calendar(calendarEl, {
+    let calendarEl = document.getElementById('calendar-holder');
+    let calendar = new Calendar(calendarEl, {
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
         timeZone: 'UTC',
         header: {

@@ -11,8 +11,8 @@ import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
 
 document.addEventListener('DOMContentLoaded', () => {
-    var calendarEl = document.getElementById('calendar-holder');
-    var calendar = new Calendar(calendarEl, {
+    let calendarEl = document.getElementById('calendar-holder');
+    let calendar = new Calendar(calendarEl, {
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
         timeZone: 'UTC',
         header: {
@@ -65,7 +65,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('error!', data.responseText);
                 }
             }
-        ]
+        ],
+        datesRender: function (calendar) {
+            if (calendar.hasOwnProperty('view') && calendar.view.hasOwnProperty('props') && calendar.view.props.hasOwnProperty('dateProfile') && calendar.view.props.dateProfile.hasOwnProperty('currentRangeUnit') && calendar.view.props.dateProfile.hasOwnProperty('currentRange') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('start') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('end') && calendar.view.props.dateProfile.currentRange.start instanceof Date && calendar.view.props.dateProfile.currentRange.end instanceof Date) {
+                let exportCalendarPdfListAnchorNode = jQuery('#export_calendar_pdf_list_anchor');
+                let start = calendar.view.props.dateProfile.currentRange.start;
+                let end = calendar.view.props.dateProfile.currentRange.end;
+                console.log(calendar.view.props.dateProfile, start, end);
+                exportCalendarPdfListAnchorNode.attr('data-scope', calendar.view.props.dateProfile.currentRangeUnit);
+                exportCalendarPdfListAnchorNode.attr('data-start', start.getFullYear()+'-'+twoDigitsPadWithZeros(start.getMonth())+'-'+twoDigitsPadWithZeros(start.getDate()));
+                exportCalendarPdfListAnchorNode.attr('data-end', end.getFullYear()+'-'+twoDigitsPadWithZeros(end.getMonth())+'-'+twoDigitsPadWithZeros(end.getDate()));
+            }
+        }
     });
     calendar.render();
 });
+
+function twoDigitsPadWithZeros(number) {
+    number = number + '';
+
+    return number.length >= 2 ? number : new Array(2).join('0') + number;
+}
