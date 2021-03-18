@@ -150,4 +150,4 @@ services:
         class: App\Admin\ExtraHelperManagerAdmin
         arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\ExtraHelperManagerAdminController, "@vich_uploader.templating.helper.uploader_helper", "@liip_imagine.cache.manager" ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: "File Manager", group: "Dummy", show_in_dashboard: false }
+            - { name: sonata.admin, manager_type: orm, label: "Extra Manager", group: "Dummy", show_in_dashboard: false }
