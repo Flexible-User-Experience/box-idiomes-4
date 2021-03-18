@@ -12,7 +12,7 @@ use TCPDF;
 
 class ReceiptBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, string $pwt, string $bn, string $bd, string $ba, string $bc, string $ib, string $locale)
     {
         parent::__construct($tcpdf, $sahs, $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale);
     }

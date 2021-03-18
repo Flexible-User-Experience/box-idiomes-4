@@ -34,6 +34,7 @@ services:
         autoconfigure: true
         bind:
             $amd: '%mailer_destination%'
+            $pwt: '%project_web_title%'
             $pub: '%project_url_base%'
             $mak: '%mailchimp_api_key%'
             $ppo: '%preregister_peridod_is_open%'
@@ -263,6 +264,14 @@ services:
             - '%boss_city%'
             - '%iban_business%'
             - '%default_locale%'
+    app.export_calendar_to_list_pdf_builder:
+        class: App\Pdf\ExportCalendarToListBuilderPdf
+        public: true
+        arguments:
+            - '@qipsius.tcpdf'
+            - '@app.smart_assets_helper'
+            - '@translator.default'
+            - '%project_web_title%'
     # SEPA
     app.xml_sepa_builder:
         class: App\Service\XmlSepaBuilderService

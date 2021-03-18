@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Started at `date +"%T %d/%m/%Y"`"
+echo "Started at $(date +"%T %d/%m/%Y")"
 
 if [ -z "$1" ]
   then
@@ -19,4 +19,4 @@ if [ -z "$1" ]
     fi
 fi
 
-echo "Finished at `date +"%T %d/%m/%Y"`"
+echo "Finished at $(date +"%T %d/%m/%Y")"

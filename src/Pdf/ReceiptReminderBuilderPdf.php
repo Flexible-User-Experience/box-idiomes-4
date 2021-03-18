@@ -10,7 +10,7 @@ use TCPDF;
 
 class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, string $pwt, string $bn, string $bd, string $ba, string $bc, string $ib, string $locale)
     {
         parent::__construct($tcpdf, $sahs, $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale);
     }
@@ -45,12 +45,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         return $pdf;
     }
 
-    /**
-     * @return \TCPDF
-     *
-     * @throws \Exception
-     */
-    public function build(Receipt $receipt)
+    public function build(Receipt $receipt): TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);
@@ -84,12 +79,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         return $pdf;
     }
 
-    /**
-     * @param BaseTcpdf|\TCPDF $pdf
-     *
-     * @throws \Exception
-     */
-    public function buildReceiptRemainderPageForItem($pdf, Receipt $receipt)
+    public function buildReceiptRemainderPageForItem($pdf, Receipt $receipt): TCPDF
     {
         // logo
         $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/img/logo-pdf.png'), BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP, 40);
@@ -128,5 +118,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG * 0.5);
 
         $pdf->Write(0, $this->bn, '', false, 'L', true);
+
+        return $pdf;
     }
 }

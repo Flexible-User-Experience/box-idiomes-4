@@ -52,7 +52,7 @@ class BaseTcpdf extends TCPDF
         $this->Write(0, $this->bpn, '', false, 'C', false);
     }
 
-    public function setFontStyle(string $font = 'dejavusans', string $style = '', int $size = 12): void
+    public function setFontStyle(?string $font = 'dejavusans', string $style = '', int $size = 12): void
     {
         // dejavusans is a UTF-8 Unicode font, if you only need to
         // print standard ASCII chars, you can use core fonts like
