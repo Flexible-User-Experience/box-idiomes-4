@@ -329,27 +329,6 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'bank.name',
-                null,
-                [
-                    'label' => 'backend.admin.bank.name',
-                ]
-            )
-            ->add(
-                'bank.swiftCode',
-                null,
-                [
-                    'label' => 'backend.admin.bank.swiftCode',
-                ]
-            )
-            ->add(
-                'bank.accountNumber',
-                null,
-                [
-                    'label' => 'IBAN',
-                ]
-            )
-            ->add(
                 'bankCreditorSepa',
                 null,
                 [
