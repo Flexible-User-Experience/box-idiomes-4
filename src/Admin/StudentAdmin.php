@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\BankCreditorSepa;
 use App\Entity\City;
+use App\Entity\ClassGroup;
 use App\Entity\Invoice;
 use App\Entity\Person;
 use App\Entity\Receipt;
@@ -362,6 +363,18 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'events.group',
+                null,
+                [
+                    'label' => 'backend.admin.event.group',
+                ],
+                EntityType::class,
+                [
+                    'class' => ClassGroup::class,
+                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.class_group_repository')->getEnabledSortedByCodeQB(),
+                ]
+            )
+            ->add(
                 'age',
                 CallbackFilter::class,
                 [
@@ -457,13 +470,16 @@ class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value)
     {
-        if (!$value) {
-            return;
+        if ($value) {
+            $queryBuilder
+                ->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age')
+                ->setParameter('age', $value['value'])
+            ;
+
+            return true;
         }
-        $queryBuilder
-            ->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age')
-            ->setParameter('age', $value['value'])
-        ;
+
+        return false;
     }
 
     protected function configureListFields(ListMapper $listMapper): void
