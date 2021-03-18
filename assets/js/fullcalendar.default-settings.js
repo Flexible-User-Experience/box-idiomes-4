@@ -75,9 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 let exportCalendarPdfListAnchorNode = jQuery('#export_calendar_pdf_list_anchor');
                 let start = calendar.view.props.dateProfile.currentRange.start;
                 let end = calendar.view.props.dateProfile.currentRange.end;
-                exportCalendarPdfListAnchorNode.attr('data-scope', calendar.view.props.dateProfile.currentRangeUnit);
-                exportCalendarPdfListAnchorNode.attr('data-start', start.getFullYear() + '-' + twoDigitsPadWithZeros(start.getMonth() + 1) + '-' + twoDigitsPadWithZeros(start.getDate()));
-                exportCalendarPdfListAnchorNode.attr('data-end', end.getFullYear() + '-' + twoDigitsPadWithZeros(end.getMonth() + 1) + '-' + twoDigitsPadWithZeros(end.getDate()));
                 let route = Routing.generate('admin_app_filedummy_exportCalendarPdfList', {start: start.getFullYear() + '-' + twoDigitsPadWithZeros(start.getMonth() + 1) + '-' + twoDigitsPadWithZeros(start.getDate()), end: end.getFullYear() + '-' + twoDigitsPadWithZeros(end.getMonth() + 1) + '-' + twoDigitsPadWithZeros(end.getDate())});
                 exportCalendarPdfListAnchorNode.attr('href', route);
             }

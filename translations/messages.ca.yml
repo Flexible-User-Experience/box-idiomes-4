@@ -140,6 +140,12 @@ backend:
         payments: Pagaments
         documents: Documents
         files: Gestor de documents
+        calendar:
+            export:
+                error:
+                    no_dates_found: "No s'ha trobat cap data d'inici o fi."
+                    end_date_period: "La data final és més gran o igual que la data final."
+                    no_items_found: "No s'ha trobat cap horari de classe registrat entre el %start% i el %end%."
         user:
             user: Usuari
             editor: Editor
