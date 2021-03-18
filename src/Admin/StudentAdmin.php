@@ -460,9 +460,10 @@ class StudentAdmin extends AbstractBaseAdmin
         if (!$value) {
             return;
         }
-//        $queryBuilder->leftJoin(sprintf('%s.codes', $alias), 'c');
-        $queryBuilder->andWhere($alias.'.name = :code');
-        $queryBuilder->setParameter('code', $value['value']);
+        $queryBuilder
+            ->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age')
+            ->setParameter('age', $value['value'])
+        ;
     }
 
     protected function configureListFields(ListMapper $listMapper): void
