@@ -81,7 +81,7 @@ class EventManager
         $total = $this->getTotalRelatedEventsAmountOf($event);
         $involved = $this->getRelatedEventsAmountOf($event);
         if (0 !== $total) {
-            $progressBarPercentiles['last'] = round(($involved * 55) / $total, 0) + 15;
+            $progressBarPercentiles['last'] = round(($involved * 55) / $total) + 15;
             $progressBarPercentiles['first'] = 85 - $progressBarPercentiles['last'];
         } else {
             $progressBarPercentiles['last'] = 15;
@@ -125,7 +125,7 @@ class EventManager
      *
      * @return bool true if there is at least one event with only one student in class, false elsewhere because is a shared private class
      */
-    public function decidePrivateLessonsTariff($events): bool
+    public function decidePrivateLessonsTariff(array $events): bool
     {
         $isPrivateLesson = false;
         /** @var Event $event */
@@ -147,7 +147,7 @@ class EventManager
      *
      * @throws NonUniqueResultException
      */
-    public function getCurrentPrivateLessonsTariffForEvents($events): Tariff
+    public function getCurrentPrivateLessonsTariffForEvents(array $events): Tariff
     {
         return $this->decidePrivateLessonsTariff($events) ? $this->tr->findCurrentPrivateLessonTariff() : $this->tr->findCurrentSharedPrivateLessonTariff();
     }

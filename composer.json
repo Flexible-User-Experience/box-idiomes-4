@@ -93,15 +93,18 @@
     },
     "scripts": {
         "auto-scripts": {
-            "local-php-security-checker": "script",
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "security-script": {
+            "local-php-security-checker": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@security-script"
         ]
     },
     "conflict": {
