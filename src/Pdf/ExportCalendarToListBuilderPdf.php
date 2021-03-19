@@ -132,8 +132,12 @@ class ExportCalendarToListBuilderPdf
                         $maxStudentRows = $hour->getMaxStudentRows();
                         if ($maxStudentRows > 0) {
                             for ($studentIteratorIndex = 0; $studentIteratorIndex < $maxStudentRows; ++$studentIteratorIndex) {
-                                $pdf->setFontStyle(null, 'B', 8);
-                                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, (0 === $studentIteratorIndex ? $hour->getRangeName() : ''), true, 0, 'L', true);
+                                if (0 === $studentIteratorIndex) {
+                                    $pdf->setFontStyle(null, 'B', 8);
+                                    $pdf->Cell(self::FIRST_CELL_WIDTH, $maxStudentRows * 5.53, $hour->getRangeName(), true, 0, 'L', true);
+                                } else {
+                                    $pdf->SetX(self::FIRST_CELL_WIDTH + 10);
+                                }
                                 $pdf->setFontStyle(null, '', 8);
                                 $eventsAmount = count($hour->getEvents());
                                 /** @var Event $event */
@@ -146,8 +150,6 @@ class ExportCalendarToListBuilderPdf
                                 }
                                 if ($eventsAmount < 5) {
                                     $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                                } else {
-                                    // TODO break new table row
                                 }
                             }
                         }
