@@ -78,7 +78,7 @@ class ExportCalendarToListBuilderPdf
                 foreach ($day->getHours() as $hour) {
 //                    if ($hour->getMaxStudentRows() > 0) {
                     $pdf->setCellPaddings(1, 1, 1, 1);
-                    $pdf->setFontStyle(null, 'B', 8);
+                    $pdf->setFontStyle(null, 'B', 10);
                     // hour range row
                     $this->setCellColors($pdf, $this->defaultCellColor);
                     $pdf->Cell($maxCellWidth, 0, $hour->getRangeName(), true, true, 'C', true);
@@ -145,14 +145,21 @@ class ExportCalendarToListBuilderPdf
                                 if ($studentIteratorIndex < count($event->getStudents())) {
                                     $studentName = $event->getStudents()[$studentIteratorIndex]->getFullname();
                                 }
-                                $pdf->Cell(self::CELL_WIDTH, 0, $studentName, true, 0, 'L', true);
+                                if (0 === count($event->getStudents())) {
+                                    $pdf->Cell(self::CELL_WIDTH, 0, '--- empty class ---', true, 0, 'C', true);
+                                } else {
+                                    $pdf->Cell(self::CELL_WIDTH, 0, $studentName, true, 0, 'L', true);
+                                }
                             }
                             if ($eventsAmount < 5) {
                                 $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
                             }
                         }
                     } else {
-                        $pdf->Cell(self::CELL_WIDTH, 0, 'WARN', true, 1, 'L', true);
+                        $pdf->SetFillColor(255, 255, 255);
+                        $pdf->setFontStyle(null, '', 8);
+                        $pdf->Cell(self::FIRST_CELL_WIDTH, 0, '', true, 0, 'R', true);
+                        $pdf->Cell(self::CELL_WIDTH, 0, '--- empty class ---', true, 1, 'C', true);
                     }
 //                    } else {
 //                        $pdf->Cell(self::CELL_WIDTH, 0, 'MAIN WARN', true, 1, 'L', true);

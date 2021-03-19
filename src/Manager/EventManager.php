@@ -180,6 +180,7 @@ class EventManager
                     } else {
                         $iteratedEvent = clone $event;
                         $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteratedEvent->getBegin()->format('H:i').' - '.$iteratedEvent->getEnd()->format('H:i'), $iteratedEvent->getBegin(), $iteratedEvent->getEnd());
+                        $calendarEventsListDayHourItem->addEvent($iteratedEvent);
                         $calendarEventsListDayItem->addHour($calendarEventsListDayHourItem);
                     }
                 }
