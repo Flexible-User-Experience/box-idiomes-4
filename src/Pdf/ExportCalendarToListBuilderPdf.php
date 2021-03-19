@@ -134,7 +134,7 @@ class ExportCalendarToListBuilderPdf
                             for ($studentIteratorIndex = 0; $studentIteratorIndex < $maxStudentRows; ++$studentIteratorIndex) {
                                 if (0 === $studentIteratorIndex) {
                                     $pdf->setFontStyle(null, 'B', 8);
-                                    $pdf->Cell(self::FIRST_CELL_WIDTH, $maxStudentRows * 5.53, $hour->getRangeName(), true, 0, 'L', true);
+                                    $pdf->Cell(self::FIRST_CELL_WIDTH, $maxStudentRows * 5.53, $hour->getRangeName(), true, 0, 'L', true, '', 0, false, 'T', 'T');
                                 } else {
                                     $pdf->SetX(self::FIRST_CELL_WIDTH + 10);
                                 }
