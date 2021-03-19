@@ -130,15 +130,13 @@ class ExportCalendarToListBuilderPdf
                         $pdf->SetFillColor(255, 255, 255);
                         // students row
                         $maxStudentRows = $hour->getMaxStudentRows();
+                        $this->setCellColors($pdf, $this->defaultCellColor);
+                        $pdf->Cell($maxCellWidth, 0, $hour->getRangeName(), true, true, 'C', true);
                         if ($maxStudentRows > 0) {
                             for ($studentIteratorIndex = 0; $studentIteratorIndex < $maxStudentRows; ++$studentIteratorIndex) {
-                                if (0 === $studentIteratorIndex) {
-                                    $pdf->setFontStyle(null, 'B', 8);
-                                    $pdf->Cell(self::FIRST_CELL_WIDTH, $maxStudentRows * 5.53, $hour->getRangeName(), true, 0, 'L', true, '', 0, false, 'T', 'T');
-                                } else {
-                                    $pdf->SetX(self::FIRST_CELL_WIDTH + 10);
-                                }
+                                $pdf->SetFillColor(255, 255, 255);
                                 $pdf->setFontStyle(null, '', 8);
+                                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, $studentIteratorIndex, true, 0, 'R', true);
                                 $eventsAmount = count($hour->getEvents());
                                 /** @var Event $event */
                                 foreach ($hour->getEvents() as $event) {
