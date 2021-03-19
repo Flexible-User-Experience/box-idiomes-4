@@ -85,4 +85,9 @@ class ExportCalendarToListDayHourItem
 
         return $this;
     }
+
+    public function getMaxStudentRows(): int
+    {
+        return 5;
+    }
 }

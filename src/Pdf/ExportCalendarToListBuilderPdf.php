@@ -59,13 +59,13 @@ class ExportCalendarToListBuilderPdf
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
         // make page
         $this->buildNewPage($pdf, $leftMargin, $rightMargin);
-        $pdf->setFontStyle(null, 'B', 13);
-        // description
-        $pdf->Write(0, $this->ts->trans('backend.admin.calendar.export.pdf.title', [
-            '%start%' => 'up',
-            '%end%' => 'down',
-        ]), '', false, 'L', true);
-        $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
+//        $pdf->setFontStyle(null, 'B', 13);
+//        // description
+//        $pdf->Write(0, $this->ts->trans('backend.admin.calendar.export.pdf.title', [
+//            '%start%' => 'up',
+//            '%end%' => 'down',
+//        ]), '', false, 'L', true);
+//        $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         $pdf->SetLineWidth(0.1);
         $iteratorDayIndex = 0;
         $daysAmount = count($calendarEventsList->getDays());
@@ -131,8 +131,25 @@ class ExportCalendarToListBuilderPdf
                         // TODO break new table row
                     }
                     $pdf->SetFillColor(255, 255, 255);
-                    $pdf->Cell(self::FIRST_CELL_WIDTH, 0, $hour->getRangeName(), true, 1, 'L', true);
-                    // TODO draw students
+                    // students row
+                    $maxStudentRows = $hour->getMaxStudentRows();
+                    for ($studentIteratorIndex = 0; $studentIteratorIndex < $maxStudentRows; ++$studentIteratorIndex) {
+                        $pdf->Cell(self::FIRST_CELL_WIDTH, 0, (0 === $studentIteratorIndex ? $hour->getRangeName() : ''), true, 0, 'L', true);
+                        $eventsAmount = count($hour->getEvents());
+                        /** @var Event $event */
+                        foreach ($hour->getEvents() as $event) {
+                            $studentName = '';
+                            if ($studentIteratorIndex < count($event->getStudents())) {
+                                $studentName = $event->getStudents()[$studentIteratorIndex]->getFullname();
+                            }
+                            $pdf->Cell(self::CELL_WIDTH, 0, $studentName, true, 0, 'L', true);
+                        }
+                        if ($eventsAmount < 5) {
+                            $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
+                        } else {
+                            // TODO break new table row
+                        }
+                    }
                 }
                 if ($iteratorDayIndex !== $daysAmount) {
                     $this->buildNewPage($pdf, $leftMargin, $rightMargin);
