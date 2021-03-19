@@ -171,7 +171,7 @@ class EventManager
             if (count($events) > 0) {
                 /** @var Event $iteradedEvent */
                 $iteradedEvent = $events[0];
-                $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').'...'.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
+                $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').' - '.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
                 $calendarEventsListDayItem->addHour($calendarEventsListDayHourItem);
                 /** @var Event $event */
                 foreach ($events as $event) {
@@ -179,7 +179,7 @@ class EventManager
                         $calendarEventsListDayHourItem->addEvent($event);
                     } else {
                         $iteradedEvent = clone $event;
-                        $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').'...'.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
+                        $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').' - '.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
                         $calendarEventsListDayItem->addHour($calendarEventsListDayHourItem);
                     }
                 }

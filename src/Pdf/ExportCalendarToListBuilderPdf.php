@@ -3,6 +3,7 @@
 namespace App\Pdf;
 
 use App\Entity\Event;
+use App\Model\Color;
 use App\Model\ExportCalendarToList;
 use App\Model\ExportCalendarToListDayHourItem;
 use App\Model\ExportCalendarToListDayItem;
@@ -21,6 +22,7 @@ class ExportCalendarToListBuilderPdf
     private SmartAssetsHelperService $sahs;
     private TranslatorInterface $ts;
     private string $pwt;
+    private Color $defaultCellColor;
 
     public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, string $pwt)
     {
@@ -28,6 +30,7 @@ class ExportCalendarToListBuilderPdf
         $this->sahs = $sahs;
         $this->ts = $ts;
         $this->pwt = $pwt;
+        $this->defaultCellColor = new Color('#E0EBFF');
     }
 
     public function build(ExportCalendarToList $calendarEventsList): TCPDF
@@ -81,56 +84,60 @@ class ExportCalendarToListBuilderPdf
                         $eventsAmount = count($hour->getEvents());
                         /** @var Event $event */
                         foreach ($hour->getEvents() as $event) {
+                            $this->setCellColors($pdf, $event->getGroup()->getColorRgbArray(), true);
                             $pdf->Cell(self::CELL_WIDTH, 0, $event->getGroup()->getCode(), true, 0, 'L', true);
                         }
+                        $this->setCellColors($pdf, $this->defaultCellColor);
                         if ($eventsAmount < 5) {
                             $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                        } else {
-                            // TODO break new table row
                         }
                         // room row
                         $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Room', true, 0, 'L', true);
                         $eventsAmount = count($hour->getEvents());
                         /** @var Event $event */
                         foreach ($hour->getEvents() as $event) {
+                            $this->setCellColors($pdf, $event->getGroup()->getColorRgbArray(), true);
                             $pdf->Cell(self::CELL_WIDTH, 0, $event->getClassroomString(), true, 0, 'L', true);
                         }
+                        $this->setCellColors($pdf, $this->defaultCellColor);
                         if ($eventsAmount < 5) {
                             $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                        } else {
-                            // TODO break new table row
                         }
                         // teacher row
                         $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Teacher', true, 0, 'L', true);
                         $eventsAmount = count($hour->getEvents());
                         /** @var Event $event */
                         foreach ($hour->getEvents() as $event) {
+                            $this->setCellColors($pdf, $event->getGroup()->getColorRgbArray(), true);
                             $pdf->Cell(self::CELL_WIDTH, 0, $event->getTeacher()->getName(), true, 0, 'L', true);
                         }
+                        $this->setCellColors($pdf, $this->defaultCellColor);
                         if ($eventsAmount < 5) {
                             $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                        } else {
-                            // TODO break new table row
                         }
                         // book row
                         $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Book', true, 0, 'L', true);
                         $eventsAmount = count($hour->getEvents());
                         /** @var Event $event */
                         foreach ($hour->getEvents() as $event) {
+                            $this->setCellColors($pdf, $event->getGroup()->getColorRgbArray(), true);
                             $pdf->Cell(self::CELL_WIDTH, 0, $event->getGroup()->getBook(), true, 0, 'L', true);
                         }
+                        $this->setCellColors($pdf, $this->defaultCellColor);
                         if ($eventsAmount < 5) {
                             $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                        } else {
-                            // TODO break new table row
                         }
                         $pdf->SetFillColor(255, 255, 255);
                         // students row
                         $maxStudentRows = $hour->getMaxStudentRows();
                         if ($maxStudentRows > 0) {
                             for ($studentIteratorIndex = 0; $studentIteratorIndex < $maxStudentRows; ++$studentIteratorIndex) {
-                                $pdf->setFontStyle(null, 'B', 8);
-                                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, (0 === $studentIteratorIndex ? $hour->getRangeName() : ''), true, 0, 'L', true);
+                                if (0 === $studentIteratorIndex) {
+                                    $pdf->setFontStyle(null, 'B', 8);
+                                    $pdf->Cell(self::FIRST_CELL_WIDTH, $maxStudentRows * 5.53, $hour->getRangeName(), true, 0, 'L', true, '', 0, false, 'T', 'T');
+                                } else {
+                                    $pdf->SetX(self::FIRST_CELL_WIDTH + 10);
+                                }
                                 $pdf->setFontStyle(null, '', 8);
                                 $eventsAmount = count($hour->getEvents());
                                 /** @var Event $event */
@@ -143,8 +150,6 @@ class ExportCalendarToListBuilderPdf
                                 }
                                 if ($eventsAmount < 5) {
                                     $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                                } else {
-                                    // TODO break new table row
                                 }
                             }
                         }
@@ -173,8 +178,17 @@ class ExportCalendarToListBuilderPdf
 
     private function buildNewPage(TCPDF $pdf, $leftMargin, $rightMargin): void
     {
-        // Add start page
+        // add new page
         $pdf->AddPage(PDF_PAGE_ORIENTATION, PDF_PAGE_FORMAT, true, true);
         $pdf->SetXY($leftMargin, $rightMargin);
+    }
+
+    private function setCellColors(TCPDF $pdf, Color $backgroundColor, bool $whiteText = false): void
+    {
+        $pdf->setTextColor(0, 0, 0);
+        if ($whiteText) {
+            $pdf->setTextColor(255, 255, 255);
+        }
+        $pdf->SetFillColor($backgroundColor->getRedDecimalValue(), $backgroundColor->getGreenDecimalValue(), $backgroundColor->getBlueDecimalValue());
     }
 }
