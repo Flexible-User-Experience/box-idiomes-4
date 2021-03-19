@@ -164,22 +164,23 @@ class EventManager
     {
         $calendarEventsList = new ExportCalendarToList();
         do {
-            $iteradedDate = clone $start;
-            $events = $this->er->getEnabledFilteredByDateSortedByBeginAndClassroom($iteradedDate);
-            $calendarEventsListDayItem = new ExportCalendarToListDayItem($iteradedDate->format('l'), $iteradedDate);
+            $iteratedDate = clone $start;
+            $events = $this->er->getEnabledFilteredByDateSortedByBeginAndClassroom($iteratedDate);
+            $calendarEventsListDayItem = new ExportCalendarToListDayItem($iteratedDate->format('l'), $iteratedDate);
             $calendarEventsListDayItem->setEvents($events);
             if (count($events) > 0) {
-                /** @var Event $iteradedEvent */
-                $iteradedEvent = $events[0];
-                $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').' - '.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
+                /** @var Event $iteratedEvent */
+                $iteratedEvent = clone $events[0];
+                $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteratedEvent->getBegin()->format('H:i').' - '.$iteratedEvent->getEnd()->format('H:i'), $iteratedEvent->getBegin(), $iteratedEvent->getEnd());
                 $calendarEventsListDayItem->addHour($calendarEventsListDayHourItem);
                 /** @var Event $event */
                 foreach ($events as $event) {
-                    if ($event->getBeginString() === $iteradedEvent->getBeginString() && $event->getEndString() === $iteradedEvent->getEndString()) {
+                    if ($event->getBeginString() === $iteratedEvent->getBeginString() && $event->getEndString() === $iteratedEvent->getEndString()) {
                         $calendarEventsListDayHourItem->addEvent($event);
                     } else {
-                        $iteradedEvent = clone $event;
-                        $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').' - '.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
+                        $iteratedEvent = clone $event;
+                        $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteratedEvent->getBegin()->format('H:i').' - '.$iteratedEvent->getEnd()->format('H:i'), $iteratedEvent->getBegin(), $iteratedEvent->getEnd());
+                        $calendarEventsListDayHourItem->addEvent($iteratedEvent);
                         $calendarEventsListDayItem->addHour($calendarEventsListDayHourItem);
                     }
                 }
