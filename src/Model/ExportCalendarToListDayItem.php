@@ -10,12 +10,14 @@ class ExportCalendarToListDayItem
     private string $weekdayName;
     private DateTimeInterface $day;
     private array $events;
+    private array $hours;
 
     public function __construct(string $weekdayName, DateTimeInterface $day)
     {
         $this->weekdayName = $weekdayName;
         $this->day = $day;
         $this->events = [];
+        $this->hours = [];
     }
 
     public function getWeekdayName(): string
@@ -57,6 +59,25 @@ class ExportCalendarToListDayItem
     public function addEvent(Event $event): self
     {
         $this->events[] = $event;
+
+        return $this;
+    }
+
+    public function getHours(): array
+    {
+        return $this->hours;
+    }
+
+    public function setHours(array $hours): self
+    {
+        $this->hours = $hours;
+
+        return $this;
+    }
+
+    public function addHour(ExportCalendarToListDayHourItem $hours): self
+    {
+        $this->hours[] = $hours;
 
         return $this;
     }
