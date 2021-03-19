@@ -57,10 +57,8 @@ class ExportCalendarToListBuilderPdf
         $pdf->SetAutoPageBreak(true, 10);
         // set image scale factor
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-        // Add start page
-        $pdf->AddPage(PDF_PAGE_ORIENTATION, PDF_PAGE_FORMAT, true, true);
-
-        $pdf->SetXY($leftMargin, $rightMargin);
+        // make page
+        $this->buildNewPage($pdf, $leftMargin, $rightMargin);
         $pdf->setFontStyle(null, 'B', 13);
         // description
         $pdf->Write(0, $this->ts->trans('backend.admin.calendar.export.pdf.title', [
@@ -69,83 +67,77 @@ class ExportCalendarToListBuilderPdf
         ]), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         $pdf->SetLineWidth(0.1);
-
+        $iteratorDayIndex = 0;
+        $daysAmount = count($calendarEventsList->getDays());
         /** @var ExportCalendarToListDayItem $day */
         foreach ($calendarEventsList->getDays() as $day) {
-            $pdf->setCellPaddings(0, 2, 2, 2);
-            $pdf->setFontStyle(null, 'B', 11);
-            $pdf->Cell($maxCellWidth, 0, $day->getWeekdayName().' '.$this->asString($day->getDay()), false, 1, 'L');
-            /** @var ExportCalendarToListDayHourItem $hour */
-            foreach ($day->getHours() as $hour) {
-                $pdf->setCellPaddings(1, 1, 1, 1);
-                $pdf->setFontStyle(null, 'B', 8);
-                $pdf->SetFillColor(224, 235, 255);
-                // group row
-                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Group', true, 0, 'L', true);
-                $eventsAmount = count($hour->getEvents());
-                /** @var Event $event */
-                foreach ($hour->getEvents() as $event) {
-                    $pdf->Cell(self::CELL_WIDTH, 0, $event->getGroup()->getCode(), true, 0, 'L', true);
+            // don't draw sundays
+            ++$iteratorDayIndex;
+            if ('0' !== $day->getDay()->format('w')) {
+                $pdf->setCellPaddings(0, 2, 2, 2);
+                $pdf->setFontStyle(null, 'B', 11);
+                $pdf->Cell($maxCellWidth, 0, $day->getWeekdayName().' '.$this->asString($day->getDay()), false, 1, 'L');
+                /** @var ExportCalendarToListDayHourItem $hour */
+                foreach ($day->getHours() as $hour) {
+                    $pdf->setCellPaddings(1, 1, 1, 1);
+                    $pdf->setFontStyle(null, 'B', 8);
+                    $pdf->SetFillColor(224, 235, 255);
+                    // group row
+                    $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Group', true, 0, 'L', true);
+                    $eventsAmount = count($hour->getEvents());
+                    /** @var Event $event */
+                    foreach ($hour->getEvents() as $event) {
+                        $pdf->Cell(self::CELL_WIDTH, 0, $event->getGroup()->getCode(), true, 0, 'L', true);
+                    }
+                    if ($eventsAmount < 5) {
+                        $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
+                    } else {
+                        // TODO break new table row
+                    }
+                    // room row
+                    $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Room', true, 0, 'L', true);
+                    $eventsAmount = count($hour->getEvents());
+                    /** @var Event $event */
+                    foreach ($hour->getEvents() as $event) {
+                        $pdf->Cell(self::CELL_WIDTH, 0, $event->getClassroomString(), true, 0, 'L', true);
+                    }
+                    if ($eventsAmount < 5) {
+                        $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
+                    } else {
+                        // TODO break new table row
+                    }
+                    // teacher row
+                    $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Teacher', true, 0, 'L', true);
+                    $eventsAmount = count($hour->getEvents());
+                    /** @var Event $event */
+                    foreach ($hour->getEvents() as $event) {
+                        $pdf->Cell(self::CELL_WIDTH, 0, $event->getTeacher()->getName(), true, 0, 'L', true);
+                    }
+                    if ($eventsAmount < 5) {
+                        $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
+                    } else {
+                        // TODO break new table row
+                    }
+                    // book row
+                    $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Book', true, 0, 'L', true);
+                    $eventsAmount = count($hour->getEvents());
+                    /** @var Event $event */
+                    foreach ($hour->getEvents() as $event) {
+                        $pdf->Cell(self::CELL_WIDTH, 0, $event->getGroup()->getBook(), true, 0, 'L', true);
+                    }
+                    if ($eventsAmount < 5) {
+                        $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
+                    } else {
+                        // TODO break new table row
+                    }
+                    $pdf->SetFillColor(255, 255, 255);
+                    $pdf->Cell(self::FIRST_CELL_WIDTH, 0, $hour->getRangeName(), true, 1, 'L', true);
+                    // TODO draw students
                 }
-                if ($eventsAmount < 5) {
-                    $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                } else {
-                    // TODO break new table row
+                if ($iteratorDayIndex !== $daysAmount) {
+                    $this->buildNewPage($pdf, $leftMargin, $rightMargin);
                 }
-                // room row
-                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Room', true, 0, 'L', true);
-                $eventsAmount = count($hour->getEvents());
-                /** @var Event $event */
-                foreach ($hour->getEvents() as $event) {
-                    $pdf->Cell(self::CELL_WIDTH, 0, $event->getClassroomString(), true, 0, 'L', true);
-                }
-                if ($eventsAmount < 5) {
-                    $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                } else {
-                    // TODO break new table row
-                }
-                // teacher row
-                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Teacher', true, 0, 'L', true);
-                $eventsAmount = count($hour->getEvents());
-                /** @var Event $event */
-                foreach ($hour->getEvents() as $event) {
-                    $pdf->Cell(self::CELL_WIDTH, 0, $event->getTeacher()->getName(), true, 0, 'L', true);
-                }
-                if ($eventsAmount < 5) {
-                    $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                } else {
-                    // TODO break new table row
-                }
-                // book row
-                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, 'Book', true, 0, 'L', true);
-                $eventsAmount = count($hour->getEvents());
-                /** @var Event $event */
-                foreach ($hour->getEvents() as $event) {
-                    $pdf->Cell(self::CELL_WIDTH, 0, $event->getGroup()->getBook(), true, 0, 'L', true);
-                }
-                if ($eventsAmount < 5) {
-                    $this->drawEmptyCells($pdf, 5 - $eventsAmount, true);
-                } else {
-                    // TODO break new table row
-                }
-                $pdf->SetFillColor(255, 255, 255);
-                $pdf->Cell(self::FIRST_CELL_WIDTH, 0, $hour->getRangeName(), true, 1, 'L', true);
             }
-//            $pdf->Write(0, $day->getWeekdayName().' '.$this->asString($day->getDay()), '', false, 'L', true);
-//            $pdf->Write(0, ' ', '', false, 'L', true);
-//            /** @var Event $event */
-//            foreach ($day->getEvents() as $event) {
-//                $pdf->setFontStyle(null, 'B', 9);
-//                $pdf->Write(0, $event->getBegin()->format('H:i').'...'.$event->getEnd()->format('H:i').': '.$event->getClassroomString().' · '.$event->getGroup()->getName().' · '.$event->getGroup()->getBook().' · '.$event->getTeacher()->getName(), '', false, 'L', true);
-//                $pdf->Write(0, ' ', '', false, 'L', true);
-//                $pdf->setFontStyle(null, '', 9);
-//                /** @var Student $student */
-//                foreach ($event->getStudents() as $student) {
-//                    $pdf->Write(0, $student->getFullName(), '', false, 'L', true);
-//                }
-//                $pdf->Write(0, ' ', '', false, 'L', true);
-//            }
-//            $pdf->Write(0, ' ', '', false, 'L', true);
         }
 
         return $pdf;
@@ -161,5 +153,12 @@ class ExportCalendarToListBuilderPdf
         for ($index = 0; $index < $columns; ++$index) {
             $pdf->Cell(self::CELL_WIDTH, 0, '', true, ($index === $columns - 1 ? 1 : 0), 'L', $fill);
         }
+    }
+
+    private function buildNewPage(TCPDF $pdf, $leftMargin, $rightMargin): void
+    {
+        // Add start page
+        $pdf->AddPage(PDF_PAGE_ORIENTATION, PDF_PAGE_FORMAT, true, true);
+        $pdf->SetXY($leftMargin, $rightMargin);
     }
 }
