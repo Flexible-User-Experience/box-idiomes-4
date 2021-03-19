@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.6.01 (WIP)
+##### Version 4.6.02 (WIP)
  * fix minor bugs
+
+##### Version 4.6.01 (2021-03-19)
+ * improve Calendar PDF design
 
 ##### Version 4.6.00 (2021-03-19)
  * fix broken Travis tests
