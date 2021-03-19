@@ -164,7 +164,7 @@ class EventManager
         $calendarEventsList = new ExportCalendarToList();
         do {
             $iteradedDate = clone $start;
-            $events = $this->er->getEnabledFilteredByDate($iteradedDate);
+            $events = $this->er->getEnabledFilteredByDateSortedByBeginAndClassroom($iteradedDate);
             $calendarEventsListDayItem = new ExportCalendarToListDayItem($iteradedDate->format('l'), $iteradedDate);
             $calendarEventsListDayItem->setEvents($events);
             $calendarEventsList->addDay($calendarEventsListDayItem);

@@ -71,7 +71,7 @@ class ExportCalendarToListBuilderPdf
             /** @var Event $event */
             foreach ($day->getEvents() as $event) {
                 $pdf->setFontStyle(null, 'B', 9);
-                $pdf->Write(0, $event->getBegin()->format('h:i').'...'.$event->getEnd()->format('h:i').': '.$event->getClassroomString().' · '.$event->getGroup()->getName().' · '.$event->getGroup()->getBook().' · '.$event->getTeacher()->getName(), '', false, 'L', true);
+                $pdf->Write(0, $event->getBegin()->format('H:i').'...'.$event->getEnd()->format('H:i').': '.$event->getClassroomString().' · '.$event->getGroup()->getName().' · '.$event->getGroup()->getBook().' · '.$event->getTeacher()->getName(), '', false, 'L', true);
                 $pdf->Write(0, ' ', '', false, 'L', true);
                 $pdf->setFontStyle(null, '', 9);
                 /** @var Student $student */
