@@ -81,4 +81,17 @@ class ExportCalendarToListDayItem
 
         return $this;
     }
+
+    public function getMaxStudentRows(): int
+    {
+        $maxStudentRows = 0;
+        /** @var ExportCalendarToListDayHourItem $hour */
+        foreach ($this->getHours() as $hour) {
+            if ($hour->getMaxStudentRows() > $maxStudentRows) {
+                $maxStudentRows = $hour->getMaxStudentRows();
+            }
+        }
+
+        return $maxStudentRows;
+    }
 }
