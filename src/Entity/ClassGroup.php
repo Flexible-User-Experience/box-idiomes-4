@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Model\Color;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -43,6 +44,11 @@ class ClassGroup extends AbstractBase
      * @ORM\Column(type="string")
      */
     private $color;
+
+    /**
+     * @var Color
+     */
+    private $colorRgbArray;
 
     /**
      * @var bool
@@ -131,6 +137,23 @@ class ClassGroup extends AbstractBase
     public function setColor($color)
     {
         $this->color = $color;
+        $this->colorRgbArray = new Color($color);
+
+        return $this;
+    }
+
+    public function getColorRgbArray(): Color
+    {
+        if (!$this->colorRgbArray) {
+            $this->colorRgbArray = new Color($this->color);
+        }
+
+        return $this->colorRgbArray;
+    }
+
+    public function setColorRgbArray(Color $colorRgbArray): self
+    {
+        $this->colorRgbArray = $colorRgbArray;
 
         return $this;
     }
