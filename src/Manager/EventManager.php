@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Event;
 use App\Entity\Tariff;
 use App\Model\ExportCalendarToList;
+use App\Model\ExportCalendarToListDayHourItem;
 use App\Model\ExportCalendarToListDayItem;
 use App\Repository\EventRepository;
 use App\Repository\TariffRepository;
@@ -164,9 +165,25 @@ class EventManager
         $calendarEventsList = new ExportCalendarToList();
         do {
             $iteradedDate = clone $start;
-            $events = $this->er->getEnabledFilteredByDate($iteradedDate);
+            $events = $this->er->getEnabledFilteredByDateSortedByBeginAndClassroom($iteradedDate);
             $calendarEventsListDayItem = new ExportCalendarToListDayItem($iteradedDate->format('l'), $iteradedDate);
             $calendarEventsListDayItem->setEvents($events);
+            if (count($events) > 0) {
+                /** @var Event $iteradedEvent */
+                $iteradedEvent = $events[0];
+                $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').'...'.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
+                $calendarEventsListDayItem->addHour($calendarEventsListDayHourItem);
+                /** @var Event $event */
+                foreach ($events as $event) {
+                    if ($event->getBeginString() === $iteradedEvent->getBeginString() && $event->getEndString() === $iteradedEvent->getEndString()) {
+                        $calendarEventsListDayHourItem->addEvent($event);
+                    } else {
+                        $iteradedEvent = clone $event;
+                        $calendarEventsListDayHourItem = new ExportCalendarToListDayHourItem($iteradedEvent->getBegin()->format('H:i').'...'.$iteradedEvent->getEnd()->format('H:i'), $iteradedEvent->getBegin(), $iteradedEvent->getEnd());
+                        $calendarEventsListDayItem->addHour($calendarEventsListDayHourItem);
+                    }
+                }
+            }
             $calendarEventsList->addDay($calendarEventsListDayItem);
             // iterate $start date one day
             $start->add(new DateInterval('P1D'));

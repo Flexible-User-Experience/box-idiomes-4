@@ -10,12 +10,14 @@ class ExportCalendarToListDayItem
     private string $weekdayName;
     private DateTimeInterface $day;
     private array $events;
+    private array $hours;
 
     public function __construct(string $weekdayName, DateTimeInterface $day)
     {
         $this->weekdayName = $weekdayName;
         $this->day = $day;
         $this->events = [];
+        $this->hours = [];
     }
 
     public function getWeekdayName(): string
@@ -59,5 +61,37 @@ class ExportCalendarToListDayItem
         $this->events[] = $event;
 
         return $this;
+    }
+
+    public function getHours(): array
+    {
+        return $this->hours;
+    }
+
+    public function setHours(array $hours): self
+    {
+        $this->hours = $hours;
+
+        return $this;
+    }
+
+    public function addHour(ExportCalendarToListDayHourItem $hours): self
+    {
+        $this->hours[] = $hours;
+
+        return $this;
+    }
+
+    public function getMaxStudentRows(): int
+    {
+        $maxStudentRows = 0;
+        /** @var ExportCalendarToListDayHourItem $hour */
+        foreach ($this->getHours() as $hour) {
+            if ($hour->getMaxStudentRows() > $maxStudentRows) {
+                $maxStudentRows = $hour->getMaxStudentRows();
+            }
+        }
+
+        return $maxStudentRows;
     }
 }

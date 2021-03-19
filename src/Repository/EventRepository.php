@@ -121,4 +121,23 @@ class EventRepository extends ServiceEntityRepository
     {
         return $this->getEnabledFilteredByDateQ($date)->getResult();
     }
+
+    public function getEnabledFilteredByDateSortedByBeginAndClassroomQB(DateTimeInterface $date): QueryBuilder
+    {
+        return $this->getEnabledFilteredByDateQB($date)
+            ->join('e.group', 'g')
+            ->orderBy('e.begin')
+            ->addOrderBy('e.classroom')
+            ->addOrderBy('g.name');
+    }
+
+    public function getEnabledFilteredByDateSortedByBeginAndClassroomQ(DateTimeInterface $date): Query
+    {
+        return $this->getEnabledFilteredByDateSortedByBeginAndClassroomQB($date)->getQuery();
+    }
+
+    public function getEnabledFilteredByDateSortedByBeginAndClassroom(DateTimeInterface $date): array
+    {
+        return $this->getEnabledFilteredByDateSortedByBeginAndClassroomQ($date)->getResult();
+    }
 }
