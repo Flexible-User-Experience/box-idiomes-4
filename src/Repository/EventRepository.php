@@ -127,6 +127,7 @@ class EventRepository extends ServiceEntityRepository
         return $this->getEnabledFilteredByDateQB($date)
             ->join('e.group', 'g')
             ->orderBy('e.begin')
+//            ->addOrderBy('e.end')
             ->addOrderBy('e.classroom')
             ->addOrderBy('g.name');
     }
