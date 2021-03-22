@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.6.02 (WIP)
+##### Version 4.6.03 (WIP)
  * fix minor bugs
+
+##### Version 4.6.02 (2021-03-22)
+ * fix Calendar PDF group hour ranges
 
 ##### Version 4.6.01 (2021-03-19)
  * improve Calendar PDF design
