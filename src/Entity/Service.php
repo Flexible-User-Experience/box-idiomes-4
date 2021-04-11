@@ -77,11 +77,8 @@ class Service extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getTitle() : '---';
+        return $this->id ? $this->getTitle() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

@@ -145,11 +145,8 @@ class Tariff extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getYear().' · '.$this->getTypeString().' · '.$this->getPriceString() : '---';
+        return $this->id ? $this->getYear().' · '.$this->getTypeString().' · '.$this->getPriceString() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

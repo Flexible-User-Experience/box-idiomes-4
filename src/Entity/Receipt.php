@@ -139,11 +139,8 @@ class Receipt extends AbstractReceiptInvoice
         return $result;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getReceiptNumber().' · '.$this->getStudent().' · '.$this->getBaseAmountString() : '---';
+        return $this->id ? $this->getReceiptNumber().' · '.$this->getStudent().' · '.$this->getBaseAmountString() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

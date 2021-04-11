@@ -184,11 +184,8 @@ abstract class AbstractReceiptInvoiceLine extends AbstractBase
         return $this->units * $this->priceUnit - $this->discount;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getDescription() : '---';
+        return $this->id ? $this->getDescription() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

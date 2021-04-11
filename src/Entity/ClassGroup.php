@@ -7,10 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class ClassGroup.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\ClassGroupRepository")
  * @ORM\Table(name="class_group")
  * @UniqueEntity({"code"})
@@ -18,123 +14,77 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class ClassGroup extends AbstractBase
 {
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $code;
+    private string $code;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $name;
+    private ?string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $book;
+    private ?string $book;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $color;
+    private string $color;
 
     /**
-     * @var Color
+     * @var Color|null
      */
-    private $colorRgbArray;
+    private ?Color $colorRgbArray;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    private $isForPrivateLessons;
+    private ?bool $isForPrivateLessons;
 
-    /**
-     * Method.
-     */
-
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    /**
-     * @param string $code
-     *
-     * @return ClassGroup
-     */
-    public function setCode($code)
+    public function setCode(string $code): self
     {
         $this->code = $code;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return ClassGroup
-     */
-    public function setName($name)
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBook()
+    public function getBook(): ?string
     {
         return $this->book;
     }
 
-    /**
-     * @param string $book
-     *
-     * @return ClassGroup
-     */
-    public function setBook($book)
+    public function setBook(?string $book): self
     {
         $this->book = $book;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getColor()
+    public function getColor(): string
     {
         return $this->color;
     }
 
-    /**
-     * @param string $color
-     *
-     * @return ClassGroup
-     */
-    public function setColor($color)
+    public function setColor(string $color): self
     {
         $this->color = $color;
         $this->colorRgbArray = new Color($color);
@@ -158,39 +108,25 @@ class ClassGroup extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isForPrivateLessons()
+    public function isForPrivateLessons(): ?bool
     {
         return $this->isForPrivateLessons;
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsForPrivateLessons()
+    public function getIsForPrivateLessons(): ?bool
     {
         return $this->isForPrivateLessons();
     }
 
-    /**
-     * @param bool $isForPrivateLessons
-     *
-     * @return $this
-     */
-    public function setIsForPrivateLessons($isForPrivateLessons)
+    public function setIsForPrivateLessons(?bool $isForPrivateLessons): self
     {
         $this->isForPrivateLessons = $isForPrivateLessons;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getCode().($this->name ? ' · '.$this->getName() : '') : '---';
+        return $this->id ? $this->getCode().($this->name ? ' · '.$this->getName() : '') : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

@@ -341,8 +341,8 @@ abstract class AbstractPerson extends AbstractBase
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getFullName() : '---';
+        return $this->id ? $this->getFullName() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

@@ -408,16 +408,13 @@ class Event extends AbstractBase
     /**
      * @return string
      */
-    public function getCalendarTitle()
+    public function getCalendarTitle(): string
     {
         return '['.$this->getShortClassroomString().'] '.$this->getGroup()->getCode().' '.$this->getTeacher()->getName();
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getBeginString().' · '.$this->getClassroomString().' · '.$this->getTeacher()->getName().' · '.$this->getGroup()->getCode() : '---';
+        return $this->id ? $this->getBeginString().' · '.$this->getClassroomString().' · '.$this->getTeacher()->getName().' · '.$this->getGroup()->getCode() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

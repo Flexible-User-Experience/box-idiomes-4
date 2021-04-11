@@ -44,11 +44,8 @@ class SpendingCategory extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getName() : '---';
+        return $this->id ? $this->getName() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }
