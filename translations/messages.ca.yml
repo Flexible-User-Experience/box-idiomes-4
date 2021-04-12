@@ -114,7 +114,9 @@ frontend:
             comments: "Comentaris"
             previous_academy: "Acadèmia anterior"
             has_been_previous_customer: "Sóc client nou, es el primer curs que accedeixo a la vostra acadèmia"
-            wants_to_make_official_exam: "Vull realitzar l'examen oficial"
+            has_been_previous_customer_short: "Client nou"
+            wants_to_make_official_exam: "Vull realitzar l'examen oficial de Cambridge University"
+            wants_to_make_official_exam_short: "Realitza examen oficial"
             season: "Temporada"
             enabled: "Alumne creat"
             submit: "Registrar"
@@ -206,6 +208,7 @@ backend:
             code: Codi
             name: Nom
             book: Llibre
+            school_year: "Curs escolar"
             color: Color
             pdf:
                 button: "Generar PDF amb llistat d'alumnes"
@@ -239,6 +242,7 @@ backend:
             teacher: Professor
             classroom: Aula
             group: Grup classe
+            group_with_book: "Grup classe (Llibre)"
             students: Estudiants
             previous: Abans
             next: Pròxima
