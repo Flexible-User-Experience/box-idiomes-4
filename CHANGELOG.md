@@ -1,12 +1,14 @@
 Changelog
 =========
 
-##### Version 4.6.04 (WIP)
+##### Version 4.7.01 (WIP)
  * fix minor bugs
 
-##### Version 4.6.03 (WIP)
+##### Version 4.7.00 (2021-04-12)
  * reduce unnecessary commented code lines
  * better local-php-security-checker usage
+ * add Book filter in Student Admin
+ * enable PreRegister form again (summer 2021)
 
 ##### Version 4.6.02 (2021-03-22)
  * fix Calendar PDF group hour ranges
