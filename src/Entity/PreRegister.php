@@ -46,6 +46,16 @@ class PreRegister extends AbstractPerson
      */
     protected ?ClassGroup $classGroup;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
+     */
+    protected ?bool $hasBeenPreivousCustomer = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
+     */
+    protected ?bool $wantsToMakeOfficialExam = false;
+
     public function getAge(): ?string
     {
         return $this->age;
@@ -131,6 +141,30 @@ class PreRegister extends AbstractPerson
     public function setClassGroup(?ClassGroup $classGroup): PreRegister
     {
         $this->classGroup = $classGroup;
+
+        return $this;
+    }
+
+    public function getHasBeenPreivousCustomer(): ?bool
+    {
+        return $this->hasBeenPreivousCustomer;
+    }
+
+    public function setHasBeenPreivousCustomer(?bool $hasBeenPreivousCustomer): self
+    {
+        $this->hasBeenPreivousCustomer = $hasBeenPreivousCustomer;
+
+        return $this;
+    }
+
+    public function getWantsToMakeOfficialExam(): ?bool
+    {
+        return $this->wantsToMakeOfficialExam;
+    }
+
+    public function setWantsToMakeOfficialExam(?bool $wantsToMakeOfficialExam): self
+    {
+        $this->wantsToMakeOfficialExam = $wantsToMakeOfficialExam;
 
         return $this;
     }

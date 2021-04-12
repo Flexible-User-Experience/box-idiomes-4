@@ -9,31 +9,16 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class EventBatchRemoveType.
- *
- * @category FormType
- */
 class EventBatchRemoveType extends AbstractType
 {
-    /**
-     * @var EventManager
-     */
-    private $em;
+    private EventManager $em;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * EventBatchRemoveType constructor.
-     */
     public function __construct(EventManager $em)
     {
         $this->em = $em;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var Event $event */
         $event = $options['event'];
@@ -54,7 +39,7 @@ class EventBatchRemoveType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

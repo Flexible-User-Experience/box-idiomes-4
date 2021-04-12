@@ -7,31 +7,16 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class GenerateInvoiceType.
- *
- * @category FormType
- */
 class GenerateInvoiceType extends GenerateInvoiceYearMonthChooserType
 {
-    /**
-     * @var RouterInterface
-     */
-    private $rs;
+    private RouterInterface $rs;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * GenerateInvoiceType constructor.
-     */
     public function __construct(RouterInterface $rs)
     {
         $this->rs = $rs;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder

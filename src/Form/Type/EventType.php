@@ -18,40 +18,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class EventType.
- *
- * @category FormType
- */
 class EventType extends AbstractType
 {
-    /**
-     * @var TeacherRepository
-     */
-    private $tr;
+    private TeacherRepository $tr;
+    private ClassGroupRepository $cgr;
+    private StudentRepository $sr;
+    private EventManager $em;
 
-    /**
-     * @var ClassGroupRepository
-     */
-    private $cgr;
-
-    /**
-     * @var StudentRepository
-     */
-    private $sr;
-
-    /**
-     * @var EventManager
-     */
-    private $em;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * EventType constructor.
-     */
     public function __construct(TeacherRepository $tr, ClassGroupRepository $cgr, StudentRepository $sr, EventManager $em)
     {
         $this->tr = $tr;
@@ -60,7 +33,7 @@ class EventType extends AbstractType
         $this->em = $em;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var Event $event */
         $event = $options['event'];
@@ -141,7 +114,7 @@ class EventType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

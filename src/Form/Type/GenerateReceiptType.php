@@ -2,42 +2,23 @@
 
 namespace App\Form\Type;
 
-use Exception;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class GenerateReceiptType.
- *
- * @category FormType
- */
 class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
 {
-    const NAME = 'generate_receipt';
+    public const NAME = 'generate_receipt';
 
-    /**
-     * @var RouterInterface
-     */
-    private $rs;
+    private RouterInterface $rs;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * GenerateReceiptType constructor.
-     */
     public function __construct(RouterInterface $rs)
     {
         $this->rs = $rs;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder
