@@ -1,7 +1,7 @@
 Changelog
 =========
 
-##### Version 4.7.01 (WIP)
+##### Version 4.7.01 (2021-04-12)
  * fix minor bugs
  * fix missing Apache reload hook after Ansible deploy
  * add short translations for long PreRegister attributes
