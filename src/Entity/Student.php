@@ -3,16 +3,13 @@
 namespace App\Entity;
 
 use App\Entity\Traits\BankCreditorSepaTrait;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Student.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\StudentRepository")
  * @ORM\Table(name="student")
  * @UniqueEntity({"name", "surname"})
@@ -24,116 +21,78 @@ class Student extends AbstractPerson
     public const DISCOUNT_PER_EXTRA_SON = 5;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(type="date")
      */
-    private $birthDate;
+    private DateTimeInterface $birthDate;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $schedule;
+    private ?string $schedule;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text", length=4000, nullable=true)
      */
-    private $comments;
+    private ?string $comments;
 
     /**
-     * @var Person
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="students")
      */
-    private $parent;
+    private ?Person $parent;
 
     /**
-     * @var Bank
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
      * @Assert\Valid
      */
-    protected $bank;
+    protected ?Bank $bank = null;
 
     /**
-     * @var Tariff
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Tariff")
      * @ORM\JoinColumn(name="tariff_id", referencedColumnName="id")
      */
-    private $tariff;
+    private ?Tariff $tariff;
 
     /**
-     * @var ArrayCollection
-     *
      * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="students")
      */
     private $events;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    private $hasImageRightsAccepted = false;
+    private ?bool $hasImageRightsAccepted = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    private $hasSepaAgreementAccepted = false;
+    private ?bool $hasSepaAgreementAccepted = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    private $isPaymentExempt = false;
+    private ?bool $isPaymentExempt = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    private $hasAcceptedInternalRegulations = false;
+    private ?bool $hasAcceptedInternalRegulations = false;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * Student constructor.
-     */
     public function __construct()
     {
         $this->events = new ArrayCollection();
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getBirthDate()
+    public function getBirthDate(): DateTimeInterface
     {
         return $this->birthDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getBirthDateString()
+    public function getBirthDateString(): string
     {
         return $this->getBirthDate() ? $this->getBirthDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @return Student
-     */
-    public function setBirthDate(\DateTime $birthDate)
+    public function setBirthDate(DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
 

@@ -6,75 +6,51 @@ use App\Enum\PreRegisterSeasonEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class PreRegister.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\PreRegisterRepository")
  * @ORM\Table(name="pre_register")
  */
 class PreRegister extends AbstractPerson
 {
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $age;
+    private ?string $age;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $courseLevel;
+    private ?string $courseLevel;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $preferredTimetable;
+    private ?string $preferredTimetable;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $previousAcademy;
+    private ?string $previousAcademy;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text", length=4000, nullable=true)
      */
-    private $comments;
+    private ?string $comments;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    private $season = 0;
+    private int $season = 0;
 
     /**
-     * @var ClassGroup
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\ClassGroup")
      */
-    protected $classGroup;
+    protected ?ClassGroup $classGroup;
 
-    /**
-     * Methods.
-     */
     public function getAge(): ?string
     {
         return $this->age;
     }
 
-    /**
-     * @return $this
-     */
     public function setAge(?string $age): PreRegister
     {
         $this->age = $age;
@@ -140,9 +116,6 @@ class PreRegister extends AbstractPerson
         return PreRegisterSeasonEnum::getReversedEnumArray()[$this->getSeason()];
     }
 
-    /**
-     * @return $this
-     */
     public function setSeason(int $season): PreRegister
     {
         $this->season = $season;
@@ -155,9 +128,6 @@ class PreRegister extends AbstractPerson
         return $this->classGroup;
     }
 
-    /**
-     * @return $this
-     */
     public function setClassGroup(?ClassGroup $classGroup): PreRegister
     {
         $this->classGroup = $classGroup;

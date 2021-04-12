@@ -8,10 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Person.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
  * @ORM\Table(name="person")
  */
@@ -20,11 +16,9 @@ class Person extends AbstractPerson
     use BankCreditorSepaTrait;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    protected $dni;
+    protected ?string $dni;
 
     /**
      * @var array
@@ -34,38 +28,21 @@ class Person extends AbstractPerson
     private $students;
 
     /**
-     * @var Bank
-     *
      * @ORM\OneToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
      * @Assert\Valid
      */
-    protected $bank;
+    protected ?Bank $bank = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * Person constructor.
-     */
     public function __construct()
     {
         $this->students = new ArrayCollection();
     }
 
-    /**
-     * @return array
-     */
     public function getStudents()
     {
         return $this->students;
     }
 
-    /**
-     * @param array $students
-     *
-     * @return Person
-     */
     public function setStudents($students)
     {
         $this->students = $students;
@@ -73,10 +50,7 @@ class Person extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getSonsAmount()
+    public function getSonsAmount(): int
     {
         return count($this->students);
     }
