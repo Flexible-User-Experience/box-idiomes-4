@@ -2,6 +2,24 @@
 
 {% form_theme preRegisterForm _self %}
 
+{% block _pre_register_hasBeenPreivousCustomer_widget %}
+    <div class="checkbox">
+        <input type="checkbox" id="hasBeenPreivousCustomer_checkbox" {{ block('widget_attributes') }} />
+        <label class="control-label my-privacy-label" for="hasBeenPreivousCustomer_checkbox">
+            {{ 'frontend.forms.preregister.has_been_preivous_customer' | trans }}
+        </label>
+    </div>
+{% endblock %}
+
+{% block _pre_register_wantsToMakeOfficialExam_widget %}
+    <div class="checkbox">
+        <input type="checkbox" id="wantsToMakeOfficialExam_checkbox" {{ block('widget_attributes') }} />
+        <label class="control-label my-privacy-label" for="wantsToMakeOfficialExam_checkbox">
+            {{ 'frontend.forms.preregister.wants_to_make_official_exam' | trans }}
+        </label>
+    </div>
+{% endblock %}
+
 {% block _pre_register_privacy_widget %}
     <div class="checkbox">
         <input type="checkbox" id="privacy_checkbox" {{ block('widget_attributes') }} />
