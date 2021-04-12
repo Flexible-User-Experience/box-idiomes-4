@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 4.7.01 (WIP)
  * fix minor bugs
+ * fix missing Apache reload hook after Ansible deploy
 
 ##### Version 4.7.00 (2021-04-12)
  * reduce unnecessary commented code lines
