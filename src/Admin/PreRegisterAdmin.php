@@ -141,14 +141,14 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'hasBeenPreviousCustomer',
                 null,
                 [
-                    'label' => 'frontend.forms.preregister.has_been_previous_customer',
+                    'label' => 'frontend.forms.preregister.has_been_previous_customer_short',
                 ]
             )
             ->add(
                 'wantsToMakeOfficialExam',
                 null,
                 [
-                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam',
+                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam_short',
                 ]
             )
             ->add(
@@ -246,14 +246,14 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 'hasBeenPreviousCustomer',
                 null,
                 [
-                    'label' => 'frontend.forms.preregister.has_been_previous_customer',
+                    'label' => 'frontend.forms.preregister.has_been_previous_customer_short',
                 ]
             )
             ->add(
                 'wantsToMakeOfficialExam',
                 null,
                 [
-                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam',
+                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam_short',
                 ]
             )
             ->add(
