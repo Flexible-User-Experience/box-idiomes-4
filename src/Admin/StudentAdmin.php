@@ -44,9 +44,9 @@ class StudentAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
+        $form
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'name',
@@ -244,9 +244,9 @@ class StudentAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'dni',
                 null,
@@ -351,8 +351,17 @@ class StudentAdmin extends AbstractBaseAdmin
                 [
                     'class' => ClassGroup::class,
                     'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.class_group_repository')->getEnabledSortedByCodeQB(),
+                    'choice_label' => 'code',
                 ]
             )
+            ->add(
+                'events.group.book',
+                null,
+                [
+                    'label' => 'backend.admin.class_group.book',
+                ]
+            )
+
             ->add(
                 'age',
                 CallbackFilter::class,
@@ -447,7 +456,7 @@ class StudentAdmin extends AbstractBaseAdmin
         ;
     }
 
-    public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value)
+    public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value): bool
     {
         if ($value && array_key_exists('value', $value)) {
             $age = (int) $value['value'];
@@ -464,9 +473,9 @@ class StudentAdmin extends AbstractBaseAdmin
         return false;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'name',
                 null,
@@ -587,9 +596,6 @@ class StudentAdmin extends AbstractBaseAdmin
         ];
     }
 
-    /**
-     * @param Student $object
-     */
     public function preRemove($object): void
     {
         $relatedReceipts = $this->getModelManager()->findBy(Receipt::class, [
@@ -624,9 +630,6 @@ class StudentAdmin extends AbstractBaseAdmin
         $this->commonPreActions($object);
     }
 
-    /**
-     * @param Student $object
-     */
     private function commonPreActions($object): void
     {
         if ($object->getBank()->getAccountNumber()) {
