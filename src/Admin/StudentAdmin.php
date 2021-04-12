@@ -10,8 +10,10 @@ use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\Tariff;
+use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
+use DateTime;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -362,11 +364,27 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'schoolYear',
+                CallbackFilter::class,
+                [
+                    'label' => 'backend.admin.class_group.school_year',
+                    'callback' => [$this, 'buildDatagridSchoolYearFilter'],
+                    'required' => true,
+                ],
+                ChoiceType::class,
+                [
+                    'choices' => SchoolYearChoicesGeneratorEnum::getSchoolYearChoicesArray(),
+                    'expanded' => false,
+                    'multiple' => false,
+                ]
+            )
+            ->add(
                 'age',
                 CallbackFilter::class,
                 [
                     'label' => 'backend.admin.student.age',
                     'callback' => [$this, 'buildDatagridAgesFilter'],
+                    'required' => true,
                 ],
                 ChoiceType::class,
                 [
@@ -453,6 +471,28 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
         ;
+    }
+
+    public function buildDatagridSchoolYearFilter($queryBuilder, $alias, $field, $value): bool
+    {
+        if ($value && array_key_exists('value', $value)) {
+            $schoolYear = (int) $value['value'];
+            $begin = new DateTime();
+            $begin->setDate($schoolYear, 8, 31);
+            $begin->setTime(0, 0);
+            $end = new DateTime();
+            $end->setDate($schoolYear + 1, 9, 1);
+            $end->setTime(0, 0);
+            $queryBuilder->join($alias.'.events', 'e');
+            $queryBuilder->andWhere('e.begin > :begin');
+            $queryBuilder->andWhere('e.begin < :end');
+            $queryBuilder->setParameter('begin', $begin);
+            $queryBuilder->setParameter('end', $end);
+
+            return true;
+        }
+
+        return false;
     }
 
     public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value): bool

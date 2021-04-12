@@ -208,6 +208,7 @@ backend:
             code: Codi
             name: Nom
             book: Llibre
+            school_year: "Curs escolar"
             color: Color
             pdf:
                 button: "Generar PDF amb llistat d'alumnes"

@@ -5,7 +5,7 @@ Changelog
  * fix minor bugs
  * fix missing Apache reload hook after Ansible deploy
  * add short translations for long PreRegister attributes
- * improve ClassGroup results in StudentAdmin filter
+ * improve ClassGroup results in StudentAdmin filter by school year
 
 ##### Version 4.7.00 (2021-04-12)
  * reduce unnecessary commented code lines
