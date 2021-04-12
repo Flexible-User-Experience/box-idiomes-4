@@ -14,27 +14,27 @@ class PreRegister extends AbstractPerson
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private ?string $age;
+    private ?string $age = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private ?string $courseLevel;
+    private ?string $courseLevel = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private ?string $preferredTimetable;
+    private ?string $preferredTimetable = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private ?string $previousAcademy;
+    private ?string $previousAcademy = null;
 
     /**
      * @ORM\Column(type="text", length=4000, nullable=true)
      */
-    private ?string $comments;
+    private ?string $comments = null;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
@@ -44,12 +44,12 @@ class PreRegister extends AbstractPerson
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ClassGroup")
      */
-    protected ?ClassGroup $classGroup;
+    protected ?ClassGroup $classGroup = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    protected ?bool $hasBeenPreivousCustomer = false;
+    protected ?bool $hasBeenPreviousCustomer = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
@@ -145,14 +145,19 @@ class PreRegister extends AbstractPerson
         return $this;
     }
 
-    public function getHasBeenPreivousCustomer(): ?bool
+    public function getHasBeenPreviousCustomer(): ?bool
     {
-        return $this->hasBeenPreivousCustomer;
+        return $this->hasBeenPreviousCustomer;
     }
 
-    public function setHasBeenPreivousCustomer(?bool $hasBeenPreivousCustomer): self
+    public function getHasBeenPreviousCustomerString(): string
     {
-        $this->hasBeenPreivousCustomer = $hasBeenPreivousCustomer;
+        return $this->getHasBeenPreviousCustomer() ? 'sí' : 'no';
+    }
+
+    public function setHasBeenPreviousCustomer(?bool $hasBeenPreviousCustomer): self
+    {
+        $this->hasBeenPreviousCustomer = $hasBeenPreviousCustomer;
 
         return $this;
     }
@@ -160,6 +165,11 @@ class PreRegister extends AbstractPerson
     public function getWantsToMakeOfficialExam(): ?bool
     {
         return $this->wantsToMakeOfficialExam;
+    }
+
+    public function getWantsToMakeOfficialExamString(): string
+    {
+        return $this->getWantsToMakeOfficialExam() ? 'sí' : 'no';
     }
 
     public function setWantsToMakeOfficialExam(?bool $wantsToMakeOfficialExam): self

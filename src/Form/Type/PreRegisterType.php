@@ -137,11 +137,11 @@ class PreRegisterType extends AbstractType
                 ]
             )
             ->add(
-                'hasBeenPreivousCustomer',
+                'hasBeenPreviousCustomer',
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'label' => 'frontend.forms.preregister.has_been_preivous_customer',
+                    'label' => 'frontend.forms.preregister.has_been_previous_customer',
                     'attr' => [
                         'tabindex' => 10,
                     ],
