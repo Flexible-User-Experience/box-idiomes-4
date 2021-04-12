@@ -361,7 +361,6 @@ class StudentAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.class_group.book',
                 ]
             )
-
             ->add(
                 'age',
                 CallbackFilter::class,

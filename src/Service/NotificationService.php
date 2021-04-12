@@ -13,44 +13,14 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use TCPDF;
 use Twig\Environment;
 
-/**
- * Class NotificationService.
- *
- * @category Service
- */
 class NotificationService
 {
-    /**
-     * @var CourierService
-     */
-    private $messenger;
+    private CourierService $messenger;
+    private Environment $twig;
+    private string $amd; // system's App Mail Destionation
+    private string $pub; // project URL base
 
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
-     * @var string system's App Mail Destionation
-     */
-    private $amd;
-
-    /**
-     * @var string Project URL Base
-     */
-    private $pub;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * NotificationService constructor.
-     *
-     * @param string $amd
-     * @param string $pub
-     */
-    public function __construct(CourierService $messenger, Environment $twig, $amd, $pub)
+    public function __construct(CourierService $messenger, Environment $twig, string $amd, string $pub)
     {
         $this->messenger = $messenger;
         $this->twig = $twig;
@@ -62,9 +32,8 @@ class NotificationService
      * Send a common notification mail to frontend user.
      *
      * @return int If is 0 failure otherwise amount of recipients
-     * @return int
      */
-    public function sendCommonUserNotification(ContactMessage $contactMessage)
+    public function sendCommonUserNotification(ContactMessage $contactMessage): int
     {
         $result = 1;
         try {
@@ -76,9 +45,7 @@ class NotificationService
                     'contact' => $contactMessage,
                 ])
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -87,10 +54,8 @@ class NotificationService
 
     /**
      * Send a contact form notification to administrator.
-     *
-     * @return int
      */
-    public function sendAdminNotification(ContactMessage $contactMessage)
+    public function sendAdminNotification(ContactMessage $contactMessage): int
     {
         $result = 1;
         try {
@@ -102,9 +67,7 @@ class NotificationService
                     'contact' => $contactMessage,
                 ])
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -113,10 +76,8 @@ class NotificationService
 
     /**
      * Send a contact form notification to admin user.
-     *
-     * @return int
      */
-    public function sendContactAdminNotification(ContactMessage $contactMessage)
+    public function sendContactAdminNotification(ContactMessage $contactMessage): int
     {
         $result = 1;
         try {
@@ -128,9 +89,7 @@ class NotificationService
                     'contact' => $contactMessage,
                 ])
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -139,10 +98,8 @@ class NotificationService
 
     /**
      * Send backend answer notification to web user.
-     *
-     * @return int
      */
-    public function sendUserBackendNotification(ContactMessage $contactMessage)
+    public function sendUserBackendNotification(ContactMessage $contactMessage): int
     {
         $result = 1;
         try {
@@ -154,9 +111,7 @@ class NotificationService
                     'contact' => $contactMessage,
                 ])
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -165,10 +120,8 @@ class NotificationService
 
     /**
      * Send a newsletter subscription form notification to admin user.
-     *
-     * @return int
      */
-    public function sendNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact)
+    public function sendNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact): int
     {
         $result = 1;
         try {
@@ -181,9 +134,7 @@ class NotificationService
                 ]),
                 $newsletterContact->getEmail()
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -192,10 +143,8 @@ class NotificationService
 
     /**
      * Send a newsletter subscription form notification to admin user on Mailchimp failure.
-     *
-     * @return int
      */
-    public function sendFailureNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact)
+    public function sendFailureNewsletterSubscriptionAdminNotification(NewsletterContact $newsletterContact): int
     {
         $result = 1;
         try {
@@ -208,9 +157,7 @@ class NotificationService
                 ]),
                 $newsletterContact->getEmail()
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -222,7 +169,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendCommonNewsletterUserNotification(NewsletterContact $newsletterContact)
+    public function sendCommonNewsletterUserNotification(NewsletterContact $newsletterContact): int
     {
         $result = 1;
         try {
@@ -234,9 +181,7 @@ class NotificationService
                     'contact' => $newsletterContact,
                 ])
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -248,7 +193,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendReceiptReminderPdfNotification(Receipt $receipt, TCPDF $pdf)
+    public function sendReceiptReminderPdfNotification(Receipt $receipt, TCPDF $pdf): int
     {
         $result = 1;
         try {
@@ -263,9 +208,7 @@ class NotificationService
                 'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
                 $pdf
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -277,7 +220,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendReceiptPdfNotification(Receipt $receipt, TCPDF $pdf)
+    public function sendReceiptPdfNotification(Receipt $receipt, TCPDF $pdf): int
     {
         $result = 1;
         try {
@@ -292,9 +235,7 @@ class NotificationService
                 'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
                 $pdf
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -306,7 +247,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendInvoicePdfNotification(Invoice $invoice, TCPDF $pdf)
+    public function sendInvoicePdfNotification(Invoice $invoice, TCPDF $pdf): int
     {
         $result = 1;
         try {
@@ -321,9 +262,7 @@ class NotificationService
                 'invoice_'.$invoice->getSluggedInvoiceNumber().'.pdf',
                 $pdf
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -335,7 +274,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendStudentAbsenceNotification(StudentAbsence $studentAbsence)
+    public function sendStudentAbsenceNotification(StudentAbsence $studentAbsence): int
     {
         $result = 1;
         try {
@@ -347,9 +286,7 @@ class NotificationService
                     'studentAbsence' => $studentAbsence,
                 ])
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
@@ -358,10 +295,8 @@ class NotificationService
 
     /**
      * Send a preregister form notification to admin user.
-     *
-     * @return int
      */
-    public function sendPreRegisterAdminNotification(PreRegister $preRegister)
+    public function sendPreRegisterAdminNotification(PreRegister $preRegister): int
     {
         $result = 1;
         try {
@@ -374,9 +309,7 @@ class NotificationService
                 ]),
                 $preRegister->getEmail()
             );
-        } catch (TransportExceptionInterface $exception) {
-            $result = 0;
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
         }
 
