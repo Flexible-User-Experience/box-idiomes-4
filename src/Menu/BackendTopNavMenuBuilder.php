@@ -2,60 +2,30 @@
 
 namespace App\Menu;
 
+use App\Entity\User;
 use App\Enum\UserRolesEnum;
 use App\Repository\ContactMessageRepository;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Security;
 
-/**
- * Class BackendTopNavMenuBuilder.
- *
- * @category Menu
- */
 class BackendTopNavMenuBuilder
 {
-    /**
-     * @var FactoryInterface
-     */
-    private $factory;
+    private FactoryInterface $factory;
+    private Security $ss;
+    private ContactMessageRepository $cmr;
 
-    /**
-     * @var TokenStorageInterface
-     */
-    private $ts;
-
-    /**
-     * @var AuthorizationChecker
-     */
-    private $ac;
-
-    /**
-     * @var ContactMessageRepository
-     */
-    private $cmr;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * Constructor.
-     */
-    public function __construct(FactoryInterface $factory, TokenStorageInterface $ts, AuthorizationChecker $ac, ContactMessageRepository $cmr)
+    public function __construct(FactoryInterface $factory, Security $ss, ContactMessageRepository $cmr)
     {
         $this->factory = $factory;
-        $this->ts = $ts;
-        $this->ac = $ac;
+        $this->ss = $ss;
         $this->cmr = $cmr;
     }
 
-    /**
-     * @return ItemInterface
-     */
-    public function createTopNavMenu()
+    public function createTopNavMenu(): ItemInterface
     {
+        /** @var User $user */
+        $user = $this->ss->getUser();
         $menu = $this->factory->createItem('topnav');
         $menu->setChildrenAttribute('class', 'nav navbar-nav navbar-right');
         $menu
@@ -88,15 +58,15 @@ class BackendTopNavMenuBuilder
                 )
             ;
         }
-        if ($this->ac->isGranted(UserRolesEnum::ROLE_ADMIN)) {
+        if ($this->ss->isGranted(UserRolesEnum::ROLE_ADMIN)) {
             $menu
                 ->addChild(
                     'username',
                     [
-                        'label' => $this->ts->getToken()->getUser()->getFullname(),
+                        'label' => $user->getFullname(),
                         'route' => 'admin_app_user_edit',
                         'routeParameters' => [
-                            'id' => $this->ts->getToken()->getUser()->getId(),
+                            'id' => $user->getId(),
                         ],
                     ]
                 )
@@ -106,7 +76,7 @@ class BackendTopNavMenuBuilder
                 ->addChild(
                     'username',
                     [
-                        'label' => $this->ts->getToken()->getUser()->getFullname(),
+                        'label' => $user->getFullname(),
                         'uri' => '#',
                     ]
                 )

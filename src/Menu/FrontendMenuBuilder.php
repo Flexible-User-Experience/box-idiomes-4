@@ -2,46 +2,29 @@
 
 namespace App\Menu;
 
+use App\Enum\UserRolesEnum;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Security;
 
-/**
- * Class FrontendMenuBuilder.
- *
- * @category Menu
- */
 class FrontendMenuBuilder
 {
     private FactoryInterface $factory;
-    private AuthorizationChecker $ac;
-    private TokenStorageInterface $ts;
+    private Security $ss;
     private string $ppo;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * Constructor.
-     */
-    public function __construct(FactoryInterface $factory, AuthorizationChecker $ac, TokenStorageInterface $ts, string $ppo)
+    public function __construct(FactoryInterface $factory, Security $ss, string $ppo)
     {
         $this->factory = $factory;
-        $this->ac = $ac;
-        $this->ts = $ts;
+        $this->ss = $ss;
         $this->ppo = $ppo;
     }
 
-    /**
-     * @return ItemInterface
-     */
-    public function createTopMenu()
+    public function createTopMenu(): ItemInterface
     {
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav navbar-right');
-        if ($this->ts->getToken() && $this->ac->isGranted('ROLE_CMS')) {
+        if ($this->ss->isGranted(UserRolesEnum::ROLE_CMS)) {
             $menu->addChild(
                 'admin',
                 [
