@@ -36,7 +36,7 @@ class ClassGroup extends AbstractBase
     /**
      * @var Color|null
      */
-    private ?Color $colorRgbArray;
+    private ?Color $colorRgbArray = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})

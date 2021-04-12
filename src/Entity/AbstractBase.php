@@ -16,7 +16,7 @@ abstract class AbstractBase
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
-    protected int $id = 0;
+    protected $id;
 
     /**
      * @ORM\Column(type="datetime")
@@ -35,7 +35,7 @@ abstract class AbstractBase
      */
     protected bool $enabled = true;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }

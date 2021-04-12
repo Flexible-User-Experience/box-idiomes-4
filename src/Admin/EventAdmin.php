@@ -7,6 +7,7 @@ use App\Entity\Event;
 use App\Entity\Student;
 use App\Entity\Teacher;
 use App\Enum\EventClassroomTypeEnum;
+use DateInterval;
 use Exception;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -18,11 +19,6 @@ use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-/**
- * Class EventAdmin.
- *
- * @category Admin
- */
 class EventAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Event';
@@ -34,9 +30,6 @@ class EventAdmin extends AbstractBaseAdmin
         '_per_page' => 400,
     ];
 
-    /**
-     * Configure route collection.
-     */
     protected function configureRoutes(RouteCollection $collection): void
     {
         parent::configureRoutes($collection);
@@ -47,9 +40,9 @@ class EventAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
+        $form
             ->with('backend.admin.dates', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'begin',
@@ -69,8 +62,8 @@ class EventAdmin extends AbstractBaseAdmin
                     'required' => true,
                 ]
             );
-        if (is_null($this->getSubject()->getId())) {
-            $formMapper
+        if (!$this->id($this->getSubject())) {
+            $form
                 ->add(
                     'dayFrequencyRepeat',
                     null,
@@ -90,7 +83,7 @@ class EventAdmin extends AbstractBaseAdmin
                     ]
                 );
         }
-        $formMapper
+        $form
             ->end()
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
             ->add(
@@ -143,9 +136,9 @@ class EventAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'begin',
                 DateTimeFilter::class,
@@ -211,9 +204,6 @@ class EventAdmin extends AbstractBaseAdmin
         ;
     }
 
-    /**
-     * @param string $context
-     */
     public function createQuery($context = 'list'): ProxyQueryInterface
     {
         $queryBuilder = parent::createQuery($context);
@@ -225,9 +215,9 @@ class EventAdmin extends AbstractBaseAdmin
         return $queryBuilder;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'begin',
                 'date',
@@ -331,8 +321,8 @@ class EventAdmin extends AbstractBaseAdmin
             $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
             $currentBegin = $object->getBegin();
             $currentEnd = $object->getEnd();
-            $currentBegin->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
-            $currentEnd->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+            $currentBegin->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+            $currentEnd->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
             $previousEvent = $object;
             $found = false;
 
@@ -351,8 +341,8 @@ class EventAdmin extends AbstractBaseAdmin
                 $em->persist($event);
                 $em->flush();
 
-                $currentBegin->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
-                $currentEnd->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+                $currentBegin->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+                $currentEnd->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
                 $previousEvent = $event;
                 $found = true;
             }
