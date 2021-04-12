@@ -53,16 +53,11 @@
                                 <p>{{ preRegister.comments | nl2br }}</p>
                                 <br>
                             {% endif %}
-                            {% if preRegister.hasBeenPreviousCustomer %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.has_been_previous_customer' | trans }}</p>
-                                <p>{{ preRegister.hasBeenPreviousCustomerString | nl2br }}</p>
-                                <br>
-                            {% endif %}
-                            {% if preRegister.wantsToMakeOfficialExam %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.wants_to_make_official_exam' | trans }}</p>
-                                <p>{{ preRegister.wantsToMakeOfficialExamString | nl2br }}</p>
-                                <br>
-                            {% endif %}
+                            <p class="grey-color">{{ 'frontend.forms.preregister.has_been_previous_customer' | trans }}</p>
+                            <p>{{ preRegister.hasBeenPreviousCustomerString | nl2br }}</p>
+                            <br>
+                            <p class="grey-color">{{ 'frontend.forms.preregister.wants_to_make_official_exam' | trans }}</p>
+                            <p>{{ preRegister.wantsToMakeOfficialExamString | nl2br }}</p>
                         </th>
                         <th class="expander"></th>
                     </tr>
