@@ -241,6 +241,7 @@ backend:
             teacher: Professor
             classroom: Aula
             group: Grup classe
+            group_with_book: "Grup classe (Llibre)"
             students: Estudiants
             previous: Abans
             next: Pròxima

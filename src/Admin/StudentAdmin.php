@@ -345,13 +345,13 @@ class StudentAdmin extends AbstractBaseAdmin
                 'events.group',
                 null,
                 [
-                    'label' => 'backend.admin.event.group',
+                    'label' => 'backend.admin.event.group_with_book',
                 ],
                 EntityType::class,
                 [
                     'class' => ClassGroup::class,
                     'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.class_group_repository')->getEnabledSortedByCodeQB(),
-                    'choice_label' => 'code',
+                    'choice_label' => 'codeAndBook',
                 ]
             )
             ->add(

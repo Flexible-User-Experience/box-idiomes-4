@@ -33,9 +33,6 @@ class ClassGroup extends AbstractBase
      */
     private string $color;
 
-    /**
-     * @var Color|null
-     */
     private ?Color $colorRgbArray = null;
 
     /**
@@ -46,6 +43,19 @@ class ClassGroup extends AbstractBase
     public function getCode(): string
     {
         return $this->code;
+    }
+
+    public function getCodeAndBook(): string
+    {
+        $result = '';
+        if ($this->getCode()) {
+            $result = $this->getCode();
+            if ($this->getBook()) {
+                $result .= ' ('.$this->getBook().')';
+            }
+        }
+
+        return $result;
     }
 
     public function setCode(string $code): self
