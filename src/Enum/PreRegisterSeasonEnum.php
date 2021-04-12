@@ -2,32 +2,21 @@
 
 namespace App\Enum;
 
-/**
- * PreRegisterSeasonEnum class.
- *
- * @category Enum
- */
 class PreRegisterSeasonEnum
 {
-    const SEASON_JULY_2020 = 0;
-    const SEASON_SEPTEMBER_2020 = 1;
-    const SEASON_JULY_2021 = 2;
-    const SEASON_SEPTEMBER_2021 = 3;
-    const SEASON_JULY_2022 = 4;
-    const SEASON_SEPTEMBER_2022 = 5;
+    public const SEASON_JULY_2020 = 0;
+    public const SEASON_SEPTEMBER_2020 = 1;
+    public const SEASON_JULY_2021 = 2;
+    public const SEASON_SEPTEMBER_2021 = 3;
+    public const SEASON_JULY_2022 = 4;
+    public const SEASON_SEPTEMBER_2022 = 5;
 
-    /**
-     * @return array
-     */
-    public static function getEnumArray()
+    public static function getEnumArray(): array
     {
         return array_flip(self::getReversedEnumArray());
     }
 
-    /**
-     * @return array
-     */
-    public static function getReversedEnumArray()
+    public static function getReversedEnumArray(): array
     {
         return [
             self::SEASON_JULY_2020 => 'seasons.july_2020',

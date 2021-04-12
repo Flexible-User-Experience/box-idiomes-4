@@ -235,13 +235,8 @@ class ContactMessage extends AbstractBase
         return $this;
     }
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getCreatedAtString().' · '.$this->getEmail() : '---';
+        return $this->id ? $this->getCreatedAtString().' · '.$this->getEmail() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

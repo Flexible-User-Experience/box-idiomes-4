@@ -65,7 +65,8 @@
         "hautelook/alice-bundle": "^2.7",
         "symfony/debug-pack": "*",
         "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
+        "symfony/test-pack": "*",
+        "thibautselingue/local-php-security-checker-installer": "^1.0"
     },
     "config": {
         "preferred-install": {
@@ -93,15 +94,16 @@
     },
     "scripts": {
         "auto-scripts": {
-            "local-php-security-checker": "script",
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "local-php-security-checker-installer && local-php-security-checker"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "local-php-security-checker"
         ]
     },
     "conflict": {

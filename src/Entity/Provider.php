@@ -274,11 +274,8 @@ class Provider extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? ($this->alias ? $this->getName().' · '.$this->getAlias().' · '.$this->getTic() : $this->getName().' · '.$this->getTic()) : '---';
+        return $this->id ? ($this->alias ? $this->getName().' · '.$this->getAlias().' · '.$this->getTic() : $this->getName().' · '.$this->getTic()) : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

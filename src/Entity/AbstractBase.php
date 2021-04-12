@@ -2,24 +2,16 @@
 
 namespace App\Entity;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * Abstract entities base class.
- *
- * @category Entity
- *
- * @Gedmo\SoftDeleteable(fieldName="removedAt", timeAware=false)
- */
 abstract class AbstractBase
 {
-    const DEFAULT_NULL_DATE_STRING = '--/--/----';
+    public const DEFAULT_NULL_STRING = '---';
+    public const DEFAULT_NULL_DATE_STRING = '--/--/----';
 
     /**
-     * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
@@ -27,175 +19,80 @@ abstract class AbstractBase
     protected $id;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
-    protected $createdAt;
+    protected DateTimeInterface $createdAt;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
      */
-    protected $updatedAt;
+    protected ?DateTimeInterface $updatedAt;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return $this
-     */
-    public function setCreatedAt(DateTime $createdAt)
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatedAtString()
+    public function getCreatedAtString(): string
     {
         return $this->getCreatedAt() ? $this->getCreatedAt()->format('d/m/Y') : self::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @return $this
-     */
-    public function setUpdatedAt(DateTime $updatedAt)
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @return string
-     */
-    public function getUpdatedAtString()
+    public function getUpdatedAtString(): string
     {
         return $this->getUpdatedAt() ? $this->getUpdatedAt()->format('d/m/Y') : self::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @return $this
-     */
-    public function setRemovedAt(DateTime $removedAt)
-    {
-        $this->removedAt = $removedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getRemovedAt()
-    {
-        return $this->removedAt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRemovedAtString()
-    {
-        return $this->getRemovedAt() ? $this->getRemovedAt()->format('d/m/Y') : self::DEFAULT_NULL_DATE_STRING;
-    }
-
-    /**
-     * Remove (soft delete).
-     *
-     * @return $this
-     */
-    public function remove()
-    {
-        $this->setRemovedAt(new DateTime());
-
-        return $this;
-    }
-
-    /**
-     * Is deleted?
-     *
-     * @return bool
-     */
-    public function isDeleted()
-    {
-        return null !== $this->removedAt;
-    }
-
-    /**
-     * @param bool $enabled
-     *
-     * @return $this
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->getEnabled();
     }
 
-    /**
-     * To string.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getId().' · '.$this->getCreatedAtString() : '---';
+        return $this->id ? $this->getId().' · '.$this->getCreatedAtString() : self::DEFAULT_NULL_STRING;
     }
 }

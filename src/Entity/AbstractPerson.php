@@ -3,346 +3,216 @@
 namespace App\Entity;
 
 use App\Enum\StudentPaymentEnum;
-use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class AbstractPerson.
- *
- * @category Entity
- *
  * @UniqueEntity({"dni", "name", "surname"})
  */
 abstract class AbstractPerson extends AbstractBase
 {
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $dischargeDate;
+    protected ?DateTimeInterface $dischargeDate;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $dni;
+    protected ?string $dni;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    protected $name;
+    protected string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    protected $surname;
+    protected string $surname;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $phone;
+    protected ?string $phone;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Email(strict="true", checkMX=true, checkHost=true)
      */
-    protected $email;
+    protected ?string $email;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $address;
+    protected ?string $address;
 
     /**
-     * @var City
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\City")
      */
-    protected $city;
+    protected ?City $city;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    protected $payment = 0;
+    protected int $payment = 0;
 
-    /**
-     * @var Bank
-     */
-    protected $bank;
+    protected ?Bank $bank = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return DateTime
-     */
-    public function getDischargeDate()
+    public function getDischargeDate(): ?DateTimeInterface
     {
         return $this->dischargeDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getDischargeDateString()
+    public function getDischargeDateString(): string
     {
         return $this->getDischargeDate() ? $this->getDischargeDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @param DateTime $dischargeDate
-     *
-     * @return $this
-     */
-    public function setDischargeDate($dischargeDate)
+    public function setDischargeDate(?DateTimeInterface $dischargeDate): self
     {
         $this->dischargeDate = $dischargeDate;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDni()
+    public function getDni(): ?string
     {
         return $this->dni;
     }
 
-    /**
-     * @param string $dni
-     *
-     * @return AbstractPerson
-     */
-    public function setDni($dni)
+    public function setDni(?string $dni): self
     {
         $this->dni = $dni;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullName()
+    public function getFullName(): string
     {
         return $this->name.' '.$this->surname;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullCanonicalName()
+    public function getFullCanonicalName(): string
     {
         return $this->surname.', '.$this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return AbstractPerson
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSurname()
+    public function getSurname(): string
     {
         return $this->surname;
     }
 
-    /**
-     * @param string $surname
-     *
-     * @return AbstractPerson
-     */
-    public function setSurname($surname)
+    public function setSurname(string $surname): self
     {
         $this->surname = $surname;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    /**
-     * @param string $phone
-     *
-     * @return AbstractPerson
-     */
-    public function setPhone($phone)
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return AbstractPerson
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
-    /**
-     * @param string $address
-     *
-     * @return AbstractPerson
-     */
-    public function setAddress($address)
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
 
         return $this;
     }
 
-    /**
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): ?City
     {
         return $this->city;
     }
 
-    /**
-     * @param City $city
-     *
-     * @return AbstractPerson
-     */
-    public function setCity($city)
+    public function setCity(?City $city): self
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPayment()
+    public function getPayment(): int
     {
         return $this->payment;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentString()
+    public function getPaymentString(): string
     {
         return StudentPaymentEnum::getEnumTranslatedArray()[$this->payment];
     }
 
-    /**
-     * @param int $payment
-     *
-     * @return AbstractPerson
-     */
-    public function setPayment($payment)
+    public function setPayment(int $payment): self
     {
         $this->payment = $payment;
 
         return $this;
     }
 
-    /**
-     * @return Bank
-     */
-    public function getBank()
+    public function getBank(): ?Bank
     {
         return $this->bank;
     }
 
-    /**
-     * @param Bank $bank
-     *
-     * @return AbstractPerson
-     */
-    public function setBank($bank)
+    public function setBank(?Bank $bank): self
     {
         $this->bank = $bank;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDebtorMandate()
+    public function getDebtorMandate(): string
     {
         return $this->getDni().'-'.strtoupper(substr($this->getName(), 0, 1)).strtoupper(substr($this->getSurname(), 0, 1)).'-'.uniqid('', false);
     }
 
-    /**
-     * @return string
-     */
-    public function getDebtorMandateSignDate()
+    public function getDebtorMandateSignDate(): string
     {
         return $this->getCreatedAt()->format('d-m-Y');
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getFullName() : '---';
+        return $this->id ? $this->getFullName() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

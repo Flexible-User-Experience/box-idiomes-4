@@ -109,11 +109,8 @@ class City extends AbstractBase
         return $this->getPostalCode().' '.$this->getName().' ('.$this->getProvince()->getName().')';
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getPostalCode().' · '.$this->getName() : '---';
+        return $this->id ? $this->getPostalCode().' · '.$this->getName() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

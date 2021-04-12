@@ -11,11 +11,6 @@ use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-/**
- * Class PreRegisterAdmin.
- *
- * @category Admin
- */
 class PreRegisterAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'PreRegister';
@@ -25,9 +20,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
         '_sort_order' => 'desc',
     ];
 
-    /**
-     * Configure route collection.
-     */
     protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
@@ -37,9 +29,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
         ;
     }
 
-    /**
-     * @param array $actions
-     */
     public function configureBatchActions($actions): array
     {
         if ($this->hasRoute('show') && $this->hasAccess('show')) {
@@ -53,9 +42,9 @@ class PreRegisterAdmin extends AbstractBaseAdmin
         return $actions;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'createdAt',
                 DateFilter::class,
@@ -149,6 +138,20 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'hasBeenPreviousCustomer',
+                null,
+                [
+                    'label' => 'frontend.forms.preregister.has_been_previous_customer',
+                ]
+            )
+            ->add(
+                'wantsToMakeOfficialExam',
+                null,
+                [
+                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam',
+                ]
+            )
+            ->add(
                 'enabled',
                 null,
                 [
@@ -158,9 +161,9 @@ class PreRegisterAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureShowFields(ShowMapper $showMapper): void
+    protected function configureShowFields(ShowMapper $show): void
     {
-        $showMapper
+        $show
             ->add(
                 'createdAt',
                 null,
@@ -240,6 +243,20 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'hasBeenPreviousCustomer',
+                null,
+                [
+                    'label' => 'frontend.forms.preregister.has_been_previous_customer',
+                ]
+            )
+            ->add(
+                'wantsToMakeOfficialExam',
+                null,
+                [
+                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam',
+                ]
+            )
+            ->add(
                 'enabled',
                 null,
                 [
@@ -249,9 +266,9 @@ class PreRegisterAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'createdAt',
                 null,
@@ -346,6 +363,8 @@ class PreRegisterAdmin extends AbstractBaseAdmin
             'preferredTimetable',
             'previousAcademy',
             'comments',
+            'hasBeenPreviousCustomerString',
+            'wantsToMakeOfficialExamString',
             'enabled',
         ];
     }

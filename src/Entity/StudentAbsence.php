@@ -229,11 +229,8 @@ class StudentAbsence extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getDayString().' · '.$this->getStudent() : '---';
+        return $this->id ? $this->getDayString().' · '.$this->getStudent() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

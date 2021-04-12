@@ -307,13 +307,8 @@ class Invoice extends AbstractReceiptInvoice
         return $value / (1 - ($this->getIrpfPercentage() / 100));
     }
 
-    /**
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->id ? $this->getInvoiceNumber().' · '.$this->getStudent().' · '.$this->getTotalAmountString() : '---';
+        return $this->id ? $this->getInvoiceNumber().' · '.$this->getStudent().' · '.$this->getTotalAmountString() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

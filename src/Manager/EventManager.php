@@ -53,7 +53,6 @@ class EventManager
     public function getRelatedEventsAmountOf(Event $event): int
     {
         $amount = 0;
-        $iteratedEvent = null;
         if (!is_null($event->getNext())) {
             $iteratedEvent = $event;
             while (!is_null($iteratedEvent->getNext())) {

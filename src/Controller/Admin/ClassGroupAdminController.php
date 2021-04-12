@@ -42,7 +42,7 @@ class ClassGroupAdminController extends BaseAdminController
         }
 
         $students = $srs->getStudentsInClassGroupSortedByName($object);
-        if (0 == count($students)) {
+        if (0 === count($students)) {
             $this->addFlash('warning', $translator->trans('backend.admin.class_group.emails_generator.flash_warning'));
 
             return $this->redirectToList();

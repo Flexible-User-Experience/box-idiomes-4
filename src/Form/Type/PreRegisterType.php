@@ -14,14 +14,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Class PreRegisterType.
- *
- * @category FormType
- */
 class PreRegisterType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -142,6 +137,28 @@ class PreRegisterType extends AbstractType
                 ]
             )
             ->add(
+                'hasBeenPreviousCustomer',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'label' => 'frontend.forms.preregister.has_been_previous_customer',
+                    'attr' => [
+                        'tabindex' => 10,
+                    ],
+                ]
+            )
+            ->add(
+                'wantsToMakeOfficialExam',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam',
+                    'attr' => [
+                        'tabindex' => 11,
+                    ],
+                ]
+            )
+            ->add(
                 'season',
                 HiddenType::class,
                 [
@@ -157,7 +174,7 @@ class PreRegisterType extends AbstractType
                     'label' => 'frontend.forms.privacy',
                     'mapped' => false,
                     'attr' => [
-                        'tabindex' => 10,
+                        'tabindex' => 12,
                     ],
                 ]
             )
@@ -168,14 +185,14 @@ class PreRegisterType extends AbstractType
                     'label' => 'frontend.forms.preregister.submit',
                     'attr' => [
                         'class' => 'btn-newsletter',
-                        'tabindex' => 11,
+                        'tabindex' => 13,
                     ],
                 ]
             )
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
