@@ -113,6 +113,8 @@ frontend:
             preferred_timetable: "Horari preferit"
             comments: "Comentaris"
             previous_academy: "Acadèmia anterior"
+            has_been_preivous_customer: "Sóc client nou, es el primer curs que accedeixo a la vostra acadèmia"
+            wants_to_make_official_exam: "Vull realitzar l'examen oficial"
             season: "Temporada"
             enabled: "Alumne creat"
             submit: "Registrar"

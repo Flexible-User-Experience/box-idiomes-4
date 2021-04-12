@@ -140,9 +140,8 @@ class PreRegisterType extends AbstractType
                 'hasBeenPreivousCustomer',
                 CheckboxType::class,
                 [
-                    'required' => true,
-                    'label' => 'frontend.forms.has_been_preivous_customer',
-                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'frontend.forms.preregister.has_been_preivous_customer',
                     'attr' => [
                         'tabindex' => 10,
                     ],
@@ -152,9 +151,8 @@ class PreRegisterType extends AbstractType
                 'wantsToMakeOfficialExam',
                 CheckboxType::class,
                 [
-                    'required' => true,
-                    'label' => 'frontend.forms.wants_to_make_official_exam',
-                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam',
                     'attr' => [
                         'tabindex' => 11,
                     ],
