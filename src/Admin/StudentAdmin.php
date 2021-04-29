@@ -478,13 +478,13 @@ class StudentAdmin extends AbstractBaseAdmin
         if ($value && array_key_exists('value', $value)) {
             $schoolYear = (int) $value['value'];
             $begin = new DateTime();
-            $begin->setDate($schoolYear, 8, 31);
+            $begin->setDate($schoolYear, 9, 1);
             $begin->setTime(0, 0);
             $end = new DateTime();
             $end->setDate($schoolYear + 1, 9, 1);
             $end->setTime(0, 0);
             $queryBuilder->join($alias.'.events', 'e');
-            $queryBuilder->andWhere('e.begin > :begin');
+            $queryBuilder->andWhere('e.begin >= :begin');
             $queryBuilder->andWhere('e.begin < :end');
             $queryBuilder->setParameter('begin', $begin);
             $queryBuilder->setParameter('end', $end);
