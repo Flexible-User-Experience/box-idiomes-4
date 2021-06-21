@@ -80,7 +80,7 @@ services:
             - '%project_url_base%'
     # Factories
     app.event_transformer_factory:
-        class: App\Service\EventTrasnformerFactoryService
+        class: App\Service\EventTransformerFactoryService
         public: true
         arguments:
             - '@router'
