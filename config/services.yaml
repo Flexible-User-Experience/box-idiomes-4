@@ -25,7 +25,7 @@ parameters:
     mailer_destination:          '%env(string:MAILER_DESTINATION)%'
     delivery_dev_address:        '%env(string:DEV_DELIVERY_ADDRESS)%'
     google_recaptcha_site_key:   '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
-    preregister_peridod_is_open: true
+    preregister_peridod_is_open: false
 
 services:
     _defaults:
