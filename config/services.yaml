@@ -4,7 +4,6 @@ imports:
 
 parameters:
     default_locale:              '%env(string:DEFAULT_LOCALE)%'
-    database_server_version:     '%env(resolve:DATABASE_SERVER_VERSION)%'
     project_web_title:           '%env(string:PROJECT_WEB_TITLE)%'
     project_url_base:            '%env(string:PROJECT_BASE_URL)%'
     project_backend_title:       '%env(string:PROJECT_BACKEND_TITLE)%'
