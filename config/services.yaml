@@ -4,7 +4,6 @@ imports:
 
 parameters:
     default_locale:              '%env(string:DEFAULT_LOCALE)%'
-    database_server_version:     '%env(resolve:DATABASE_SERVER_VERSION)%'
     project_web_title:           '%env(string:PROJECT_WEB_TITLE)%'
     project_url_base:            '%env(string:PROJECT_BASE_URL)%'
     project_backend_title:       '%env(string:PROJECT_BACKEND_TITLE)%'
@@ -26,7 +25,7 @@ parameters:
     mailer_destination:          '%env(string:MAILER_DESTINATION)%'
     delivery_dev_address:        '%env(string:DEV_DELIVERY_ADDRESS)%'
     google_recaptcha_site_key:   '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
-    preregister_peridod_is_open: true
+    preregister_peridod_is_open: false
 
 services:
     _defaults:
@@ -80,7 +79,7 @@ services:
             - '%project_url_base%'
     # Factories
     app.event_transformer_factory:
-        class: App\Service\EventTrasnformerFactoryService
+        class: App\Service\EventTransformerFactoryService
         public: true
         arguments:
             - '@router'

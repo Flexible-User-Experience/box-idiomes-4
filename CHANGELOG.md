@@ -1,8 +1,15 @@
 Changelog
 =========
 
-##### Version 4.7.01 (2021-04-12)
+##### Version 4.7.03 (WIP)
  * fix minor bugs
+
+##### Version 4.7.02 (2021-06-21)
+ * Symfony 4.4.25 security update
+ * Yarn dependencies upgrade
+ * close PreRegister form period (summer 2021)
+
+##### Version 4.7.01 (2021-04-12)
  * fix missing Apache reload hook after Ansible deploy
  * add short translations for long PreRegister attributes
  * improve ClassGroup results in StudentAdmin filter by school year
