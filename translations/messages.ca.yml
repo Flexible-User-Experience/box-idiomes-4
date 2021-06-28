@@ -92,7 +92,7 @@ frontend:
         title_summer: "Estiu 2021"
         description_summer: "Reserva la teva plaça al curs estiu 2020"
         title_winter: "Setembre 2021"
-        description_winter: "Formulari de preinscripció per al curs escolar 2020-2021"
+        description_winter: "Formulari de preinscripció per al curs escolar 2021-2022"
     forms:
         name: Nom
         surname: Cognoms

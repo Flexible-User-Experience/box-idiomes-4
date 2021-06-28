@@ -4,6 +4,9 @@ Changelog
 ##### Version 4.7.03 (WIP)
  * fix minor bugs
 
+##### Version 4.7.03 (2021-06-28)
+ * open PreRegister form period (winter 2021)
+
 ##### Version 4.7.02 (2021-06-21)
  * Symfony 4.4.25 security update
  * Yarn dependencies upgrade
