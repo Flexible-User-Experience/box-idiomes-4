@@ -40,14 +40,18 @@
                 <div class="extra-m-bottom">
                     <ul class="nav nav-tabs normal-m-bottom" role="tablist">
 {#                        <li role="presentation"><a href="#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }}" aria-controls="season-tab-summer" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_summer' | trans }}</strong></a></li>#}
-                        <li role="presentation" class="active"><a href="#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2021') }}" aria-controls="season-tab-winter" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_summer' | trans }}</strong></a></li>
+{#                        <li role="presentation" class="active"><a href="#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2021') }}" aria-controls="season-tab-winter" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_summer' | trans }}</strong></a></li>#}
+                        <li role="presentation" class="active"><a href="#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2021') }}" aria-controls="season-tab-winter" role="tab" data-toggle="tab" class="c-violet"><strong>{{ 'frontend.preregister.title_winter' | trans }}</strong></a></li>
                     </ul>
                     <div class="tab-content">
 {#                        <div role="tabpanel" class="tab-pane active" id="season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2020') }}">#}
 {#                            <p class="c-violet">{{ 'frontend.preregister.description_summer' | trans }}</p>#}
 {#                        </div>#}
-                        <div role="tabpanel" class="tab-pane" id="season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2021') }}">
-                            <p class="c-violet">{{ 'frontend.preregister.description_summer' | trans }}</p>
+{#                        <div role="tabpanel" class="tab-pane" id="season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2021') }}">#}
+{#                            <p class="c-violet">{{ 'frontend.preregister.description_summer' | trans }}</p>#}
+{#                        </div>#}
+                        <div role="tabpanel" class="tab-pane" id="season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2021') }}">
+                            <p class="c-violet">{{ 'frontend.preregister.description_winter' | trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -86,7 +90,7 @@
     {{ parent() }}
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            setPreRegisterSeasonNodeValue({{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2021') }});
+            setPreRegisterSeasonNodeValue({{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_SEPTEMBER_2021') }});
             jQuery('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 let hrefTargetNode = jQuery(e.target).attr('href');
                 if (hrefTargetNode === "#season-tab-{{ constant('App\\Enum\\PreRegisterSeasonEnum::SEASON_JULY_2021') }}") {

@@ -14,7 +14,6 @@ use App\Form\Type\PreRegisterType;
 use App\Manager\MailchimpManager;
 use App\Service\NotificationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -153,48 +152,48 @@ class DefaultController extends AbstractController
     /**
      * @Route("/preinscripcions", name="app_pre_register")
      */
-    public function preRegistersAction(Request $request, NotificationService $messenger): RedirectResponse
+    public function preRegistersAction(Request $request, NotificationService $messenger): Response
     {
-        $this->addFlash(
-            'notice',
-            'Redirect flash.'
-        );
-
-        return $this->redirectToRoute('app_homepage');
-//
-//        $preRegister = new PreRegister();
-//        $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
-//        $preRegisterForm->handleRequest($request);
-//
-//        if ($preRegisterForm->isSubmitted() && $preRegisterForm->isValid()) {
-//            // Persist new pre-register record into DB
-//            $em = $this->getDoctrine()->getManager();
-//            $preRegister->setEnabled(false);
-//            $em->persist($preRegister);
-//            $em->flush();
-//            if (0 !== $messenger->sendPreRegisterAdminNotification($preRegister)) {
-//                // Set frontend flash message
-//                $this->addFlash(
-//                    'notice',
-//                    'La teva preinscripció s\'ha enviat correctament. Ens posarem en contacte amb tu tan aviat com ens sigui possible.'
-//                );
-//            } else {
-//                $this->addFlash(
-//                    'danger',
-//                    'S\'ha produït un error inesperat durant el registre de la teva preinscripció. Si us plau, contacta directament amb nosaltres a través del telèfon que apareix al peu d\'aquesta pàgina. Gràcies.'
-//                );
-//            }
-//            // Clean up new form
-//            $preRegister = new PreRegister();
-//            $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
-//        }
-//
-//        return $this->render(
-//            'Front/pre_register.html.twig',
-//            [
-//                'preRegisterForm' => $preRegisterForm->createView(),
-//            ]
+//        $this->addFlash(
+//            'notice',
+//            'Redirect flash.'
 //        );
+//
+//        return $this->redirectToRoute('app_homepage');
+
+        $preRegister = new PreRegister();
+        $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
+        $preRegisterForm->handleRequest($request);
+
+        if ($preRegisterForm->isSubmitted() && $preRegisterForm->isValid()) {
+            // Persist new pre-register record into DB
+            $em = $this->getDoctrine()->getManager();
+            $preRegister->setEnabled(false);
+            $em->persist($preRegister);
+            $em->flush();
+            if (0 !== $messenger->sendPreRegisterAdminNotification($preRegister)) {
+                // Set frontend flash message
+                $this->addFlash(
+                    'notice',
+                    'La teva preinscripció s\'ha enviat correctament. Ens posarem en contacte amb tu tan aviat com ens sigui possible.'
+                );
+            } else {
+                $this->addFlash(
+                    'danger',
+                    'S\'ha produït un error inesperat durant el registre de la teva preinscripció. Si us plau, contacta directament amb nosaltres a través del telèfon que apareix al peu d\'aquesta pàgina. Gràcies.'
+                );
+            }
+            // Clean up new form
+            $preRegister = new PreRegister();
+            $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
+        }
+
+        return $this->render(
+            'Front/pre_register.html.twig',
+            [
+                'preRegisterForm' => $preRegisterForm->createView(),
+            ]
+        );
     }
 
     /**
