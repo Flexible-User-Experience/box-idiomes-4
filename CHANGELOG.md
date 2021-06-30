@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.7.05 (WIP)
+##### Version 4.7.06 (WIP)
  * fix minor bugs
+
+##### Version 4.7.05 (2021-06-30)
+ * add new TariffType enums
 
 ##### Version 4.7.04 (2021-06-30)
  * fix bad student receipt generation due to missing ID join in where clause
