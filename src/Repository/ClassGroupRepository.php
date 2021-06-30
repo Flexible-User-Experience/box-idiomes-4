@@ -8,45 +8,27 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class ClassGroupRepository.
- *
- * @category Repository
- */
 class ClassGroupRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, ClassGroup::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getEnabledSortedByCodeQB()
+    public function getEnabledSortedByCodeQB(): QueryBuilder
     {
         return $this->createQueryBuilder('cg')
             ->where('cg.enabled = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('cg.code', 'ASC')
-        ;
+            ->orderBy('cg.code', 'ASC');
     }
 
-    /**
-     * @return Query
-     */
-    public function getEnabledSortedByCodeQ()
+    public function getEnabledSortedByCodeQ(): Query
     {
         return $this->getEnabledSortedByCodeQB()->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function getEnabledSortedByCode()
+    public function getEnabledSortedByCode(): array
     {
         return $this->getEnabledSortedByCodeQ()->getResult();
     }

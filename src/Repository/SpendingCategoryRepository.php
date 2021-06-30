@@ -8,25 +8,14 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class SpendingCategoryRepository.
- *
- * @category Repository
- */
 class SpendingCategoryRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, SpendingCategory::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getEnabledSortedByNameQB()
+    public function getEnabledSortedByNameQB(): QueryBuilder
     {
         return $this->createQueryBuilder('sc')
             ->where('sc.enabled = :enabled')
@@ -35,18 +24,12 @@ class SpendingCategoryRepository extends ServiceEntityRepository
             ;
     }
 
-    /**
-     * @return Query
-     */
-    public function getEnabledSortedByNameQ()
+    public function getEnabledSortedByNameQ(): Query
     {
         return $this->getEnabledSortedByNameQB()->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function getEnabledSortedByName()
+    public function getEnabledSortedByName(): array
     {
         return $this->getEnabledSortedByNameQ()->getResult();
     }

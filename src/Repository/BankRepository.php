@@ -9,28 +9,16 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class BankRepository.
- *
- * @category Repository
- */
 class BankRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Bank::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getStudentRelatedItemsQB(Student $student = null)
+    public function getStudentRelatedItemsQB(Student $student = null): QueryBuilder
     {
         $qb = $this->createQueryBuilder('b');
-
         if ($student instanceof Student && !is_null($student->getId())) {
             // $student is not null
             $qb
@@ -45,18 +33,12 @@ class BankRepository extends ServiceEntityRepository
         return $qb;
     }
 
-    /**
-     * @return Query
-     */
-    public function getStudentRelatedItemsQ(Student $student = null)
+    public function getStudentRelatedItemsQ(Student $student = null): Query
     {
         return $this->getStudentRelatedItemsQB($student)->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function getStudentRelatedItems(Student $student = null)
+    public function getStudentRelatedItems(Student $student = null): array
     {
         return $this->getStudentRelatedItemsQ($student)->getResult();
     }

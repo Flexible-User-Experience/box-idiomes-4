@@ -2,61 +2,29 @@
 
 namespace App\Form\Model;
 
-/**
- * Abstract class AbstractGenerateReceiptInvoiceModel.
- *
- * @category FormModel
- */
 abstract class AbstractGenerateReceiptInvoiceModel
 {
-    /**
-     * @var int
-     */
-    protected $year;
+    protected int $year;
+    protected int $month;
 
-    /**
-     * @var int
-     */
-    protected $month;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return int
-     */
-    public function getYear()
+    public function getYear(): int
     {
         return $this->year;
     }
 
-    /**
-     * @param int $year
-     *
-     * @return $this
-     */
-    public function setYear($year)
+    public function setYear(int $year): self
     {
         $this->year = $year;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getMonth()
+    public function getMonth(): int
     {
         return $this->month;
     }
 
-    /**
-     * @param int $month
-     *
-     * @return $this
-     */
-    public function setMonth($month)
+    public function setMonth(int $month): self
     {
         $this->month = $month;
 
