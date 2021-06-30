@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\InvoiceYearMonthEnum;
 use App\Enum\StudentPaymentEnum;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -157,54 +158,34 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
-    public function getDateString()
+    public function getDateString(): string
     {
         return $this->getDate() ? $this->getDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @return $this
-     */
-    public function setDate(\DateTime $date)
+    public function setDate(?DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPayed()
+    public function isPayed(): bool
     {
         return $this->isPayed;
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsPayed()
+    public function getIsPayed(): bool
     {
         return $this->isPayed();
     }
 
-    /**
-     * @param bool $isPayed
-     *
-     * @return $this
-     */
-    public function setIsPayed($isPayed)
+    public function setIsPayed(bool $isPayed): self
     {
         $this->isPayed = $isPayed;
 
@@ -267,28 +248,17 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getSendDate()
+    public function getSendDate(): ?DateTimeInterface
     {
         return $this->sendDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getSendDateString()
+    public function getSendDateString(): string
     {
         return $this->getSendDate() ? $this->getSendDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @param \DateTime|null $sendDate
-     *
-     * @return $this
-     */
-    public function setSendDate($sendDate)
+    public function setSendDate(?DateTimeInterface $sendDate): string
     {
         $this->sendDate = $sendDate;
 

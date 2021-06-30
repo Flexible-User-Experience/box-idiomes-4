@@ -2,366 +2,167 @@
 
 namespace App\Repository;
 
-use App\Entity\Invoice;
 use App\Entity\Receipt;
 use App\Entity\Student;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class ReceiptRepository.
- *
- * @category Repository
- */
 class ReceiptRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Receipt::class);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousReceiptByStudentYearAndMonthOrNullQB(Student $student, $year, $month)
+    public function findOnePreviousReceiptByStudentYearAndMonthOrNullQB(Student $student, $year, $month): QueryBuilder
     {
-        $qb = $this
-            ->createQueryBuilder('r')
+        return $this->createQueryBuilder('r')
             ->where('r.student = :student')
             ->andWhere('r.year = :year')
             ->andWhere('r.month = :month')
             ->setParameter('student', $student)
             ->setParameter('year', $year)
             ->setParameter('month', $month)
-            ->setMaxResults(1)
-        ;
-
-        return $qb;
+            ->setMaxResults(1);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousReceiptByStudentYearAndMonthOrNullQ(Student $student, $year, $month)
+    public function findOnePreviousReceiptByStudentYearAndMonthOrNullQ(Student $student, $year, $month): Query
     {
         return $this->findOnePreviousReceiptByStudentYearAndMonthOrNullQB($student, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousReceiptByStudentYearAndMonthOrNull(Student $student, $year, $month)
+    public function findOnePreviousReceiptByStudentYearAndMonthOrNull(Student $student, $year, $month): ?Receipt
     {
         return $this->findOnePreviousReceiptByStudentYearAndMonthOrNullQ($student, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
+    public function findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month): QueryBuilder
     {
-        $qb = $this
-            ->createQueryBuilder('r')
+        return $this->createQueryBuilder('r')
             ->where('r.student = :student')
             ->andWhere('r.year = :year')
             ->andWhere('r.month = :month')
             ->setParameter('student', $studentId)
             ->setParameter('year', $year)
             ->setParameter('month', $month)
-            ->setMaxResults(1)
-        ;
-
-        return $qb;
+            ->setMaxResults(1);
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)
+    public function findOnePreviousReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month): Query
     {
         return $this->findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousReceiptByStudentIdYearAndMonthOrNull($studentId, $year, $month)
+    public function findOnePreviousReceiptByStudentIdYearAndMonthOrNull($studentId, $year, $month): ?Receipt
     {
         return $this->findOnePreviousReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNullQB(Student $student, $year, $month)
+    public function findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNullQB(Student $student, $year, $month): QueryBuilder
     {
-        $qb = $this
-            ->findOnePreviousReceiptByStudentYearAndMonthOrNullQB($student, $year, $month)
+        return $this->findOnePreviousReceiptByStudentYearAndMonthOrNullQB($student, $year, $month)
             ->andWhere('r.isForPrivateLessons = :isForPrivateLessons')
-            ->setParameter('isForPrivateLessons', false)
-        ;
-
-        return $qb;
+            ->setParameter('isForPrivateLessons', false);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNullQ(Student $student, $year, $month)
+    public function findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNullQ(Student $student, $year, $month): Query
     {
         return $this->findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNullQB($student, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNull(Student $student, $year, $month)
+    public function findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNull(Student $student, $year, $month): ?Receipt
     {
         return $this->findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNullQ($student, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
+    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month): QueryBuilder
     {
-        $qb = $this
-            ->findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
+        return $this->findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
             ->andWhere('r.isForPrivateLessons = :isForPrivateLessons')
-            ->setParameter('isForPrivateLessons', false)
-        ;
-
-        return $qb;
+            ->setParameter('isForPrivateLessons', false);
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)
+    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month): Query
     {
         return $this->findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNull($studentId, $year, $month)
+    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNull($studentId, $year, $month): ?Receipt
     {
         return $this->findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNullQB(Student $student, $year, $month)
+    public function findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNullQB(Student $student, $year, $month): QueryBuilder
     {
-        $qb = $this
-            ->findOnePreviousReceiptByStudentYearAndMonthOrNullQB($student, $year, $month)
+        return $this->findOnePreviousReceiptByStudentYearAndMonthOrNullQB($student, $year, $month)
             ->andWhere('r.isForPrivateLessons = :isForPrivateLessons')
-            ->setParameter('isForPrivateLessons', true)
-        ;
-
-        return $qb;
+            ->setParameter('isForPrivateLessons', true);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNullQ(Student $student, $year, $month)
+    public function findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNullQ(Student $student, $year, $month): Query
     {
         return $this->findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNullQB($student, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNull(Student $student, $year, $month)
+    public function findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNull(Student $student, $year, $month): ?Receipt
     {
         return $this->findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNullQ($student, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
+    public function findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month): QueryBuilder
     {
-        $qb = $this
-            ->findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
+        return $this->findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
             ->andWhere('r.isForPrivateLessons = :isForPrivateLessons')
-            ->setParameter('isForPrivateLessons', true)
-        ;
-
-        return $qb;
+            ->setParameter('isForPrivateLessons', true);
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)
+    public function findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month): Query
     {
         return $this->findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNull($studentId, $year, $month)
+    public function findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNull($studentId, $year, $month): ?Receipt
     {
         return $this->findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getAllSortedByNumberDescQB()
+    public function getAllSortedByNumberDescQB(): QueryBuilder
     {
-        $qb = $this
-            ->createQueryBuilder('r')
-            ->orderBy('r.id', 'DESC')
-        ;
-
-        return $qb;
+        return $this->createQueryBuilder('r')->orderBy('r.id', 'DESC');
     }
 
-    /**
-     * @return Query
-     */
-    public function getAllSortedByNumberDescQ()
+    public function getAllSortedByNumberDescQ(): Query
     {
         return $this->getAllSortedByNumberDescQB()->getQuery();
     }
 
-    /**
-     * @return Receipt[]|null
-     */
-    public function getAllSortedByNumberDesc()
+    public function getAllSortedByNumberDesc(): array
     {
         return $this->getAllSortedByNumberDescQ()->getResult();
     }
 
-    /**
-     * @param array $ids
-     *
-     * @return QueryBuilder
-     */
-    public function findByIdsArrayQB($ids)
+    public function findByIdsArrayQB($ids): QueryBuilder
     {
-        $qb = $this
-            ->createQueryBuilder('r')
+        return $this->createQueryBuilder('r')
             ->where('r.id IN (:ids)')
-            ->setParameter('ids', $ids)
-        ;
-
-        return $qb;
+            ->setParameter('ids', $ids);
     }
 
-    /**
-     * @param array $ids
-     *
-     * @return Query
-     */
-    public function findByIdsArrayQ($ids)
+    public function findByIdsArrayQ($ids): Query
     {
         return $this->findByIdsArrayQB($ids)->getQuery();
     }
 
-    /**
-     * @param array $ids
-     *
-     * @return Receipt[]|null
-     */
-    public function findByIdsArray($ids)
+    public function findByIdsArray($ids): array
     {
         return $this->findByIdsArrayQ($ids)->getResult();
     }
 
-    /**
-     * @return int
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getMonthlyIncomingsAmountForDate(\DateTime $date)
+    public function getMonthlyIncomingsAmountForDate(DateTimeInterface $date): int
     {
         $begin = clone $date;
         $end = clone $date;
@@ -376,6 +177,6 @@ class ReceiptRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0 : floatval($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR));
+        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0 : (float) $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 }
