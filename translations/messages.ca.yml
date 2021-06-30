@@ -235,6 +235,10 @@ backend:
             tariff_10: "5h / setmana"
             tariff_11: "5'5h / setmana"
             tariff_12: "preu especial"
+            tariff_13: "intensiu 1 setmana"
+            tariff_14: "intensiu 2 setmanes"
+            tariff_15: "intensiu 3 setmanes"
+            tariff_16: "intensiu 4/5 setmanes"
         event:
             range: "Limitar l'abast dels canvis a la data"
             begin: Inici
