@@ -12,9 +12,7 @@ use App\Repository\EventRepository;
 use App\Repository\ReceiptRepository;
 use App\Repository\StudentRepository;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
@@ -26,14 +24,14 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
     private ReceiptRepository $rr;
     private EventManager $eem;
 
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManager $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem)
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem)
     {
         parent::__construct($logger, $kernel, $em, $ts, $sr, $er);
         $this->rr = $rr;
         $this->eem = $eem;
     }
 
-    private function commonFastGenerateReciptsForYearAndMonth($year, $month, $enableEmailDelivery = false): int
+    private function commonFastGenerateReciptsForYearAndMonth(int $year, int $month, $enableEmailDelivery = false): int
     {
         $generatedReceiptsAmount = 0;
 
@@ -164,43 +162,17 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         return $generatedReceiptsAmount;
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return int
-     *
-     * @throws NonUniqueResultException
-     * @throws OptimisticLockException
-     */
-    public function fastGenerateReciptsForYearAndMonth($year, $month)
+    public function fastGenerateReciptsForYearAndMonth(int $year, int $month): int
     {
-        return $this->commonFastGenerateReciptsForYearAndMonth($year, $month, false);
+        return $this->commonFastGenerateReciptsForYearAndMonth($year, $month);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return int
-     *
-     * @throws NonUniqueResultException
-     * @throws OptimisticLockException
-     */
-    public function fastGenerateReciptsForYearAndMonthAndDeliverEmail($year, $month)
+    public function fastGenerateReciptsForYearAndMonthAndDeliverEmail(int $year, int $month): int
     {
         return $this->commonFastGenerateReciptsForYearAndMonth($year, $month, true);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return GenerateReceiptModel
-     *
-     * @throws NonUniqueResultException
-     */
-    public function buildFullModelForm($year, $month)
+    public function buildFullModelForm(int $year, int $month): GenerateReceiptModel
     {
         $generateReceipt = new GenerateReceiptModel();
         $generateReceipt

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -214,14 +215,9 @@ class Invoice extends AbstractReceiptInvoice
         return $this;
     }
 
-    /**
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function getInvoiceNumber()
+    public function getInvoiceNumber(): string
     {
-        $date = new \DateTime();
+        $date = new DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
