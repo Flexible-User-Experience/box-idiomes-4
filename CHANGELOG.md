@@ -1,8 +1,15 @@
 Changelog
 =========
 
-##### Version 4.7.03 (WIP)
+##### Version 4.7.05 (WIP)
  * fix minor bugs
+
+##### Version 4.7.04 (2021-06-30)
+ * fix bad student receipt generation due to missing ID join in where clause
+ * fix broken tests
+ * enable delete receipt action button
+ * add better type hints in method signatures
+ * dependencies update
 
 ##### Version 4.7.03 (2021-06-28)
  * open PreRegister form period (winter 2021)
