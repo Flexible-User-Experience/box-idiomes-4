@@ -4,125 +4,83 @@ namespace App\Entity;
 
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Invoice.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  * @ORM\Table(name="invoice")
  */
 class Invoice extends AbstractReceiptInvoice
 {
-    const TAX_IRPF = 15;
-    const TAX_IVA = 0;
+    public const TAX_IRPF = 15;
+    public const TAX_IVA = 0;
 
     /**
-     * @var Receipt
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Receipt")
      * @ORM\JoinColumn(name="receipt_id", referencedColumnName="id")
      */
-    private $receipt;
+    private ?Receipt $receipt;
 
     /**
-     * @var ArrayCollection|array|InvoiceLine[]
-     *
      * @Assert\Valid
      * @ORM\OneToMany(targetEntity="App\Entity\InvoiceLine", mappedBy="invoice", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $lines;
+    private ?Collection $lines;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float", options={"default"=0})
      */
-    private $taxPercentage = self::TAX_IVA;
+    private float $taxPercentage = self::TAX_IVA;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float", nullable=true, options={"default"=15})
      */
-    private $irpfPercentage = self::TAX_IRPF;
+    private ?float $irpfPercentage = self::TAX_IRPF;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float", nullable=true)
      */
-    private $totalAmount;
+    private ?float $totalAmount = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * Invoice constructor.
-     */
     public function __construct()
     {
         $this->lines = new ArrayCollection();
     }
 
-    /**
-     * @return Receipt
-     */
-    public function getReceipt()
+    public function getReceipt(): ?Receipt
     {
         return $this->receipt;
     }
 
-    /**
-     * @param Receipt $receipt
-     *
-     * @return $this
-     */
-    public function setReceipt($receipt)
+    public function setReceipt(?Receipt $receipt): self
     {
         $this->receipt = $receipt;
 
         return $this;
     }
 
-    /**
-     * @return InvoiceLine[]|array|ArrayCollection
-     */
-    public function getLines()
+    public function getLines(): ?Collection
     {
         return $this->lines;
     }
 
-    /**
-     * @param InvoiceLine[]|array|ArrayCollection $lines
-     *
-     * @return $this
-     */
-    public function setLines($lines)
+    public function setLines(?Collection $lines): self
     {
         $this->lines = $lines;
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function basicAddLine(InvoiceLine $line)
+    public function basicAddLine(InvoiceLine $line): self
     {
         $this->lines->add($line);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function addLine(InvoiceLine $line)
+    public function addLine(InvoiceLine $line): self
     {
         if (!$this->lines->contains($line)) {
             $line->setInvoice($this);
@@ -134,10 +92,7 @@ class Invoice extends AbstractReceiptInvoice
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function removeLine(InvoiceLine $line)
+    public function removeLine(InvoiceLine $line): self
     {
         if ($this->lines->contains($line)) {
             $this->lines->removeElement($line);
@@ -147,68 +102,41 @@ class Invoice extends AbstractReceiptInvoice
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getTaxPercentage()
+    public function getTaxPercentage(): float
     {
         return $this->taxPercentage;
     }
 
-    /**
-     * @param float $taxPercentage
-     *
-     * @return Invoice
-     */
-    public function setTaxPercentage($taxPercentage)
+    public function setTaxPercentage(float $taxPercentage): self
     {
         $this->taxPercentage = $taxPercentage;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getIrpfPercentage()
+    public function getIrpfPercentage(): ?float
     {
         return $this->irpfPercentage;
     }
 
-    /**
-     * @param float $irpfPercentage
-     *
-     * @return Invoice
-     */
-    public function setIrpfPercentage($irpfPercentage)
+    public function setIrpfPercentage(?float $irpfPercentage): self
     {
         $this->irpfPercentage = $irpfPercentage;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getTotalAmount()
+    public function getTotalAmount(): ?float
     {
         return $this->totalAmount;
     }
 
-    /**
-     * @return string
-     */
-    public function getTotalAmountString()
+    public function getTotalAmountString(): string
     {
         return number_format($this->totalAmount, 2, ',', '.').'€';
     }
 
-    /**
-     * @param float $totalAmount
-     *
-     * @return Invoice
-     */
-    public function setTotalAmount($totalAmount)
+    public function setTotalAmount(?float $totalAmount): self
     {
         $this->totalAmount = $totalAmount;
 
@@ -225,14 +153,9 @@ class Invoice extends AbstractReceiptInvoice
         return $date->format('Y').'/'.$this->getId();
     }
 
-    /**
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function getSluggedInvoiceNumber()
+    public function getSluggedInvoiceNumber(): string
     {
-        $date = new \DateTime();
+        $date = new DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -240,14 +163,9 @@ class Invoice extends AbstractReceiptInvoice
         return $date->format('Y').'-'.$this->getId();
     }
 
-    /**
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function getUnderscoredInvoiceNumber()
+    public function getUnderscoredInvoiceNumber(): string
     {
-        $date = new \DateTime();
+        $date = new DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -255,50 +173,33 @@ class Invoice extends AbstractReceiptInvoice
         return $date->format('Y').'_'.$this->getId();
     }
 
-    /**
-     * @return float
-     */
-    public function calculateBaseAmount()
+    public function calculateBaseAmount(): float
     {
         $result = 0.0;
         /** @var InvoiceLine $line */
         foreach ($this->lines as $line) {
-            $result = $result + $line->calculateBaseAmount();
+            $result += $line->calculateBaseAmount();
         }
 
         return $result;
     }
 
-    /**
-     * @return float|int
-     */
-    public function calculateTaxPercentage()
+    public function calculateTaxPercentage(): float
     {
         return $this->getBaseAmount() * ($this->getTaxPercentage() / 100);
     }
 
-    /**
-     * @return float|int
-     */
-    public function calculateIrpfPercentatge()
+    public function calculateIrpfPercentatge(): float
     {
         return $this->getBaseAmount() * ($this->getIrpfPercentage() / 100);
     }
 
-    /**
-     * @return float|int
-     */
-    public function calculateTotalAmount()
+    public function calculateTotalAmount(): float
     {
         return $this->getBaseAmount() + $this->calculateTaxPercentage() - $this->calculateIrpfPercentatge();
     }
 
-    /**
-     * @param int|float $value
-     *
-     * @return float
-     */
-    public function calculateIrpfOverhead($value)
+    public function calculateIrpfOverhead($value): float
     {
         return $value / (1 - ($this->getIrpfPercentage() / 100));
     }
