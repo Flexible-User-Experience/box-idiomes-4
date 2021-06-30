@@ -277,12 +277,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         return $generateReceipt;
     }
 
-    /**
-     * @param array $requestArray
-     *
-     * @return GenerateReceiptModel
-     */
-    public function transformRequestArrayToModel($requestArray)
+    public function transformRequestArrayToModel(array $requestArray): GenerateReceiptModel
     {
         $generateReceipt = new GenerateReceiptModel();
         if (array_key_exists('year', $requestArray)) {

@@ -43,7 +43,8 @@ class ReceiptRepository extends ServiceEntityRepository
     public function findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month): QueryBuilder
     {
         return $this->createQueryBuilder('r')
-            ->where('r.student = :student')
+            ->join('r.student', 's')
+            ->where('s.id = :student')
             ->andWhere('r.year = :year')
             ->andWhere('r.month = :month')
             ->setParameter('student', $studentId)
@@ -79,19 +80,19 @@ class ReceiptRepository extends ServiceEntityRepository
         return $this->findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNullQ($student, $year, $month)->getOneOrNullResult();
     }
 
-    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month): QueryBuilder
+    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQB(int $studentId, int $year, int $month): QueryBuilder
     {
         return $this->findOnePreviousReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
             ->andWhere('r.isForPrivateLessons = :isForPrivateLessons')
             ->setParameter('isForPrivateLessons', false);
     }
 
-    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month): Query
+    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQ(int $studentId, int $year, int $month): Query
     {
         return $this->findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)->getQuery();
     }
 
-    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNull($studentId, $year, $month): ?Receipt
+    public function findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNull(int $studentId, int $year, int $month): ?Receipt
     {
         return $this->findOnePreviousGroupLessonsReceiptByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)->getOneOrNullResult();
     }
