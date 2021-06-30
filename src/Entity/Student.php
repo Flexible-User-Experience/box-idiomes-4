@@ -112,20 +112,12 @@ class Student extends AbstractPerson
         return $interval->y;
     }
 
-    /**
-     * @return string
-     */
-    public function getSchedule()
+    public function getSchedule(): ?string
     {
         return $this->schedule;
     }
 
-    /**
-     * @param string $schedule
-     *
-     * @return Student
-     */
-    public function setSchedule($schedule)
+    public function setSchedule(?string $schedule): self
     {
         $this->schedule = $schedule;
 
@@ -172,20 +164,12 @@ class Student extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return Tariff
-     */
-    public function getTariff()
+    public function getTariff(): ?Tariff
     {
         return $this->tariff;
     }
 
-    /**
-     * @param Tariff $tariff
-     *
-     * @return Student
-     */
-    public function setTariff($tariff)
+    public function setTariff(?Tariff $tariff): self
     {
         $this->tariff = $tariff;
 

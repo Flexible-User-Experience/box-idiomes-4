@@ -544,7 +544,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
                         'send' => ['template' => 'Admin/Buttons/list__action_receipt_send_button.html.twig'],
                         'createInvoice' => ['template' => 'Admin/Buttons/list__action_receipt_create_invoice_button.html.twig'],
                         'generateDirectDebit' => ['template' => 'Admin/Buttons/list__action_generate_direct_debit_xml_button.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_superadmin_button.html.twig'],
+                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
                     ],
                     'label' => 'backend.admin.actions',
                 ]
