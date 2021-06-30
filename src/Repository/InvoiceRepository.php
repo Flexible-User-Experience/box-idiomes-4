@@ -4,128 +4,66 @@ namespace App\Repository;
 
 use App\Entity\Invoice;
 use App\Entity\Student;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class InvoiceRepository.
- *
- * @category Repository
- */
 class InvoiceRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Invoice::class);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousInvoiceByStudentYearAndMonthOrNullQB(Student $student, $year, $month)
+    public function findOnePreviousInvoiceByStudentYearAndMonthOrNullQB(Student $student, int $year, int $month): QueryBuilder
     {
-        $qb = $this
-            ->createQueryBuilder('i')
+        return $this->createQueryBuilder('i')
             ->where('i.student = :student')
             ->andWhere('i.year = :year')
             ->andWhere('i.month = :month')
             ->setParameter('student', $student)
             ->setParameter('year', $year)
             ->setParameter('month', $month)
-            ->setMaxResults(1)
-        ;
-
-        return $qb;
+            ->setMaxResults(1);
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousInvoiceByStudentYearAndMonthOrNullQ(Student $student, $year, $month)
+    public function findOnePreviousInvoiceByStudentYearAndMonthOrNullQ(Student $student, int $year, int $month): Query
     {
         return $this->findOnePreviousInvoiceByStudentYearAndMonthOrNullQB($student, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousInvoiceByStudentYearAndMonthOrNull(Student $student, $year, $month)
+    public function findOnePreviousInvoiceByStudentYearAndMonthOrNull(Student $student, int $year, int $month): ?Invoice
     {
         return $this->findOnePreviousInvoiceByStudentYearAndMonthOrNullQ($student, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return QueryBuilder
-     */
-    public function findOnePreviousInvoiceByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)
+    public function findOnePreviousInvoiceByStudentIdYearAndMonthOrNullQB(int $studentId, int $year, int $month): QueryBuilder
     {
-        $qb = $this
-            ->createQueryBuilder('i')
-            ->where('i.student = :student')
+        return $this->createQueryBuilder('i')
+            ->join('i.student', 's')
+            ->where('s.id = :student')
             ->andWhere('i.year = :year')
             ->andWhere('i.month = :month')
             ->setParameter('student', $studentId)
             ->setParameter('year', $year)
             ->setParameter('month', $month)
-            ->setMaxResults(1)
-        ;
-
-        return $qb;
+            ->setMaxResults(1);
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Query
-     */
-    public function findOnePreviousInvoiceByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)
+    public function findOnePreviousInvoiceByStudentIdYearAndMonthOrNullQ(int $studentId, int $year, int $month): Query
     {
         return $this->findOnePreviousInvoiceByStudentIdYearAndMonthOrNullQB($studentId, $year, $month)->getQuery();
     }
 
-    /**
-     * @param int $studentId
-     * @param int $year
-     * @param int $month
-     *
-     * @return Invoice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOnePreviousInvoiceByStudentIdYearAndMonthOrNull($studentId, $year, $month)
+    public function findOnePreviousInvoiceByStudentIdYearAndMonthOrNull(int $studentId, int $year, int $month): ?Invoice
     {
         return $this->findOnePreviousInvoiceByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)->getOneOrNullResult();
     }
 
-    /**
-     * @return int
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function getMonthlyIncomingsAmountForDate(\DateTime $date)
+    public function getMonthlyIncomingsAmountForDate(DateTimeInterface $date): int
     {
         $begin = clone $date;
         $end = clone $date;
@@ -140,6 +78,6 @@ class InvoiceRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0 : floatval($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR));
+        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0 : (int) $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 }

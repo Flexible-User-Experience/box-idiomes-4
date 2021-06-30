@@ -7,29 +7,15 @@ use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\NonUniqueResultException;
 
-/**
- * Class SpendingRepository.
- *
- * @category Repository
- */
 class SpendingRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Spending::class);
     }
 
-    /**
-     * @return int
-     *
-     * @throws NonUniqueResultException
-     */
-    public function getMonthlyExpensesAmountForDate(DateTimeInterface $date)
+    public function getMonthlyExpensesAmountForDate(DateTimeInterface $date): int
     {
         $begin = clone $date;
         $end = clone $date;
@@ -44,6 +30,6 @@ class SpendingRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0 : floatval($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR));
+        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0 : (int) $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 }

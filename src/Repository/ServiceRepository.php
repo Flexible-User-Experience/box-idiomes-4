@@ -8,25 +8,14 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class ServiceRepository.
- *
- * @category Repository
- */
 class ServiceRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Service::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function findAllEnabledSortedByPositionQB()
+    public function findAllEnabledSortedByPositionQB(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->where('s.enabled = :enabled')
@@ -34,18 +23,12 @@ class ServiceRepository extends ServiceEntityRepository
             ->orderBy('s.position', 'ASC');
     }
 
-    /**
-     * @return Query
-     */
-    public function findAllEnabledSortedByPositionQ()
+    public function findAllEnabledSortedByPositionQ(): Query
     {
         return $this->findAllEnabledSortedByPositionQB()->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function findAllEnabledSortedByPosition()
+    public function findAllEnabledSortedByPosition(): array
     {
         return $this->findAllEnabledSortedByPositionQ()->getResult();
     }

@@ -8,78 +8,47 @@ use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class TeacherRepository.
- *
- * @category Repository
- */
 class TeacherRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Teacher::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function findAllEnabledSortedByPositionQB()
+    public function findAllEnabledSortedByPositionQB(): QueryBuilder
     {
-        $query = $this
-            ->createQueryBuilder('t')
+        return $this->createQueryBuilder('t')
             ->where('t.enabled = :enabled')
             ->setParameter('enabled', true)
             ->andWhere('t.showInHomepage = :showInHomepage')
             ->setParameter('showInHomepage', true)
             ->orderBy('t.position', 'ASC');
-
-        return $query;
     }
 
-    /**
-     * @return Query
-     */
-    public function findAllEnabledSortedByPositionQ()
+    public function findAllEnabledSortedByPositionQ(): Query
     {
         return $this->findAllEnabledSortedByPositionQB()->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function findAllEnabledSortedByPosition()
+    public function findAllEnabledSortedByPosition(): array
     {
         return $this->findAllEnabledSortedByPositionQ()->getResult();
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function getEnabledSortedByNameQB()
+    public function getEnabledSortedByNameQB(): QueryBuilder
     {
-        return $this
-            ->createQueryBuilder('t')
+        return $this->createQueryBuilder('t')
             ->where('t.enabled = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('t.name', 'ASC')
-        ;
+            ->orderBy('t.name', 'ASC');
     }
 
-    /**
-     * @return Query
-     */
-    public function getEnabledSortedByNameQ()
+    public function getEnabledSortedByNameQ(): Query
     {
         return $this->getEnabledSortedByNameQB()->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function getEnabledSortedByName()
+    public function getEnabledSortedByName(): array
     {
         return $this->getEnabledSortedByNameQ()->getResult();
     }

@@ -4,89 +4,60 @@ namespace App\Repository;
 
 use App\Entity\Tariff;
 use App\Enum\TariffTypeEnum;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * Class TariffRepository.
- *
- * @category Repository
- */
 class TariffRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Tariff::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function findAllSortedByYearAndPriceQB()
+    public function findAllSortedByYearAndPriceQB(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.year', 'DESC')
-            ->addOrderBy('t.price', 'ASC')
-        ;
+            ->addOrderBy('t.price', 'ASC');
     }
 
-    /**
-     * @return Query
-     */
-    public function findAllSortedByYearAndPriceQ()
+    public function findAllSortedByYearAndPriceQ(): Query
     {
         return $this->findAllSortedByYearAndPriceQB()->getQuery();
     }
 
-    /**
-     * @return array
-     */
-    public function findAllSortedByYearAndPrice()
+    public function findAllSortedByYearAndPrice(): array
     {
         return $this->findAllSortedByYearAndPriceQ()->getResult();
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function findCurrentPrivateLessonTariffQB()
+    public function findCurrentPrivateLessonTariffQB(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->where('t.type = :type')
             ->setParameter('type', TariffTypeEnum::TARIFF_PRIVATE_LESSON_PER_HOUR)
             ->orderBy('t.year', 'DESC')
-            ->setMaxResults(1)
-        ;
+            ->setMaxResults(1);
     }
 
-    /**
-     * @return Query
-     */
-    public function findCurrentPrivateLessonTariffQ()
+    public function findCurrentPrivateLessonTariffQ(): Query
     {
         return $this->findCurrentPrivateLessonTariffQB()->getQuery();
     }
 
-    /**
-     * @return Tariff
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findCurrentPrivateLessonTariff()
+    public function findCurrentPrivateLessonTariff(): Tariff
     {
         $result = $this->findCurrentPrivateLessonTariffQ()->getOneOrNullResult();
 
         if (is_null($result)) {
-            $today = new \DateTime();
+            $today = new DateTimeImmutable();
             $result = new Tariff();
             $result
                 ->setName('default empty tariff')
-                ->setYear(intval($today->format('Y')))
+                ->setYear((int) $today->format('Y'))
                 ->setType(TariffTypeEnum::TARIFF_PRIVATE_LESSON_PER_HOUR)
                 ->setPrice(0)
             ;
@@ -95,42 +66,30 @@ class TariffRepository extends ServiceEntityRepository
         return $result;
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function findCurrentSharedPrivateLessonTariffQB()
+    public function findCurrentSharedPrivateLessonTariffQB(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->where('t.type = :type')
             ->setParameter('type', TariffTypeEnum::TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR)
             ->orderBy('t.year', 'DESC')
-            ->setMaxResults(1)
-        ;
+            ->setMaxResults(1);
     }
 
-    /**
-     * @return Query
-     */
-    public function findCurrentSharedPrivateLessonTariffQ()
+    public function findCurrentSharedPrivateLessonTariffQ(): Query
     {
         return $this->findCurrentSharedPrivateLessonTariffQB()->getQuery();
     }
 
-    /**
-     * @return Tariff
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findCurrentSharedPrivateLessonTariff()
+    public function findCurrentSharedPrivateLessonTariff(): Tariff
     {
         $result = $this->findCurrentSharedPrivateLessonTariffQ()->getOneOrNullResult();
 
         if (is_null($result)) {
-            $today = new \DateTime();
+            $today = new DateTimeImmutable();
             $result = new Tariff();
             $result
                 ->setName('default empty shared tariff')
-                ->setYear(intval($today->format('Y')))
+                ->setYear((int) $today->format('Y'))
                 ->setType(TariffTypeEnum::TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR)
                 ->setPrice(0)
             ;
