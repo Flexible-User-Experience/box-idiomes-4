@@ -5,18 +5,10 @@ namespace App\Pdf;
 use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Enum\StudentPaymentEnum;
-use App\Service\SmartAssetsHelperService;
-use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use TCPDF;
 
 class InvoiceBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, Translator $ts, string $pwt, string $bn, string $bd, string $ba, string $bc, string $ib, string $locale)
-    {
-        parent::__construct($tcpdf, $sahs, $ts, $pwt, $bn, $bd, $ba, $bc, $ib, $locale);
-    }
-
     public function build(Invoice $invoice): TCPDF
     {
         if ($this->sahs->isCliContext()) {

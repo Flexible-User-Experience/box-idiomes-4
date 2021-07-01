@@ -32,13 +32,19 @@ services:
         autowire:      true
         autoconfigure: true
         bind:
-            $amd: '%mailer_destination%'
-            $pwt: '%project_web_title%'
-            $pub: '%project_url_base%'
-            $mak: '%mailchimp_api_key%'
-            $ppo: '%preregister_peridod_is_open%'
-            $bba: '%boss_address%'
-            $bpn: '%boss_phone_number_1%'
+            $amd:    '%mailer_destination%'
+            $pwt:    '%project_web_title%'
+            $pub:    '%project_url_base%'
+            $mak:    '%mailchimp_api_key%'
+            $ppo:    '%preregister_peridod_is_open%'
+            $bn:     '%boss_name%'
+            $bd:     '%boss_dni%'
+            $ba:     '%boss_address%'
+            $bc:     '%boss_city%'
+            $ib:     '%iban_business%'
+            $bba:    '%boss_address%'
+            $bpn:    '%boss_phone_number_1%'
+            $locale: '%default_locale%'
     # Commons
     App\:
         resource: '../src/*'
