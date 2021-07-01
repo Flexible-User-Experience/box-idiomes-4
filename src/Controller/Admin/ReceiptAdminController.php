@@ -12,8 +12,6 @@ use App\Form\Type\GenerateReceiptYearMonthChooserType;
 use App\Manager\GenerateReceiptFormManager;
 use App\Manager\ReceiptManager;
 use App\Pdf\ReceiptBuilderPdf;
-use App\Pdf\ReceiptReminderBuilderPdf;
-use App\Repository\BankCreditorSepaRepository;
 use App\Service\NotificationService;
 use App\Service\XmlSepaBuilderService;
 use DateTime;
@@ -220,12 +218,13 @@ class ReceiptAdminController extends BaseAdminController
         return $response;
     }
 
-    public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery, ReceiptReminderBuilderPdf $rrps): Response
+    public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
 
         try {
+            $rrps = $this->container->get('app.receipt_reminder_pdf_builder');
             $pdf = $rrps->buildBatchReminder();
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
@@ -249,10 +248,13 @@ class ReceiptAdminController extends BaseAdminController
         }
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs, BankCreditorSepaRepository $bcsr): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $xsbs = $this->container->get('app.xml_sepa_builder');
+        $bcsr = $this->container->get('app.bank_creditor_sepa_repository');
         try {
             $paymentUniqueId = uniqid('', false);
             $xmlsArray = [];
