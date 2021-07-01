@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.7.06 (WIP)
+##### Version 4.7.07 (WIP)
  * fix minor bugs
+
+##### Version 4.7.06 (2021-07-01)
+ * make only enabled students available to create/update a Event (classroom/timetable)
 
 ##### Version 4.7.05 (2021-06-30)
  * add new TariffType enums
