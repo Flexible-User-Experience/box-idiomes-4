@@ -2,16 +2,13 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Receipt.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\ReceiptRepository")
  * @ORM\Table(name="receipt")
  * @UniqueEntity(fields={"month", "year", "student", "person", "isForPrivateLessons"})
@@ -26,13 +23,6 @@ class Receipt extends AbstractReceiptInvoice
      */
     private $lines;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * Receipt constructor.
-     */
     public function __construct()
     {
         $this->lines = new ArrayCollection();
@@ -46,22 +36,14 @@ class Receipt extends AbstractReceiptInvoice
         return $this->lines;
     }
 
-    /**
-     * @param ReceiptLine[]|array|ArrayCollection $lines
-     *
-     * @return $this
-     */
-    public function setLines($lines)
+    public function setLines($lines): self
     {
         $this->lines = $lines;
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function addLine(ReceiptLine $line)
+    public function addLine(ReceiptLine $line): self
     {
         if (!$this->lines->contains($line)) {
             $line->setReceipt($this);
@@ -73,10 +55,7 @@ class Receipt extends AbstractReceiptInvoice
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function removeLine(ReceiptLine $line)
+    public function removeLine(ReceiptLine $line): self
     {
         if ($this->lines->contains($line)) {
             $this->lines->removeElement($line);
@@ -86,12 +65,9 @@ class Receipt extends AbstractReceiptInvoice
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getReceiptNumber()
+    public function getReceiptNumber(): string
     {
-        $date = new \DateTime();
+        $date = new DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -99,12 +75,9 @@ class Receipt extends AbstractReceiptInvoice
         return $date->format('Y').'/'.$this->getId();
     }
 
-    /**
-     * @return string
-     */
-    public function getSluggedReceiptNumber()
+    public function getSluggedReceiptNumber(): string
     {
-        $date = new \DateTime();
+        $date = new DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -112,12 +85,9 @@ class Receipt extends AbstractReceiptInvoice
         return $date->format('Y').'-'.$this->getId();
     }
 
-    /**
-     * @return string
-     */
-    public function getUnderscoredReceiptNumber()
+    public function getUnderscoredReceiptNumber(): string
     {
-        $date = new \DateTime();
+        $date = new DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -125,15 +95,12 @@ class Receipt extends AbstractReceiptInvoice
         return $date->format('Y').'_'.$this->getId();
     }
 
-    /**
-     * @return float
-     */
-    public function calculateTotalBaseAmount()
+    public function calculateTotalBaseAmount(): float
     {
         $result = 0.0;
         /** @var ReceiptLine $line */
         foreach ($this->lines as $line) {
-            $result = $result + $line->calculateBaseAmount();
+            $result += $line->calculateBaseAmount();
         }
 
         return $result;
