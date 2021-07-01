@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.7.07 (WIP)
+##### Version 4.7.08 (WIP)
  * fix minor bugs
+
+##### Version 4.7.07 (2021-07-01)
+ * fix broken PDF services
 
 ##### Version 4.7.06 (2021-07-01)
  * make only enabled students available to create/update a Event (classroom/timetable)
