@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     meridiem: 'short'
                 },
                 scrollTime: '08:00:00',
-                minTime: '06:00:00',
+                minTime: '07:00:00',
                 maxTime: '22:00:00',
                 hiddenDays: [ 0 ]
             }

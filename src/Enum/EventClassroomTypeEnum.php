@@ -10,6 +10,7 @@ class EventClassroomTypeEnum
     public const CLASSROOM_4 = 3;
     public const CLASSROOM_5 = 4;
     public const CLASSROOM_6 = 5;
+    public const CLASSROOM_7 = 6;
 
     public static function getEnumArray(): array
     {
@@ -24,6 +25,7 @@ class EventClassroomTypeEnum
             self::CLASSROOM_3 => 'backend.admin.event.classroom_3',
             self::CLASSROOM_4 => 'backend.admin.event.classroom_4',
             self::CLASSROOM_5 => 'backend.admin.event.classroom_5',
+            self::CLASSROOM_7 => 'backend.admin.event.classroom_7',
             self::CLASSROOM_6 => 'backend.admin.event.classroom_6',
         ];
     }
@@ -36,6 +38,7 @@ class EventClassroomTypeEnum
             self::CLASSROOM_3 => 'Aula 3',
             self::CLASSROOM_4 => 'Aula 4',
             self::CLASSROOM_5 => 'Aula 5',
+            self::CLASSROOM_7 => 'Aula 6',
             self::CLASSROOM_6 => 'Aula Online',
         ];
     }
@@ -48,6 +51,7 @@ class EventClassroomTypeEnum
             self::CLASSROOM_3 => '3',
             self::CLASSROOM_4 => '4',
             self::CLASSROOM_5 => '5',
+            self::CLASSROOM_7 => '6',
             self::CLASSROOM_6 => 'Online',
         ];
     }
