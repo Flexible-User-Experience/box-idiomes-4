@@ -8,6 +8,7 @@ use TCPDF;
 class BaseTcpdf extends TCPDF
 {
     public const PDF_WIDTH = 210;
+    public const PDF_WIDTH_LANDSCAPE = 297;
     public const PDF_MARGIN_LEFT = 30;
     public const PDF_MARGIN_RIGHT = 30;
     public const PDF_MARGIN_TOP = 70;

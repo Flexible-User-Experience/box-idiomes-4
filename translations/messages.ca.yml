@@ -258,6 +258,7 @@ backend:
             classroom_3: Aula 3
             classroom_4: Aula 4
             classroom_5: Aula 5
+            classroom_7: Aula 6
             classroom_6: Aula Online
             button:
                 previous: "Esdeveniment anterior"
