@@ -55,10 +55,7 @@ class Person extends AbstractPerson
         return count($this->students);
     }
 
-    /**
-     * @return int
-     */
-    public function getEnabledSonsAmount()
+    public function getEnabledSonsAmount(): int
     {
         $result = 0;
         /** @var Student $student */
