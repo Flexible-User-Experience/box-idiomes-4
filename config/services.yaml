@@ -25,7 +25,7 @@ parameters:
     mailer_destination:          '%env(string:MAILER_DESTINATION)%'
     delivery_dev_address:        '%env(string:DEV_DELIVERY_ADDRESS)%'
     google_recaptcha_site_key:   '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
-    preregister_peridod_is_open: false
+    preregister_period_is_open:  false
 
 services:
     _defaults:
@@ -36,7 +36,7 @@ services:
             $pwt:    '%project_web_title%'
             $pub:    '%project_url_base%'
             $mak:    '%mailchimp_api_key%'
-            $ppo:    '%preregister_peridod_is_open%'
+            $ppo:    '%preregister_period_is_open%'
             $bn:     '%boss_name%'
             $bd:     '%boss_dni%'
             $ba:     '%boss_address%'
@@ -136,7 +136,7 @@ services:
         arguments:
             - '@knp_menu.factory'
             - '@security.helper'
-            - '%preregister_peridod_is_open%'
+            - '%preregister_period_is_open%'
     app.frontend_top_menu:
         class: Knp\Menu\MenuItem
         factory: [ '@app.frontend_menu_builder', createTopMenu ]

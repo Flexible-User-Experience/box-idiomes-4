@@ -1,15 +1,19 @@
 Changelog
 =========
 
-##### Version 4.7.09 (WIP)
+##### Version 4.7.10 (WIP)
  * fix minor bugs
+
+##### Version 4.7.09 (2021-09-13)
+ * add better Student abscence management with Stimulus controllers
+ * disable preregister_period
+ * fix typo in service parameter name
 
 ##### Version 4.7.08 (2021-09-13)
  * vendors update
  * add Classroom 6
  * draw ExportCalendarToListBuilderPdf in protrait mode and up to 7 classroom columns
  * remove 6:00 AM from admin dashboard calendar
- * disable preregister_peridod
 
 ##### Version 4.7.07 (2021-07-01)
  * fix broken PDF services
