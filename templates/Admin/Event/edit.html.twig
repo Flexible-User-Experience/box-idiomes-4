@@ -18,3 +18,26 @@
     {# timelapse buttons section #}
     {% include "Admin/Event/timelapse_buttons_section.html.twig" with {mode: 'edit'} %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            let emptyPanelBoxNode = jQuery('div.sonata-ba-collapsed-fields em').parent();
+            if (emptyPanelBoxNode) {
+                emptyPanelBoxNode.html('<div data-controller="events-student-assistance" data-events-student-assistance-eid-value="{{ object.id }}" data-action="app-student-added@window->events-student-assistance#studentAdded app-student-removed@window->events-student-assistance#studentRemoved"></div>');
+                let studentsMultiSelectNode = jQuery('#{{ form.vars.id ~ '_students' }}');
+                studentsMultiSelectNode.on('change', function(event) {
+                    if (event.hasOwnProperty('added')) {
+                        const trigger = new CustomEvent('app-student-added', {detail: {event: '{{ object.id }}', student: event.added.id, text: event.added.text, element: event.added.element[0]}});
+                        window.dispatchEvent(trigger);
+                    }
+                    if (event.hasOwnProperty('removed')) {
+                        const trigger = new CustomEvent('app-student-removed', {detail: {event: '{{ object.id }}', student: event.removed.id, text: event.removed.text, element: event.removed.element[0]}});
+                        window.dispatchEvent(trigger);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

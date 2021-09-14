@@ -2,3 +2,7 @@ fos_js_routing:
     routes_to_expose:
         - 'sonata_admin_dashboard'
         - 'admin_app_filedummy_exportCalendarPdfList'
+        - 'admin_app_event_apiget'
+        - 'admin_app_event_apiattendedclass'
+        - 'admin_app_event_apinotattendedclass'
+        - 'admin_app_studentabsence_notification'
