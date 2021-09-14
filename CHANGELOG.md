@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 4.7.10 (WIP)
  * fix minor bugs
+ * replace callto by tel tag
 
 ##### Version 4.7.09 (2021-09-13)
  * add better Student abscence management with Stimulus controllers
