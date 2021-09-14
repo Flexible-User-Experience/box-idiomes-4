@@ -9,6 +9,7 @@ Changelog
  * add Classroom 6
  * draw ExportCalendarToListBuilderPdf in protrait mode and up to 7 classroom columns
  * remove 6:00 AM from admin dashboard calendar
+ * disable preregister_peridod
 
 ##### Version 4.7.07 (2021-07-01)
  * fix broken PDF services
