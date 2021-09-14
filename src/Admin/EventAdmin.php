@@ -36,6 +36,9 @@ class EventAdmin extends AbstractBaseAdmin
         $collection
             ->add('batchedit', $this->getRouterIdParameter().'/batch-edit')
             ->add('batchdelete', $this->getRouterIdParameter().'/batch-delete')
+            ->add('apiget', $this->getRouterIdParameter().'/api/get')
+            ->add('apiattendedclass', $this->getRouterIdParameter().'/api/{student}/attended-the-class')
+            ->add('apinotattendedclass', $this->getRouterIdParameter().'/api/{student}/not-attended-the-class')
             ->remove('delete')
         ;
     }
@@ -132,6 +135,8 @@ class EventAdmin extends AbstractBaseAdmin
                     'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.student_repository')->getEnabledSortedByNameQB(),
                 ]
             )
+            ->end()
+            ->with('backend.admin.assistance', $this->getFormMdSuccessBoxArray(6))
             ->end()
         ;
     }

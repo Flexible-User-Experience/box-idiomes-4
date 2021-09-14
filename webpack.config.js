@@ -51,6 +51,9 @@ Encore
     // enables LESS support
     .enableLessLoader()
 
+    // enables Stimulus support
+    .enableStimulusBridge('./assets/controllers.json')
+
     // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
 ;

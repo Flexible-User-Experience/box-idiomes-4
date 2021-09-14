@@ -128,6 +128,7 @@ backend:
         actions: Accions
         controls: Controls
         general: General
+        assistance: "Control assistència"
         date: Data creació
         dates: Dates
         enabled: Actiu
