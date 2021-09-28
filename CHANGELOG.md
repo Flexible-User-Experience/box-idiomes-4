@@ -7,6 +7,7 @@ Changelog
 ##### Version 4.7.10 (2021-09-28)
  * replace callto by tel tag
  * add Whatsapp call to action button
+ * hide frontend homepage newsletter form section
 
 ##### Version 4.7.09 (2021-09-13)
  * add better Student abscence management with Stimulus controllers
