@@ -1,9 +1,12 @@
 Changelog
 =========
 
-##### Version 4.7.10 (WIP)
+##### Version 4.7.11 (WIP)
  * fix minor bugs
+
+##### Version 4.7.10 (2021-09-28)
  * replace callto by tel tag
+ * add Whatsapp call to action button
 
 ##### Version 4.7.09 (2021-09-13)
  * add better Student abscence management with Stimulus controllers
