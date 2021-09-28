@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         ],
         datesRender: function (calendar) {
-            console.log('calendar', calendar);
             if (calendar.hasOwnProperty('view') && calendar.view.hasOwnProperty('props') && calendar.view.props.hasOwnProperty('dateProfile') && calendar.view.props.dateProfile.hasOwnProperty('currentRangeUnit') && calendar.view.props.dateProfile.hasOwnProperty('currentRange') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('start') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('end') && calendar.view.props.dateProfile.currentRange.start instanceof Date && calendar.view.props.dateProfile.currentRange.end instanceof Date) {
                 let exportCalendarPdfListAnchorNode = jQuery('#export_calendar_pdf_list_anchor');
                 let start = calendar.view.props.dateProfile.currentRange.start;
