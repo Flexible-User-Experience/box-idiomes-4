@@ -340,6 +340,9 @@
     "qipsius/tcpdf-bundle": {
         "version": "2.0.1"
     },
+    "roave/security-advisories": {
+        "version": "dev-latest"
+    },
     "saad-tazi/g-chart-bundle": {
         "version": "v3.1.1"
     },
