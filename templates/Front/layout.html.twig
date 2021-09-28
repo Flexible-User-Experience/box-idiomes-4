@@ -60,6 +60,23 @@
 <div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-2x fa-chevron-up"></i></span></div>
 {#<!-- Footer -->#}
 {% block footer %}
+    {# Newsletter section #}
+    <div class="p-vertical violet-background">
+        <div class="container">
+            <div class="row normal-m-top">
+                <div class="col-sm-4">
+                    <h4 class="c-white no-m-top">Whatsapp</h4>
+                    <p class="c-white no-m-top">Ens posarem en contacte tan aviat com sigui posssible.</p>
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 text-center top-margin-responsive">
+                    <a href="https://wa.me/{{ main_brand_phone_1 | replace({' ': ''}) }}?text=Hola! Estic interessat en rebre més informació sobre {{ main_brand_title }}." class="btn-newsletter btn">
+                        <i class="fa fa-whatsapp"></i> ENVIAR MISSATGE
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="footer">
         <div class="container">
             <div class="row">
