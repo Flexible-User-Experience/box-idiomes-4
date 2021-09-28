@@ -3,12 +3,13 @@ Changelog
 
 ##### Version 4.7.11 (WIP)
  * fix minor bugs
+ * fullcalendar 4.4.2 update
+ * add roave/security-advisories dev dependency
 
 ##### Version 4.7.10 (2021-09-28)
  * replace callto by tel tag
  * add Whatsapp call to action button
  * hide frontend homepage newsletter form section
- * fullcalendar 4.4.2 update
 
 ##### Version 4.7.09 (2021-09-13)
  * add better Student abscence management with Stimulus controllers
