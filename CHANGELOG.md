@@ -1,8 +1,15 @@
 Changelog
 =========
 
-##### Version 4.7.11 (WIP)
+##### Version 4.7.12 (WIP)
  * fix minor bugs
+ * fullcalendar 4.4.2 update
+ * add roave/security-advisories dev dependency
+
+##### Version 4.7.11 (2021-09-29)
+ * add better WhatsApp icon in CTA button
+ * fullcalendar 4.4.2 update
+ * add roave/security-advisories dev dependency
 
 ##### Version 4.7.10 (2021-09-28)
  * replace callto by tel tag
