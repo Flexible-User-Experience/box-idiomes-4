@@ -1,10 +1,13 @@
 Changelog
 =========
 
-##### Version 4.7.12 (WIP)
+##### Version 4.7.13 (WIP)
  * fix minor bugs
+
+##### Version 4.7.12 (2021-09-30)
  * fullcalendar 4.4.2 update
  * add roave/security-advisories dev dependency
+ * fix export problem
 
 ##### Version 4.7.11 (2021-09-29)
  * add better WhatsApp icon in CTA button
