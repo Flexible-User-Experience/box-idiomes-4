@@ -4,11 +4,11 @@ namespace App\Repository;
 
 use App\Entity\ContactMessage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry as RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
-class ContactMessageRepository extends ServiceEntityRepository
+final class ContactMessageRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ContactMessage::class);
     }
