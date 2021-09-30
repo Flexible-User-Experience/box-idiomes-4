@@ -7,6 +7,7 @@ use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Enum\InvoiceYearMonthEnum;
 use App\Enum\StudentPaymentEnum;
+use DateTimeImmutable;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -19,12 +20,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-/**
- * Class ReceiptAdmin.
- *
- * @category Admin
- */
-class ReceiptAdmin extends AbstractBaseAdmin
+final class ReceiptAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Receipt';
     protected $baseRoutePattern = 'billings/receipt';
@@ -36,9 +32,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
     ];
     protected $perPageOptions = [25, 50, 100, 200, 500];
 
-    /**
-     * Configure route collection.
-     */
     protected function configureRoutes(RouteCollection $collection): void
     {
         $collection
@@ -54,9 +47,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
         ;
     }
 
-    /**
-     * @param array $actions
-     */
     public function configureBatchActions($actions): array
     {
         if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
@@ -75,9 +65,6 @@ class ReceiptAdmin extends AbstractBaseAdmin
         return $actions;
     }
 
-    /**
-     * Get the list of actions that can be accessed directly from the dashboard.
-     */
     public function getDashboardActions(): array
     {
         $actions = parent::getDashboardActions();
@@ -91,15 +78,11 @@ class ReceiptAdmin extends AbstractBaseAdmin
         return $actions;
     }
 
-    /**
-     * @throws \Exception
-     */
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $now = new \DateTime();
+        $now = new DateTimeImmutable();
         $currentYear = $now->format('Y');
-
-        $formMapper
+        $form
             ->with('backend.admin.receipt.receipt', $this->getFormMdSuccessBoxArray(3))
             ->add(
                 'year',
@@ -151,8 +134,8 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.receipt.date',
                     'format' => 'd/M/y',
-                    'required' => $this->id($this->getSubject()) ? false : true,
-                    'disabled' => $this->id($this->getSubject()) ? true : false,
+                    'required' => !$this->id($this->getSubject()),
+                    'disabled' => (bool) $this->id($this->getSubject()),
                 ]
             )
             ->add(
@@ -186,7 +169,7 @@ class ReceiptAdmin extends AbstractBaseAdmin
             )
         ;
         if (($this->id($this->getSubject()) && !$this->getSubject()->getStudent()->isPaymentExempt()) || !$this->id($this->getSubject())) {
-            $formMapper
+            $form
                 ->add(
                     'isSepaXmlGenerated',
                     CheckboxType::class,
@@ -244,9 +227,9 @@ class ReceiptAdmin extends AbstractBaseAdmin
                 )
             ;
         }
-        $formMapper->end();
+        $form->end();
         if ($this->id($this->getSubject())) { // is edit mode, disable on new subjetcs
-            $formMapper
+            $form
                 ->with('backend.admin.receipt.lines', $this->getFormMdSuccessBoxArray(12))
                 ->add(
                     'lines',
@@ -267,9 +250,9 @@ class ReceiptAdmin extends AbstractBaseAdmin
         }
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'id',
                 null,
@@ -428,9 +411,9 @@ class ReceiptAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'id',
                 null,
