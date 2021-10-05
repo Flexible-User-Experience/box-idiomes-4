@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 4.7.13 (WIP)
  * fix minor bugs
+ * fix problem with sepaXmlGeneratedDate datagrid filters
 
 ##### Version 4.7.12 (2021-09-30)
  * fullcalendar 4.4.2 update
