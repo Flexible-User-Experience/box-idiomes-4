@@ -65,16 +65,12 @@ final class InvoiceRepository extends ServiceEntityRepository
 
     public function getMonthlyIncomingsAmountForDate(DateTimeInterface $date): int
     {
-        $begin = clone $date;
-        $end = clone $date;
-        $begin->modify('first day of this month');
-        $end->modify('last day of this month');
         $query = $this->createQueryBuilder('i')
             ->select('SUM(i.baseAmount) as amount')
-            ->where('i.date >= :begin')
-            ->andWhere('i.date <= :end')
-            ->setParameter('begin', $begin->format('Y-m-d'))
-            ->setParameter('end', $end->format('Y-m-d'))
+            ->where('i.month = :month')
+            ->andWhere('i.year = :year')
+            ->setParameter('month', (int) $date->format('m'))
+            ->setParameter('year', (int) $date->format('Y'))
             ->getQuery()
         ;
 
