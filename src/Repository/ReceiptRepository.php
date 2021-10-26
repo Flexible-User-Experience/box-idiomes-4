@@ -169,8 +169,8 @@ final class ReceiptRepository extends ServiceEntityRepository
             ->select('SUM(r.baseAmount) as amount')
             ->where('r.month = :month')
             ->andWhere('r.year = :year')
-            ->setParameter('month', $date->format('m'))
-            ->setParameter('year', $date->format('Y'))
+            ->setParameter('month', (int) $date->format('m'))
+            ->setParameter('year', (int) $date->format('Y'))
             ->getQuery()
         ;
 
