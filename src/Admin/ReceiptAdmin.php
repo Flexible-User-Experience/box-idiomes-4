@@ -361,9 +361,16 @@ final class ReceiptAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'sepaXmlGeneratedDate',
-                null,
+                DateFilter::class,
                 [
                     'label' => 'backend.admin.receipt.sepaXmlGeneratedDate',
+                    'field_type' => DatePickerType::class,
+                    'format' => 'd-m-Y',
+                ],
+                null,
+                [
+                    'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy',
                 ]
             )
             ->add(
