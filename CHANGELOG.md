@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.7.14 (WIP)
+##### Version 4.7.15 (WIP)
  * fix minor bugs
+
+##### Version 4.7.14 (2021-12-01)
+ * vendors update
+ * remove unnecessary contact warning message on missing student case
 
 ##### Version 4.7.13 (2021-10-26)
  * fix problem with sepaXmlGeneratedDate datagrid filters
