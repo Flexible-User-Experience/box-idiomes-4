@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.7.15 (WIP)
+##### Version 4.7.16 (WIP)
  * fix minor bugs
+
+##### Version 4.7.15 (2021-12-02)
+ * vendors update
+ * improve contact warning message on missing student case
 
 ##### Version 4.7.14 (2021-12-01)
  * vendors update
