@@ -19,4 +19,4 @@ twig:
         main_brand_city:          '%boss_city%'
         main_brand_phone_1:       '%boss_phone_number_1%'
         main_brand_phone_2:       '%boss_phone_number_2%'
-        admin_tag_version:        'v4.7.14'
+        admin_tag_version:        'v4.7.15'
