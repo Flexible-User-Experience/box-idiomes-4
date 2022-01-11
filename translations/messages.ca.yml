@@ -189,6 +189,7 @@ backend:
             bank: Rebut bancari
             cash: Efectiu
             transfer: Transferència bancaria
+            credit_card: "Targeta de crèdit"
             phone: Telèfon
             dni: "DNI/NIE"
             email: Email

@@ -87,7 +87,13 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true,
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {

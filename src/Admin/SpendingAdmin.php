@@ -126,7 +126,7 @@ class SpendingAdmin extends AbstractBaseAdmin
                 ChoiceType::class,
                 [
                     'label' => 'backend.admin.customer.payment_method',
-                    'choices' => StudentPaymentEnum::getEnumArray(),
+                    'choices' => StudentPaymentEnum::getEnumArrayWithCreditCard(),
                     'required' => true,
                 ]
             )
