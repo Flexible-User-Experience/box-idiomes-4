@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 4.7.16 (WIP)
+##### Version 4.7.17 (WIP)
  * fix minor bugs
+
+##### Version 4.7.16 (2022-01-11)
+ * add new credit card payment method in SpendingAdmin
+ * change config IBAN value
 
 ##### Version 4.7.15 (2021-12-02)
  * vendors update
