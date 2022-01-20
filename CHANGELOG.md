@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 4.7.17 (WIP)
+##### Version 4.7.18 (WIP)
  * fix minor bugs
+
+##### Version 4.7.17 (2022-01-20)
+ * fix missing download PDF button template in SpendingAdmin edit view
 
 ##### Version 4.7.16 (2022-01-11)
  * add new credit card payment method in SpendingAdmin
