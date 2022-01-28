@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class FileManagerAdminController extends BaseAdminController
+final class FileManagerAdminController extends BaseAdminController
 {
     public function handlerAction(): Response
     {

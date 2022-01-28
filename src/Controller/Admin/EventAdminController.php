@@ -14,17 +14,13 @@ use Doctrine\ORM\EntityManager;
 use Exception;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
-class EventAdminController extends BaseAdminController
+final class EventAdminController extends BaseAdminController
 {
-    /**
-     * @return RedirectResponse|Response
-     */
-    public function editAction($deprecatedId = null)
+    public function editAction($deprecatedId = null): Response
     {
         $request = $this->getRequest();
         $id = $request->get($this->admin->getIdParameter());
@@ -116,7 +112,6 @@ class EventAdminController extends BaseAdminController
         $form = $this->createForm(EventBatchRemoveType::class, $object, ['event' => $object]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
             $eventIdStopRange = $form->get('range')->getData();
             /** @var Event|null $eventStopRange */
