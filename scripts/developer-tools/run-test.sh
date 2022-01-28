@@ -4,13 +4,13 @@ echo "Started at $(date +"%T %d/%m/%Y")"
 
 if [ -z "$1" ]
   then
-    php ./vendor/bin/phpunit --no-coverage
+    php ./vendor/bin/phpunit
   else
     if [ "$1" = "cc" -o "$1" = "coverage" ]
       then
         if [ "$1" = "cc" ]
           then
-            php bin/console cache:clear --env=test && php ./vendor/bin/phpunit --no-coverage
+            php bin/console cache:clear --env=test && php ./vendor/bin/phpunit
           else
             php ./vendor/bin/phpunit
         fi
