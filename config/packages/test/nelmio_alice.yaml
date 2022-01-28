@@ -1,2 +1,13 @@
-imports:
-    - { resource: ../dev/nelmio_alice.yaml }
+nelmio_alice:
+    locale: 'es_ES'
+    seed: 6669
+    loading_limit: 1500
+    max_unique_values_retry: 1500
+    functions_blacklist:
+        - 'current'
+        - 'shuffle'
+        - 'date'
+        - 'time'
+        - 'file'
+        - 'md5'
+        - 'sha1'

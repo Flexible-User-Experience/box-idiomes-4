@@ -294,7 +294,7 @@ services:
         class: App\Service\FileService
         public: true
         arguments:
-            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
             - '%kernel.project_dir%'
     # Forms
     app.form.type.generate_receipt:
