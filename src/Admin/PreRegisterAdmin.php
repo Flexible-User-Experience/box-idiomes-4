@@ -2,25 +2,30 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Enum\PreRegisterSeasonEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class PreRegisterAdmin extends AbstractBaseAdmin
+final class PreRegisterAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'PreRegister';
     protected $baseRoutePattern = 'students/pre-register';
-    protected $datagridValues = [
-        '_sort_by' => 'createdAt',
-        '_sort_order' => 'desc',
-    ];
 
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
+        $sortValues[DatagridInterface::SORT_BY] = 'createdAt';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
             ->add('student', $this->getRouterIdParameter().'/create-student')
@@ -51,12 +56,11 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'frontend.forms.preregister.date',
                     'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
-                ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy',
+                    ],
+//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -64,14 +68,13 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'frontend.forms.preregister.season',
-                    'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
-                ],
-                ChoiceType::class,
-                [
-                    'choices' => PreRegisterSeasonEnum::getEnumArray(),
-                    'expanded' => false,
-                    'multiple' => false,
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => PreRegisterSeasonEnum::getEnumArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
+//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -276,8 +279,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                     'label' => 'frontend.forms.preregister.date',
                     'editable' => false,
                     'format' => 'd/m/Y H:i',
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
                 ]
             )
             ->add(
@@ -286,8 +287,6 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'frontend.forms.preregister.season',
                     'template' => 'Admin/Cells/list__cell_pre_register_season.html.twig',
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
                 ]
             )
             ->add(
@@ -328,28 +327,30 @@ class PreRegisterAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'frontend.forms.preregister.enabled',
                     'editable' => false,
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
-                    'header_class' => 'text-right',
-                    'row_align' => 'right',
+                    'label' => 'backend.admin.actions',
                     'actions' => [
-                        'show' => ['template' => 'Admin/Buttons/list__action_show_button.html.twig'],
-                        'student' => ['template' => 'Admin/Buttons/list__action_create_student_from_pre_register_button.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
+                        'show' => [
+                            'template' => 'Admin/Buttons/list__action_show_button.html.twig',
+                        ],
+                        'student' => [
+                            'template' => 'Admin/Buttons/list__action_create_student_from_pre_register_button.html.twig',
+                        ],
+                        'delete' => [
+                            'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
+                        ],
                     ],
-                    'label' => 'Accions',
                 ]
             )
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'createdAtString',

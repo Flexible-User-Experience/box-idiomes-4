@@ -2,31 +2,28 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 
-/**
- * Class ClassGroupAdmin.
- *
- * @category Admin
- */
-class ClassGroupAdmin extends AbstractBaseAdmin
+final class ClassGroupAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ClassGroup';
     protected $baseRoutePattern = 'classrooms/group';
-    protected $datagridValues = [
-        '_sort_by' => 'code',
-        '_sort_order' => 'asc',
-    ];
 
-    /**
-     * Configure route collection.
-     */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'code';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
         $collection
@@ -35,10 +32,10 @@ class ClassGroupAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
             ->add(
                 'code',
                 null,
@@ -64,7 +61,7 @@ class ClassGroupAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
                 'color',
                 ColorType::class,
@@ -92,9 +89,9 @@ class ClassGroupAdmin extends AbstractBaseAdmin
             ->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'code',
                 null,
@@ -133,9 +130,9 @@ class ClassGroupAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'code',
                 null,
@@ -189,22 +186,22 @@ class ClassGroupAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
                         'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
                         'emails' => ['template' => 'Admin/Cells/list__action_group_emails.html.twig'],
                     ],
-                    'label' => 'backend.admin.actions',
                 ]
             )
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'code',

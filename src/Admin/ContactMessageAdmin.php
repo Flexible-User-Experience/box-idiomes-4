@@ -2,42 +2,40 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\Form\Type\DatePickerType;
 
-/**
- * Class ContactMessageAdmin.
- *
- * @category Admin
- */
-class ContactMessageAdmin extends AbstractBaseAdmin
+final class ContactMessageAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ContactMessage';
     protected $baseRoutePattern = 'contacts/message';
-    protected $datagridValues = [
-        '_sort_by' => 'createdAt',
-        '_sort_order' => 'desc',
-    ];
 
-    /**
-     * Configure route collection.
-     */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
+        $sortValues[DatagridInterface::SORT_BY] = 'createdAt';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
+            ->add('answer', $this->getRouterIdParameter().'/answer')
             ->remove('create')
             ->remove('edit')
             ->remove('batch')
-            ->add('answer', $this->getRouterIdParameter().'/answer');
+        ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'checked',
                 null,
@@ -51,13 +49,12 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.date',
                     'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd/MM/yyyy',
+                    ],
+//                    'format' => 'd-m-Y',
                 ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
-                ]
             )
             ->add(
                 'name',
@@ -100,12 +97,13 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.contact.description',
                 ]
-            );
+            )
+        ;
     }
 
-    protected function configureShowFields(ShowMapper $showMapper): void
+    protected function configureShowFields(ShowMapper $show): void
     {
-        $showMapper
+        $show
             ->add(
                 'checked',
                 null,
@@ -148,22 +146,24 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.contact.answered',
                 ]
-            );
-        if ($this->getSubject()->getAnswered()) {
-            $showMapper
+            )
+        ;
+        if ($this->getSubject() && $this->getSubject()->getAnswered()) {
+            $show
                 ->add(
                     'description',
                     'textarea',
                     [
                         'label' => 'backend.admin.contact.answer',
                     ]
-                );
+                )
+            ;
         }
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'checked',
                 null,
@@ -207,9 +207,10 @@ class ContactMessageAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
@@ -228,7 +229,7 @@ class ContactMessageAdmin extends AbstractBaseAdmin
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'checked',

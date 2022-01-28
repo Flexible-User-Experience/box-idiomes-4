@@ -2,29 +2,29 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-/**
- * Class ReceiptLineAdmin.
- *
- * @category Admin
- */
-class ReceiptLineAdmin extends AbstractBaseAdmin
+final class ReceiptLineAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ReceiptLine';
     protected $baseRoutePattern = 'billings/receipt-line';
-    protected $datagridValues = [
-        '_sort_by' => 'description',
-        '_sort_order' => 'asc',
-    ];
 
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureDefaultSortValues(array &$sortValues): void
     {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'description';
+    }
+
+    protected function configureFormFields(FormMapper $form): void
+    {
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general'))
             ->add(
                 'description',
                 null,
@@ -54,7 +54,7 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(6))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls'))
             ->add(
                 'receipt',
                 null,
@@ -81,9 +81,9 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'receipt',
                 null,
@@ -136,9 +136,9 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'receipt',
                 null,
@@ -196,17 +196,21 @@ class ReceiptLineAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
-                    'header_class' => 'text-right',
-                    'row_align' => 'right',
-                    'actions' => [
-                        'show' => ['template' => 'Admin/Buttons/list__action_show_button.html.twig'],
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
-                    ],
                     'label' => 'backend.admin.actions',
+                    'actions' => [
+                        'show' => [
+                            'template' => 'Admin/Buttons/list__action_show_button.html.twig',
+                        ],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'delete' => [
+                            'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
+                        ],
+                    ],
                 ]
             )
         ;

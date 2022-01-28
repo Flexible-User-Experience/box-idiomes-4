@@ -2,13 +2,15 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Provider;
 use App\Entity\SpendingCategory;
 use App\Enum\StudentPaymentEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,36 +18,28 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-/**
- * Class SpendingAdmin.
- *
- * @category Admin
- */
-class SpendingAdmin extends AbstractBaseAdmin
+final class SpendingAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Spending';
     protected $baseRoutePattern = 'purchases/spending';
-    protected $datagridValues = [
-        '_sort_by' => 'date',
-        '_sort_order' => 'desc',
-    ];
 
-    /**
-     * Configure route collection.
-     */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
+        $sortValues[DatagridInterface::SORT_BY] = 'date';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
         $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
     }
 
-    /**
-     * @throws \Twig\Error\Error
-     */
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(5))
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 5))
             ->add(
                 'date',
                 DatePickerType::class,
@@ -62,7 +56,7 @@ class SpendingAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.spending.category',
                     'required' => false,
                     'class' => SpendingCategory::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.spending_category_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(SpendingCategory::class)->getEnabledSortedByNameQB(),
                 ]
             )
             ->add(
@@ -72,7 +66,7 @@ class SpendingAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.spending.provider',
                     'required' => false,
                     'class' => Provider::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.provider_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(Provider::class)->getEnabledSortedByNameQB(),
                 ]
             )
             ->add(
@@ -84,7 +78,7 @@ class SpendingAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.documents', $this->getFormMdSuccessBoxArray(4))
+            ->with('backend.admin.documents', $this->getFormMdSuccessBoxArray('backend.admin.documents', 4))
             ->add(
                 'documentFile',
                 FileType::class,
@@ -95,7 +89,7 @@ class SpendingAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
                 'baseAmount',
                 null,
@@ -134,21 +128,20 @@ class SpendingAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'date',
                 DateFilter::class,
                 [
                     'label' => 'backend.admin.spending.date',
                     'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
-                ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy',
+                    ],
+//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -156,13 +149,13 @@ class SpendingAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.spending.category',
-                ],
-                EntityType::class,
-                [
-                    'expanded' => false,
-                    'multiple' => false,
-                    'class' => SpendingCategory::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.spending_category_repository')->getEnabledSortedByNameQB(),
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'expanded' => false,
+                        'multiple' => false,
+                        'class' => SpendingCategory::class,
+                        'query_builder' => $this->em->getRepository(SpendingCategory::class)->getEnabledSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(
@@ -170,13 +163,13 @@ class SpendingAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.spending.provider',
-                ],
-                EntityType::class,
-                [
-                    'expanded' => false,
-                    'multiple' => false,
-                    'class' => Provider::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.provider_repository')->getEnabledSortedByNameQB(),
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'expanded' => false,
+                        'multiple' => false,
+                        'class' => Provider::class,
+                        'query_builder' => $this->em->getRepository(Provider::class)->getEnabledSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(
@@ -202,16 +195,15 @@ class SpendingAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'paymentDate',
-                DateFilter::class,
+                'doctrine_orm_date',
                 [
                     'label' => 'backend.admin.invoice.paymentDate',
                     'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
-                ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy',
+                    ],
+//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -219,20 +211,20 @@ class SpendingAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.customer.payment_method',
-                ],
-                ChoiceType::class,
-                [
-                    'label' => 'backend.admin.customer.payment_method',
-                    'choices' => StudentPaymentEnum::getEnumArray(),
-                    'required' => true,
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'label' => 'backend.admin.customer.payment_method',
+                        'choices' => StudentPaymentEnum::getEnumArray(),
+                        'required' => true,
+                    ],
                 ]
             )
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'date',
                 null,
@@ -298,24 +290,32 @@ class SpendingAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
-                    'label' => 'backend.admin.actions',
                     'actions' => [
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
-                        'document' => ['template' => 'Admin/Buttons/list__action_spending_document_button.html.twig'],
-                        'duplicate' => ['template' => 'Admin/Buttons/list__action_invoice_duplicate_button.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'document' => [
+                            'template' => 'Admin/Buttons/list__action_spending_document_button.html.twig',
+                        ],
+                        'duplicate' => [
+                            'template' => 'Admin/Buttons/list__action_invoice_duplicate_button.html.twig',
+                        ],
+                        'delete' => [
+                            'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
+                        ],
                     ],
                 ]
             )
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'dateString',

@@ -1,5 +1,4 @@
 imports:
-    - { resource: 'services/repositories.yaml' }
     - { resource: 'services/admins.yaml' }
 
 parameters:
@@ -94,9 +93,9 @@ services:
         public: true
         arguments:
             - '@translator'
-            - '@app.receipt_repository'
-            - '@app.invoice_repository'
-            - '@app.spending_repository'
+            - '@App\Repository\ReceiptRepository'
+            - '@App\Repository\InvoiceRepository'
+            - '@App\Repository\SpendingRepository'
     # Menus
     app.backend_top_nav_menu_builder:
         class: App\Menu\BackendTopNavMenuBuilder
@@ -164,13 +163,13 @@ services:
         class: App\Manager\ReceiptManager
         public: true
         arguments:
-            - '@app.invoice_repository'
+            - '@App\Repository\InvoiceRepository'
     app.event_manager:
         class: App\Manager\EventManager
         public: true
         arguments:
-            - '@app.event_repository'
-            - '@app.tariff_repository'
+            - '@App\Repository\EventRepository'
+            - '@App\Repository\TariffRepository'
     app.generate_receipt_form_manager:
         class: App\Manager\GenerateReceiptFormManager
         public: true
@@ -179,9 +178,9 @@ services:
             - '@kernel'
             - '@doctrine.orm.entity_manager'
             - '@translator.default'
-            - '@app.student_repository'
-            - '@app.event_repository'
-            - '@app.receipt_repository'
+            - '@App\Repository\StudentRepository'
+            - '@App\Repository\EventRepository'
+            - '@App\Repository\ReceiptRepository'
             - '@app.event_manager'
     app.generate_invoice_form_manager:
         class: App\Manager\GenerateInvoiceFormManager
@@ -191,9 +190,9 @@ services:
             - '@kernel'
             - '@doctrine.orm.entity_manager'
             - '@translator.default'
-            - '@app.student_repository'
-            - '@app.event_repository'
-            - '@app.invoice_repository'
+            - '@App\Repository\StudentRepository'
+            - '@App\Repository\EventRepository'
+            - '@App\Repository\InvoiceRepository'
     # PDF Builders
     app.student_image_rights_pdf_builder:
         class: App\Pdf\StudentImageRightsBuilderPdf
@@ -315,9 +314,9 @@ services:
         class: App\Form\Type\EventType
         public: true
         arguments:
-            - '@app.teacher_repository'
-            - '@app.class_group_repository'
-            - '@app.student_repository'
+            - '@App\Repository\TeacherRepository'
+            - '@App\Repository\ClassGroupRepository'
+            - '@App\Repository\StudentRepository'
             - '@app.event_manager'
         tags:
             - { name: form.type }
