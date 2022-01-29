@@ -325,6 +325,9 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
     "psr/http-message": {
         "version": "1.0.1"
     },
@@ -339,9 +342,6 @@
     },
     "roave/security-advisories": {
         "version": "dev-latest"
-    },
-    "saad-tazi/g-chart-bundle": {
-        "version": "v3.1.1"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
@@ -496,9 +496,6 @@
     "symfony/css-selector": {
         "version": "v4.4.8"
     },
-    "symfony/debug": {
-        "version": "v4.4.8"
-    },
     "symfony/debug-bundle": {
         "version": "4.1",
         "recipe": {
@@ -591,9 +588,6 @@
     "symfony/http-kernel": {
         "version": "v4.4.8"
     },
-    "symfony/inflector": {
-        "version": "v4.4.8"
-    },
     "symfony/intl": {
         "version": "v4.4.8"
     },
@@ -631,6 +625,9 @@
     },
     "symfony/options-resolver": {
         "version": "v4.4.8"
+    },
+    "symfony/password-hasher": {
+        "version": "v5.4.3"
     },
     "symfony/phpunit-bridge": {
         "version": "4.3",
