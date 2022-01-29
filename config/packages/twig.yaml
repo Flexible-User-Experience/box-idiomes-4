@@ -21,6 +21,6 @@ twig:
         main_brand_phone_2:       '%boss_phone_number_2%'
         admin_tag_version:        'v4.7.17'
 
-#when@test:
-#    twig:
-#        strict_variables: true
+when@test:
+    twig:
+        strict_variables: true
