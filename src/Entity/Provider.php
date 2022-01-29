@@ -63,7 +63,7 @@ class Provider extends AbstractBase
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\Email(strict=true, checkMX=true, checkHost=true)
+     * @Assert\Email()
      */
     private $email;
 

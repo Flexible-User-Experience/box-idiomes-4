@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-//use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="admin_user")
  * @UniqueEntity("username")
  */
-class User extends AbstractBase implements UserInterface //PasswordAuthenticatedUserInterface, UserInterface
+class User extends AbstractBase implements PasswordAuthenticatedUserInterface, UserInterface
 {
     public const DEFAULT_ROLE_USER = UserRolesEnum::ROLE_USER;
 
@@ -295,6 +295,246 @@ class User extends AbstractBase implements UserInterface //PasswordAuthenticated
     public function setPasswordChangedAt(?DateTimeInterface $passwordChangedAt): self
     {
         $this->passwordChangedAt = $passwordChangedAt;
+
+        return $this;
+    }
+
+    public function getUsernameCanonical(): string
+    {
+        return $this->usernameCanonical;
+    }
+
+    public function setUsernameCanonical(string $usernameCanonical): self
+    {
+        $this->usernameCanonical = $usernameCanonical;
+
+        return $this;
+    }
+
+    public function getEmailCanonical(): string
+    {
+        return $this->emailCanonical;
+    }
+
+    public function setEmailCanonical(string $emailCanonical): self
+    {
+        $this->emailCanonical = $emailCanonical;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function getTimezone(): ?string
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(?string $timezone): self
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    public function getFacebookUid(): ?string
+    {
+        return $this->facebookUid;
+    }
+
+    public function setFacebookUid(?string $facebookUid): self
+    {
+        $this->facebookUid = $facebookUid;
+
+        return $this;
+    }
+
+    public function getFacebookName(): ?string
+    {
+        return $this->facebookName;
+    }
+
+    public function setFacebookName(?string $facebookName): self
+    {
+        $this->facebookName = $facebookName;
+
+        return $this;
+    }
+
+    public function getFacebookData(): ?array
+    {
+        return $this->facebookData;
+    }
+
+    public function setFacebookData(?array $facebookData): self
+    {
+        $this->facebookData = $facebookData;
+
+        return $this;
+    }
+
+    public function getTwitterUid(): ?string
+    {
+        return $this->twitterUid;
+    }
+
+    public function setTwitterUid(?string $twitterUid): self
+    {
+        $this->twitterUid = $twitterUid;
+
+        return $this;
+    }
+
+    public function getTwitterName(): ?string
+    {
+        return $this->twitterName;
+    }
+
+    public function setTwitterName(?string $twitterName): self
+    {
+        $this->twitterName = $twitterName;
+
+        return $this;
+    }
+
+    public function getTwitterkData(): ?array
+    {
+        return $this->twitterkData;
+    }
+
+    public function setTwitterkData(?array $twitterkData): self
+    {
+        $this->twitterkData = $twitterkData;
+
+        return $this;
+    }
+
+    public function getGplusUid(): ?string
+    {
+        return $this->gplusUid;
+    }
+
+    public function setGplusUid(?string $gplusUid): self
+    {
+        $this->gplusUid = $gplusUid;
+
+        return $this;
+    }
+
+    public function getGplusName(): ?string
+    {
+        return $this->gplusName;
+    }
+
+    public function setGplusName(?string $gplusName): self
+    {
+        $this->gplusName = $gplusName;
+
+        return $this;
+    }
+
+    public function getGplusData(): ?array
+    {
+        return $this->gplusData;
+    }
+
+    public function setGplusData(?array $gplusData): self
+    {
+        $this->gplusData = $gplusData;
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): self
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(?string $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getTwoStepVerificationCode(): ?string
+    {
+        return $this->twoStepVerificationCode;
+    }
+
+    public function setTwoStepVerificationCode(?string $twoStepVerificationCode): self
+    {
+        $this->twoStepVerificationCode = $twoStepVerificationCode;
 
         return $this;
     }

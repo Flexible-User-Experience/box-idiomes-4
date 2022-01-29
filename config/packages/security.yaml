@@ -56,11 +56,12 @@ security:
                 property: 'username'
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         admin:
-            pattern: /admin(.*)
-            lazy:    true
+            pattern:     /admin(.*)
+            lazy:        true
+            entry_point: form_login
             form_login:
                 provider:                       'app_user_provider'
                 login_path:                     /admin/login
@@ -91,3 +92,6 @@ when@test:
                 cost:        4
                 time_cost:   3
                 memory_cost: 10
+        firewalls:
+            admin:
+                http_basic: ~

@@ -40,7 +40,7 @@ abstract class AbstractPerson extends AbstractBase
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Email(strict="true", checkMX=true, checkHost=true)
+     * @Assert\Email()
      */
     protected ?string $email;
 

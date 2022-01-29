@@ -46,12 +46,11 @@ services:
             $locale: '%default_locale%'
     # Commons
     App\:
-        resource: '../src/*'
-        exclude:  '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-    # Controllers
-    App\Controller\:
-        resource: '../src/Controller'
-        tags:     [ 'controller.service_arguments' ]
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
     Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
     # Template Blocks
     app.block.event_calendar:
@@ -335,3 +334,10 @@ services:
             - "@doctrine.orm.default_entity_manager"
         tags:
             - { name: "kernel.event_subscriber", priority: 100 }
+    app.doctrine_user_event:
+        class: App\Doctrine\Listener\UserListener
+        arguments:
+            - '@security.user_password_hasher'
+        tags:
+            - { name: doctrine.orm.entity_listener, event: prePersist, entity: App\Entity\User, priority: 2 }
+            - { name: doctrine.orm.entity_listener, event: preUpdate, entity: App\Entity\User, priority: 2 }

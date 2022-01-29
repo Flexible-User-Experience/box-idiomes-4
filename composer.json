@@ -75,8 +75,11 @@
         "hautelook/alice-bundle": "^2.9",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
+        "symfony/browser-kit": "5.4.*",
+        "symfony/css-selector": "5.4.*",
         "symfony/debug-bundle": "5.4.*",
         "symfony/maker-bundle": "^1.0",
+        "symfony/phpunit-bridge": "^6.0",
         "symfony/stopwatch": "5.4.*",
         "symfony/web-profiler-bundle": "5.4.*",
         "thibautselingue/local-php-security-checker-installer": "^1.0"
