@@ -6,8 +6,8 @@
 {# custom logo #}
 {% block logo %}
     <a class="logo" href="{{ path('sonata_admin_dashboard') }}">
-        <img src="{{ asset('build/img/backend-logo.png') }}" alt="{{ sonata_admin.adminPool.title }}">
-        <span>{{ sonata_admin.adminPool.title }}</span>
+        <img src="{{ asset('build/img/backend-logo.png') }}" alt="{{ sonata_config.title }}">
+        <span>{{ sonata_config.title }}</span>
     </a>
 {% endblock %}
 

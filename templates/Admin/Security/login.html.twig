@@ -1,0 +1,66 @@
+{% extends "Admin/layout.html.twig" %}
+
+{% block sonata_head_title %}{{ 'login.title' | trans }} · {{ main_brand_title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('backend') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('backend') }}
+{% endblock %}
+
+{% block sonata_nav %}{% endblock sonata_nav %}
+
+{% block logo %}{% endblock logo %}
+
+{% block sonata_left_side %}{% endblock sonata_left_side %}
+
+{% block body_attributes %}class="sonata-bc login-page"{% endblock %}
+
+{% block sonata_wrapper %}
+    <div class="login-box" style="background-color:{{ admin_color }}">
+        {% include 'Admin/Security/login_logo_fragment.html.twig' %}
+        <div class="login-box-body">
+            {% block sonata_user_login_form %}
+                {% block sonata_user_login_error %}
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey | trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ label }}">
+                            {{ flash }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% if admin_is_stage %}
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle mr-1"></i> {{ 'layout.admin_is_stage_warning' | trans }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {{ form_start(form) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.password) }}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button type="submit" class="btn btn-primary btn-block">{{ 'login.submit' | trans }}</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    {{ form_rest(form) }}
+                {{ form_end(form) }}
+            {% endblock %}
+        </div>
+        {% include 'Admin/Security/login_footer_fragment.html.twig' %}
+    </div>
+{% endblock sonata_wrapper %}

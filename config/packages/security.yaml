@@ -63,14 +63,15 @@ security:
             lazy:        true
             entry_point: form_login
             form_login:
-                provider:                       'app_user_provider'
-                login_path:                     /admin/login
-                use_forward:                    false
-                check_path:                     /admin/login_check
-                failure_path:                   /admin/login
-                default_target_path:            /admin/dashboard
-                always_use_default_target_path: true
-                use_referer:                    true
+                provider:              'app_user_provider'
+                login_path:            'admin_app_login'
+                check_path:            'admin_app_login'
+                username_parameter:    'admin_login_form[username]'
+                password_parameter:    'admin_login_form[password]'
+                target_path_parameter: 'admin_login_form[target_path]'
+                csrf_parameter:        '_csrf_token'
+                enable_csrf:           false
+                failure_path:          null
             logout:
                 path:   /admin/logout
                 target: /admin/login
@@ -79,9 +80,9 @@ security:
             context: user
             lazy:    true
     access_control:
-#        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/admin/, role: ROLE_USER }
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_USER }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
 when@test:

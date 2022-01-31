@@ -24,6 +24,9 @@ parameters:
     mailer_destination:          '%env(string:MAILER_DESTINATION)%'
     delivery_dev_address:        '%env(string:DEV_DELIVERY_ADDRESS)%'
     google_recaptcha_site_key:   '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
+    admin_logo:                  '%env(string:ADMIN_LOGO)%'
+    admin_color:                 '%env(string:ADMIN_COLOR)%'
+    admin_is_stage:              '%env(bool:ADMIN_IS_STAGE)%'
     preregister_period_is_open:  false
 
 services:

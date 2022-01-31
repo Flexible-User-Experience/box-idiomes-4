@@ -347,6 +347,11 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return $this;
     }
 
+    public function getFullName(): string
+    {
+        return $this->getFirstname() && $this->getLastname() ? $this->getFirstname().' '.$this->getLastname() : $this->getUsername();
+    }
+
     public function getWebsite(): ?string
     {
         return $this->website;
