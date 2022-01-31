@@ -17,7 +17,7 @@ final class AdminLoginForm extends AbstractType
                 'username',
                 TextType::class,
                 [
-                    'label' => 'login.username',
+                    'label' => 'backend.admin.login.username',
                     'required' => true,
                 ]
             )
@@ -25,7 +25,7 @@ final class AdminLoginForm extends AbstractType
                 'password',
                 PasswordType::class,
                 [
-                    'label' => 'login.password',
+                    'label' => 'backend.admin.login.password',
                     'required' => true,
                 ]
             )
@@ -33,7 +33,7 @@ final class AdminLoginForm extends AbstractType
                 'target_path',
                 HiddenType::class,
                 [
-                    'label' => 'login.target_path',
+                    'label' => 'backend.admin.login.target_path',
                     'required' => true,
                 ]
             )
