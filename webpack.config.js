@@ -1,4 +1,4 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
@@ -7,20 +7,12 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
+    .setPublicPath('/build')
     .copyFiles([
         {from: './assets/img', to: 'img/[path][name].[ext]'},
         {from: './assets/svg', to: 'svg/[path][name].[ext]'},
         {from: './assets/fonts', to: 'fonts/[path][name].[ext]'},
-        {from: './node_modules/ckeditor4/', to: 'ckeditor4/[path][name].[ext]', pattern: /\.(js|css)$/, includeSubdirectories: false},
-        {from: './node_modules/ckeditor4/adapters', to: 'ckeditor4/adapters/[path][name].[ext]'},
-        {from: './node_modules/ckeditor4/lang', to: 'ckeditor4/lang/[path][name].[ext]'},
-        {from: './node_modules/ckeditor4/plugins', to: 'ckeditor4/plugins/[path][name].[ext]'},
-        {from: './node_modules/ckeditor4/skins', to: 'ckeditor4/skins/[path][name].[ext]'},
-        {from: './node_modules/google-charts/dist', to: 'google-charts/[path][name].[ext]'}
     ])
-    // public path used by the web server to access the output path
-    .setPublicPath('/build')
-
     /*
      * ENTRY CONFIG
      */
@@ -43,13 +35,16 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
+    .configureBabel((config) => {
+        config.plugins.push('@babel/plugin-proposal-class-properties');
+    })
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
         config.corejs = 3;
     })
 
     // enables LESS support
-    .enableLessLoader()
+    .enableSassLoader()
 
     // enables Stimulus support
     .enableStimulusBridge('./assets/controllers.json')

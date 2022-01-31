@@ -1,5 +1,5 @@
-import '../css/frontend.less';
-import '../../node_modules/bootstrap-less/js/bootstrap.min';
+import '../css/frontend.scss';
+import '../../node_modules/bootstrap-sass/assets/javascripts/bootstrap';
 const $ = require('jquery');
 
 global.$ = global.jQuery = $;
