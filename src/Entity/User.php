@@ -164,14 +164,14 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     private ?DateTimeInterface $lastLogin;
 
     /**
-     * @ORM\Column(name="password_changed_at", type="datetime", nullable=true)
+     * @ORM\Column(name="date_of_birth", type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $passwordChangedAt;
+    private ?DateTimeInterface $dateOfBirth;
 
     /**
      * @ORM\Column(name="roles", type="json")
      */
-    private array $roles = [];
+    private ?array $roles = [];
 
     public function getUserIdentifier(): string
     {
@@ -287,14 +287,14 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return $this;
     }
 
-    public function getPasswordChangedAt(): ?DateTimeInterface
+    public function getDateOfBirth(): ?DateTimeInterface
     {
-        return $this->passwordChangedAt;
+        return $this->dateOfBirth;
     }
 
-    public function setPasswordChangedAt(?DateTimeInterface $passwordChangedAt): self
+    public function setDateOfBirth(?DateTimeInterface $dateOfBirth): self
     {
-        $this->passwordChangedAt = $passwordChangedAt;
+        $this->dateOfBirth = $dateOfBirth;
 
         return $this;
     }
@@ -552,7 +552,7 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
 

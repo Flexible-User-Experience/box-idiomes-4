@@ -87,7 +87,7 @@ class BackendTopNavMenuBuilder
                 'logout',
                 [
                     'label' => '<i class="fa fa-power-off text-success"></i>',
-                    'route' => 'sonata_user_admin_security_logout',
+                    'route' => 'admin_app_logout',
                 ]
             )
             ->setExtras(

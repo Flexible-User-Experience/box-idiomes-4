@@ -3,7 +3,6 @@
 namespace App\Doctrine\Listener;
 
 use App\Entity\User;
-use DateTimeImmutable;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -37,7 +36,6 @@ class UserListener
         $user
             ->setSalt('unsalted')
             ->setPassword($this->pe->hashPassword($user, $plainPassword))
-            ->setPasswordChangedAt(new DateTimeImmutable())
             ->eraseCredentials()
         ;
     }
