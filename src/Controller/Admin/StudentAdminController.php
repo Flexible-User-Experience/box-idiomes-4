@@ -5,45 +5,43 @@ namespace App\Controller\Admin;
 use App\Entity\Student;
 use App\Pdf\SepaAgreementBuilderPdf;
 use App\Pdf\StudentImageRightsBuilderPdf;
+use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class StudentAdminController extends BaseAdminController
+final class StudentAdminController extends CRUDController
 {
-    public function imagerightsAction(): Response
+    public function imagerightsAction(Request $request, StudentImageRightsBuilderPdf $sirps): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var Student $object */
         $object = $this->admin->getObject($id);
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-        /** @var StudentImageRightsBuilderPdf $sirps */
-        $sirps = $this->get('app.student_image_rights_pdf_builder');
         $pdf = $sirps->build($object);
 
-        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
-    public function sepaagreementAction(): Response
+    public function sepaagreementAction(Request $request, SepaAgreementBuilderPdf $saps): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var Student $object */
         $object = $this->admin->getObject($id);
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-        /** @var SepaAgreementBuilderPdf $saps */
-        $saps = $this->get('app.sepa_agreement_pdf_builder');
         $pdf = $saps->build($object);
 
-        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
-    public function showAction($deprecatedId = null): Response
+    public function showAction(Request $request): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         $object = $this->admin->getObject($id);
         if (!$object) {

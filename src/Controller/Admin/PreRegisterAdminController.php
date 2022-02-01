@@ -5,19 +5,22 @@ namespace App\Controller\Admin;
 use App\Entity\PreRegister;
 use App\Entity\Student;
 use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class PreRegisterAdminController extends BaseAdminController
+final class PreRegisterAdminController extends CRUDController
 {
     /**
      * Create new Student from PreRegister record action.
      */
-    public function studentAction(): Response
+    public function studentAction(Request $request, EntityManagerInterface $em): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var PreRegister $object */
         $object = $this->admin->getObject($id);
@@ -25,7 +28,7 @@ final class PreRegisterAdminController extends BaseAdminController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
         $object->setEnabled(true);
-        $previouslyStoredStudents = $this->getDoctrine()->getRepository(Student::class)->getPreviouslyStoredStudentsFromPreRegister($object);
+        $previouslyStoredStudents = $em->getRepository(Student::class)->getPreviouslyStoredStudentsFromPreRegister($object);
         if (count($previouslyStoredStudents) > 0) {
             // there are a previous Student with same name & surname
             $this->addFlash('warning', 'Ja existeix un alumne prèviament creat amb el mateix nom i cognoms. No s\'ha creat cap alumne nou.');
@@ -40,19 +43,18 @@ final class PreRegisterAdminController extends BaseAdminController
                 ->setComments($object->getComments())
                 ->setBirthDate(new DateTimeImmutable())
             ;
-            $this->getDoctrine()->getManager()->persist($student);
+            $em->persist($student);
             $this->addFlash('success', 'S\'ha creat un nou alumne correctament.');
         }
-        $this->getDoctrine()->getManager()->flush();
+        $em->flush();
 
         return $this->redirectToList();
     }
 
-    public function batchActionGeneratestudents(ProxyQueryInterface $selectedModelQuery): RedirectResponse
+    public function batchActionGeneratestudents(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em): RedirectResponse
     {
         $this->admin->checkAccess('show');
-        $em = $this->getDoctrine()->getManager();
-        $prrs = $this->getDoctrine()->getRepository(Student::class);
+        $prrs = $em->getRepository(Student::class);
         $selectedModels = $selectedModelQuery->execute();
         $totalItemsIterated = 0;
         $newStudentsCreated = 0;

@@ -4,13 +4,17 @@ namespace App\Controller\Admin;
 
 use App\Entity\ContactMessage;
 use App\Form\Type\ContactMessageAnswerType;
+use App\Service\NotificationService;
+use Doctrine\ORM\EntityManagerInterface;
+use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ContactMessageAdminController extends BaseAdminController
+final class ContactMessageAdminController extends CRUDController
 {
-    public function showAction($deprecatedId = null): Response
+    public function showAction(Request $request): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var ContactMessage $object */
         $object = $this->admin->getObject($id);
@@ -41,9 +45,9 @@ final class ContactMessageAdminController extends BaseAdminController
     /**
      * Answer message action.
      */
-    public function answerAction(): Response
+    public function answerAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var ContactMessage $object */
         $object = $this->admin->getObject($id);
@@ -56,11 +60,9 @@ final class ContactMessageAdminController extends BaseAdminController
             // persist new contact message form record
             $object->setChecked(true);
             $object->setAnswered(true);
-            $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
             // send notifications
-            $messenger = $this->get('app.notification');
             $messenger->sendUserBackendNotification($object);
             // build flash message
             $this->addFlash('success', 'Your answer has been sent.');

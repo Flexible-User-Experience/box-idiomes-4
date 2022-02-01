@@ -5,22 +5,19 @@ namespace App\Controller\Admin;
 use App\Entity\ClassGroup;
 use App\Pdf\ClassGroupBuilderPdf;
 use App\Repository\StudentRepository;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class ClassGroupAdminController extends BaseAdminController
+final class ClassGroupAdminController extends CRUDController
 {
     /**
      * Get group emails list in PDF action.
      */
-    public function emailsAction(Request $request): Response
+    public function emailsAction(Request $request, StudentRepository $srs, ClassGroupBuilderPdf $cgpbs, TranslatorInterface $translator): Response
     {
-        /** @var StudentRepository $srs */
-        $srs = $this->container->get('app.student_repository');
-        /** @var TranslatorInterface $translator */
-        $translator = $this->container->get('translator');
-        $request = $this->resolveRequest($request);
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var ClassGroup $object */
         $object = $this->admin->getObject($id);
@@ -33,10 +30,8 @@ final class ClassGroupAdminController extends BaseAdminController
 
             return $this->redirectToList();
         }
-        /* @var ClassGroupBuilderPdf $cgpbs */
-        $cgpbs = $this->container->get('app.class_group_pdf_builder');
         $pdf = $cgpbs->build($object, $students);
 
-        return new Response($pdf->Output('pas_a_repas_class_group_'.$object->getId().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('box_idiomes_class_group_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 }

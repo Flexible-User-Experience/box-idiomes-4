@@ -5,7 +5,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-xs-12 margin-bottom">
-                    <div id="calendar-holder" data-events-url="{{ path('fc_load_events') }}"></div>
+                    <div id="calendar-holder" data-events-url="{{ path('fc_load_events') }}" data-gmap-api-key="{{ google_maps_api_key }}"></div>
                 </div>
                 <div class="col-xs-12">
                     <a href="{{ path('admin_app_event_create') }}" class="btn btn-primary margin-r-5"><i class="fa fa-plus-circle"></i> {{ 'backend.admin.event.button.add' | trans }}</a>

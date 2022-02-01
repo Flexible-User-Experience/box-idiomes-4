@@ -2,9 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Response;
 
-final class FileManagerAdminController extends BaseAdminController
+final class FileManagerAdminController extends CRUDController
 {
     public function handlerAction(): Response
     {

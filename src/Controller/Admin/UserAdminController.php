@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
-final class UserAdminController extends BaseAdminController
+use Sonata\AdminBundle\Controller\CRUDController;
+
+final class UserAdminController extends CRUDController
 {
 }

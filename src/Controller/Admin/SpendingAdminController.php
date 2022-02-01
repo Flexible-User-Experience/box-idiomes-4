@@ -4,13 +4,16 @@ namespace App\Controller\Admin;
 
 use App\Entity\Spending;
 use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
+use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class SpendingAdminController extends BaseAdminController
+final class SpendingAdminController extends CRUDController
 {
-    public function duplicateAction(): Response
+    public function duplicateAction(Request $request, EntityManagerInterface $em): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var Spending $object */
         $object = $this->admin->getObject($id);
@@ -28,8 +31,6 @@ final class SpendingAdminController extends BaseAdminController
             ->setIsPayed(false)
             ->setPaymentMethod($object->getPaymentMethod())
         ;
-
-        $em = $this->getDoctrine()->getManager();
         $em->persist($newSpending);
         $em->flush();
         $this->addFlash('success', 'S\'ha duplicat la despesa núm. '.$object->getId().' amb la factura núm. '.$newSpending->getId().' correctament.');

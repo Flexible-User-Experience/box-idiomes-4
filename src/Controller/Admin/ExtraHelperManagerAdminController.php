@@ -5,10 +5,11 @@ namespace App\Controller\Admin;
 use App\Manager\EventManager;
 use App\Pdf\ExportCalendarToListBuilderPdf;
 use DateTime;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class ExtraHelperManagerAdminController extends BaseAdminController
+final class ExtraHelperManagerAdminController extends CRUDController
 {
     public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, string $start, string $end): Response
     {

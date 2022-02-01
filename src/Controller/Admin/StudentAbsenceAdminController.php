@@ -3,13 +3,18 @@
 namespace App\Controller\Admin;
 
 use App\Entity\StudentAbsence;
+use App\Service\NotificationService;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
-final class StudentAbsenceAdminController extends BaseAdminController
+final class StudentAbsenceAdminController extends CRUDController
 {
-    public function notificationAction(): RedirectResponse
+    public function notificationAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): RedirectResponse
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var StudentAbsence $object */
         $object = $this->admin->getObject($id);
@@ -19,11 +24,9 @@ final class StudentAbsenceAdminController extends BaseAdminController
         $this->admin->checkAccess('show', $object);
         $object
             ->setHasBeenNotified(true)
-            ->setNotificationDate(new \DateTime())
+            ->setNotificationDate(new DateTimeImmutable())
         ;
-        $em = $this->getDoctrine()->getManager();
         $em->flush();
-        $messenger = $this->container->get('app.notification');
         $messenger->sendStudentAbsenceNotification($object);
         $this->addFlash('success', 'S\'ha enviat un notificació per correu electrònic a l\'adreça '.$object->getStudent()->getMainEmailSubject().' advertint que l\'alumne '.$object->getStudent()->getFullName().' no ha assistit a la classe del dia '.$object->getDayString().'.');
 
