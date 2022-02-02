@@ -22,7 +22,7 @@ twig:
         admin_logo:               '%admin_logo%'
         admin_color:              '%admin_color%'
         admin_is_stage:           '%admin_is_stage%'
-        admin_tag_version:        'v4.7.17'
+        admin_tag_version:        'v5.0.00'
 
 when@test:
     twig:
