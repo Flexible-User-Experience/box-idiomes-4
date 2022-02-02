@@ -2,76 +2,43 @@
 
 namespace App\Entity\Traits;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Image trait.
- *
- * @category Trait
- *
- * @author   David Romaní <david@flux.cat>
- */
 trait ImageTrait
 {
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $imageName;
+    private ?string $imageName = null;
 
-    /**
-     * Set imageFile.
-     *
-     * @param File|UploadedFile $imageFile
-     *
-     * @return $this
-     */
-    public function setImageFile(File $imageFile = null)
+    public function getImageName(): ?string
     {
-        $this->imageFile = $imageFile;
-        if ($imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTime('now');
-        }
-
-        return $this;
+        return $this->imageName;
     }
 
-    /**
-     * Get imageFile.
-     *
-     * @return File|UploadedFile
-     */
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * Set imageName.
-     *
-     * @param string $imageName
-     *
-     * @return $this
-     */
-    public function setImageName($imageName)
+    public function setImageName(?string $imageName): self
     {
         $this->imageName = $imageName;
 
         return $this;
     }
 
-    /**
-     * Get imageName.
-     *
-     * @return string
-     */
-    public function getImageName()
+    public function getImageFile(): File
     {
-        return $this->imageName;
+        return $this->imageFile;
+    }
+
+    public function setImageFile(File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new DateTimeImmutable();
+        }
+
+        return $this;
     }
 }

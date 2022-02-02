@@ -6,10 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class BankCreditorSepa.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\BankCreditorSepaRepository")
  * @ORM\Table(name="bank_creditor_sepa")
  */
@@ -42,9 +38,6 @@ class BankCreditorSepa extends AbstractBase
      */
     private string $bic;
 
-    /**
-     * Methods.
-     */
     public function getName(): string
     {
         return $this->name;
