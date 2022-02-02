@@ -33,7 +33,7 @@ final class ContactMessageAdminController extends CRUDController
         $em->flush();
 
         return $this->renderWithExtraParams(
-            $this->admin->getTemplate('show'),
+            'Admin/show.html.twig',
             [
                 'action' => 'show',
                 'object' => $object,
