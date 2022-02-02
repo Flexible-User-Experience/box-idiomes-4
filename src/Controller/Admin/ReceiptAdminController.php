@@ -108,7 +108,7 @@ final class ReceiptAdminController extends CRUDController
         }
         $pdf = $rps->build($object);
 
-        return new Response($pdf->Output('pas_a_repas_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('box_idiomes_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
     public function sendReminderAction(Request $request, ReceiptBuilderPdf $rps, NotificationService $messenger): RedirectResponse
@@ -145,7 +145,7 @@ final class ReceiptAdminController extends CRUDController
         }
         $pdf = $rps->build($object);
 
-        return new Response($pdf->Output('pas_a_repas_receipt_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('box_idiomes_receipt_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
     public function sendAction(Request $request, EntityManagerInterface $em, ReceiptBuilderPdf $rps, NotificationService $messenger): RedirectResponse
@@ -218,7 +218,7 @@ final class ReceiptAdminController extends CRUDController
                 }
             }
 
-            return new Response($pdf->Output('pas_a_repas_receipt_reminders.pdf'), 200, ['Content-type' => 'application/pdf']);
+            return new Response($pdf->Output('box_idiomes_receipt_reminders.pdf'), 200, ['Content-type' => 'application/pdf']);
         } catch (Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu de recordatoris de pagaments de rebut amb format PDF. Revisa els rebuts seleccionats.');
             $this->addFlash('error', $e->getMessage());
