@@ -4,7 +4,7 @@ twig:
     strict_variables:     '%kernel.debug%'
     exception_controller: null
     form_themes:
-        - 'bootstrap_3_layout.html.twig'
+        - 'bootstrap_5_layout.html.twig'
         - '@SonataForm/Form/datepicker.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
         - '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig'

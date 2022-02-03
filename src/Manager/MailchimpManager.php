@@ -8,7 +8,7 @@ use DrewM\MailChimp\MailChimp;
 
 class MailchimpManager
 {
-    private const SUBSCRIBED = 'subscribed';
+    public const SUBSCRIBED = 'subscribed';
 
     private MailChimp $mailChimp;
     private NotificationService $messenger;

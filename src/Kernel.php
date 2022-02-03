@@ -10,6 +10,7 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     public const CLI_API = 'cli';
+    public const ENV_PROD = 'prod';
     public const ENV_DEV = 'dev';
     public const ENV_TEST = 'test';
 }

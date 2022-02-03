@@ -66,7 +66,7 @@ class ContactHomepageType extends AbstractType
                 [
                     'label' => 'frontend.forms.subscribe',
                     'attr' => [
-                        'class' => 'btn-newsletter',
+                        'class' => 'btn btn-primary',
                     ],
                 ]
             )

@@ -111,7 +111,7 @@ class ContactMessageType extends AbstractType
                 [
                     'label' => 'frontend.forms.send',
                     'attr' => [
-                        'class' => 'btn-newsletter',
+                        'class' => 'btn btn-outline-secondary',
                     ],
                 ]
             )

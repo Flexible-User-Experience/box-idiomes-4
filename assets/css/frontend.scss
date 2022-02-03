@@ -6,11 +6,11 @@ $icon-font-path: "../../fonts/bootstrap/";
 
 @font-face {
     font-family: 'futura';
-    src:url('../../public/build/fonts/original_FuturaStd-Medium.eot');
-    src:url('../../public/build/fonts/original_FuturaStd-Medium.eot?#iefix') format('embedded-opentype'),
-    url('../../public/build/fonts/original_FuturaStd-Medium.ttf') format('truetype'),
-    url('../../public/build/fonts/original_FuturaStd-Medium.woff') format('woff'),
-    url('../../public/build/fonts/original_FuturaStd-Medium.svg') format('svg');
+    src:url('../fonts/original_FuturaStd-Medium.eot');
+    src:url('../fonts/original_FuturaStd-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/original_FuturaStd-Medium.ttf') format('truetype'),
+    url('../fonts/original_FuturaStd-Medium.woff') format('woff'),
+    url('../fonts/original_FuturaStd-Medium.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -20,15 +20,9 @@ $font-family-sans-serif: "futura", "Helvetica Neue", Helvetica, Arial, sans-seri
 $link-color: $ek-c-grey;
 
 // Custom vars
-$ek-s-base:       20px;
-$ek-s-base-plus:  60px;
-$ek-s-base-minus: 10px;
-$gap-normal:      20px;
-$gap-double-extra-big: $gap-normal * 4;
-$gap-extra-big: $gap-normal * 3;
-$gap-big:       $gap-normal * 2;
-$gap-small:           $gap-normal / 2;
-$gap-extra-small:     $gap-normal / 20;
+$ek-s-base:               20px;
+$ek-s-base-plus:          60px;
+$ek-s-base-minus:         10px;
 $ek-font-size-base:       16px;
 $ek-custom-navbar-height: 90px;
 $screen-xs: 480px !default;
@@ -143,120 +137,6 @@ body {
     }
 }
 
-label.control-label {
-    color: darken($ek-c-light-grey, 20%);
-    &.my-privacy-label {
-        a {
-            color: $ek-c-grey;
-            &:hover {
-                text-decoration: none;
-                color: $ek-c-violet;
-            }
-        }
-    }
-    &.my-privacy-label-homepage {
-        color: $ek-c-white;
-        a {
-            text-decoration: underline;
-            color: $ek-c-white;
-        }
-    }
-}
-
-// Credits bubble
-.caption {
-    position: absolute;
-    top: 8%;
-    left: 0;
-    width: 100%;
-}
-
-.white-text {
-    color: $ek-c-white;
-    a {
-        color: $ek-c-white;
-    }
-}
-
-// Custom anchors
-.underlined-anchors {
-    a {
-        text-decoration: underline;
-    }
-}
-
-// Custom main container
-.container-main {
-    min-height: 400px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-
-// Custom margins
-.left-margin-negative {
-    margin-left: -15px;
-    border-right: solid $ek-s-base $ek-c-black;
-    @media(max-width: $screen-sm) {
-        margin-left: 0;
-        border-right: none;
-    }
-}
-
-.top-margin-responsive {
-    margin-top: 0;
-    @media(max-width: $screen-sm) {
-        margin-top: $gap-normal;
-    }
-}
-
-.top-margin-responsive-inversed {
-    margin-top: $gap-big;
-    @media(max-width: $screen-sm) {
-        margin-top: 0;
-    }
-}
-
-.bottom-margin-responsive {
-    margin-bottom: 0;
-    @media(max-width: $screen-sm) {
-        margin-bottom: $gap-big;
-    }
-}
-
-.text-size-responsive {
-    margin-top: 20px;
-    @media(max-width: $screen-sm) {
-        margin-top: 0;
-    }
-}
-
-.no-m { margin: 0; }
-.no-m-top { margin-top: 0; }
-.no-p-top { padding-top: 0; }
-.no-m-bottom { margin-bottom: 0; }
-.no-m-right  { margin-right: 0; }
-.extra-m-top    { margin-top: $ek-s-base-plus; }
-.extra-big-m-top{ margin-top: $gap-extra-big; }
-.extra-double-m-top{ margin-top: $gap-double-extra-big; }
-.normal-m-top   { margin-top: $gap-normal; }
-.m-top-30   { margin-top: 30px; }
-.normal-m-bottom{ margin-bottom: $gap-normal; }
-.extra-m-bottom { margin-bottom: $gap-big; }
-.small-m-top    { margin-top: $gap-small; }
-.small-m-bottom { margin-bottom: $gap-small; }
-.extra-small-m-bottom { margin-bottom: $gap-extra-small; }
-
-// Custom paddings
-.p-vertical {
-    padding-top: $gap-big;
-    padding-bottom: $gap-big;
-}
-
-.p-vertical-small {
-    padding-top: $gap-normal;
-    padding-bottom: $gap-normal;
-}
-
 // Pagination
 ul.pagination {
     li.active {
@@ -290,7 +170,7 @@ ul.categories-selector {
     bottom: 15px;
     padding-top: 2px;
     border-radius: 4px;
-    //.transition (all 0.5s ease-in-out);
+    transition: all 0.5s ease-in-out;
     &.show {
         visibility: visible;
         cursor: pointer;
@@ -298,43 +178,6 @@ ul.categories-selector {
     }
     i.fa {
         line-height: inherit;
-    }
-}
-
-// Custom homepage
-.main-logo-homepage {
-    position: absolute;
-    left: 35%;
-    top: 135px;
-}
-
-// Homepage call to action
-div.subtitle-background {
-    background-color: rgba(0, 0, 0, 0.65);
-    padding: $ek-s-base-minus 0;
-    margin-top: -100px;
-    z-index: 1000;
-    position: relative;
-    h2 {
-        text-align: right;
-        color: $ek-c-white;
-        font-size: 18px;
-        margin-top: 5px;
-    }
-    button.btn-kowo.btn-lg { font-size: 11px; }
-    @media(min-width: $screen-xs) {
-        padding: $ek-s-base 0;
-        margin-top: -132px;
-        h2 { font-size: 25px; }
-        button.btn-kowo.btn-lg { font-size: 14px; }
-    }
-    @media(min-width: $screen-sm) {
-        margin-top: -160px;
-        h2 { font-size: 45px; }
-        button.btn-kowo.btn-lg { font-size: 18px; }
-    }
-    p {
-        text-align: right;
     }
 }
 
@@ -355,72 +198,7 @@ footer {
     }
 }
 
-// Other customizations
-.content {
-    margin: $ek-s-base-plus 0;
-    @media(max-width: $screen-sm) { margin: $ek-s-base 0; }
-}
-
-.text-title {
-    color: $ek-c-grey;
-    font-weight: bold;
-}
-
-.under-construction-warning {
-    margin: 20px;
-}
-
-.social-networks {
-    margin: 5px 0;
-}
-
-.light-font-weight {
-    font-weight: 400;
-}
-
-.carousel-control {
-    .fa-angle-left, .fa-angle-right {
-        position: absolute;
-        top: 50%;
-        margin-top: -10px;
-        z-index: 5;
-        display: inline-block;
-    }
-}
-
 textarea { resize: vertical; }
-
-// Icomoon
-@font-face {
-    font-family: 'icomoon';
-    src:url('../../public/build/fonts/icomoon.eot?owk010');
-    src:url('../../public/build/fonts/icomoon.eot?owk010#iefix') format('embedded-opentype'),
-    url('../../public/build/fonts/icomoon.ttf?owk010') format('truetype'),
-    url('../../public/build/fonts/icomoon.woff?owk010') format('woff'),
-    url('../../public/build/fonts/icomoon.svg?owk010#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-    font-family: 'icomoon', sans-serif !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-face-icon:before {
-    content: "\e900";
-}
-
-.icon-inst-icon:before {
-    content: "\e901";
-}
 
 @import "~bootstrap/scss/bootstrap";
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
