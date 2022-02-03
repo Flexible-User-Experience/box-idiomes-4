@@ -93,5 +93,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% include 'Front/includes/scroll-to-flash-js.html.twig' %}
+    {{ encore_entry_script_tags('scroll_to_flash') }}
 {% endblock %}

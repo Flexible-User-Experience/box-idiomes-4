@@ -1,8 +1,10 @@
-<script type="text/javascript">
+import jQuery from 'jquery';
+
+jQuery(document).ready(function() {
     jQuery(document).ready(function() {
-        var errorNode = jQuery(".glyphicon-exclamation-sign");
-        var envelopeNode = jQuery(".fa-paper-plane-o");
-        var exclamationTriangleNode = jQuery(".fa-exclamation-triangle");
+        const errorNode = jQuery(".glyphicon-exclamation-sign");
+        const envelopeNode = jQuery(".fa-paper-plane-o");
+        const exclamationTriangleNode = jQuery(".fa-exclamation-triangle");
         if (errorNode.length > 0) {
             jQuery('html,body').animate({scrollTop: errorNode.offset().top - 100}, "slow");
         }
@@ -13,4 +15,4 @@
             jQuery('html,body').animate({scrollTop: exclamationTriangleNode.offset().top - 100}, "slow");
         }
     });
-</script>
+});

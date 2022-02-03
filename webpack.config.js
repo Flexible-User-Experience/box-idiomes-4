@@ -15,6 +15,7 @@ Encore
     ])
     // entries
     .addEntry('frontend', './assets/js/frontend.js')
+    .addEntry('scroll_to_flash', './assets/js/scroll_to_flash.js')
     .addEntry('backend', './assets/js/backend.js')
     .addEntry('fullcalendardefaultsettings', './assets/js/fullcalendar.default-settings.js')
     .addEntry('fullcalendarstudentsettings', './assets/js/fullcalendar.student-settings.js')
