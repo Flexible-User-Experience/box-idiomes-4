@@ -41,7 +41,7 @@ class Service extends AbstractBase
      * )
      * @Assert\Image(minWidth=1200)
      */
-    private ?File $imageFile;
+    private ?File $imageFile = null;
 
     public function getTitle(): string
     {

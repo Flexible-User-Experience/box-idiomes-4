@@ -42,7 +42,7 @@ class Teacher extends AbstractBase
      * )
      * @Assert\Image(allowLandscape=false, allowPortrait=true, minWidth=600)
      */
-    private ?File $imageFile;
+    private ?File $imageFile = null;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})

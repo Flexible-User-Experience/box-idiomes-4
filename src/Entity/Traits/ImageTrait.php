@@ -25,12 +25,12 @@ trait ImageTrait
         return $this;
     }
 
-    public function getImageFile(): File
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
-    public function setImageFile(File $imageFile = null): self
+    public function setImageFile(?File $imageFile = null): self
     {
         $this->imageFile = $imageFile;
         if ($imageFile) {

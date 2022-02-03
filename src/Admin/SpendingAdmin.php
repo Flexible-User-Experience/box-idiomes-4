@@ -195,7 +195,7 @@ final class SpendingAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'paymentDate',
-                'doctrine_orm_date',
+                null,
                 [
                     'label' => 'backend.admin.invoice.paymentDate',
                     'field_type' => DatePickerType::class,

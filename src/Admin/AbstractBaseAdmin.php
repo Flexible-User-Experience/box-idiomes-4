@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -18,11 +19,12 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     protected Environment $twig;
     protected UploaderHelper $vus;
     protected CacheManager $lis;
+    protected FileService $fs;
 
     protected array $perPageOptions = [25, 50, 100, 200, 400];
     protected int $maxPerPage = 25;
 
-    public function __construct($code, $class, $baseControllerName, EntityManagerInterface $em, Security $ss, Environment $twig, UploaderHelper $vus, CacheManager $lis)
+    public function __construct($code, $class, $baseControllerName, EntityManagerInterface $em, Security $ss, Environment $twig, UploaderHelper $vus, CacheManager $lis, FileService $fs)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->em = $em;
@@ -30,6 +32,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
         $this->twig = $twig;
         $this->vus = $vus;
         $this->lis = $lis;
+        $this->fs = $fs;
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
@@ -132,18 +135,11 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     /**
      * Get image helper form mapper with thumbnail.
-     *
-     * @param string $attribute
-     * @param string $uploaderMapping
-     *
-     * @throws \Twig\Error\Error
      */
-    protected function getSmartHelper($attribute, $uploaderMapping): string
+    protected function getSmartHelper(string $attribute, string $uploaderMapping): string
     {
-        $fs = $this->getConfigurationPool()->getContainer()->get('app.file_service');
-
         if ($this->getSubject() && $this->getSubject()->$attribute()) {
-            if ($fs->isPdf($this->getSubject(), $uploaderMapping)) {
+            if ($this->fs->isPdf($this->getSubject(), $uploaderMapping)) {
                 // PDF case
                 return $this->twig->render('Admin/Helpers/pdf.html.twig', [
                     'attribute' => $this->getSubject()->$attribute(),
