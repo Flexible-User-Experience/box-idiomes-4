@@ -27,12 +27,11 @@ final class ReceiptAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Receipt';
     protected $baseRoutePattern = 'billings/receipt';
-    protected int $maxPerPage = 500;
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
-        $sortValues[DatagridInterface::PER_PAGE] = [25, 50, 100, 200, 500];
+        $sortValues[DatagridInterface::PER_PAGE] = 500;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'id';
     }

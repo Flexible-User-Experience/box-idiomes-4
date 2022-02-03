@@ -16,12 +16,12 @@ abstract class AbstractPerson extends AbstractBase
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?DateTimeInterface $dischargeDate;
+    protected ?DateTimeInterface $dischargeDate = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected ?string $dni;
+    protected ?string $dni = null;
 
     /**
      * @ORM\Column(type="string")

@@ -92,7 +92,7 @@
                                     <tfoot>
                                     <tr class="active">
                                         <td>
-                                            {{ groupLessonsTypeLoop }} {{ 'backend.admin.receipt.generator.ready' | trans({'count': groupLessonsTypeLoop}) }}
+                                            {{ groupLessonsTypeLoop }} {{ 'backend.admin.receipt.generator.ready' | trans({'%count%': groupLessonsTypeLoop}) }}
                                         </td>
                                         <th colspan="5" class="text-right">
                                             {{ 'backend.admin.student.total' | trans | upper }}
@@ -167,7 +167,7 @@
                                     <tfoot>
                                     <tr class="active">
                                         <td>
-                                            {{ privateLessonsTypeLoop }} {{ 'backend.admin.receipt.generator.ready' | trans({'count': privateLessonsTypeLoop}) }}
+                                            {{ privateLessonsTypeLoop }} {{ 'backend.admin.receipt.generator.ready' | trans({'%count%': privateLessonsTypeLoop}) }}
                                         </td>
                                         <th colspan="4" class="text-right">
                                             {{ 'backend.admin.student.total' | trans | upper }}

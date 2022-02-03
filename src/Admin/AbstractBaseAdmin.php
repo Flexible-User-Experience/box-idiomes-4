@@ -2,10 +2,12 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Security\Core\Security;
@@ -22,7 +24,6 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     protected FileService $fs;
 
     protected array $perPageOptions = [25, 50, 100, 200, 400];
-    protected int $maxPerPage = 25;
 
     public function __construct($code, $class, $baseControllerName, EntityManagerInterface $em, Security $ss, Environment $twig, UploaderHelper $vus, CacheManager $lis, FileService $fs)
     {
@@ -33,6 +34,14 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
         $this->vus = $vus;
         $this->lis = $lis;
         $this->fs = $fs;
+    }
+
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::PER_PAGE] = 25;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'id';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
