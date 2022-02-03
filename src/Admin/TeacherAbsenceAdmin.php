@@ -115,7 +115,7 @@ final class TeacherAbsenceAdmin extends AbstractBaseAdmin
     {
         $list
             ->add(
-                'image',
+                'teacher.imageName',
                 null,
                 [
                     'label' => 'backend.admin.image',
