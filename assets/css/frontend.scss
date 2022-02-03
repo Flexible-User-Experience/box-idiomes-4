@@ -1,6 +1,5 @@
 // Imports
 @import "colors.scss";
-//@import "buttons.scss";
 
 // Fonts
 $icon-font-path: "../../fonts/bootstrap/";
@@ -30,9 +29,7 @@ $gap-extra-big: $gap-normal * 3;
 $gap-big:       $gap-normal * 2;
 $gap-small:           $gap-normal / 2;
 $gap-extra-small:     $gap-normal / 20;
-$ek-font-size-base:  16px;
-//$ek-font-size-large: ceil((font-size-base * 1.25));
-//$ek-font-size-small: ceil((font-size-base * 0.95));
+$ek-font-size-base:       16px;
 $ek-custom-navbar-height: 90px;
 $screen-xs: 480px !default;
 $screen-sm: 768px !default;
@@ -83,37 +80,6 @@ body {
 .navbar-default .navbar-nav > .active.violet-background > a {
     background-color: $ek-c-violet;
 }
-
-//Mixins
-//.placeholder-newsletter-mixin(@darken) {
-//    &::-webkit-input-placeholder {
-//        color: darken($ek-c-white, @darken);
-//    }
-//    &:-moz-placeholder {
-//        color: darken($ek-c-white, @darken);
-//    }
-//    &::-moz-placeholder {
-//        color: darken($ek-c-white, @darken);
-//    }
-//    &:-ms-input-placeholder {
-//        color: darken($ek-c-white, @darken);
-//    }
-//}
-
-//.placeholder-contact-message-mixin(@darken) {
-//    &::-webkit-input-placeholder {
-//        color: darken($ek-c-light-grey, @darken);
-//    }
-//    &:-moz-placeholder {
-//        color: darken($ek-c-light-grey, @darken);
-//    }
-//    &::-moz-placeholder {
-//        color: darken($ek-c-light-grey, @darken);
-//    }
-//    &:-ms-input-placeholder {
-//        color: darken($ek-c-light-grey, @darken);
-//    }
-//}
 
 // Newsletter form
 .newsletter-email {
@@ -456,7 +422,7 @@ textarea { resize: vertical; }
     content: "\e901";
 }
 
-@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import "~bootstrap/scss/bootstrap";
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';

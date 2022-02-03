@@ -23,7 +23,7 @@ class FrontendMenuBuilder
     public function createTopMenu(): ItemInterface
     {
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'nav navbar-nav navbar-right');
+        $menu->setChildrenAttribute('class', 'navbar-nav ms-auto mb-2 mb-lg-0');
         if ($this->ss->isGranted(UserRolesEnum::ROLE_CMS)) {
             $menu->addChild(
                 'admin',
@@ -38,6 +38,12 @@ class FrontendMenuBuilder
             [
                 'label' => 'frontend.menu.services',
                 'route' => 'app_services',
+                'attributes' => [
+                    'class' => 'nav-item',
+                ],
+                'linkAttributes' => [
+                    'class' => 'nav-link',
+                ],
             ]
         );
         $menu->addChild(
@@ -45,6 +51,12 @@ class FrontendMenuBuilder
             [
                 'label' => 'frontend.menu.academy',
                 'route' => 'app_academy',
+                'attributes' => [
+                    'class' => 'nav-item',
+                ],
+                'linkAttributes' => [
+                    'class' => 'nav-link',
+                ],
             ]
         );
         $menu->addChild(
@@ -52,6 +64,12 @@ class FrontendMenuBuilder
             [
                 'label' => 'frontend.menu.contact',
                 'route' => 'app_contact',
+                'attributes' => [
+                    'class' => 'nav-item',
+                ],
+                'linkAttributes' => [
+                    'class' => 'nav-link',
+                ],
             ]
         );
         // activate Preregister top menu option conditionally

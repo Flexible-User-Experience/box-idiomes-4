@@ -1,6 +1,8 @@
 import '../css/frontend.scss';
 import jQuery from 'jquery';
 
+require('bootstrap');
+
 jQuery(document).ready(function() {
     jQuery(document).on('scroll', function() {
         if (jQuery(window).scrollTop() > 100) {
