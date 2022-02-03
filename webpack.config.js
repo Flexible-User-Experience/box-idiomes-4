@@ -5,7 +5,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-    // directory where compiled assets will be stored
+    // disc copy
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .copyFiles([
@@ -13,28 +13,12 @@ Encore
         {from: './assets/svg', to: 'svg/[path][name].[ext]'},
         {from: './assets/fonts', to: 'fonts/[path][name].[ext]'},
     ])
-    /*
-     * ENTRY CONFIG
-     */
+    // entries
     .addEntry('frontend', './assets/js/frontend.js')
     .addEntry('backend', './assets/js/backend.js')
     .addEntry('fullcalendardefaultsettings', './assets/js/fullcalendar.default-settings.js')
     .addEntry('fullcalendarstudentsettings', './assets/js/fullcalendar.student-settings.js')
-
-    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
-    .splitEntryChunks()
-
-    // will require an extra script tag for runtime.js
-    // but, you probably want this, unless you're building a single-page app
-    .enableSingleRuntimeChunk()
-
-    /*
-     * FEATURE CONFIG
-     */
-    .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
-    .enableSourceMaps(!Encore.isProduction())
-    .enableVersioning(Encore.isProduction())
+    // config
     .configureBabel((config) => {
         config.plugins.push('@babel/plugin-proposal-class-properties');
     })
@@ -42,15 +26,16 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = 3;
     })
-
-    // enables LESS support
-    .enableSassLoader()
-
-    // enables Stimulus support
+    // features
+    // .autoProvidejQuery()
+    .cleanupOutputBeforeBuild()
+    .splitEntryChunks()
+    .enableBuildNotifications()
+    .enableSourceMaps(!Encore.isProduction())
+    .enableVersioning(Encore.isProduction())
     .enableStimulusBridge('./assets/controllers.json')
-
-    // uncomment if you're having problems with a jQuery plugin
-    .autoProvidejQuery()
+    .enableSingleRuntimeChunk()
+    .enableSassLoader()
 ;
 
 module.exports = Encore.getWebpackConfig();

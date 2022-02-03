@@ -107,10 +107,6 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('frontend') }}
 {% endblock %}
-{% block scroll_top %}
-    {#<!-- Scroll-Top effect JS -->#}
-    {% include 'Front/includes/scroll-to-top-js.html.twig' %}
-{% endblock %}
 {% block analytics %}
     {#<!-- Google Analytics -->#}
     {% if google_analytics_enabled %}
