@@ -3,23 +3,18 @@
 {% block title %}{{ 'frontend.menu.services' | trans | capitalize }} · {{ parent() }}{% endblock %}
 
 {% block main %}
-    <div class="container container-main">
-        <div class="row">
+    <div class="container">
+        <div class="row row-cols-2 my-5">
             {% for service in services %}
-                <div class="col-sm-6 bottom-margin-responsive">
+                <div class="col mb-5">
                     {% if service.imageName is not null %}
-                        <img src="{{ vich_uploader_asset(service, 'imageFile') | imagine_filter('585xY') }}"
-                             class="img-responsive img-rounded" alt="{{ service.imageName }}">
+                        <img src="{{ vich_uploader_asset(service, 'imageFile') | imagine_filter('585xY') }}"  class="img-fluid img-rounded mb-3" alt="{{ service.imageName }}">
                     {% else %}
-                        <img src="{{ asset('build/img/serveis.jpeg') | imagine_filter('585xY') }}" class="img-responsive img-rounded" alt="serveis">
+                        <img src="{{ asset('build/img/serveis.jpeg') | imagine_filter('585xY') }}" class="img-fluid img-rounded mb-3" alt="serveis">
                     {% endif %}
-                    <h4 class="c-blue m-top-30 normal-m-bottom">{{ service.title }}</h4>
+                    <h4 class="c-blue">{{ service.title }}</h4>
                     <p>{{ service.description | raw }}</p>
                 </div>
-                {% if loop.index is divisible by(2) %}
-                    </div>
-                    <div class="row extra-double-m-top">
-                {% endif %}
             {% endfor %}
         </div>
     </div>
