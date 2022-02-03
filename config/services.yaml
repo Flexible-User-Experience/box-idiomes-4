@@ -330,11 +330,10 @@ services:
         tags:
             - { name: form.type }
     # Listeners
-    app.sitemap.blog_post_subscriber:
+    app.sitemap.subscriber:
         class: App\Listener\SitemapListener
         arguments:
             - "@router"
-            - "@doctrine.orm.default_entity_manager"
         tags:
             - { name: "kernel.event_subscriber", priority: 100 }
     app.doctrine_user_event:

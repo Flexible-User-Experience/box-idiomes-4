@@ -29,7 +29,7 @@
         "liip/imagine-bundle": "^2.5",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.2",
-        "presta/sitemap-bundle": "^2.1",
+        "presta/sitemap-bundle": "^3.3",
         "qipsius/tcpdf-bundle": "^2.0",
         "sensio/framework-extra-bundle": "^6.1",
         "sonata-project/admin-bundle": "^4.3",

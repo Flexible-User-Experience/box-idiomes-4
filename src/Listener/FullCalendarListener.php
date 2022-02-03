@@ -11,55 +11,19 @@ use App\Repository\TeacherAbsenceRepository;
 use App\Service\EventTransformerFactoryService;
 use CalendarBundle\CalendarEvents;
 use CalendarBundle\Event\CalendarEvent;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class FullCalendarListener.
- *
- * @category Listener
- */
 class FullCalendarListener implements EventSubscriberInterface
 {
-    /**
-     * @var EventRepository
-     */
-    private $ers;
+    private EventRepository $ers;
+    private TeacherAbsenceRepository $tars;
+    private StudentRepository $srs;
+    private EventTransformerFactoryService $etfs;
+    private RequestStack $rss;
+    private RouterInterface $router;
 
-    /**
-     * @var TeacherAbsenceRepository
-     */
-    private $tars;
-
-    /**
-     * @var StudentRepository
-     */
-    private $srs;
-
-    /**
-     * @var EventTransformerFactoryService
-     */
-    private $etfs;
-
-    /**
-     * @var RequestStack
-     */
-    private $rss;
-
-    /**
-     * @var Router
-     */
-    private $router;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * FullcalendarListener constructor.
-     */
     public function __construct(EventRepository $ers, TeacherAbsenceRepository $tars, StudentRepository $srs, EventTransformerFactoryService $etfs, RequestStack $rss, RouterInterface $router)
     {
         $this->ers = $ers;
@@ -70,23 +34,18 @@ class FullCalendarListener implements EventSubscriberInterface
         $this->router = $router;
     }
 
-    /**
-     * @return array|string[]
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             CalendarEvents::SET_DATA => 'loadData',
         ];
     }
 
-    public function loadData(CalendarEvent $calendarEvent)
+    public function loadData(CalendarEvent $calendarEvent): void
     {
         $startDate = $calendarEvent->getStart();
         $endDate = $calendarEvent->getEnd();
-
         $referer = $this->rss->getCurrentRequest()->headers->get('referer');
-
         if ($this->rss->getCurrentRequest()->getBaseUrl()) {
             // probably dev environment
             $path = substr($referer, strpos($referer, $this->rss->getCurrentRequest()->getBaseUrl()));
