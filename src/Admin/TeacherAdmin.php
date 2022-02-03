@@ -150,7 +150,7 @@ final class TeacherAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'image',
+                'imageName',
                 null,
                 [
                     'label' => 'backend.admin.image',
