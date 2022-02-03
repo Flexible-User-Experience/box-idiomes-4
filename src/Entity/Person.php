@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\BankCreditorSepaTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,11 +22,9 @@ class Person extends AbstractPerson
     protected ?string $dni;
 
     /**
-     * @var array
-     *
      * @ORM\OneToMany(targetEntity="App\Entity\Student", mappedBy="parent")
      */
-    private $students;
+    private Collection $students;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
@@ -38,12 +37,12 @@ class Person extends AbstractPerson
         $this->students = new ArrayCollection();
     }
 
-    public function getStudents()
+    public function getStudents(): Collection
     {
         return $this->students;
     }
 
-    public function setStudents($students)
+    public function setStudents(Collection $students): self
     {
         $this->students = $students;
 

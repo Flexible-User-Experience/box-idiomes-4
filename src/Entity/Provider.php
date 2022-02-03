@@ -8,266 +8,165 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Provider.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\ProviderRepository")
  * @UniqueEntity({"tic"})
  */
 class Provider extends AbstractBase
 {
     /**
-     * @var string Tax Identification Number
-     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $tic;
+    private string $tic;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alias;
+    private ?string $alias = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $address;
+    private ?string $address = null;
 
     /**
-     * @var City
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\City")
      */
-    private $city;
+    private City $city;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $phone;
+    private ?string $phone = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      * @Assert\Email()
      */
-    private $email;
+    private ?string $email = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    private $paymentMethod;
+    private int $paymentMethod = StudentPaymentEnum::BANK_ACCOUNT_NUMBER;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Iban()
      */
-    private $ibanForBankDraftPayment;
+    private ?string $ibanForBankDraftPayment = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return string
-     */
-    public function getTic()
+    public function getTic(): string
     {
         return $this->tic;
     }
 
-    /**
-     * @param string $tic
-     *
-     * @return $this
-     */
-    public function setTic($tic)
+    public function setTic(string $tic): self
     {
         $this->tic = $tic;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlias()
+    public function getAlias(): ?string
     {
         return $this->alias;
     }
 
-    /**
-     * @param string $alias
-     *
-     * @return $this
-     */
-    public function setAlias($alias)
+    public function setAlias(?string $alias): self
     {
         $this->alias = $alias;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
-    /**
-     * @param string $address
-     *
-     * @return $this
-     */
-    public function setAddress($address)
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
 
         return $this;
     }
 
-    /**
-     * @return City
-     */
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
 
-    /**
-     * @param City $city
-     *
-     * @return $this
-     */
-    public function setCity($city)
+    public function setCity(City $city): self
     {
         $this->city = $city;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    /**
-     * @param string $phone
-     *
-     * @return $this
-     */
-    public function setPhone($phone)
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return $this
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPaymentMethod()
+    public function getPaymentMethod(): int
     {
         return $this->paymentMethod;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentString()
+    public function getPaymentString(): string
     {
         return StudentPaymentEnum::getEnumTranslatedArray()[$this->getPaymentMethod()];
     }
 
-    /**
-     * @param int $paymentMethod
-     *
-     * @return $this
-     */
-    public function setPaymentMethod($paymentMethod)
+    public function setPaymentMethod(int $paymentMethod): self
     {
         $this->paymentMethod = $paymentMethod;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getIbanForBankDraftPayment()
+    public function getIbanForBankDraftPayment(): ?string
     {
         return $this->ibanForBankDraftPayment;
     }
 
-    /**
-     * @param string $ibanForBankDraftPayment
-     *
-     * @return $this
-     */
-    public function setIbanForBankDraftPayment($ibanForBankDraftPayment)
+    public function setIbanForBankDraftPayment(?string $ibanForBankDraftPayment): self
     {
         $this->ibanForBankDraftPayment = $ibanForBankDraftPayment;
 

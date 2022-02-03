@@ -3,15 +3,11 @@
 namespace App\Entity;
 
 use App\Enum\TeacherAbsenceTypeEnum;
-use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class TeacherAbsence.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\TeacherAbsenceRepository")
  * @ORM\Table(name="teacher_absence")
  * @UniqueEntity({"teacher", "day"})
@@ -19,98 +15,60 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class TeacherAbsence extends AbstractBase
 {
     /**
-     * @var Teacher
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
      */
-    private $teacher;
+    private Teacher $teacher;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    private $type = 0;
+    private int $type = TeacherAbsenceTypeEnum::PERSONAL_ISSUES;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="date")
      */
-    private $day;
+    private DateTimeInterface $day;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return Teacher
-     */
-    public function getTeacher()
+    public function getTeacher(): Teacher
     {
         return $this->teacher;
     }
 
-    /**
-     * @param Teacher $teacher
-     *
-     * @return TeacherAbsence
-     */
-    public function setTeacher($teacher)
+    public function setTeacher(Teacher $teacher): self
     {
         $this->teacher = $teacher;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getTypeString()
+    public function getTypeString(): string
     {
         return TeacherAbsenceTypeEnum::getReversedEnumArray()[$this->type];
     }
 
-    /**
-     * @param int $type
-     *
-     * @return TeacherAbsence
-     */
-    public function setType($type)
+    public function setType(int $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDay()
+    public function getDay(): DateTimeInterface
     {
         return $this->day;
     }
 
-    /**
-     * @return string
-     */
-    public function getDayString()
+    public function getDayString(): string
     {
         return $this->getDay() ? $this->getDay()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @return TeacherAbsence
-     */
-    public function setDay(DateTime $day)
+    public function setDay(DateTimeInterface $day): self
     {
         $this->day = $day;
 

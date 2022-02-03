@@ -94,7 +94,7 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     /**
      * @ORM\Column(name="twitter_data", type="json", nullable=true)
      */
-    private ?array $twitterkData = null;
+    private ?array $twitterData = null;
 
     /**
      * @ORM\Column(name="gplus_uid", type="string", length=255, nullable=true)
@@ -436,14 +436,14 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return $this;
     }
 
-    public function getTwitterkData(): ?array
+    public function getTwitterData(): ?array
     {
-        return $this->twitterkData;
+        return $this->twitterData;
     }
 
-    public function setTwitterkData(?array $twitterkData): self
+    public function setTwitterData(?array $twitterData): self
     {
-        $this->twitterkData = $twitterkData;
+        $this->twitterData = $twitterData;
 
         return $this;
     }

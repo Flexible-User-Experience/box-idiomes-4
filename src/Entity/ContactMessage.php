@@ -6,10 +6,6 @@ use App\Entity\Traits\DescriptionTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class ContactMessage.
- *
- * @category Entity
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\ContactMessageRepository")
  */
@@ -18,217 +14,132 @@ class ContactMessage extends AbstractBase
     use DescriptionTrait;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private string $email;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $checked = false;
+    private ?bool $checked = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $answered = false;
+    private ?bool $answered = false;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $subject;
+    private ?string $subject;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $phone;
+    private ?string $phone;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text", length=4000)
      */
-    private $message;
+    private ?string $message;
 
-    /**
-     * @var bool
-     */
-    private $privacy;
+    private bool $privacy;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return $this
-     */
-    public function setEmail($email)
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email): string
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getChecked(): ?bool
     {
-        return $this->email;
+        return $this->checked;
     }
 
-    /**
-     * @param bool $checked
-     *
-     * @return $this
-     */
-    public function setChecked($checked)
+    public function setChecked(?bool $checked): self
     {
         $this->checked = $checked;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getChecked()
+    public function getAnswered(): ?bool
     {
-        return $this->checked;
+        return $this->answered;
     }
 
-    /**
-     * @param bool $answered
-     *
-     * @return $this
-     */
-    public function setAnswered($answered)
+    public function setAnswered(?bool $answered): self
     {
         $this->answered = $answered;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAnswered()
-    {
-        return $this->answered;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubject()
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
 
-    /**
-     * @param string $subject
-     *
-     * @return $this
-     */
-    public function setSubject($subject)
+    public function setSubject(?string $subject): self
     {
         $this->subject = $subject;
 
         return $this;
     }
 
-    /**
-     * @param string $message
-     *
-     * @return $this
-     */
-    public function setMessage($message)
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?string $message): self
     {
         $this->message = $message;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    /**
-     * @param string $phone
-     *
-     * @return $this
-     */
-    public function setPhone($phone)
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPrivacy()
+    public function isPrivacy(): bool
     {
         return $this->privacy;
     }
 
-    /**
-     * @param bool $privacy
-     *
-     * @return $this
-     */
-    public function setPrivacy($privacy)
+    public function setPrivacy(bool $privacy): self
     {
         $this->privacy = $privacy;
 
