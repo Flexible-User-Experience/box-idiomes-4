@@ -15,17 +15,17 @@ abstract class AbstractReceiptInvoiceLine extends AbstractBase
     /**
      * @ORM\Column(type="string")
      */
-    protected string $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="float")
      */
-    protected float $units;
+    protected float $units = 0.0;
 
     /**
      * @ORM\Column(type="float")
      */
-    protected float $priceUnit;
+    protected float $priceUnit = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -49,12 +49,12 @@ abstract class AbstractReceiptInvoiceLine extends AbstractBase
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 

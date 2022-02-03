@@ -13,7 +13,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
      * @ORM\ManyToOne(targetEntity="App\Entity\Student")
      * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
-    protected Student $student;
+    protected ?Student $student = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
@@ -54,7 +54,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    protected ?DateTimeInterface $sepaXmlGeneratedDate;
+    protected ?DateTimeInterface $sepaXmlGeneratedDate = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -69,24 +69,24 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     /**
      * @ORM\Column(type="integer")
      */
-    protected int $month;
+    protected int $month = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected int $year;
+    protected int $year = 0;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
     protected ?bool $isForPrivateLessons = false;
 
-    public function getStudent(): Student
+    public function getStudent(): ?Student
     {
         return $this->student;
     }
 
-    public function setStudent(Student $student): self
+    public function setStudent(?Student $student): self
     {
         $this->student = $student;
 
