@@ -124,7 +124,7 @@ final class ServiceAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'image',
+                'imageName',
                 null,
                 [
                     'label' => 'backend.admin.image',

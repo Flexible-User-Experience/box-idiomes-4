@@ -1,6 +1,4 @@
 fos_ck_editor:
-    base_path: 'build/ckeditor4'
-    js_path:   'build/ckeditor4/ckeditor.js'
     inline:    false
     configs:
         my_config:
