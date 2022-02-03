@@ -1,5 +1,5 @@
 {% if not object.student.isPaymentExempt %}
     <a class="btn btn-sm btn-default" href="{{ admin.generateObjectUrl('pdf', object) }}" title="{{ 'backend.admin.invoice.download' | trans }}">
-        <i class="fa fa-file-text-o"></i>
+        <i class="far fa-file-alt"></i>
     </a>
 {% endif %}

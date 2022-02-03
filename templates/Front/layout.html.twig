@@ -26,7 +26,7 @@
             fbq('track', 'PageView');
         </script>
         <noscript>
-            <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ facebook_pixel_id }}&ev=PageView&noscript=1"/>
+            <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id={{ facebook_pixel_id }}&ev=PageView&noscript=1" alt="nopixel"/>
         </noscript>
     {% endif %}
 </head>
@@ -46,7 +46,7 @@
                 <a class="navbar-brand navbar-brand-logo" href="{{ path('app_homepage') }}">
                     <h1 class="hidden">{{ main_brand_title }}</h1>
                     <svg height="70" width="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <image height="70" width="100" class="navbar-logo" xlink:href="{{ asset('build/svg/box-logo-header.svg') }}" alt="{{ main_brand_title }} Logo"></image>
+                        <image height="70" width="100" class="navbar-logo" xlink:href="{{ asset('build/svg/box-logo-header.svg') }}"></image>
                     </svg>
                 </a>
             </div>
@@ -74,7 +74,7 @@
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4 text-center top-margin-responsive">
                     <a href="https://wa.me/{{ main_brand_phone_1 | replace({' ': ''}) }}?text=Hola! Estic interessat en rebre més informació sobre {{ main_brand_title }}." class="btn btn-newsletter pull-right">
-                        <i class="fa fa-send-o"></i> ENVIAR MISSATGE
+                        <i class="far fa-paper-plane"></i> ENVIAR MISSATGE
                     </a>
                 </div>
             </div>
@@ -85,22 +85,24 @@
             <div class="row">
                 <div class="col-sm-4 col-xs-4 text-left">
                     <p class="text-title">Segueix-nos</p>
-                    <a target="_blank" href="https://www.facebook.com/boxviuelsidiomes/">
-                        <i class="fa-2x icon-face-icon" aria-hidden="true"></i>
+                    <a target="_blank" href="https://www.facebook.com/boxviuelsidiomes/" class="me-3">
+                        <i class="fab fa-2x fa-facebook-square" aria-hidden="true"></i>
+{#                        <i class="fa-2x icon-face-icon" aria-hidden="true"></i>#}
                     </a>
                     <a target="_blank" href="https://www.instagram.com/boxidiomes/">
-                        <i class="fa-2x icon-inst-icon" aria-hidden="true"></i>
+                        <i class="fab fa-2x fa-instagram" aria-hidden="true"></i>
+{#                        <i class="fa-2x icon-inst-icon" aria-hidden="true"></i>#}
                     </a>
                 </div>
                 <div class="col-sm-4 col-xs-4">
                     <span class="text-title">Adreça</span><br>
                     {{ main_brand_address }}<br>
                     {{ main_brand_city }}<br>
-                    <i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:{{ main_brand_phone_2 | replace({' ': ''}) }}">{{ main_brand_phone_2 }}</a> · <a href="tel:{{ main_brand_phone_1 | replace({' ': ''}) }}"> {{ main_brand_phone_1 }}</a>
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:{{ main_brand_phone_2 | replace({' ': ''}) }}">{{ main_brand_phone_2 }}</a> · <a href="tel:{{ main_brand_phone_1 | replace({' ': ''}) }}"> {{ main_brand_phone_1 }}</a>
                 </div>
                 <div class="col-sm-4 col-xs-4 text-right">
                     <a href="{{ path('app_privacy_policy') }}">privacitat</a> · <a href="{{ path('app_credits') }}">crèdits</a><br>
-                    <i class="fa fa-copyright" aria-hidden="true"></i> {{ "now" | date("Y") }}
+                    <i class="far fa-copyright" aria-hidden="true"></i> {{ "now" | date("Y") }}
                 </div>
             </div>
         </div>
