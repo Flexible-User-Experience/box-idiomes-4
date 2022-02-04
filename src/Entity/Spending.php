@@ -135,6 +135,16 @@ class Spending extends AbstractBase
         return number_format($this->baseAmount, 2, ',', '.');
     }
 
+    public function getAmount(): float
+    {
+        return $this->getBaseAmount();
+    }
+
+    public function getAmountString(): string
+    {
+        return $this->getBaseAmountString();
+    }
+
     public function setBaseAmount(float $baseAmount): self
     {
         $this->baseAmount = $baseAmount;

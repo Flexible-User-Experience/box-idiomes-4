@@ -426,7 +426,7 @@ backend:
             paymentDate: Data pagament
             isSended: Enviada
             sendDate: Data enviament
-            baseAmount: Base imposable
+            baseAmount: "Import"
             id: Núm. Factura
             taxPercentage: IVA
             irpfPercentage: IRPF
