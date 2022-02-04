@@ -2,7 +2,7 @@ import jQuery from 'jquery';
 
 jQuery(document).ready(function() {
     const errorNode = jQuery('.glyphicon-exclamation-sign');
-    const envelopeNode = jQuery('.fa-paper-plane');
+    const envelopeNode = jQuery('.fa-thumbs-up');
     const exclamationTriangleNode = jQuery('.fa-exclamation-triangle');
     moveToNode(errorNode);
     moveToNode(envelopeNode);

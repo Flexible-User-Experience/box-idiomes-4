@@ -1903,16 +1903,16 @@
         },
         {
             "name": "excelwebzone/recaptcha-bundle",
-            "version": "v1.5.31",
+            "version": "v1.5.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/excelwebzone/EWZRecaptchaBundle.git",
-                "reference": "f5fbc9e164976a581fb579c2d38ec869000de600"
+                "reference": "c4dcc715fa765a16ace2ca51ddc9ae276cc5dd59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/f5fbc9e164976a581fb579c2d38ec869000de600",
-                "reference": "f5fbc9e164976a581fb579c2d38ec869000de600",
+                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/c4dcc715fa765a16ace2ca51ddc9ae276cc5dd59",
+                "reference": "c4dcc715fa765a16ace2ca51ddc9ae276cc5dd59",
                 "shasum": ""
             },
             "require": {
@@ -1957,9 +1957,9 @@
             ],
             "support": {
                 "issues": "https://github.com/excelwebzone/EWZRecaptchaBundle/issues",
-                "source": "https://github.com/excelwebzone/EWZRecaptchaBundle/tree/v1.5.31"
+                "source": "https://github.com/excelwebzone/EWZRecaptchaBundle/tree/v1.5.32"
             },
-            "time": "2022-01-11T15:13:31+00:00"
+            "time": "2022-02-03T17:58:00+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
@@ -10538,16 +10538,16 @@
         },
         {
             "name": "twig/extra-bundle",
-            "version": "v3.3.7",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/twig-extra-bundle.git",
-                "reference": "e0cc9c35a0650006b0da232a3f749cc060c65d3b"
+                "reference": "2e58256b0e9fe52f30149347c0547e4633304765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/e0cc9c35a0650006b0da232a3f749cc060c65d3b",
-                "reference": "e0cc9c35a0650006b0da232a3f749cc060c65d3b",
+                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/2e58256b0e9fe52f30149347c0547e4633304765",
+                "reference": "2e58256b0e9fe52f30149347c0547e4633304765",
                 "shasum": ""
             },
             "require": {
@@ -10601,7 +10601,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.3.7"
+                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.3.8"
             },
             "funding": [
                 {
@@ -10613,7 +10613,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-03T21:04:59+00:00"
+            "time": "2022-01-04T13:58:53+00:00"
         },
         {
             "name": "twig/inky-extra",
@@ -10688,16 +10688,16 @@
         },
         {
             "name": "twig/markdown-extra",
-            "version": "v3.3.5",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/markdown-extra.git",
-                "reference": "57377ba1d3508bd5d5b2661a24369b66e1264550"
+                "reference": "25ed505b6ffd3b00f922ca682489dfbaf44eb1f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/markdown-extra/zipball/57377ba1d3508bd5d5b2661a24369b66e1264550",
-                "reference": "57377ba1d3508bd5d5b2661a24369b66e1264550",
+                "url": "https://api.github.com/repos/twigphp/markdown-extra/zipball/25ed505b6ffd3b00f922ca682489dfbaf44eb1f7",
+                "reference": "25ed505b6ffd3b00f922ca682489dfbaf44eb1f7",
                 "shasum": ""
             },
             "require": {
@@ -10745,7 +10745,7 @@
                 "twig"
             ],
             "support": {
-                "source": "https://github.com/twigphp/markdown-extra/tree/v3.3.5"
+                "source": "https://github.com/twigphp/markdown-extra/tree/v3.3.8"
             },
             "funding": [
                 {
@@ -10757,7 +10757,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T15:32:49+00:00"
+            "time": "2022-01-29T15:34:05+00:00"
         },
         {
             "name": "twig/string-extra",
@@ -10833,16 +10833,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.3.7",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "8f168c6ffa3ce76d1786b3cd52275424a3fc675b"
+                "reference": "972d8604a92b7054828b539f2febb0211dd5945c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/8f168c6ffa3ce76d1786b3cd52275424a3fc675b",
-                "reference": "8f168c6ffa3ce76d1786b3cd52275424a3fc675b",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/972d8604a92b7054828b539f2febb0211dd5945c",
+                "reference": "972d8604a92b7054828b539f2febb0211dd5945c",
                 "shasum": ""
             },
             "require": {
@@ -10893,7 +10893,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.3.7"
+                "source": "https://github.com/twigphp/Twig/tree/v3.3.8"
             },
             "funding": [
                 {
@@ -10905,7 +10905,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-03T21:15:37+00:00"
+            "time": "2022-02-04T06:59:48+00:00"
         },
         {
             "name": "vich/uploader-bundle",
@@ -11365,12 +11365,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "DeepCopy\\": "src/DeepCopy/"
-                },
                 "files": [
                     "src/DeepCopy/deep_copy.php"
-                ]
+                ],
+                "psr-4": {
+                    "DeepCopy\\": "src/DeepCopy/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -12151,12 +12151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "fa60732bcafd446e9ff858eefa06cdcbae8d9823"
+                "reference": "8ba45c14eb7b79db601052ba90c2811d9b028d7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/fa60732bcafd446e9ff858eefa06cdcbae8d9823",
-                "reference": "fa60732bcafd446e9ff858eefa06cdcbae8d9823",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8ba45c14eb7b79db601052ba90c2811d9b028d7a",
+                "reference": "8ba45c14eb7b79db601052ba90c2811d9b028d7a",
                 "shasum": ""
             },
             "conflict": {
@@ -12455,7 +12455,7 @@
                 "symfony/dependency-injection": ">=2,<2.0.17|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
                 "symfony/error-handler": ">=4.4,<4.4.4|>=5,<5.0.4",
                 "symfony/form": ">=2.3,<2.3.35|>=2.4,<2.6.12|>=2.7,<2.7.50|>=2.8,<2.8.49|>=3,<3.4.20|>=4,<4.0.15|>=4.1,<4.1.9|>=4.2,<4.2.1",
-                "symfony/framework-bundle": "<5.3.15|>=5.4,<5.4.4|>=6,<6.0.4",
+                "symfony/framework-bundle": ">=2,<2.3.18|>=2.4,<2.4.8|>=2.5,<2.5.2|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7|>=5.3.14,<=5.3.14|>=5.4.3,<=5.4.3|>=6.0.3,<=6.0.3|= 6.0.3|= 5.4.3|= 5.3.14",
                 "symfony/http-foundation": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.3.8|>=4.4,<4.4.7|>=5,<5.0.7",
                 "symfony/http-kernel": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.4.13|>=5,<5.1.5|>=5.2,<5.3.12",
                 "symfony/intl": ">=2.7,<2.7.38|>=2.8,<2.8.31|>=3,<3.2.14|>=3.3,<3.3.13",
@@ -12482,6 +12482,7 @@
                 "t3/dce": ">=2.2,<2.6.2",
                 "t3g/svg-sanitizer": "<1.0.3",
                 "tecnickcom/tcpdf": "<6.2.22",
+                "terminal42/contao-tablelookupwizard": ">=1,<3.3.5",
                 "thelia/backoffice-default-template": ">=2.1,<2.1.2",
                 "thelia/thelia": ">=2.1-beta.1,<2.1.3",
                 "theonedemon/phpwhois": "<=4.2.5",
@@ -12590,7 +12591,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-01T15:19:50+00:00"
+            "time": "2022-02-04T09:12:31+00:00"
         },
         {
             "name": "sebastian/cli-parser",

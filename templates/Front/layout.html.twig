@@ -76,7 +76,7 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 col-xs-4 text-left mb-sm-4">
+                <div class="col-sm-6 col-md-4 mb-4">
                     <p class="text-title">Segueix-nos</p>
                     <a target="_blank" href="https://www.facebook.com/boxviuelsidiomes/" class="text-decoration-none">
                         <i class="fab fa-2x fa-facebook-square" aria-hidden="true"></i>
@@ -85,13 +85,14 @@
                         <i class="fab fa-2x fa-instagram" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="col-sm-4 col-xs-4 mb-sm-4">
+                <div class="col-sm-6 col-md-4 mb-4">
                     <span class="text-title">Adreça</span><br>
                     {{ main_brand_address }}<br>
                     {{ main_brand_city }}<br>
-                    <i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:{{ main_brand_phone_2 | replace({' ': ''}) }}" class="text-decoration-none">{{ main_brand_phone_2 }}</a> &nbsp; <i class="fas fa-mobile-alt" aria-hidden="true"></i> <a href="tel:{{ main_brand_phone_1 | replace({' ': ''}) }}" class="text-decoration-none"> {{ main_brand_phone_1 }}</a>
+                    <i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:{{ main_brand_phone_2 | replace({' ': ''}) }}" class="text-decoration-none">{{ main_brand_phone_2 }}</a><br>
+                    <i class="fas fa-mobile-alt" aria-hidden="true"></i> <a href="tel:{{ main_brand_phone_1 | replace({' ': ''}) }}" class="text-decoration-none"> {{ main_brand_phone_1 }}</a>
                 </div>
-                <div class="col-sm-4 col-xs-4 text-end">
+                <div class="col-sm-6 col-md-4 mb-4 text-md-end">
                     <a href="{{ path('app_privacy_policy') }}" class="text-decoration-none">privacitat</a> · <a href="{{ path('app_credits') }}" class="text-decoration-none">crèdits</a><br>
                     <i class="far fa-copyright" aria-hidden="true"></i> {{ "now" | date("Y") }}
                 </div>
