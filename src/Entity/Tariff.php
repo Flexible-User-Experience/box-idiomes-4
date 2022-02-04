@@ -7,10 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class Tariff.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\TariffRepository")
  * @ORM\Table(name="tariff")
  * @UniqueEntity({"type", "year"})
@@ -18,127 +14,77 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Tariff extends AbstractBase
 {
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $year;
+    private int $year;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      */
-    private $price;
+    private float $price;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    private $type;
+    private int $type = TariffTypeEnum::TARIFF_ONE_HOUR_PER_WEEK;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $name;
+    private ?string $name;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return int
-     */
-    public function getYear()
+    public function getYear(): int
     {
         return $this->year;
     }
 
-    /**
-     * @param int $year
-     *
-     * @return Tariff
-     */
-    public function setYear($year)
+    public function setYear(int $year): self
     {
         $this->year = $year;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
 
-    /**
-     * @return string
-     */
-    public function getPriceString()
+    public function getPriceString(): string
     {
         return $this->price.'€';
     }
 
-    /**
-     * @param float $price
-     *
-     * @return Tariff
-     */
-    public function setPrice($price)
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
 
-    /**
-     * @return string
-     */
-    public function getTypeString()
+    public function getTypeString(): string
     {
         return TariffTypeEnum::getTranslatedEnumArray()[$this->type];
     }
 
-    /**
-     * @param int $type
-     *
-     * @return Tariff
-     */
-    public function setType($type)
+    public function setType(int $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Tariff
-     */
-    public function setName($name)
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

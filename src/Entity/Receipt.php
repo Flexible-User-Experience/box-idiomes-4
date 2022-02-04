@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,27 +17,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Receipt extends AbstractReceiptInvoice
 {
     /**
-     * @var ArrayCollection|array|ReceiptLine[]
-     *
-     * @Assert\Valid
      * @ORM\OneToMany(targetEntity="App\Entity\ReceiptLine", mappedBy="receipt", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Assert\Valid
      */
-    private $lines;
+    private ?Collection $lines;
 
     public function __construct()
     {
         $this->lines = new ArrayCollection();
     }
 
-    /**
-     * @return ReceiptLine[]|array|ArrayCollection
-     */
-    public function getLines()
+    public function getLines(): ?Collection
     {
         return $this->lines;
     }
 
-    public function setLines($lines): self
+    public function setLines(?Collection $lines): self
     {
         $this->lines = $lines;
 

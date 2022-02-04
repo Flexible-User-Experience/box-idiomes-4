@@ -123,6 +123,12 @@ frontend:
 
 backend:
     admin:
+        login:
+            title: "Login"
+            submit: "Enviar"
+            username: "Usuari"
+            password: "Contrasenya"
+        is_stage_warning: "Entorn de proves"
         yes: Sí
         no: No
         actions: Accions

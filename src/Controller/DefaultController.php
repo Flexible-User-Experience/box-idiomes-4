@@ -11,8 +11,10 @@ use App\Entity\Teacher;
 use App\Form\Type\ContactHomepageType;
 use App\Form\Type\ContactMessageType;
 use App\Form\Type\PreRegisterType;
+use App\Kernel;
 use App\Manager\MailchimpManager;
 use App\Service\NotificationService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,27 +24,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    public const ENV_DEV = 'dev';
-
     /**
      * @Route("/", name="app_homepage")
      */
-    public function indexAction(Request $request, MailchimpManager $mailchimpManager, NotificationService $messenger): Response
+    public function indexAction(Request $request, EntityManagerInterface $em, MailchimpManager $mailchimpManager, NotificationService $messenger): Response
     {
-        $teachers = $this->getDoctrine()->getRepository(Teacher::class)->findAllEnabledSortedByPosition();
-
+        $teachers = $em->getRepository(Teacher::class)->findAllEnabledSortedByPosition();
         $contact = new NewsletterContact();
         $newsletterForm = $this->createForm(ContactHomepageType::class, $contact);
         $newsletterForm->handleRequest($request);
-
         if ($newsletterForm->isSubmitted() && $newsletterForm->isValid()) {
             // Persist new contact message into DB
-            $em = $this->getDoctrine()->getManager();
             $em->persist($contact);
             $em->flush();
             // Subscribe contact to mailchimp list
             $result = $mailchimpManager->subscribeContactToList($contact, $this->getParameter('mailchimp_list_id'));
-
             if (is_array($result) && MailchimpManager::SUBSCRIBED === $result['status']) {
                 // Send notification and OK flash
                 $this->setFlashMessageAndEmailNotifications($messenger, $contact);
@@ -88,14 +84,12 @@ class DefaultController extends AbstractController
     /**
      * @Route("/serveis", name="app_services")
      */
-    public function servicesAction(): Response
+    public function servicesAction(EntityManagerInterface $em): Response
     {
-        $services = $this->getDoctrine()->getRepository(Service::class)->findAllEnabledSortedByPosition();
-
         return $this->render(
             'Front/services.html.twig',
             [
-                'services' => $services,
+                'services' => $em->getRepository(Service::class)->findAllEnabledSortedByPosition(),
             ]
         );
     }
@@ -111,15 +105,13 @@ class DefaultController extends AbstractController
     /**
      * @Route("/contacte", name="app_contact")
      */
-    public function contactAction(Request $request, NotificationService $messenger): Response
+    public function contactAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
     {
         $contactMessage = new ContactMessage();
         $contactMessageForm = $this->createForm(ContactMessageType::class, $contactMessage);
         $contactMessageForm->handleRequest($request);
-
         if ($contactMessageForm->isSubmitted() && $contactMessageForm->isValid()) {
             // Persist new contact message into DB
-            $em = $this->getDoctrine()->getManager();
             $em->persist($contactMessage);
             $em->flush();
             // Send email notifications
@@ -152,7 +144,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/preinscripcions", name="app_pre_register")
      */
-    public function preRegistersAction(Request $request, NotificationService $messenger): Response
+    public function preRegistersAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
     {
 //        $this->addFlash(
 //            'notice',
@@ -160,14 +152,11 @@ class DefaultController extends AbstractController
 //        );
 //
 //        return $this->redirectToRoute('app_homepage');
-
         $preRegister = new PreRegister();
         $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
         $preRegisterForm->handleRequest($request);
-
         if ($preRegisterForm->isSubmitted() && $preRegisterForm->isValid()) {
             // Persist new pre-register record into DB
-            $em = $this->getDoctrine()->getManager();
             $preRegister->setEnabled(false);
             $em->persist($preRegister);
             $em->flush();
@@ -201,7 +190,7 @@ class DefaultController extends AbstractController
      */
     public function privacyPolicyAction(): Response
     {
-        return $this->render('Front/privacy_policy.html.twig', []);
+        return $this->render('Front/privacy_policy.html.twig');
     }
 
     /**
@@ -215,18 +204,16 @@ class DefaultController extends AbstractController
     /**
      * @Route("/test-email", name="app_test_email")
      */
-    public function testEmailAction(KernelInterface $kernel): Response
+    public function testEmailAction(KernelInterface $kernel, EntityManagerInterface $em): Response
     {
-        if ('prod' === $kernel->getEnvironment()) {
+        if (Kernel::ENV_PROD === $kernel->getEnvironment()) {
             throw new AccessDeniedHttpException();
         }
-
-        $invoice = $this->getDoctrine()->getRepository(Invoice::class)->find(8);
 
         return $this->render(
             'Mails/invoice_pdf_notification.html.twig',
             [
-                'invoice' => $invoice,
+                'invoice' => $em->getRepository(Invoice::class)->find(8),
             ]
         );
     }

@@ -4,8 +4,8 @@ namespace App\Form\Model;
 
 abstract class AbstractGenerateReceiptInvoiceModel
 {
-    protected int $year;
-    protected int $month;
+    protected ?int $year = null;
+    protected ?int $month = null;
 
     public function getYear(): int
     {

@@ -10,23 +10,20 @@ use App\Form\Type\EventBatchRemoveType;
 use App\Form\Type\EventType;
 use App\Manager\EventManager;
 use DateInterval;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
-class EventAdminController extends BaseAdminController
+final class EventAdminController extends CRUDController
 {
-    /**
-     * @return RedirectResponse|Response
-     */
-    public function editAction($deprecatedId = null)
+    public function editAction(Request $request): Response
     {
-        $request = $this->getRequest();
+        $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
         /** @var Event $object */
         $object = $this->admin->getObject($id);
@@ -37,7 +34,7 @@ class EventAdminController extends BaseAdminController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
 
-        return parent::editAction($id);
+        return parent::editAction($request);
     }
 
     /**
@@ -45,7 +42,7 @@ class EventAdminController extends BaseAdminController
      *
      * @throws Exception
      */
-    public function batcheditAction(Request $request, EventManager $eventsManager): Response
+    public function batcheditAction(Request $request, EventManager $eventsManager, EntityManagerInterface $em): Response
     {
         $object = $this->getEvent($request);
         $firstEvent = $eventsManager->getFirstEventOf($object);
@@ -58,8 +55,6 @@ class EventAdminController extends BaseAdminController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $eventIdStopRangeIterator = $form->get('range')->getData();
-            /** @var EntityManager $em */
-            $em = $this->getDoctrine()->getManager();
             $em->flush();
             $iteratorCounter = 1;
             if (!is_null($object->getNext())) {
@@ -107,7 +102,7 @@ class EventAdminController extends BaseAdminController
     /**
      * Delete event and all the next related events action.
      */
-    public function batchdeleteAction(Request $request, EventManager $eventsManager): Response
+    public function batchdeleteAction(Request $request, EventManager $eventsManager, EntityManagerInterface $em): Response
     {
         $object = $this->getEvent($request);
         $firstEvent = $eventsManager->getFirstEventOf($object);
@@ -116,8 +111,6 @@ class EventAdminController extends BaseAdminController
         $form = $this->createForm(EventBatchRemoveType::class, $object, ['event' => $object]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var EntityManager $em */
-            $em = $this->getDoctrine()->getManager();
             $eventIdStopRange = $form->get('range')->getData();
             /** @var Event|null $eventStopRange */
             $eventStopRange = $em->getRepository(Event::class)->find($eventIdStopRange);
@@ -215,7 +208,7 @@ class EventAdminController extends BaseAdminController
     /**
      * API GET action.
      */
-    public function apigetAction(Request $request, EngineInterface $twig): JsonResponse
+    public function apigetAction(Request $request, EngineInterface $twig, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get($this->admin->getIdParameter());
         /** @var Event $object */
@@ -227,7 +220,7 @@ class EventAdminController extends BaseAdminController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
         // init synchro process, create new references
-        $items = $this->getDoctrine()->getRepository(EventStudent::class)->getItemsByEvent($object);
+        $items = $em->getRepository(EventStudent::class)->getItemsByEvent($object);
         $resultItems = [];
         /** @var Student $student */
         foreach ($object->getStudents() as $student) {
@@ -246,13 +239,13 @@ class EventAdminController extends BaseAdminController
                     ->setStudent($student)
                     ->setHasAttendedTheClass(true)
                 ;
-                $this->getDoctrine()->getManager()->persist($newEventStudent);
+                $em->persist($newEventStudent);
                 $resultItems[] = $newEventStudent;
             } else {
                 $resultItems[] = $item;
             }
         }
-        $this->getDoctrine()->getManager()->flush();
+        $em->flush();
         $resonse = [
             'eid' => $object->getId(),
             'html' => $twig->render('Admin/Event/api_get.html.twig', [
@@ -266,14 +259,14 @@ class EventAdminController extends BaseAdminController
     /**
      * API attended action.
      */
-    public function apiattendedclassAction(Request $request): JsonResponse
+    public function apiattendedclassAction(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $event = $this->getEvent($request);
         $student = $this->getStudent($request);
         $searchedStudentAbsence = $this->getStudentAbsenceByEventAndStudent($event, $student);
         if ($searchedStudentAbsence) {
-            $this->getDoctrine()->getManager()->remove($searchedStudentAbsence);
-            $this->getDoctrine()->getManager()->flush();
+            $em->remove($searchedStudentAbsence);
+            $em->flush();
         }
 
         return $this->commonAttendedClass($event, $student, true);
@@ -282,7 +275,7 @@ class EventAdminController extends BaseAdminController
     /**
      * API not attended action.
      */
-    public function apinotattendedclassAction(Request $request): JsonResponse
+    public function apinotattendedclassAction(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $event = $this->getEvent($request);
         $student = $this->getStudent($request);
@@ -293,8 +286,8 @@ class EventAdminController extends BaseAdminController
                 ->setDay($event->getBegin())
                 ->setStudent($student)
             ;
-            $this->getDoctrine()->getManager()->persist($studentAbsence);
-            $this->getDoctrine()->getManager()->flush();
+            $em->persist($studentAbsence);
+            $em->flush();
 
             return $this->commonAttendedClass($event, $student, false, $studentAbsence->getId());
         }

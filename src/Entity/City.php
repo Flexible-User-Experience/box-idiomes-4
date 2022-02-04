@@ -6,10 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class City.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
  * @ORM\Table(name="city")
  * @UniqueEntity({"postalCode", "province"})
@@ -17,94 +13,57 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class City extends AbstractBase
 {
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $postalCode;
+    private string $postalCode;
 
     /**
-     * @var Province
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Province")
      */
-    private $province;
+    private Province $province;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return City
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPostalCode()
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
 
-    /**
-     * @param string $postalCode
-     *
-     * @return City
-     */
-    public function setPostalCode($postalCode)
+    public function setPostalCode(string $postalCode): self
     {
         $this->postalCode = $postalCode;
 
         return $this;
     }
 
-    /**
-     * @return Province
-     */
-    public function getProvince()
+    public function getProvince(): Province
     {
         return $this->province;
     }
 
-    /**
-     * @param Province $province
-     *
-     * @return City
-     */
-    public function setProvince($province)
+    public function setProvince(Province $province): self
     {
         $this->province = $province;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCanonicalPostalString()
+    public function getCanonicalPostalString(): string
     {
         return $this->getPostalCode().' '.$this->getName().' ('.$this->getProvince()->getName().')';
     }

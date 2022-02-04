@@ -2,42 +2,40 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
+use App\Entity\City;
 use App\Enum\StudentPaymentEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-/**
- * Class ProviderAdmin.
- *
- * @category Admin
- */
-class ProviderAdmin extends AbstractBaseAdmin
+final class ProviderAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Provider';
     protected $baseRoutePattern = 'purchases/provider';
-    protected $datagridValues = [
-        '_sort_by' => 'name',
-        '_sort_order' => 'asc',
-    ];
 
-    /**
-     * Configure route collection.
-     */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
         $collection->remove('delete');
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(5))
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 5))
             ->add(
                 'tic',
                 null,
@@ -73,7 +71,7 @@ class ProviderAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.customer.city',
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.city_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
                     'required' => true,
                 ]
             )
@@ -92,7 +90,7 @@ class ProviderAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.payments', $this->getFormMdSuccessBoxArray(4))
+            ->with('backend.admin.payments', $this->getFormMdSuccessBoxArray('backend.admin.payments', 4))
             ->add(
                 'paymentMethod',
                 ChoiceType::class,
@@ -112,7 +110,7 @@ class ProviderAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
                 'enabled',
                 CheckboxType::class,
@@ -125,9 +123,9 @@ class ProviderAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'tic',
                 null,
@@ -201,9 +199,9 @@ class ProviderAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'tic',
                 null,
@@ -255,21 +253,23 @@ class ProviderAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
-                    'label' => 'backend.admin.actions',
                     'actions' => [
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
                     ],
                 ]
             )
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'tic',

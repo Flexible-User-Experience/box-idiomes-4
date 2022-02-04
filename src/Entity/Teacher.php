@@ -13,10 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Class Teacher.
- *
- * @category    Entity
- *
  * @ORM\Table()
  * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="App\Repository\TeacherRepository")
@@ -29,22 +25,16 @@ class Teacher extends AbstractBase
     use SlugTrait;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true, length=255)
      */
-    private $slug;
+    private string $slug;
 
     /**
-     * @var File
-     *
      * @Vich\UploadableField(mapping="teacher", fileNameProperty="imageName")
      * @Assert\File(
      *     maxSize="10M",
@@ -52,88 +42,53 @@ class Teacher extends AbstractBase
      * )
      * @Assert\Image(allowLandscape=false, allowPortrait=true, minWidth=600)
      */
-    private $imageFile;
+    private ?File $imageFile = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    private $color = 0;
+    private int $color = 0;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $showInHomepage = true;
+    private bool $showInHomepage = true;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getColor()
+    public function getColor(): int
     {
         return $this->color;
     }
 
-    /**
-     * @return string
-     */
-    public function getCssColor()
+    public function getCssColor(): string
     {
         return 'c-'.TeacherColorEnum::getReversedEnumArray()[$this->getColor()];
     }
 
-    /**
-     * @param int $color
-     *
-     * @return Teacher
-     */
-    public function setColor($color)
+    public function setColor(int $color): self
     {
         $this->color = $color;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isShowInHomepage()
+    public function isShowInHomepage(): bool
     {
         return $this->showInHomepage;
     }
 
-    /**
-     * @param bool $showInHomepage
-     *
-     * @return Teacher
-     */
-    public function setShowInHomepage($showInHomepage)
+    public function setShowInHomepage(bool $showInHomepage): self
     {
         $this->showInHomepage = $showInHomepage;
 

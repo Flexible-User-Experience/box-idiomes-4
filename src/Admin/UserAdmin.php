@@ -2,64 +2,40 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Enum\UserRolesEnum;
-use FOS\UserBundle\Model\UserManagerInterface;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
-use Sonata\UserBundle\Admin\Model\UserAdmin as ParentUserAdmin;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-/**
- * Class UserAdmin.
- *
- * @category Admin
- */
-class UserAdmin extends ParentUserAdmin
+final class UserAdmin extends AbstractBaseAdmin
 {
-    /**
-     * @var UserManagerInterface
-     */
-    protected $userManager;
-
     protected $classnameLabel = 'User';
     protected $baseRoutePattern = 'users';
-    protected $datagridValues = [
-        '_sort_by' => 'username',
-        '_sort_order' => 'asc',
-    ];
 
-    /**
-     * Available routes.
-     */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'username';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('batch');
         $collection->remove('export');
         $collection->remove('show');
     }
 
-    /**
-     * Remove batch action list view first column.
-     *
-     * @return array
-     */
-    public function getBatchActions()
+    protected function configureFormFields(FormMapper $form): void
     {
-        $actions = parent::getBatchActions();
-        unset($actions['delete']);
-
-        return $actions;
-    }
-
-    protected function configureFormFields(FormMapper $formMapper): void
-    {
-        /* @var object $formMapper */
-        $formMapper
-            ->with('backend.admin.general', ['class' => 'col-md-3'])
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
             ->add(
                 'firstname',
                 null,
@@ -99,7 +75,7 @@ class UserAdmin extends ParentUserAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', ['class' => 'col-md-3'])
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
                 'enabled',
                 CheckboxType::class,
@@ -118,12 +94,13 @@ class UserAdmin extends ParentUserAdmin
                     'expanded' => true,
                 ]
             )
-            ->end();
+            ->end()
+        ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $filterMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $filterMapper
+        $filter
             ->add(
                 'username',
                 null,
@@ -144,12 +121,13 @@ class UserAdmin extends ParentUserAdmin
                 [
                     'label' => 'backend.admin.enabled',
                 ]
-            );
+            )
+        ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'username',
                 null,
@@ -187,17 +165,22 @@ class UserAdmin extends ParentUserAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
-                    'label' => 'backend.admin.actions',
                     'actions' => [
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'delete' => [
+                            'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
+                        ],
                     ],
                 ]
-            );
+            )
+        ;
     }
 }

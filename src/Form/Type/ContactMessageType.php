@@ -47,11 +47,7 @@ class ContactMessageType extends AbstractType
                     ],
                     'constraints' => [
                         new Assert\NotBlank(),
-                        new Assert\Email([
-                            'strict' => true,
-                            'checkMX' => true,
-                            'checkHost' => true,
-                        ]),
+                        new Assert\Email(),
                     ],
                 ]
             )
@@ -115,7 +111,7 @@ class ContactMessageType extends AbstractType
                 [
                     'label' => 'frontend.forms.send',
                     'attr' => [
-                        'class' => 'btn-newsletter',
+                        'class' => 'btn btn-outline-secondary',
                     ],
                 ]
             )

@@ -66,7 +66,7 @@
                                 <a class="btn btn-warning" href="{{ admin.generateObjectUrl('batchdelete', object.previous) }}" title="{{ 'backend.admin.event.button.previous' | trans({}, 'messages') }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ object.previous.begin | date('d/m/Y H:i') }}</a>
                             {% endif %}
                             {% if object.next is not null %}
-                                <a class="btn btn-warning" href="{{ admin.generateObjectUrl('batchdelete', object.next) }}" title="{{ 'backend.admin.event.button.next' | trans({}, 'messages') }}">{{ object.next.begin | date('d/m/Y H:i') }} <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                <a class="btn btn-warning" href="{{ admin.generateObjectUrl('batchdelete', object.next) }}" title="{{ 'backend.admin.event.button.next' | trans({}, 'messages') }}">{{ object.next.begin | date('d/m/Y H:i') }} <i class="fas fa-chevron-right" aria-hidden="true"></i></a>
                             {% endif %}
                         </div>
                     </div>

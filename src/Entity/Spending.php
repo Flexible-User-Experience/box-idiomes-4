@@ -3,331 +3,219 @@
 namespace App\Entity;
 
 use App\Enum\StudentPaymentEnum;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Class Spending.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\SpendingRepository")
  * @Vich\Uploadable
  */
 class Spending extends AbstractBase
 {
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(type="date", nullable=false)
      */
-    private $date;
+    private DateTimeInterface $date;
 
     /**
-     * @var SpendingCategory
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\SpendingCategory")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
-    private $category;
+    private ?SpendingCategory $category = null;
 
     /**
-     * @var Provider
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Provider")
      * @ORM\JoinColumn(name="provider_id", referencedColumnName="id")
      */
-    private $provider;
+    private ?Provider $provider = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float", nullable=false)
      */
-    private $baseAmount;
+    private float $baseAmount;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isPayed;
+    private ?bool $isPayed = null;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(type="date", nullable=true)
      */
-    private $paymentDate;
+    private ?DateTimeInterface $paymentDate = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    private $paymentMethod;
+    private int $paymentMethod = StudentPaymentEnum::BANK_ACCOUNT_NUMBER;
 
     /**
-     * @var File
-     *
      * @Vich\UploadableField(mapping="spending", fileNameProperty="document")
      * @Assert\File(
      *     maxSize="10M",
      *     mimeTypes={"image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf", "application/x-pdf"}
      * )
      */
-    private $documentFile;
+    private ?File $documentFile = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $document;
+    private ?string $document = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getDate(): DateTimeInterface
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
-    public function getDateString()
+    public function getDateString(): string
     {
         return $this->getDate() ? $this->getDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @return $this
-     */
-    public function setDate(\DateTime $date)
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    /**
-     * @return SpendingCategory
-     */
-    public function getCategory()
+    public function getCategory(): ?SpendingCategory
     {
         return $this->category;
     }
 
-    /**
-     * @param SpendingCategory $category
-     *
-     * @return $this
-     */
-    public function setCategory($category)
+    public function setCategory(?SpendingCategory $category): self
     {
         $this->category = $category;
 
         return $this;
     }
 
-    /**
-     * @return Provider
-     */
-    public function getProvider()
+    public function getProvider(): ?Provider
     {
         return $this->provider;
     }
 
-    /**
-     * @param Provider $provider
-     *
-     * @return $this
-     */
-    public function setProvider($provider)
+    public function setProvider(?Provider $provider): self
     {
         $this->provider = $provider;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return $this
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getBaseAmount()
+    public function getBaseAmount(): float
     {
         return $this->baseAmount;
     }
 
-    /**
-     * @return float
-     */
-    public function getBaseAmountString()
+    public function getBaseAmountString(): string
     {
         return number_format($this->baseAmount, 2, ',', '.');
     }
 
-    /**
-     * @param float $baseAmount
-     *
-     * @return $this
-     */
-    public function setBaseAmount($baseAmount)
+    public function setBaseAmount(float $baseAmount): self
     {
         $this->baseAmount = $baseAmount;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPayed()
+    public function isPayed(): ?bool
     {
         return $this->isPayed;
     }
 
-    /**
-     * @param bool $isPayed
-     *
-     * @return $this
-     */
-    public function setIsPayed($isPayed)
+    public function getPayed(): ?bool
+    {
+        return $this->isPayed();
+    }
+
+    public function setIsPayed(?bool $isPayed): self
     {
         $this->isPayed = $isPayed;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getPaymentDate()
+    public function getPaymentDate(): ?DateTimeInterface
     {
         return $this->paymentDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentDateString()
+    public function getPaymentDateString(): string
     {
         return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    /**
-     * @param \DateTime $paymentDate
-     *
-     * @return $this
-     */
-    public function setPaymentDate($paymentDate)
+    public function setPaymentDate(?DateTimeInterface $paymentDate): self
     {
         $this->paymentDate = $paymentDate;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPaymentMethod()
+    public function getPaymentMethod(): int
     {
         return $this->paymentMethod;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentString()
+    public function getPaymentString(): string
     {
         return StudentPaymentEnum::getEnumTranslatedArray()[$this->getPaymentMethod()];
     }
 
-    /**
-     * @param int $paymentMethod
-     *
-     * @return $this
-     */
-    public function setPaymentMethod($paymentMethod)
+    public function setPaymentMethod(int $paymentMethod): self
     {
         $this->paymentMethod = $paymentMethod;
 
         return $this;
     }
 
-    /**
-     * @return File
-     */
-    public function getDocumentFile()
+    public function getDocumentFile(): ?File
     {
         return $this->documentFile;
     }
 
-    /**
-     * @param File|UploadedFile $documentFile
-     *
-     * @return $this
-     */
-    public function setDocumentFile(File $documentFile = null)
+    public function setDocumentFile(?File $documentFile = null): self
     {
         $this->documentFile = $documentFile;
         if ($documentFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = new DateTimeImmutable('now');
         }
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDocument()
+    public function getDocument(): ?string
     {
         return $this->document;
     }
 
-    /**
-     * @param string $document
-     *
-     * @return $this
-     */
-    public function setDocument($document)
+    public function setDocument(?string $document): self
     {
         $this->document = $document;
 

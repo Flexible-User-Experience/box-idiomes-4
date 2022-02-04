@@ -2,41 +2,38 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Province;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-/**
- * Class CityAdmin.
- *
- * @category Admin
- */
-class CityAdmin extends AbstractBaseAdmin
+final class CityAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'City';
     protected $baseRoutePattern = 'administrations/city';
-    protected $datagridValues = [
-        '_sort_by' => 'name',
-        '_sort_order' => 'asc',
-    ];
 
-    /**
-     * Configure route collection.
-     */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
         $collection->remove('delete');
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
             ->add(
                 'postalCode',
                 null,
@@ -52,7 +49,7 @@ class CityAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
                 'province',
                 EntityType::class,
@@ -61,7 +58,7 @@ class CityAdmin extends AbstractBaseAdmin
                     'required' => true,
                     'class' => Province::class,
                     'choice_label' => 'name',
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.province_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(Province::class)->getEnabledSortedByNameQB(),
                 ]
             )
             ->add(
@@ -76,9 +73,9 @@ class CityAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'postalCode',
                 null,
@@ -110,15 +107,17 @@ class CityAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'postalCode',
                 null,
                 [
                     'label' => 'backend.admin.city.postalCode',
                     'editable' => true,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 ]
             )
             ->add(
@@ -152,15 +151,15 @@ class CityAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
                         'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
                     ],
-                    'label' => 'Accions',
                 ]
             )
         ;

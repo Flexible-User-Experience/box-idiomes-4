@@ -2,18 +2,23 @@
 
 namespace App\Admin;
 
-use Sonata\AdminBundle\Route\RouteCollection;
+use App\Doctrine\Enum\SortOrderTypeEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
-class FileDummyAdmin extends AbstractBaseAdmin
+final class FileDummyAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'FileDummy';
     protected $baseRoutePattern = 'fitxers';
-    protected $datagridValues = [
-        '_sort_by' => 'name',
-        '_sort_order' => 'asc',
-    ];
 
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
             ->add('handler', 'gestor')
