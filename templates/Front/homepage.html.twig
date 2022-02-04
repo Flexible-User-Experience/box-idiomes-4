@@ -31,7 +31,7 @@
                     {% else %}
                         <img src="{{ asset('build/img/1teacher.jpeg') | imagine_filter('585x756_teacher_mask') }}" class="img-fluid" alt="1teacher">
                     {% endif %}
-                    <h4 class="{{ teacher.cssColor }} mb-1">{{ teacher.name }}</h4>
+                    <h4 class="c-blue mb-1">{{ teacher.name }}</h4>
                     <p>{{ teacher.description | raw }}</p>
                 </div>
             {% endfor %}
