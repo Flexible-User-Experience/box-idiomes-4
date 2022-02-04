@@ -31,14 +31,9 @@ $screen-md: 992px !default;
 $screen-lg: 1200px !default;
 
 // Custom Navbar
-$navbar-default-bg: rgba(255,255,255,1);
-$navbar-default-link-active-bg: rgba(255,255,255,1);
-$navbar-default-link-active-color: $ek-c-violet;
-$navbar-default-link-color: $ek-c-blue;
-$navbar-default-link-hover-color: darken($ek-c-blue, 10%);
-$navbar-default-link-hover-bg: rgba(255,255,255,0.75);
-$navbar-height: $ek-custom-navbar-height;
-$navbar-border-radius: 0;
+$nav-link-color:  $ek-c-blue;
+$nav-link-hover-color: lighten($ek-c-blue, 25%);
+$nav-link-active-color:$ek-c-violet;
 
 body {
     padding-top: $ek-custom-navbar-height;
@@ -201,6 +196,7 @@ footer {
 textarea { resize: vertical; }
 
 @import "~bootstrap/scss/bootstrap";
+@import '~icheck-bootstrap/icheck-bootstrap.css';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';

@@ -19,6 +19,7 @@
         "core-js": "^3.0.0",
         "dropzone": "^5.5.1",
         "file-loader": "^6.0.0",
+        "icheck-bootstrap": "^3.0.1",
         "jquery": "^3.6.0",
         "node-sass": "^6.0.0",
         "regenerator-runtime": "^0.13.2",
