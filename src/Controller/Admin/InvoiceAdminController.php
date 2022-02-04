@@ -2,13 +2,13 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\DefaultController;
 use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Enum\StudentPaymentEnum;
 use App\Form\Model\GenerateInvoiceModel;
 use App\Form\Type\GenerateInvoiceType;
 use App\Form\Type\GenerateInvoiceYearMonthChooserType;
+use App\Kernel;
 use App\Manager\GenerateInvoiceFormManager;
 use App\Pdf\InvoiceBuilderPdf;
 use App\Service\NotificationService;
@@ -132,7 +132,7 @@ final class InvoiceAdminController extends CRUDController
             ->setSepaXmlGeneratedDate(new DateTimeImmutable())
         ;
         $em->flush();
-        if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
+        if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
         $now = new DateTimeImmutable();
@@ -210,7 +210,7 @@ final class InvoiceAdminController extends CRUDController
                 }
             }
             $em->flush();
-            if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
+            if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, ['Content-type' => 'application/xml']);
             }
             $now = new DateTimeImmutable();

@@ -4,7 +4,7 @@ services:
         class: App\Admin\StudentAdmin
         arguments: [ ~, App\Entity\Student, App\Controller\Admin\StudentAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: "Alumne", group: "Alumnes" }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Student', controller: 'App\Controller\Admin\StudentAdminController', label: 'Alumne', group: 'Alumnes' }
         calls:
             - [ setTemplate, [ edit, "Admin/Student/edit.html.twig" ] ]
     admin.student_absence:

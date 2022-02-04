@@ -372,6 +372,7 @@ backend:
             second_paragraph_4: ", amb una quantitat de "
             third_paragraph: "Atentament,"
         receipt:
+            mark_as_payed_batch_action: "Marcar com a rebuts pagats"
             receipt: Rebut
             date: Data
             generate_only: Generar rebuts

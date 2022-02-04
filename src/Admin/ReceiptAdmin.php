@@ -64,6 +64,11 @@ final class ReceiptAdmin extends AbstractBaseAdmin
                 'translation_domain' => 'messages',
                 'ask_confirmation' => false,
             ];
+            $actions['markaspayed'] = [
+                'label' => 'backend.admin.receipt.mark_as_payed_batch_action',
+                'translation_domain' => 'messages',
+                'ask_confirmation' => false,
+            ];
         }
 
         return $actions;

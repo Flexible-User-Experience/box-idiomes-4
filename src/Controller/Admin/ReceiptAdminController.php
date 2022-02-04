@@ -2,12 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\DefaultController;
 use App\Entity\Receipt;
 use App\Enum\StudentPaymentEnum;
 use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
+use App\Kernel;
 use App\Manager\GenerateReceiptFormManager;
 use App\Manager\ReceiptManager;
 use App\Pdf\ReceiptBuilderPdf;
@@ -189,7 +189,7 @@ final class ReceiptAdminController extends CRUDController
             ->setSepaXmlGeneratedDate(new DateTimeImmutable())
         ;
         $em->flush();
-        if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
+        if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
         $now = new DateTimeImmutable();
@@ -231,7 +231,7 @@ final class ReceiptAdminController extends CRUDController
         }
     }
 
-    public function batchActionGeneratefirstsepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs)
+    public function batchActionGeneratefirstsepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
@@ -248,7 +248,7 @@ final class ReceiptAdminController extends CRUDController
                 }
             }
             $em->flush();
-            if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
+            if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, ['Content-type' => 'application/xml']);
             }
             $now = new DateTimeImmutable();
@@ -272,7 +272,7 @@ final class ReceiptAdminController extends CRUDController
         }
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs)
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
@@ -289,7 +289,7 @@ final class ReceiptAdminController extends CRUDController
                 }
             }
             $em->flush();
-            if (DefaultController::ENV_DEV === $this->getParameter('kernel.environment')) {
+            if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, ['Content-type' => 'application/xml']);
             }
             $now = new DateTimeImmutable();
@@ -311,5 +311,28 @@ final class ReceiptAdminController extends CRUDController
                 ])
             );
         }
+    }
+
+    public function batchActionMarkaspayed(ProxyQueryInterface $selectedModelQuery, Request $request): RedirectResponse
+    {
+        $this->admin->checkAccess('edit');
+        $selectedModels = $selectedModelQuery->execute();
+        try {
+            /** @var Receipt $selectedModel */
+            foreach ($selectedModels as $selectedModel) {
+                $selectedModel
+                    ->setIsPayed(true)
+                    ->setPaymentDate(new DateTimeImmutable())
+                ;
+            }
+            $modelManager = $this->admin->getModelManager();
+            $modelManager->update($selectedModel);
+            $this->addFlash('success', 'S\'han marcat '.count($selectedModels).' rebuts com a pagats correctament.');
+        } catch (Exception $e) {
+            $this->addFlash('error', 'S\'ha produït un error al generar marcar els rebuts com a pagats. Revisa els rebuts seleccionats.');
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToList();
     }
 }
