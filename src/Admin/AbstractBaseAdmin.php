@@ -62,7 +62,7 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     public function getExportFormats(): array
     {
-        return ['csv', 'xls'];
+        return ['csv', 'xls', 'xlsx'];
     }
 
     protected function checkUserHasRole(string $role): bool
