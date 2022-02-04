@@ -36,17 +36,17 @@ class ContactMessage extends AbstractBase
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $subject;
+    private ?string $subject = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $phone;
+    private ?string $phone = null;
 
     /**
      * @ORM\Column(type="text", length=4000)
      */
-    private ?string $message;
+    private ?string $message = null;
 
     private bool $privacy;
 

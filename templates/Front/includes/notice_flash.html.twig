@@ -1,24 +1,32 @@
 {% for flash_message in app.session.flashBag.get('notice') %}
-    <div class="p-vertical green-background">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="text-success no-m">
-                        <i class="far fa-paper-plane"></i> {{ flash_message }}
-                    </p>
+    <div class="container-fluid green-background">
+        <div class="row py-5">
+            <div class="col">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-success m-0">
+                                <i class="far fa-paper-plane"></i> {{ flash_message }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 {% endfor %}
 {% for flash_message in app.session.flashBag.get('danger') %}
-    <div class="p-vertical green-background">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="text-danger no-m">
-                        <i class="fas fa-exclamation-triangle"></i> {{ flash_message }}
-                    </p>
+    <div class="container-fluid green-background">
+        <div class="row py-5">
+            <div class="col">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-danger m-0">
+                                <i class="fas fa-exclamation-triangle"></i> {{ flash_message }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
