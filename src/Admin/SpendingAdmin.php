@@ -320,7 +320,9 @@ final class SpendingAdmin extends AbstractBaseAdmin
         return [
             'dateString',
             'category',
-            'provider',
+            'provider.tic',
+            'provider.name',
+            'provider.alias',
             'description',
             'baseAmountString',
             'isPayed',
