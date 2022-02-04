@@ -5,23 +5,30 @@ namespace App\Menu;
 use App\Enum\UserRolesEnum;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 
 class FrontendMenuBuilder
 {
     private FactoryInterface $factory;
     private Security $ss;
+    private RequestStack $rs;
     private string $ppo;
 
-    public function __construct(FactoryInterface $factory, Security $ss, string $ppo)
+    public function __construct(FactoryInterface $factory, Security $ss, RequestStack $rs, string $ppo)
     {
         $this->factory = $factory;
         $this->ss = $ss;
+        $this->rs = $rs;
         $this->ppo = $ppo;
     }
 
     public function createTopMenu(): ItemInterface
     {
+        $current = '';
+        if ($this->rs->getCurrentRequest()) {
+            $current = $this->rs->getCurrentRequest()->get('_route');
+        }
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'navbar-nav ms-auto mb-2 mb-lg-0');
         if ($this->ss->isGranted(UserRolesEnum::ROLE_CMS)) {
@@ -30,6 +37,12 @@ class FrontendMenuBuilder
                 [
                     'label' => 'frontend.menu.cms',
                     'route' => 'sonata_admin_dashboard',
+                    'attributes' => [
+                        'class' => 'nav-item',
+                    ],
+                    'linkAttributes' => [
+                        'class' => 'nav-link',
+                    ],
                 ]
             );
         }
@@ -42,7 +55,7 @@ class FrontendMenuBuilder
                     'class' => 'nav-item',
                 ],
                 'linkAttributes' => [
-                    'class' => 'nav-link',
+                    'class' => 'nav-link'.('app_services' === $current ? ' active' : ''),
                 ],
             ]
         );
@@ -55,7 +68,7 @@ class FrontendMenuBuilder
                     'class' => 'nav-item',
                 ],
                 'linkAttributes' => [
-                    'class' => 'nav-link',
+                    'class' => 'nav-link'.('app_academy' === $current ? ' active' : ''),
                 ],
             ]
         );
@@ -68,7 +81,7 @@ class FrontendMenuBuilder
                     'class' => 'nav-item',
                 ],
                 'linkAttributes' => [
-                    'class' => 'nav-link',
+                    'class' => 'nav-link'.('app_contact' === $current ? ' active' : ''),
                 ],
             ]
         );
@@ -83,7 +96,7 @@ class FrontendMenuBuilder
                         'class' => 'violet-background',
                     ],
                     'linkAttributes' => [
-                        'class' => 'c-white',
+                        'class' => 'c-white'.('app_pre_register' === $current ? ' active' : ''),
                     ],
                 ]
             );

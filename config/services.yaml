@@ -137,6 +137,7 @@ services:
         arguments:
             - '@knp_menu.factory'
             - '@security.helper'
+            - '@request_stack'
             - '%preregister_period_is_open%'
     app.frontend_top_menu:
         class: Knp\Menu\MenuItem
