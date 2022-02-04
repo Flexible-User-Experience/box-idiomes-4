@@ -4,4 +4,4 @@ ewz_recaptcha:
 
 when@dev:
     ewz_recaptcha:
-        enabled: true
+        enabled: false

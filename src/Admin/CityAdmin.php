@@ -164,4 +164,14 @@ final class CityAdmin extends AbstractBaseAdmin
             )
         ;
     }
+
+    public function configureExportFields(): array
+    {
+        return [
+            'postalCode',
+            'name',
+            'province',
+            'enabled',
+        ];
+    }
 }

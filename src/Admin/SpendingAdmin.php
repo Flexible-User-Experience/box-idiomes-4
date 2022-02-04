@@ -325,7 +325,7 @@ final class SpendingAdmin extends AbstractBaseAdmin
             'baseAmountString',
             'isPayed',
             'paymentDateString',
-            'paymentString',
+            'paymentMethodString',
             'document',
         ];
     }

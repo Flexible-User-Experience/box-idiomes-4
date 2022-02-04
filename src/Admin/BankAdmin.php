@@ -119,4 +119,13 @@ final class BankAdmin extends AbstractBaseAdmin
             )
         ;
     }
+
+    public function configureExportFields(): array
+    {
+        return [
+            'name',
+            'swiftCode',
+            'accountNumber',
+        ];
+    }
 }

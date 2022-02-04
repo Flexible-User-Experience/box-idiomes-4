@@ -151,6 +151,17 @@ class ProvinceAdmin extends AbstractBaseAdmin
         ;
     }
 
+    public function configureExportFields(): array
+    {
+        return [
+            'code',
+            'name',
+            'country',
+            'creditorName',
+            'enabled',
+        ];
+    }
+
     public function prePersist($object): void
     {
         $object->setCountry(SpanishSepaHelperService::COUNTRY_CODE);

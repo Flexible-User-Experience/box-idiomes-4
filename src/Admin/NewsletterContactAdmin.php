@@ -79,4 +79,12 @@ final class NewsletterContactAdmin extends AbstractBaseAdmin
             )
         ;
     }
+
+    public function configureExportFields(): array
+    {
+        return [
+            'createdAtString',
+            'email',
+        ];
+    }
 }

@@ -195,4 +195,16 @@ final class BankCreditorSepaAdmin extends AbstractBaseAdmin
             )
         ;
     }
+
+    public function configureExportFields(): array
+    {
+        return [
+            'name',
+            'organizationId',
+            'creditorName',
+            'iban',
+            'bic',
+            'enabled',
+        ];
+    }
 }

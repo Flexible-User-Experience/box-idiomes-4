@@ -79,7 +79,7 @@ class Spending extends AbstractBase
 
     public function getDateString(): string
     {
-        return $this->getDate() ? $this->getDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getDate());
     }
 
     public function setDate(DateTimeInterface $date): self
@@ -166,7 +166,7 @@ class Spending extends AbstractBase
 
     public function getPaymentDateString(): string
     {
-        return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getPaymentDate());
     }
 
     public function setPaymentDate(?DateTimeInterface $paymentDate): self
@@ -181,9 +181,9 @@ class Spending extends AbstractBase
         return $this->paymentMethod;
     }
 
-    public function getPaymentString(): string
+    public function getPaymentMethodString(): string
     {
-        return StudentPaymentEnum::getEnumTranslatedArray()[$this->getPaymentMethod()];
+        return array_key_exists($this->getPaymentMethod(), StudentPaymentEnum::getEnumTranslatedArray()) ? StudentPaymentEnum::getEnumTranslatedArray()[$this->getPaymentMethod()] : self::DEFAULT_NULL_STRING;
     }
 
     public function setPaymentMethod(int $paymentMethod): self

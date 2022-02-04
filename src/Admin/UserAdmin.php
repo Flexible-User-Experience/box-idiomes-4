@@ -183,4 +183,13 @@ final class UserAdmin extends AbstractBaseAdmin
             )
         ;
     }
+
+    public function configureExportFields(): array
+    {
+        return [
+            'username',
+            'email',
+            'enabled',
+        ];
+    }
 }
