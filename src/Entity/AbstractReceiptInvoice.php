@@ -112,7 +112,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
 
     public function getDateString(): string
     {
-        return $this->getDate() ? $this->getDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getDate());
     }
 
     public function setDate(?DateTimeInterface $date): self
@@ -146,7 +146,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
 
     public function getPaymentDateString(): string
     {
-        return $this->getPaymentDate() ? $this->getPaymentDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getPaymentDate());
     }
 
     public function setPaymentDate(?DateTimeInterface $paymentDate): self
@@ -180,7 +180,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
 
     public function getSendDateString(): string
     {
-        return $this->getSendDate() ? $this->getSendDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getSendDate());
     }
 
     public function setSendDate(?DateTimeInterface $sendDate): self
@@ -229,7 +229,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
 
     public function getSepaXmlGeneratedDateString(): string
     {
-        return $this->getSepaXmlGeneratedDate() ? $this->getSepaXmlGeneratedDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getSepaXmlGeneratedDate());
     }
 
     public function setSepaXmlGeneratedDate(?DateTimeInterface $sepaXmlGeneratedDate): self

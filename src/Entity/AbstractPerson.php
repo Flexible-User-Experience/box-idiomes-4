@@ -68,7 +68,7 @@ abstract class AbstractPerson extends AbstractBase
 
     public function getDischargeDateString(): string
     {
-        return $this->getDischargeDate() ? $this->getDischargeDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getDischargeDate());
     }
 
     public function setDischargeDate(?DateTimeInterface $dischargeDate): self

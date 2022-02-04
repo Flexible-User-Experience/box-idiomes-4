@@ -2,9 +2,9 @@
 
 {% form_theme form _self %}
 
-{% block checkbox_radio_label %}
-    {{- widget | raw }}
-{% endblock checkbox_radio_label %}
+{#{% block checkbox_radio_label %}#}
+{#    {{- widget | raw }}#}
+{#{% endblock checkbox_radio_label %}#}
 
 {% block sonata_admin_content %}
     <div class="sonata-ba-show">
@@ -15,7 +15,19 @@
                         <h4 class="box-title">{{ 'backend.admin.receipt.generate_only' | trans }}</h4>
                     </div>
                     <div class="box-body">
-                        {{ form(year_month_form) }}
+                        {{ form_start(year_month_form) }}
+                            <div class="form-group">
+                                {{ form_row(year_month_form.year) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(year_month_form.month) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(year_month_form.preview) }}
+                            </div>
+
+                        {{ form_rest(year_month_form) }}
+                        {{ form_end(year_month_form) }}
                     </div>
                 </div>
             </div>

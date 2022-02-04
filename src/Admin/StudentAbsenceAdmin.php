@@ -206,6 +206,8 @@ final class StudentAbsenceAdmin extends AbstractBaseAdmin
         return [
             'dayString',
             'student',
+            'hasBeenNotified',
+            'notificationDateString',
         ];
     }
 }

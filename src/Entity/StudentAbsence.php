@@ -62,7 +62,7 @@ class StudentAbsence extends AbstractBase
 
     public function getDayString(): string
     {
-        return $this->getDay() ? $this->getDay()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getDay());
     }
 
     public function setDay(DateTimeInterface $day): self
@@ -102,6 +102,11 @@ class StudentAbsence extends AbstractBase
     public function getNotificationDate(): ?DateTimeInterface
     {
         return $this->notificationDate;
+    }
+
+    public function getNotificationDateString(): string
+    {
+        return self::convertDateTimeAsString($this->getNotificationDate());
     }
 
     public function setNotificationDate(?DateTimeInterface $notificationDate): self

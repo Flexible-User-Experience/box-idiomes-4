@@ -82,7 +82,7 @@ class Event extends AbstractBase
 
     public function getBeginString(): string
     {
-        return $this->getBegin() ? $this->getBegin()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateTimeAsString($this->getBegin());
     }
 
     public function setBegin(DateTimeInterface $begin): self
@@ -99,7 +99,7 @@ class Event extends AbstractBase
 
     public function getEndString(): string
     {
-        return $this->getEnd() ? $this->getEnd()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateTimeAsString($this->getEnd());
     }
 
     public function setEnd(DateTimeInterface $end): self
@@ -240,6 +240,11 @@ class Event extends AbstractBase
     public function getUntil(): ?DateTimeInterface
     {
         return $this->until;
+    }
+
+    public function getUntilString(): string
+    {
+        return self::convertDateTimeAsString($this->getUntil());
     }
 
     public function setUntil(?DateTimeInterface $until): self

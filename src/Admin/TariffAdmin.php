@@ -174,9 +174,9 @@ final class TariffAdmin extends AbstractBaseAdmin
     {
         return [
             'year',
+            'typeString',
             'name',
             'price',
-            'typeString',
         ];
     }
 }

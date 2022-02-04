@@ -25,6 +25,15 @@
         {% include 'Admin/Security/login_logo_fragment.html.twig' %}
         <div class="login-box-body">
             {% block sonata_user_login_form %}
+                {% if admin_is_stage %}
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle mr-1"></i> {{ 'backend.admin.is_stage_warning' | trans }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
                 {% block sonata_user_login_error %}
                     {% if error %}
                         <div class="alert alert-danger">
@@ -39,18 +48,13 @@
                         </div>
                     {% endfor %}
                 {% endfor %}
-                {% if admin_is_stage %}
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="alert alert-warning">
-                                <i class="fas fa-exclamation-triangle mr-1"></i> {{ 'backend.admin.is_stage_warning' | trans }}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
                 {{ form_start(form) }}
-                    {{ form_row(form.username) }}
-                    {{ form_row(form.password) }}
+                    <div class="form-group">
+                        {{ form_row(form.username) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.password) }}
+                    </div>
                     <div class="row">
                         <div class="col-xs-6">
                             <button type="submit" class="btn btn-primary btn-block">{{ 'backend.admin.login.submit' | trans }}</button>
