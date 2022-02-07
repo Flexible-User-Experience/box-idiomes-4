@@ -47,7 +47,7 @@ final class InvoiceAdmin extends AbstractBaseAdmin
         ;
     }
 
-    public function configureBatchActions($actions): array
+    public function configureBatchActions(array $actions): array
     {
         if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
             $actions['generatesepaxmls'] = [

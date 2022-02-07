@@ -9,6 +9,7 @@ use App\Entity\PreRegister;
 use App\Entity\Receipt;
 use App\Entity\StudentAbsence;
 use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use TCPDF;
 use Twig\Environment;
@@ -20,12 +21,12 @@ class NotificationService
     private string $amd; // system's App Mail Destionation
     private string $pub; // project URL base
 
-    public function __construct(CourierService $messenger, Environment $twig, string $amd, string $pub)
+    public function __construct(CourierService $messenger, Environment $twig, ParameterBagInterface $pb)
     {
         $this->messenger = $messenger;
         $this->twig = $twig;
-        $this->amd = $amd;
-        $this->pub = $pub;
+        $this->amd = $pb->get('mailer_destination');
+        $this->pub = $pb->get('project_url_base');
     }
 
     /**

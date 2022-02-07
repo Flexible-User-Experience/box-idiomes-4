@@ -34,19 +34,10 @@ services:
         autowire:      true
         autoconfigure: true
         bind:
-            $amd:    '%mailer_destination%'
             $pwt:    '%project_web_title%'
-            $pub:    '%project_url_base%'
             $mak:    '%mailchimp_api_key%'
             $ppo:    '%preregister_period_is_open%'
             $bn:     '%boss_name%'
-            $bd:     '%boss_dni%'
-            $ba:     '%boss_address%'
-            $bc:     '%boss_city%'
-            $ib:     '%iban_business%'
-            $bba:    '%boss_address%'
-            $bpn:    '%boss_phone_number_1%'
-            $locale: '%default_locale%'
     # Commons
     App\:
         resource: '../src/'
@@ -83,7 +74,6 @@ services:
             - '@app.courier'
             - '@twig'
             - '%mailer_destination%'
-            - '%project_url_base%'
     # Factories
     app.event_transformer_factory:
         class: App\Service\EventTransformerFactoryService
@@ -152,10 +142,7 @@ services:
         public: true
         arguments:
             - '@kernel'
-            - '%project_url_base%'
-            - '%mailer_destination%'
-            - '%boss_address%'
-            - '%boss_phone_number_1%'
+            - '@parameter_bag'
     app.mailchimp_manager:
         class: App\Manager\MailchimpManager
         public: true
@@ -221,13 +208,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.receipt_pdf_builder:
         class: App\Pdf\ReceiptBuilderPdf
         public: true
@@ -235,13 +216,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.invoice_pdf_builder:
         class: App\Pdf\InvoiceBuilderPdf
         public: true
@@ -249,13 +224,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.class_group_pdf_builder:
         class: App\Pdf\ClassGroupBuilderPdf
         public: true
@@ -263,13 +232,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.export_calendar_to_list_pdf_builder:
         class: App\Pdf\ExportCalendarToListBuilderPdf
         public: true

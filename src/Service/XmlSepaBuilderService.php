@@ -12,6 +12,7 @@ use Digitick\Sepa\PaymentInformation;
 use Digitick\Sepa\TransferFile\Facade\CustomerDirectDebitFacade;
 use Digitick\Sepa\TransferFile\Factory\TransferFileFacadeFactory;
 use Digitick\Sepa\Util\StringHelper;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class XmlSepaBuilderService
 {
@@ -25,13 +26,13 @@ class XmlSepaBuilderService
     private string $ib;
     private string $bic;
 
-    public function __construct(SpanishSepaHelperService $sshs, string $bn, string $bd, string $ib, string $bic)
+    public function __construct(SpanishSepaHelperService $sshs, ParameterBagInterface $pb)
     {
         $this->sshs = $sshs;
-        $this->bn = $bn;
-        $this->bd = $bd;
-        $this->ib = $this->removeSpacesFrom($ib);
-        $this->bic = $this->removeSpacesFrom($bic);
+        $this->bn = $pb->get('boss_name');
+        $this->bd = $pb->get('boss_dni');
+        $this->ib = $this->removeSpacesFrom($pb->get('iban_business'));
+        $this->bic = $this->removeSpacesFrom($pb->get('bic_number'));
     }
 
     public function buildDirectDebitSingleReceiptXml(string $paymentId, DateTimeInterface $dueDate, Receipt $receipt): string

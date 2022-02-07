@@ -34,7 +34,7 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
         ;
     }
 
-    public function configureBatchActions($actions): array
+    public function configureBatchActions(array $actions): array
     {
         if ($this->hasRoute('show') && $this->hasAccess('show')) {
             $actions['generatestudents'] = [

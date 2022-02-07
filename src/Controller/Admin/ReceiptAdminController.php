@@ -8,17 +8,9 @@ use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
 use App\Kernel;
-use App\Manager\GenerateReceiptFormManager;
-use App\Manager\ReceiptManager;
-use App\Pdf\ReceiptBuilderPdf;
-use App\Pdf\ReceiptReminderBuilderPdf;
-use App\Service\NotificationService;
-use App\Service\XmlSepaBuilderService;
 use DateTime;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -26,11 +18,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class ReceiptAdminController extends CRUDController
+final class ReceiptAdminController extends AbstractAdminController
 {
-    public function generateAction(Request $request, GenerateReceiptFormManager $grfm): Response
+    public function generateAction(Request $request): Response
     {
         // year & month chooser form
         $generateReceiptYearMonthChooser = new GenerateReceiptModel();
@@ -44,7 +35,7 @@ final class ReceiptAdminController extends CRUDController
             $year = $generateReceiptYearMonthChooser->getYear();
             $month = $generateReceiptYearMonthChooser->getMonth();
             // build preview view
-            $generateReceipt = $grfm->buildFullModelForm($year, $month);
+            $generateReceipt = $this->grfm->buildFullModelForm($year, $month);
             $form = $this->createForm(GenerateReceiptType::class, $generateReceipt);
         }
 
@@ -58,26 +49,26 @@ final class ReceiptAdminController extends CRUDController
         );
     }
 
-    public function creatorAction(Request $request, TranslatorInterface $translator, GenerateReceiptFormManager $grfm): RedirectResponse
+    public function creatorAction(Request $request): RedirectResponse
     {
-        $generateReceipt = $grfm->transformRequestArrayToModel($request->get('generate_receipt'));
+        $generateReceipt = $this->grfm->transformRequestArrayToModel($request->get('generate_receipt'));
         if (array_key_exists('generate_and_send', $request->get(GenerateReceiptType::NAME))) {
             // generate receipts and send it by email
-            $recordsParsed = $grfm->persistAndDeliverFullModelForm($generateReceipt);
+            $recordsParsed = $this->grfm->persistAndDeliverFullModelForm($generateReceipt);
         } else {
             // only generate receipts
-            $recordsParsed = $grfm->persistFullModelForm($generateReceipt);
+            $recordsParsed = $this->grfm->persistFullModelForm($generateReceipt);
         }
         if (0 === $recordsParsed) {
-            $this->addFlash('danger', $translator->trans('backend.admin.receipt.generator.no_records_presisted'));
+            $this->addFlash('danger', $this->ts->trans('backend.admin.receipt.generator.no_records_presisted'));
         } else {
-            $this->addFlash('success', $translator->trans('backend.admin.receipt.generator.flash_success', ['%amount%' => $recordsParsed], 'messages'));
+            $this->addFlash('success', $this->ts->trans('backend.admin.receipt.generator.flash_success', ['%amount%' => $recordsParsed], 'messages'));
         }
 
         return $this->redirectToList();
     }
 
-    public function createInvoiceAction(Request $request, EntityManagerInterface $em, ReceiptManager $rm): Response
+    public function createInvoiceAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -86,15 +77,15 @@ final class ReceiptAdminController extends CRUDController
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-        $invoice = $rm->createInvoiceFromReceipt($object);
-        $em->persist($invoice);
-        $em->flush();
+        $invoice = $this->rm->createInvoiceFromReceipt($object);
+        $this->mr->getManager()->persist($invoice);
+        $this->mr->getManager()->flush();
         $this->addFlash('success', 'S\'ha generat la factura núm. '.$invoice->getInvoiceNumber());
 
         return $this->redirectToList();
     }
 
-    public function reminderAction(Request $request, ReceiptBuilderPdf $rps): Response
+    public function reminderAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -106,12 +97,12 @@ final class ReceiptAdminController extends CRUDController
         if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $object->getMainSubject()->getPayment()) {
             throw $this->createNotFoundException(sprintf('invalid payment type for object with id: %s', $id));
         }
-        $pdf = $rps->build($object);
+        $pdf = $this->rbp->build($object);
 
         return new Response($pdf->Output('box_idiomes_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
-    public function sendReminderAction(Request $request, ReceiptBuilderPdf $rps, NotificationService $messenger): RedirectResponse
+    public function sendReminderAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -123,8 +114,8 @@ final class ReceiptAdminController extends CRUDController
         if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $object->getMainSubject()->getPayment()) {
             throw $this->createNotFoundException(sprintf('invalid payment type for object with id: %s', $id));
         }
-        $pdf = $rps->build($object);
-        $result = $messenger->sendReceiptReminderPdfNotification($object, $pdf);
+        $pdf = $this->rbp->build($object);
+        $result = $this->ns->sendReceiptReminderPdfNotification($object, $pdf);
         if (0 === $result) {
             $this->addFlash('danger', 'S\'ha produït un error durant l\'enviament del recordatori de pagament del rebut núm. '.$object->getReceiptNumber().'. La persona '.$object->getMainEmailName().' no ha rebut cap missatge a la seva bústia.');
         } else {
@@ -134,7 +125,7 @@ final class ReceiptAdminController extends CRUDController
         return $this->redirectToList();
     }
 
-    public function pdfAction(Request $request, ReceiptBuilderPdf $rps): Response
+    public function pdfAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -143,12 +134,12 @@ final class ReceiptAdminController extends CRUDController
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-        $pdf = $rps->build($object);
+        $pdf = $this->rbp->build($object);
 
         return new Response($pdf->Output('box_idiomes_receipt_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
     }
 
-    public function sendAction(Request $request, EntityManagerInterface $em, ReceiptBuilderPdf $rps, NotificationService $messenger): RedirectResponse
+    public function sendAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -161,9 +152,9 @@ final class ReceiptAdminController extends CRUDController
             ->setIsSended(true)
             ->setSendDate(new DateTimeImmutable())
         ;
-        $em->flush();
-        $pdf = $rps->build($object);
-        $result = $messenger->sendReceiptPdfNotification($object, $pdf);
+        $this->mr->getManager()->flush();
+        $pdf = $this->rpp->build($object);
+        $result = $this->ns->sendReceiptPdfNotification($object, $pdf);
         if (0 === $result) {
             $this->addFlash('danger', 'S\'ha produït un error durant l\'enviament del rebut núm. '.$object->getReceiptNumber().'. La persona '.$object->getMainEmailName().' no ha rebut cap missatge a la seva bústia.');
         } else {
@@ -173,7 +164,7 @@ final class ReceiptAdminController extends CRUDController
         return $this->redirectToList();
     }
 
-    public function generateDirectDebitAction(Request $request, EntityManagerInterface $em, XmlSepaBuilderService $xsbs): Response
+    public function generateDirectDebitAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -183,12 +174,12 @@ final class ReceiptAdminController extends CRUDController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
         $paymentUniqueId = uniqid('', true);
-        $xml = $xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
+        $xml = $this->xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
         $object
             ->setIsSepaXmlGenerated(true)
             ->setSepaXmlGeneratedDate(new DateTimeImmutable())
         ;
-        $em->flush();
+        $this->mr->getManager()->flush();
         if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
@@ -203,18 +194,18 @@ final class ReceiptAdminController extends CRUDController
         return $response;
     }
 
-    public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery, ReceiptReminderBuilderPdf $rrps): Response
+    public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
         try {
-            $pdf = $rrps->buildBatchReminder();
+            $pdf = $this->rrbp->buildBatchReminder();
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER !== $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
                     // add page
                     $pdf->AddPage('L', 'A5', true, true);
-                    $rrps->buildReceiptRemainderPageForItem($pdf, $selectedModel);
+                    $this->rrbp->buildReceiptRemainderPageForItem($pdf, $selectedModel);
                 }
             }
 
@@ -231,13 +222,13 @@ final class ReceiptAdminController extends CRUDController
         }
     }
 
-    public function batchActionGeneratefirstsepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs): Response
+    public function batchActionGeneratefirstsepaxmls(ProxyQueryInterface $selectedModelQuery): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
         try {
             $paymentUniqueId = uniqid('', true);
-            $xmls = $xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
+            $xmls = $this->xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
@@ -247,7 +238,7 @@ final class ReceiptAdminController extends CRUDController
                     ;
                 }
             }
-            $em->flush();
+            $this->mr->getManager()->flush();
             if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, ['Content-type' => 'application/xml']);
             }
@@ -272,13 +263,13 @@ final class ReceiptAdminController extends CRUDController
         }
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, Request $request): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
         try {
             $paymentUniqueId = uniqid('', true);
-            $xmls = $xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
+            $xmls = $this->xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
@@ -288,7 +279,7 @@ final class ReceiptAdminController extends CRUDController
                     ;
                 }
             }
-            $em->flush();
+            $this->mr->getManager()->flush();
             if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, ['Content-type' => 'application/xml']);
             }
