@@ -153,7 +153,7 @@ final class ReceiptAdminController extends AbstractAdminController
             ->setSendDate(new DateTimeImmutable())
         ;
         $this->mr->getManager()->flush();
-        $pdf = $this->rpp->build($object);
+        $pdf = $this->rbp->build($object);
         $result = $this->ns->sendReceiptPdfNotification($object, $pdf);
         if (0 === $result) {
             $this->addFlash('danger', 'S\'ha produït un error durant l\'enviament del rebut núm. '.$object->getReceiptNumber().'. La persona '.$object->getMainEmailName().' no ha rebut cap missatge a la seva bústia.');

@@ -9,15 +9,9 @@ use App\Form\Model\GenerateInvoiceModel;
 use App\Form\Type\GenerateInvoiceType;
 use App\Form\Type\GenerateInvoiceYearMonthChooserType;
 use App\Kernel;
-use App\Manager\GenerateInvoiceFormManager;
-use App\Pdf\InvoiceBuilderPdf;
-use App\Service\NotificationService;
-use App\Service\XmlSepaBuilderService;
 use DateTime;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -25,11 +19,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class InvoiceAdminController extends CRUDController
+final class InvoiceAdminController extends AbstractAdminController
 {
-    public function generateAction(Request $request, GenerateInvoiceFormManager $gifm): Response
+    public function generateAction(Request $request): Response
     {
         // year & month chooser form
         $generateInvoiceYearMonthChooser = new GenerateInvoiceModel();
@@ -43,7 +36,7 @@ final class InvoiceAdminController extends CRUDController
             $year = $generateInvoiceYearMonthChooser->getYear();
             $month = $generateInvoiceYearMonthChooser->getMonth();
             // fill full items form
-            $generateInvoice = $gifm->buildFullModelForm($year, $month);
+            $generateInvoice = $this->gifm->buildFullModelForm($year, $month);
             $form = $this->createForm(GenerateInvoiceType::class, $generateInvoice);
         }
 
@@ -58,20 +51,20 @@ final class InvoiceAdminController extends CRUDController
         );
     }
 
-    public function creatorAction(Request $request, TranslatorInterface $translator, GenerateInvoiceFormManager $gifm): RedirectResponse
+    public function creatorAction(Request $request): RedirectResponse
     {
-        $generateInvoice = $gifm->transformRequestArrayToModel($request->get('generate_invoice'));
-        $recordsParsed = $gifm->persistFullModelForm($generateInvoice);
+        $generateInvoice = $this->gifm->transformRequestArrayToModel($request->get('generate_invoice'));
+        $recordsParsed = $this->gifm->persistFullModelForm($generateInvoice);
         if (0 === $recordsParsed) {
-            $this->addFlash('warning', $translator->trans('backend.admin.invoice.generator.no_records_presisted'));
+            $this->addFlash('warning', $this->ts->trans('backend.admin.invoice.generator.no_records_presisted'));
         } else {
-            $this->addFlash('success', $translator->trans('backend.admin.invoice.generator.flash_success', ['%amount%' => $recordsParsed], 'messages'));
+            $this->addFlash('success', $this->ts->trans('backend.admin.invoice.generator.flash_success', ['%amount%' => $recordsParsed], 'messages'));
         }
 
         return $this->redirectToList();
     }
 
-    public function pdfAction(Request $request, InvoiceBuilderPdf $ips): Response
+    public function pdfAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -80,7 +73,7 @@ final class InvoiceAdminController extends CRUDController
         if (!$object) {
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
-        $pdf = $ips->build($object);
+        $pdf = $this->ibp->build($object);
 
         return new Response($pdf->Output('box_idiomes_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
@@ -88,7 +81,7 @@ final class InvoiceAdminController extends CRUDController
     /**
      * Send PDF invoice action.
      */
-    public function sendAction(Request $request, EntityManagerInterface $em, InvoiceBuilderPdf $ips, NotificationService $messenger): RedirectResponse
+    public function sendAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -101,9 +94,9 @@ final class InvoiceAdminController extends CRUDController
             ->setIsSended(true)
             ->setSendDate(new DateTimeImmutable())
         ;
-        $em->flush();
-        $pdf = $ips->build($object);
-        $result = $messenger->sendInvoicePdfNotification($object, $pdf);
+        $this->mr->getManager()->flush();
+        $pdf = $this->ibp->build($object);
+        $result = $this->ns->sendInvoicePdfNotification($object, $pdf);
         if (0 === $result) {
             $this->addFlash('danger', 'S\'ha produït un error durant l\'enviament de la factura núm. '.$object->getInvoiceNumber().'. La persona '.$object->getMainEmailName().' no ha rebut cap missatge a la seva bústia.');
         } else {
@@ -116,7 +109,7 @@ final class InvoiceAdminController extends CRUDController
     /**
      * Generate SEPA direct debit XML action.
      */
-    public function generateDirectDebitAction(Request $request, EntityManagerInterface $em, XmlSepaBuilderService $xsbs): Response
+    public function generateDirectDebitAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -126,12 +119,12 @@ final class InvoiceAdminController extends CRUDController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
         $paymentUniqueId = uniqid('', true);
-        $xml = $xsbs->buildDirectDebitSingleInvoiceXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
+        $xml = $this->xsbs->buildDirectDebitSingleInvoiceXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
         $object
             ->setIsSepaXmlGenerated(true)
             ->setSepaXmlGeneratedDate(new DateTimeImmutable())
         ;
-        $em->flush();
+        $this->mr->getManager()->flush();
         if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
@@ -146,7 +139,7 @@ final class InvoiceAdminController extends CRUDController
         return $response;
     }
 
-    public function duplicateAction(Request $request, EntityManagerInterface $em): RedirectResponse
+    public function duplicateAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -172,8 +165,8 @@ final class InvoiceAdminController extends CRUDController
             ->setIrpfPercentage($object->getIrpfPercentage())
             ->setIsPayed(false)
         ;
-        $em->persist($newInvoice);
-        $em->flush();
+        $this->mr->getManager()->persist($newInvoice);
+        $this->mr->getManager()->flush();
         /** @var InvoiceLine $line */
         foreach ($object->getLines() as $line) {
             $newInvoiceLine = new InvoiceLine();
@@ -185,21 +178,21 @@ final class InvoiceAdminController extends CRUDController
                 ->setDiscount($line->getDiscount())
                 ->setTotal($line->getTotal())
             ;
-            $em->persist($newInvoiceLine);
+            $this->mr->getManager()->persist($newInvoiceLine);
         }
-        $em->flush();
+        $this->mr->getManager()->flush();
         $this->addFlash('success', 'S\'ha duplicat la factura núm. '.$object->getId().' amb la factura núm. '.$newInvoice->getId().' correctament.');
 
         return $this->redirectToList();
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em, XmlSepaBuilderService $xsbs): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, Request $request): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
         try {
             $paymentUniqueId = uniqid('', true);
-            $xmls = $xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
+            $xmls = $this->xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
             /** @var Invoice $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
@@ -209,7 +202,7 @@ final class InvoiceAdminController extends CRUDController
                     ;
                 }
             }
-            $em->flush();
+            $this->mr->getManager()->flush();
             if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, ['Content-type' => 'application/xml']);
             }
@@ -218,7 +211,6 @@ final class InvoiceAdminController extends CRUDController
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoices_'.$now->format('Y-m-d_H-i').'.xml';
             $fileSystem->touch($fileNamePath);
             $fileSystem->dumpFile($fileNamePath, $xmls);
-
             $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 

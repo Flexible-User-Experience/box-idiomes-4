@@ -8,18 +8,17 @@ use App\Entity\Student;
 use App\Entity\StudentAbsence;
 use App\Form\Type\EventBatchRemoveType;
 use App\Form\Type\EventType;
-use App\Manager\EventManager;
 use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
-final class EventAdminController extends CRUDController
+final class EventAdminController extends AbstractAdminController
 {
     public function editAction(Request $request): Response
     {
@@ -42,20 +41,20 @@ final class EventAdminController extends CRUDController
      *
      * @throws Exception
      */
-    public function batcheditAction(Request $request, EventManager $eventsManager, EntityManagerInterface $em): Response
+    public function batcheditAction(ProxyQueryInterface $selectedModelQuery, Request $request): Response
     {
         $object = $this->getEvent($request);
-        $firstEvent = $eventsManager->getFirstEventOf($object);
+        $firstEvent = $this->em->getFirstEventOf($object);
         if (is_null($firstEvent)) {
             $firstEvent = $object;
         }
-        $lastEvent = $eventsManager->getLastEventOf($object);
+        $lastEvent = $this->em->getLastEventOf($object);
         /** @var Form $form */
         $form = $this->createForm(EventType::class, $object, ['event' => $object]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $eventIdStopRangeIterator = $form->get('range')->getData();
-            $em->flush();
+            $this->mr->getManager()->flush();
             $iteratorCounter = 1;
             if (!is_null($object->getNext())) {
                 $iteratedEvent = $object;
@@ -73,7 +72,7 @@ final class EventAdminController extends CRUDController
                             ->setClassroom($object->getClassroom())
                             ->setGroup($object->getGroup())
                             ->setStudents($object->getStudents());
-                        $em->flush();
+                        $this->mr->getManager()->flush();
                         ++$iteratorCounter;
                     }
                 }
@@ -93,7 +92,7 @@ final class EventAdminController extends CRUDController
                 'object' => $object,
                 'firstEvent' => $firstEvent,
                 'lastEvent' => $lastEvent,
-                'progressBarPercentiles' => $eventsManager->getProgressBarPercentilesOf($object),
+                'progressBarPercentiles' => $this->em->getProgressBarPercentilesOf($object),
                 'form' => $form->createView(),
             ]
         );
@@ -102,27 +101,27 @@ final class EventAdminController extends CRUDController
     /**
      * Delete event and all the next related events action.
      */
-    public function batchdeleteAction(Request $request, EventManager $eventsManager, EntityManagerInterface $em): Response
+    public function batchdeleteAction(ProxyQueryInterface $selectedModelQuery, Request $request): Response
     {
         $object = $this->getEvent($request);
-        $firstEvent = $eventsManager->getFirstEventOf($object);
-        $lastEvent = $eventsManager->getLastEventOf($object);
+        $firstEvent = $this->em->getFirstEventOf($object);
+        $lastEvent = $this->em->getLastEventOf($object);
         /** @var Form $form */
         $form = $this->createForm(EventBatchRemoveType::class, $object, ['event' => $object]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $eventIdStopRange = $form->get('range')->getData();
             /** @var Event|null $eventStopRange */
-            $eventStopRange = $em->getRepository(Event::class)->find($eventIdStopRange);
+            $eventStopRange = $this->mr->getManager()->getRepository(Event::class)->find($eventIdStopRange);
             /** @var Event|null $eventAfterStopRange */
             $eventAfterStopRange = null;
             if ($eventStopRange && !is_null($eventStopRange->getNext())) {
-                $eventAfterStopRange = $em->getRepository(Event::class)->find($eventStopRange->getNext()->getId());
+                $eventAfterStopRange = $this->mr->getManager()->getRepository(Event::class)->find($eventStopRange->getNext()->getId());
             }
             /** @var Event|null $eventBeforeStartRange */
             $eventBeforeStartRange = null;
             if (!is_null($object->getPrevious())) {
-                $eventBeforeStartRange = $em->getRepository(Event::class)->find($object->getPrevious()->getId());
+                $eventBeforeStartRange = $this->mr->getManager()->getRepository(Event::class)->find($object->getPrevious()->getId());
             }
             // begin range
             if (is_null($firstEvent)) {
@@ -141,7 +140,7 @@ final class EventAdminController extends CRUDController
                     }
                 }
                 $object->setEnabled(false);
-                $em->flush();
+                $this->mr->getManager()->flush();
             // end range
             } elseif (is_null($eventAfterStopRange)) {
                 $iteratorCounter = 1;
@@ -157,7 +156,7 @@ final class EventAdminController extends CRUDController
                 if (!is_null($eventBeforeStartRange)) {
                     $eventBeforeStartRange->setNext(null);
                 }
-                $em->flush();
+                $this->mr->getManager()->flush();
             // middle range
             } else {
                 if (is_null($eventBeforeStartRange)) {
@@ -168,7 +167,7 @@ final class EventAdminController extends CRUDController
                 }
                 $eventBeforeStartRange->setNext($eventAfterStopRange);
                 $eventAfterStopRange->setPrevious($eventBeforeStartRange);
-                $em->flush();
+                $this->mr->getManager()->flush();
                 $iteratorCounter = 1;
                 if (!is_null($object->getNext())) {
                     $iteratedEvent = $object;
@@ -180,7 +179,7 @@ final class EventAdminController extends CRUDController
                         }
                     }
                     $object->setEnabled(false);
-                    $em->flush();
+                    $this->mr->getManager()->flush();
                 }
             }
 
@@ -199,7 +198,7 @@ final class EventAdminController extends CRUDController
                 'object' => $object,
                 'firstEvent' => $firstEvent,
                 'lastEvent' => $lastEvent,
-                'progressBarPercentiles' => $eventsManager->getProgressBarPercentilesOf($object),
+                'progressBarPercentiles' => $this->em->getProgressBarPercentilesOf($object),
                 'form' => $form->createView(),
             ]
         );
@@ -297,7 +296,7 @@ final class EventAdminController extends CRUDController
 
     public function commonAttendedClass(Event $event, Student $student, bool $attended, ?int $studentAbsenceId = null): JsonResponse
     {
-        $searchedEventStudent = $this->getDoctrine()->getRepository(EventStudent::class)->findOneBy([
+        $searchedEventStudent = $this->mr->getManager()->getRepository(EventStudent::class)->findOneBy([
             'event' => $event,
             'student' => $student,
         ]);
@@ -307,10 +306,10 @@ final class EventAdminController extends CRUDController
                 ->setEvent($event)
                 ->setStudent($student)
             ;
-            $this->getDoctrine()->getManager()->persist($searchedEventStudent);
+            $this->mr->getManager()->persist($searchedEventStudent);
         }
         $searchedEventStudent->setHasAttendedTheClass($attended);
-        $this->getDoctrine()->getManager()->flush();
+        $this->mr->getManager()->flush();
         if ($studentAbsenceId) {
             $resonse = [
                 'eid' => $event->getId(),
@@ -345,7 +344,7 @@ final class EventAdminController extends CRUDController
     private function getStudent(Request $request): Student
     {
         $sid = $request->get('student');
-        $student = $this->getDoctrine()->getRepository(Student::class)->find((int) $sid);
+        $student = $this->mr->getManager()->getRepository(Student::class)->find((int) $sid);
         if (!$student) {
             throw $this->createNotFoundException(sprintf('unable to find the student with id: %s', $sid));
         }
@@ -355,7 +354,7 @@ final class EventAdminController extends CRUDController
 
     private function getStudentAbsenceByEventAndStudent(Event $event, Student $student): ?StudentAbsence
     {
-        return $this->getDoctrine()->getRepository(StudentAbsence::class)->findOneBy([
+        return $this->mr->getManager()->getRepository(StudentAbsence::class)->findOneBy([
             'day' => $event->getBegin(),
             'student' => $student,
         ]);

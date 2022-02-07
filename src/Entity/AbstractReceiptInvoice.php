@@ -249,7 +249,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return number_format($this->baseAmount, 2, ',', '.').'€';
     }
 
-    public function setBaseAmount(?float $baseAmount): string
+    public function setBaseAmount(?float $baseAmount): self
     {
         $this->baseAmount = $baseAmount;
 

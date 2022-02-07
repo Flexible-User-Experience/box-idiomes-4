@@ -4,13 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\ContactMessage;
 use App\Form\Type\ContactMessageAnswerType;
-use App\Service\NotificationService;
-use Doctrine\ORM\EntityManagerInterface;
-use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ContactMessageAdminController extends CRUDController
+final class ContactMessageAdminController extends AbstractAdminController
 {
     public function showAction(Request $request): Response
     {
@@ -28,9 +25,8 @@ final class ContactMessageAdminController extends CRUDController
             return $preResponse;
         }
         $this->admin->setSubject($object);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($object);
-        $em->flush();
+        $this->mr->getManager()->persist($object);
+        $this->mr->getManager()->flush();
 
         return $this->renderWithExtraParams(
             'Admin/show.html.twig',
@@ -45,7 +41,7 @@ final class ContactMessageAdminController extends CRUDController
     /**
      * Answer message action.
      */
-    public function answerAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
+    public function answerAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -60,10 +56,10 @@ final class ContactMessageAdminController extends CRUDController
             // persist new contact message form record
             $object->setChecked(true);
             $object->setAnswered(true);
-            $em->persist($object);
-            $em->flush();
+            $this->mr->getManager()->persist($object);
+            $this->mr->getManager()->flush();
             // send notifications
-            $messenger->sendUserBackendNotification($object);
+            $this->ns->sendUserBackendNotification($object);
             // build flash message
             $this->addFlash('success', 'Your answer has been sent.');
 
