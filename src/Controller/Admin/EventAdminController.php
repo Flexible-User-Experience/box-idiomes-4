@@ -11,7 +11,6 @@ use App\Form\Type\EventType;
 use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,7 +40,7 @@ final class EventAdminController extends AbstractAdminController
      *
      * @throws Exception
      */
-    public function batcheditAction(ProxyQueryInterface $selectedModelQuery, Request $request): Response
+    public function batcheditAction(Request $request): Response
     {
         $object = $this->getEvent($request);
         $firstEvent = $this->em->getFirstEventOf($object);
@@ -101,7 +100,7 @@ final class EventAdminController extends AbstractAdminController
     /**
      * Delete event and all the next related events action.
      */
-    public function batchdeleteAction(ProxyQueryInterface $selectedModelQuery, Request $request): Response
+    public function batchdeleteAction(Request $request): Response
     {
         $object = $this->getEvent($request);
         $firstEvent = $this->em->getFirstEventOf($object);
