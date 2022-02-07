@@ -10,6 +10,7 @@ use App\Model\ExportCalendarToListDayItem;
 use App\Service\SmartAssetsHelperService;
 use DateTimeInterface;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
@@ -26,12 +27,12 @@ class ExportCalendarToListBuilderPdf
     private Color $defaultCellColor;
     private int $pageCounter = 0;
 
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, string $pwt)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, ParameterBagInterface $pb)
     {
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
-        $this->pwt = $pwt;
+        $this->pwt = $pb->get('project_web_title');
         $this->defaultCellColor = new Color('#E0EBFF');
     }
 

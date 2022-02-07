@@ -5,6 +5,7 @@ namespace App\Pdf;
 use App\Entity\Student;
 use App\Service\SmartAssetsHelperService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
@@ -16,13 +17,13 @@ class SepaAgreementBuilderPdf
     private string $pwt;
     private string $bn;
 
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, string $pwt, string $bn)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, ParameterBagInterface $pb)
     {
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
-        $this->pwt = $pwt;
-        $this->bn = $bn;
+        $this->pwt = $pb->get('project_web_title');
+        $this->bn = $pb->get('boss_name');
     }
 
     public function build(Student $student): TCPDF

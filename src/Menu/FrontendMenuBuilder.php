@@ -5,6 +5,7 @@ namespace App\Menu;
 use App\Enum\UserRolesEnum;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 
@@ -15,12 +16,12 @@ class FrontendMenuBuilder
     private RequestStack $rs;
     private string $ppo;
 
-    public function __construct(FactoryInterface $factory, Security $ss, RequestStack $rs, string $ppo)
+    public function __construct(FactoryInterface $factory, Security $ss, RequestStack $rs, ParameterBagInterface $pb)
     {
         $this->factory = $factory;
         $this->ss = $ss;
         $this->rs = $rs;
-        $this->ppo = $ppo;
+        $this->ppo = $pb->get('preregister_period_is_open');
     }
 
     public function createTopMenu(): ItemInterface

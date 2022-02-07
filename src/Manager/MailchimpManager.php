@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\NewsletterContact;
 use App\Service\NotificationService;
 use DrewM\MailChimp\MailChimp;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MailchimpManager
 {
@@ -13,9 +14,9 @@ class MailchimpManager
     private MailChimp $mailChimp;
     private NotificationService $messenger;
 
-    public function __construct(NotificationService $messenger, $mak)
+    public function __construct(NotificationService $messenger, ParameterBagInterface $pb)
     {
-        $this->mailChimp = new MailChimp($mak);
+        $this->mailChimp = new MailChimp($pb->get('mailchimp_api_key'));
         $this->messenger = $messenger;
     }
 

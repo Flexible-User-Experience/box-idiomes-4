@@ -2,42 +2,37 @@ imports:
     - { resource: 'services/admins.yaml' }
 
 parameters:
-    default_locale:              '%env(string:DEFAULT_LOCALE)%'
-    project_web_title:           '%env(string:PROJECT_WEB_TITLE)%'
-    project_url_base:            '%env(string:PROJECT_BASE_URL)%'
-    project_backend_title:       '%env(string:PROJECT_BACKEND_TITLE)%'
-    google_analytics_enabled:    '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
-    google_analytics_account:    '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
-    google_maps_api_key:         '%env(string:GOOGLE_MAPS_API_KEY)%'
-    facebook_pixel_enabled:      '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
-    facebook_pixel_id:           '%env(string:FACEBOOK_PIXEL_ID)%'
-    mailchimp_api_key:           '%env(string:MAILCHIMP_API_KEY)%'
-    mailchimp_list_id:           '%env(string:MAILCHIMP_LIST_ID)%'
-    boss_name:                   '%env(string:BOSS_NAME)%'
-    boss_dni:                    '%env(string:BOSS_DNI)%'
-    boss_phone_number_1:         '%env(string:BOSS_PHONE_NUMBER_1)%'
-    boss_phone_number_2:         '%env(string:BOSS_PHONE_NUMBER_2)%'
-    boss_address:                '%env(string:BOSS_ADDRESS)%'
-    boss_city:                   '%env(string:BOSS_CITY)%'
-    iban_business:               '%env(string:IBAN_BUSINESS)%'
-    bic_number:                  '%env(string:BIC_NUMBER)%'
-    mailer_destination:          '%env(string:MAILER_DESTINATION)%'
-    delivery_dev_address:        '%env(string:DEV_DELIVERY_ADDRESS)%'
-    google_recaptcha_site_key:   '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
-    admin_logo:                  '%env(string:ADMIN_LOGO)%'
-    admin_color:                 '%env(string:ADMIN_COLOR)%'
-    admin_is_stage:              '%env(bool:ADMIN_IS_STAGE)%'
-    preregister_period_is_open:  false
+    default_locale:             '%env(string:DEFAULT_LOCALE)%'
+    project_web_title:          '%env(string:PROJECT_WEB_TITLE)%'
+    project_url_base:           '%env(string:PROJECT_BASE_URL)%'
+    project_backend_title:      '%env(string:PROJECT_BACKEND_TITLE)%'
+    google_analytics_enabled:   '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
+    google_analytics_account:   '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
+    google_maps_api_key:        '%env(string:GOOGLE_MAPS_API_KEY)%'
+    facebook_pixel_enabled:     '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
+    facebook_pixel_id:          '%env(string:FACEBOOK_PIXEL_ID)%'
+    mailchimp_api_key:          '%env(string:MAILCHIMP_API_KEY)%'
+    mailchimp_list_id:          '%env(string:MAILCHIMP_LIST_ID)%'
+    boss_name:                  '%env(string:BOSS_NAME)%'
+    boss_dni:                   '%env(string:BOSS_DNI)%'
+    boss_phone_number_1:        '%env(string:BOSS_PHONE_NUMBER_1)%'
+    boss_phone_number_2:        '%env(string:BOSS_PHONE_NUMBER_2)%'
+    boss_address:               '%env(string:BOSS_ADDRESS)%'
+    boss_city:                  '%env(string:BOSS_CITY)%'
+    iban_business:              '%env(string:IBAN_BUSINESS)%'
+    bic_number:                 '%env(string:BIC_NUMBER)%'
+    mailer_destination:         '%env(string:MAILER_DESTINATION)%'
+    delivery_dev_address:       '%env(string:DEV_DELIVERY_ADDRESS)%'
+    google_recaptcha_site_key:  '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
+    admin_logo:                 '%env(string:ADMIN_LOGO)%'
+    admin_color:                '%env(string:ADMIN_COLOR)%'
+    admin_is_stage:             '%env(bool:ADMIN_IS_STAGE)%'
+    preregister_period_is_open: false
 
 services:
     _defaults:
         autowire:      true
         autoconfigure: true
-        bind:
-            $pwt:    '%project_web_title%'
-            $mak:    '%mailchimp_api_key%'
-            $ppo:    '%preregister_period_is_open%'
-            $bn:     '%boss_name%'
     # Commons
     App\:
         resource: '../src/'
@@ -73,7 +68,7 @@ services:
         arguments:
             - '@app.courier'
             - '@twig'
-            - '%mailer_destination%'
+            - '@parameter_bag'
     # Factories
     app.event_transformer_factory:
         class: App\Service\EventTransformerFactoryService
@@ -128,7 +123,7 @@ services:
             - '@knp_menu.factory'
             - '@security.helper'
             - '@request_stack'
-            - '%preregister_period_is_open%'
+            - '@parameter_bag'
     app.frontend_top_menu:
         class: Knp\Menu\MenuItem
         factory: [ '@app.frontend_menu_builder', createTopMenu ]
@@ -148,7 +143,7 @@ services:
         public: true
         arguments:
             - '@app.notification'
-            - '%mailchimp_api_key%'
+            - '@parameter_bag'
     app.receipt_manager:
         class: App\Manager\ReceiptManager
         public: true
@@ -191,7 +186,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
+            - '@parameter_bag'
     app.sepa_agreement_pdf_builder:
         class: App\Pdf\SepaAgreementBuilderPdf
         public: true
@@ -199,8 +194,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
+            - '@parameter_bag'
     app.receipt_reminder_pdf_builder:
         class: App\Pdf\ReceiptReminderBuilderPdf
         public: true
@@ -240,27 +234,21 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
+            - '@parameter_bag'
     # SEPA
     app.xml_sepa_builder:
         class: App\Service\XmlSepaBuilderService
         public: true
         arguments:
-            - '@app.spanish_sepa_helper'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%iban_business%'
-            - '%bic_number%'
-    app.spanish_sepa_helper:
-        class: App\Service\SpanishSepaHelperService
-        public: true
+            - '@App\Service\SpanishSepaHelperService'
+            - '@parameter_bag'
     # File
     app.file_service:
         class: App\Service\FileService
         public: true
         arguments:
             - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
-            - '%kernel.project_dir%'
+            - '@parameter_bag'
     # Forms
     app.form.type.generate_receipt:
         class: App\Form\Type\GenerateReceiptType
@@ -297,13 +285,13 @@ services:
     app.sitemap.subscriber:
         class: App\Listener\SitemapListener
         arguments:
-            - "@router"
+            - '@router'
         tags:
-            - { name: "kernel.event_subscriber", priority: 100 }
+            - { name: 'kernel.event_subscriber', priority: 100 }
     app.doctrine_user_event:
         class: App\Doctrine\Listener\UserListener
         arguments:
             - '@security.user_password_hasher'
         tags:
-            - { name: doctrine.orm.entity_listener, event: prePersist, entity: App\Entity\User, priority: 2 }
-            - { name: doctrine.orm.entity_listener, event: preUpdate, entity: App\Entity\User, priority: 2 }
+            - { name: 'doctrine.orm.entity_listener', event: prePersist, entity: 'App\Entity\User', priority: 2 }
+            - { name: 'doctrine.orm.entity_listener', event: preUpdate, entity: 'App\Entity\User', priority: 2 }
