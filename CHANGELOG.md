@@ -1,8 +1,20 @@
 Changelog
 =========
 
-##### Version 4.7.18 (WIP)
+##### Version 5.0.01 (WIP)
  * fix minor bugs
+
+##### Version 5.0.00 (2022-02-08)
+ * Symfony 5.4 LTS upgrade
+ * Sonata Admin 4.0 upgrade
+ * Bootstrap CSS 5.0 upgrade
+ * Font Awesome 5.0 upgrade
+ * add Admin XLSX export format
+ * improve frontend responsiveness
+ * improve frontend Google Map in contact view
+ * improve backend dashboard Google Chart 3.0
+ * improve backend dashboard Full Calendar 5.0
+ * add better admin PDF previews
 
 ##### Version 4.7.17 (2022-01-20)
  * fix missing download PDF button template in SpendingAdmin edit view
