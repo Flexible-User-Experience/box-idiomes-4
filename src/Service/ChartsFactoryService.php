@@ -92,7 +92,7 @@ class ChartsFactoryService
                 'scales' => [
                     'yAxes' => [
                         'ticks' => [
-                            'display' => false,
+                            'display' => true,
                         ],
                     ],
                 ],

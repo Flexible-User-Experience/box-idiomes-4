@@ -21,13 +21,11 @@ class ChartsBlock extends AbstractBlockService
 
     public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
-        $settings = $blockContext->getSettings();
-
         return $this->renderResponse(
             $blockContext->getTemplate(),
             [
                 'block' => $blockContext->getBlock(),
-                'settings' => $settings,
+                'settings' => $blockContext->getSettings(),
                 'title' => 'Charts',
                 'chart' => $this->cfs->buildLastYearResultsChart(),
             ],
