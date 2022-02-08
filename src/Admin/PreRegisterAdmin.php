@@ -60,7 +60,6 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
                         'widget' => 'single_text',
                         'format' => 'dd-MM-yyyy',
                     ],
-//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -74,7 +73,6 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
                         'expanded' => false,
                         'multiple' => false,
                     ],
-//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(

@@ -296,7 +296,6 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                         'widget' => 'single_text',
                         'format' => 'dd/MM/yyyy',
                     ],
-//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -427,7 +426,6 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                         'widget' => 'single_text',
                         'format' => 'dd-MM-yyyy',
                     ],
-//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -447,7 +445,6 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                         'widget' => 'single_text',
                         'format' => 'dd-MM-yyyy',
                     ],
-//                    'format' => 'd-m-Y',
                 ]
             )
             ->add(
@@ -467,7 +464,6 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                         'widget' => 'single_text',
                         'format' => 'dd-MM-yyyy',
                     ],
-//                    'format' => 'd-m-Y',
                 ]
             )
         ;
@@ -598,12 +594,24 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
-                        'invoice' => ['template' => 'Admin/Buttons/list__action_invoice_pdf_button.html.twig'],
-                        'send' => ['template' => 'Admin/Buttons/list__action_invoice_send_button.html.twig'],
-                        'generateDirectDebit' => ['template' => 'Admin/Buttons/list__action_generate_direct_debit_xml_button.html.twig'],
-                        'duplicate' => ['template' => 'Admin/Buttons/list__action_invoice_duplicate_button.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_superadmin_button.html.twig'],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'invoice' => [
+                            'template' => 'Admin/Buttons/list__action_invoice_pdf_button.html.twig',
+                        ],
+                        'send' => [
+                            'template' => 'Admin/Buttons/list__action_invoice_send_button.html.twig',
+                        ],
+                        'generateDirectDebit' => [
+                            'template' => 'Admin/Buttons/list__action_generate_direct_debit_xml_button.html.twig',
+                        ],
+                        'duplicate' => [
+                            'template' => 'Admin/Buttons/list__action_invoice_duplicate_button.html.twig',
+                        ],
+                        'delete' => [
+                            'template' => 'Admin/Buttons/list__action_delete_superadmin_button.html.twig',
+                        ],
                     ],
                 ]
             );
