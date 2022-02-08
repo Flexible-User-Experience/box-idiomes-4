@@ -2,14 +2,15 @@
 
 namespace App\Service;
 
+use App\Kernel;
 use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class SmartAssetsHelperService
+final class SmartAssetsHelperService
 {
-    const HTTP_PROTOCOL = 'https://';
-    const PHP_SERVER_API_CLI_CONTEXT = 'cli';
+    public const HTTP_PROTOCOL = 'https://';
 
     private KernelInterface $kernel;
     private string $pub;
@@ -17,13 +18,13 @@ class SmartAssetsHelperService
     private string $bba;
     private string $bpn;
 
-    public function __construct(KernelInterface $kernel, string $pub, string $amd, string $bba, string $bpn)
+    public function __construct(KernelInterface $kernel, ParameterBagInterface $pb)
     {
         $this->kernel = $kernel;
-        $this->pub = $pub;
-        $this->amd = $amd;
-        $this->bba = $bba;
-        $this->bpn = $bpn;
+        $this->pub = $pb->get('project_url_base');
+        $this->amd = $pb->get('mailer_destination');
+        $this->bba = $pb->get('boss_address');
+        $this->bpn = $pb->get('boss_phone_number_1');
     }
 
     public function getAmd(): string
@@ -44,15 +45,15 @@ class SmartAssetsHelperService
     /**
      * Determine if this PHP script is executed under a CLI context.
      */
-    public function isCliContext()
+    public function isCliContext(): string
     {
-        return self::PHP_SERVER_API_CLI_CONTEXT === php_sapi_name();
+        return Kernel::CLI_API === PHP_SAPI;
     }
 
     /**
      * Always return absolute URL path, even in CLI contexts.
      */
-    public function getAbsoluteAssetPathContextIndependent($assetPath)
+    public function getAbsoluteAssetPathContextIndependent($assetPath): string
     {
         $package = new UrlPackage(self::HTTP_PROTOCOL.$this->pub.'/', new EmptyVersionStrategy());
 
@@ -62,7 +63,7 @@ class SmartAssetsHelperService
     /**
      * If is CLI context returns absolute file path, otherwise returns absolute URL path.
      */
-    public function getAbsoluteAssetPathByContext($assetPath)
+    public function getAbsoluteAssetPathByContext($assetPath): string
     {
         $result = $this->getAbsoluteAssetPathContextIndependent($assetPath);
         if ($this->isCliContext()) {
@@ -75,17 +76,15 @@ class SmartAssetsHelperService
     /**
      * Always return relative URL path, even in CLI contexts.
      */
-    public function getRelativeAssetPathContextIndependent($assetPath)
+    public function getRelativeAssetPathContextIndependent($assetPath): string
     {
-        $package = new UrlPackage('/', new EmptyVersionStrategy());
-
-        return $package->getUrl($assetPath);
+        return (new UrlPackage('/', new EmptyVersionStrategy()))->getUrl($assetPath);
     }
 
     /**
      * If is CLI context returns absolute file path, otherwise returns relative URL path.
      */
-    public function getRelativeAssetPathByContext($assetPath)
+    public function getRelativeAssetPathByContext($assetPath): string
     {
         $result = $this->getRelativeAssetPathContextIndependent($assetPath);
         if ($this->isCliContext()) {
@@ -98,7 +97,7 @@ class SmartAssetsHelperService
     /**
      * Returns absolute file path.
      */
-    public function getAbsoluteAssetFilePath($assetPath)
+    public function getAbsoluteAssetFilePath($assetPath): string
     {
         return $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
     }

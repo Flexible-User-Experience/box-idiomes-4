@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\BankCreditorSepa;
 use App\Entity\City;
 use App\Entity\ClassGroup;
@@ -14,30 +15,35 @@ use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
 use DateTime;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
-use Sonata\DoctrineORMAdminBundle\Filter\ModelAutocompleteFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class StudentAdmin extends AbstractBaseAdmin
+final class StudentAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Student';
     protected $baseRoutePattern = 'students/student';
-    protected $datagridValues = [
-        '_sort_by' => 'surname',
-        '_sort_order' => 'asc',
-    ];
 
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'surname';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
             ->add('imagerights', $this->getRouterIdParameter().'/image-rights')
@@ -49,7 +55,7 @@ class StudentAdmin extends AbstractBaseAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
             ->add(
                 'name',
                 null,
@@ -72,7 +78,7 @@ class StudentAdmin extends AbstractBaseAdmin
                     'required' => false,
                     'class' => Person::class,
                     'choice_label' => 'fullcanonicalname',
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.parent_repository')->getEnabledSortedBySurnameQB(),
+                    'query_builder' => $this->em->getRepository(Person::class)->getEnabledSortedBySurnameQB(),
                 ]
             )
             ->add(
@@ -88,7 +94,7 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.contact.contact', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.contact.contact', $this->getFormMdSuccessBoxArray('backend.admin.contact.contact', 3))
             ->add(
                 'phone',
                 null,
@@ -120,11 +126,11 @@ class StudentAdmin extends AbstractBaseAdmin
                     'required' => true,
                     'class' => City::class,
                     'choice_label' => 'name',
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.city_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
                 ]
             )
             ->end()
-            ->with('backend.admin.student.payment_information', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.student.payment_information', $this->getFormMdSuccessBoxArray('backend.admin.student.payment_information', 3))
             ->add(
                 'payment',
                 ChoiceType::class,
@@ -155,11 +161,11 @@ class StudentAdmin extends AbstractBaseAdmin
                     'help' => 'backend.admin.bank.creditor_bank_name_help',
                     'required' => true,
                     'class' => BankCreditorSepa::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(BankCreditorSepa::class)->getEnabledSortedByNameQB(),
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
                 'dni',
                 null,
@@ -199,7 +205,7 @@ class StudentAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.student.tariff',
                     'required' => true,
                     'class' => Tariff::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.tariff_repository')->findAllSortedByYearAndPriceQB(),
+                    'query_builder' => $this->em->getRepository(Tariff::class)->findAllSortedByYearAndPriceQB(),
                 ]
             )
             ->add(
@@ -272,14 +278,14 @@ class StudentAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'parent',
-                ModelAutocompleteFilter::class,
+                ModelFilter::class,
                 [
                     'label' => 'backend.admin.student.parent',
-                ],
-                null,
-                [
-                    'class' => Person::class,
-                    'property' => ['name', 'surname'],
+                    'field_type' => ModelAutocompleteType::class,
+                    'field_options' => [
+                        'class' => Person::class,
+                        'property' => ['name', 'surname'],
+                    ],
                 ]
             )
             ->add(
@@ -322,12 +328,12 @@ class StudentAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.parent.payment',
-                ],
-                ChoiceType::class,
-                [
-                    'choices' => StudentPaymentEnum::getEnumArray(),
-                    'expanded' => false,
-                    'multiple' => false,
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => StudentPaymentEnum::getEnumArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
                 ]
             )
             ->add(
@@ -335,32 +341,23 @@ class StudentAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.bank.creditor_bank_name',
-                ],
-                EntityType::class,
-                [
-                    'required' => false,
-                    'class' => BankCreditorSepa::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.bank_creditor_sepa_repository')->getAllSortedByNameQB(),
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => BankCreditorSepa::class,
+                        'query_builder' => $this->em->getRepository(BankCreditorSepa::class)->getAllSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(
                 'events.group',
                 null,
                 [
-                    'label' => 'backend.admin.event.group_with_book',
-                ],
-                EntityType::class,
-                [
-                    'class' => ClassGroup::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.class_group_repository')->getEnabledSortedByCodeQB(),
-                    'choice_label' => 'codeAndBook',
-                ]
-            )
-            ->add(
-                'events.group.book',
-                null,
-                [
-                    'label' => 'backend.admin.class_group.book',
+                    'label' => 'backend.admin.event.group',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => ClassGroup::class,
+                        'query_builder' => $this->em->getRepository(ClassGroup::class)->getEnabledSortedByCodeQB(),
+                    ],
                 ]
             )
             ->add(
@@ -370,12 +367,12 @@ class StudentAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.class_group.school_year',
                     'callback' => [$this, 'buildDatagridSchoolYearFilter'],
                     'required' => true,
-                ],
-                ChoiceType::class,
-                [
-                    'choices' => SchoolYearChoicesGeneratorEnum::getSchoolYearChoicesArray(),
-                    'expanded' => false,
-                    'multiple' => false,
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => SchoolYearChoicesGeneratorEnum::getSchoolYearChoicesArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
                 ]
             )
             ->add(
@@ -385,12 +382,12 @@ class StudentAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.student.age',
                     'callback' => [$this, 'buildDatagridAgesFilter'],
                     'required' => true,
-                ],
-                ChoiceType::class,
-                [
-                    'choices' => StudentAgesEnum::getReversedEnumTranslatedArray(),
-                    'expanded' => false,
-                    'multiple' => false,
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => StudentAgesEnum::getReversedEnumTranslatedArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
                 ]
             )
             ->add(
@@ -399,12 +396,10 @@ class StudentAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.student.birthDate',
                     'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
-                ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy',
+                    ],
                 ]
             )
             ->add(
@@ -413,12 +408,10 @@ class StudentAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.student.dischargeDate',
                     'field_type' => DatePickerType::class,
-                    'format' => 'd-m-Y',
-                ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy',
+                    ],
                 ]
             )
             ->add(
@@ -478,13 +471,13 @@ class StudentAdmin extends AbstractBaseAdmin
         if ($value && array_key_exists('value', $value)) {
             $schoolYear = (int) $value['value'];
             $begin = new DateTime();
-            $begin->setDate($schoolYear, 9, 1);
+            $begin->setDate($schoolYear, 8, 31);
             $begin->setTime(0, 0);
             $end = new DateTime();
             $end->setDate($schoolYear + 1, 9, 1);
             $end->setTime(0, 0);
             $queryBuilder->join($alias.'.events', 'e');
-            $queryBuilder->andWhere('e.begin >= :begin');
+            $queryBuilder->andWhere('e.begin > :begin');
             $queryBuilder->andWhere('e.begin < :end');
             $queryBuilder->setParameter('begin', $begin);
             $queryBuilder->setParameter('end', $end);
@@ -588,25 +581,35 @@ class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
-                        'show' => ['template' => 'Admin/Buttons/list__action_show_button.html.twig'],
-                        'imagerights' => ['template' => 'Admin/Cells/list__action_image_rights.html.twig'],
-                        'sepaagreement' => ['template' => 'Admin/Cells/list__action_sepa_agreement.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_student_button.html.twig'],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'show' => [
+                            'template' => 'Admin/Buttons/list__action_show_button.html.twig',
+                        ],
+                        'imagerights' => [
+                            'template' => 'Admin/Cells/list__action_image_rights.html.twig',
+                        ],
+                        'sepaagreement' => [
+                            'template' => 'Admin/Cells/list__action_sepa_agreement.html.twig',
+                        ],
+                        'delete' => [
+                            'template' => 'Admin/Buttons/list__action_delete_student_button.html.twig',
+                        ],
                     ],
-                    'label' => 'backend.admin.actions',
                 ]
             )
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'dni',

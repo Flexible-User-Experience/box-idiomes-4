@@ -6,10 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class Province.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\ProvinceRepository")
  * @ORM\Table(name="province")
  * @UniqueEntity({"code", "country"})
@@ -17,84 +13,50 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Province extends AbstractBase
 {
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $code;
+    private string $code;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $name;
+    private string $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $country;
+    private string $country;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return string
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    /**
-     * @param string $code
-     *
-     * @return Province
-     */
-    public function setCode($code)
+    public function setCode(string $code): self
     {
         $this->code = $code;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Province
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    /**
-     * @param string $country
-     *
-     * @return Province
-     */
-    public function setCountry($country)
+    public function setCountry(string $country): self
     {
         $this->country = $country;
 

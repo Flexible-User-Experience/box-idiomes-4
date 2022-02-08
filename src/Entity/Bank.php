@@ -6,204 +6,111 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Bank.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\BankRepository")
  * @ORM\Table(name="bank")
  */
 class Bank extends AbstractBase
 {
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Iban()
      */
-    private $accountNumber;
+    private ?string $accountNumber = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Bic()
      */
-    private $swiftCode;
+    private ?string $swiftCode = null;
 
     /**
-     * @var Person
-     *
      * @ORM\OneToOne(targetEntity="App\Entity\Person")
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
-    private $parent;
+    private ?Person $parent = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Bank
-     */
-    public function setName($name)
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccountNumber()
+    public function getAccountNumber(): ?string
     {
         return $this->accountNumber;
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getBAN1part()
+    public function getBAN1part(): string
     {
-        if (strlen($this->accountNumber) < 4) {
-            return '';
-        }
-
-        return substr($this->accountNumber, 0, 4);
+        return strlen($this->accountNumber) < 4 ? '' : substr($this->accountNumber, 0, 4);
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getBAN2part()
+    public function getBAN2part(): string
     {
-        if (strlen($this->accountNumber) < 8) {
-            return '';
-        }
-
-        return substr($this->accountNumber, 4, 4);
+        return strlen($this->accountNumber) < 8 ? '' : substr($this->accountNumber, 4, 4);
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getBAN3part()
+    public function getBAN3part(): string
     {
-        if (strlen($this->accountNumber) < 12) {
-            return '';
-        }
-
-        return substr($this->accountNumber, 8, 4);
+        return strlen($this->accountNumber) < 12 ? '' : substr($this->accountNumber, 8, 4);
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getBAN4part()
+    public function getBAN4part(): string
     {
-        if (strlen($this->accountNumber) < 16) {
-            return '';
-        }
-
-        return substr($this->accountNumber, 12, 4);
+        return strlen($this->accountNumber) < 16 ? '' : substr($this->accountNumber, 12, 4);
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getBAN5part()
+    public function getBAN5part(): string
     {
-        if (strlen($this->accountNumber) < 20) {
-            return '';
-        }
-
-        return substr($this->accountNumber, 16, 4);
+        return strlen($this->accountNumber) < 20 ? '' : substr($this->accountNumber, 16, 4);
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getBAN6part()
+    public function getBAN6part(): string
     {
-        if (strlen($this->accountNumber) < 24) {
-            return '';
-        }
-
-        return substr($this->accountNumber, 20, 4);
+        return strlen($this->accountNumber) < 24 ? '' : substr($this->accountNumber, 20, 4);
     }
 
-    /**
-     * @return string
-     */
-    public function getIbanFormatNumber()
+    public function getIbanFormatNumber(): string
     {
         return $this->getBAN1part().' '.$this->getBAN2part().' '.$this->getBAN3part().' '.$this->getBAN4part().' '.$this->getBAN5part().' '.$this->getBAN6part();
     }
 
-    /**
-     * @param string $accountNumber
-     *
-     * @return Bank
-     */
-    public function setAccountNumber($accountNumber)
+    public function setAccountNumber(?string $accountNumber): self
     {
         $this->accountNumber = $accountNumber;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSwiftCode()
+    public function getSwiftCode(): ?string
     {
         return $this->swiftCode;
     }
 
-    /**
-     * @param string $swiftCode
-     *
-     * @return Bank
-     */
-    public function setSwiftCode($swiftCode)
+    public function setSwiftCode(?string $swiftCode): self
     {
         $this->swiftCode = $swiftCode;
 
         return $this;
     }
 
-    /**
-     * @return Person
-     */
-    public function getParent()
+    public function getParent(): ?Person
     {
         return $this->parent;
     }
 
-    /**
-     * @param Person $parent
-     *
-     * @return Bank
-     */
-    public function setParent($parent)
+    public function setParent(?Person $parent): self
     {
         $this->parent = $parent;
 

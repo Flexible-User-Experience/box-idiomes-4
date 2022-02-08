@@ -5,39 +5,23 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class InvoiceLine.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceLineRepository")
  * @ORM\Table(name="invoice_line")
  */
 class InvoiceLine extends AbstractReceiptInvoiceLine
 {
     /**
-     * @var Invoice
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="lines")
      * @ORM\JoinColumn(name="invoice_id", referencedColumnName="id")
      */
-    private $invoice;
+    private Invoice $invoice;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return Invoice
-     */
-    public function getInvoice()
+    public function getInvoice(): Invoice
     {
         return $this->invoice;
     }
 
-    /**
-     * @return $this
-     */
-    public function setInvoice(Invoice $invoice)
+    public function setInvoice(Invoice $invoice): self
     {
         $this->invoice = $invoice;
 

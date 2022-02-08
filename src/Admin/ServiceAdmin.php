@@ -2,50 +2,37 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-/**
- * Class ServiceAdmin.
- *
- * @category Admin
- */
-class ServiceAdmin extends AbstractBaseAdmin
+final class ServiceAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Service';
     protected $baseRoutePattern = 'services/service';
-    protected $datagridValues = [
-        '_sort_by' => 'position',
-        '_sort_order' => 'asc',
-    ];
 
-    /**
-     * Configure route collection.
-     */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
     {
-        $collection
-            ->remove('batch');
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'position';
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
-            ->add(
-                'imageFile',
-                FileType::class,
-                [
-                    'label' => 'backend.admin.image',
-                    'help' => $this->getImageHelperFormMapperWithThumbnail(),
-                    'required' => false,
-                ]
-            )
+        $collection->remove('batch');
+    }
+
+    protected function configureFormFields(FormMapper $form): void
+    {
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general'))
             ->add(
                 'title',
                 null,
@@ -62,7 +49,15 @@ class ServiceAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
+            ->add(
+                'imageFile',
+                VichImageType::class,
+                [
+                    'label' => 'backend.admin.image',
+                    'required' => false,
+                ]
+            )
             ->add(
                 'position',
                 null,
@@ -78,12 +73,13 @@ class ServiceAdmin extends AbstractBaseAdmin
                     'required' => false,
                 ]
             )
-            ->end();
+            ->end()
+        ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'position',
                 null,
@@ -111,12 +107,13 @@ class ServiceAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.enabled',
                 ]
-            );
+            )
+        ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'position',
                 'decimal',
@@ -126,7 +123,7 @@ class ServiceAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'image',
+                'imageName',
                 null,
                 [
                     'label' => 'backend.admin.image',
@@ -147,27 +144,29 @@ class ServiceAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.enabled',
                     'editable' => true,
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
-                        'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'delete' => [
+                            'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
+                        ],
                     ],
-                    'label' => 'backend.admin.actions',
                 ]
             )
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'position',

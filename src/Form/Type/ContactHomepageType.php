@@ -29,11 +29,7 @@ class ContactHomepageType extends AbstractType
                     ],
                     'constraints' => [
                         new Assert\NotBlank(),
-                        new Assert\Email([
-                            'strict' => true,
-                            'checkMX' => true,
-                            'checkHost' => true,
-                        ]),
+                        new Assert\Email(),
                     ],
                 ]
             )
@@ -70,7 +66,7 @@ class ContactHomepageType extends AbstractType
                 [
                     'label' => 'frontend.forms.subscribe',
                     'attr' => [
-                        'class' => 'btn-newsletter',
+                        'class' => 'btn btn-primary',
                     ],
                 ]
             )

@@ -2,15 +2,11 @@
 
 namespace App\Entity;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Class StudentAbsence.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\StudentAbsenceRepository")
  * @ORM\Table(name="student_absence")
  * @UniqueEntity({"student", "day"})
@@ -18,211 +14,136 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class StudentAbsence extends AbstractBase
 {
     /**
-     * @var Student
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Student")
      */
-    private $student;
+    private Student $student;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="date", nullable=false)
      */
-    private $day;
+    private DateTimeInterface $day;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    private $hasBeenNotified = false;
+    private ?bool $hasBeenNotified = false;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $notificationDate;
+    private ?DateTimeInterface $notificationDate = null;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
-    private $hasBeenAccepted = false;
+    private ?bool $hasBeenAccepted = false;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $acceptedDate;
+    private ?DateTimeInterface $acceptedDate;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return Student
-     */
-    public function getStudent()
+    public function getStudent(): Student
     {
         return $this->student;
     }
 
-    /**
-     * @param Student $student
-     *
-     * @return $this
-     */
-    public function setStudent($student)
+    public function setStudent(Student $student): self
     {
         $this->student = $student;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDay()
+    public function getDay(): DateTimeInterface
     {
         return $this->day;
     }
 
-    /**
-     * @return string
-     */
-    public function getDayString()
+    public function getDayString(): string
     {
-        return $this->getDay() ? $this->getDay()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getDay());
     }
 
-    /**
-     * @return $this
-     */
-    public function setDay(DateTime $day)
+    public function setDay(DateTimeInterface $day): self
     {
         $this->day = $day;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCalendarTitle()
+    public function getCalendarTitle(): string
     {
         return '[Alumne] '.$this->getStudent()->getName();
     }
 
-    /**
-     * @return bool
-     */
-    public function isHasBeenNotified()
+    public function isHasBeenNotified(): ?bool
     {
         return $this->hasBeenNotified;
     }
 
-    /**
-     * @return bool
-     */
-    public function getHasBeenNotified()
+    public function getHasBeenNotified(): ?bool
     {
         return $this->isHasBeenNotified();
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBeenNotified()
+    public function hasBeenNotified(): ?bool
     {
         return $this->isHasBeenNotified();
     }
 
-    /**
-     * @param bool $hasBeenNotified
-     *
-     * @return $this
-     */
-    public function setHasBeenNotified($hasBeenNotified)
+    public function setHasBeenNotified(?bool $hasBeenNotified): self
     {
         $this->hasBeenNotified = $hasBeenNotified;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getNotificationDate()
+    public function getNotificationDate(): ?DateTimeInterface
     {
         return $this->notificationDate;
     }
 
-    /**
-     * @param DateTime $notificationDate
-     *
-     * @return $this
-     */
-    public function setNotificationDate($notificationDate)
+    public function getNotificationDateString(): string
+    {
+        return self::convertDateTimeAsString($this->getNotificationDate());
+    }
+
+    public function setNotificationDate(?DateTimeInterface $notificationDate): self
     {
         $this->notificationDate = $notificationDate;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHasBeenAccepted()
+    public function isHasBeenAccepted(): ?bool
     {
         return $this->hasBeenAccepted;
     }
 
-    /**
-     * @return bool
-     */
-    public function getHasBeenAccepted()
+    public function getHasBeenAccepted(): ?bool
     {
         return $this->isHasBeenAccepted();
     }
 
-    /**
-     * @return bool
-     */
-    public function hasBeenAccepted()
+    public function hasBeenAccepted(): ?bool
     {
         return $this->isHasBeenAccepted();
     }
 
-    /**
-     * @param bool $hasBeenAccepted
-     *
-     * @return $this
-     */
-    public function setHasBeenAccepted($hasBeenAccepted)
+    public function setHasBeenAccepted(?bool $hasBeenAccepted): self
     {
         $this->hasBeenAccepted = $hasBeenAccepted;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getAcceptedDate()
+    public function getAcceptedDate(): ?DateTimeInterface
     {
         return $this->acceptedDate;
     }
 
-    /**
-     * @param DateTime $acceptedDate
-     *
-     * @return $this
-     */
-    public function setAcceptedDate($acceptedDate)
+    public function setAcceptedDate(?DateTimeInterface $acceptedDate): self
     {
         $this->acceptedDate = $acceptedDate;
 

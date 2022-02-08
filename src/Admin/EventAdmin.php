@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\ClassGroup;
 use App\Entity\Event;
 use App\Entity\Student;
@@ -9,28 +10,31 @@ use App\Entity\Teacher;
 use App\Enum\EventClassroomTypeEnum;
 use DateInterval;
 use Exception;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\DateTimeFilter;
 use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class EventAdmin extends AbstractBaseAdmin
+final class EventAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Event';
     protected $baseRoutePattern = 'classrooms/timetable';
-    protected $maxPerPage = 400;
-    protected $datagridValues = [
-        '_sort_by' => 'begin',
-        '_sort_order' => 'desc',
-        '_per_page' => 400,
-    ];
 
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::PER_PAGE] = 400;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
+        $sortValues[DatagridInterface::SORT_BY] = 'begin';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
         $collection
@@ -46,7 +50,7 @@ class EventAdmin extends AbstractBaseAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->with('backend.admin.dates', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.dates', $this->getFormMdSuccessBoxArray('backend.admin.dates', 3))
             ->add(
                 'begin',
                 DateTimePickerType::class,
@@ -65,7 +69,7 @@ class EventAdmin extends AbstractBaseAdmin
                     'required' => true,
                 ]
             );
-        if (!$this->id($this->getSubject())) {
+        if ($this->isFormToCreateNewRecord()) {
             $form
                 ->add(
                     'dayFrequencyRepeat',
@@ -88,7 +92,7 @@ class EventAdmin extends AbstractBaseAdmin
         }
         $form
             ->end()
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(3))
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
             ->add(
                 'classroom',
                 ChoiceType::class,
@@ -108,7 +112,7 @@ class EventAdmin extends AbstractBaseAdmin
                     'required' => true,
                     'class' => Teacher::class,
                     'choice_label' => 'name',
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.teacher_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(Teacher::class)->getEnabledSortedByNameQB(),
                 ]
             )
             ->add(
@@ -118,11 +122,11 @@ class EventAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.event.group',
                     'required' => true,
                     'class' => ClassGroup::class,
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.class_group_repository')->getEnabledSortedByCodeQB(),
+                    'query_builder' => $this->em->getRepository(ClassGroup::class)->getEnabledSortedByCodeQB(),
                 ]
             )
             ->end()
-            ->with('backend.admin.event.students', $this->getFormMdSuccessBoxArray(6))
+            ->with('backend.admin.event.students', $this->getFormMdSuccessBoxArray('backend.admin.event.students'))
             ->add(
                 'students',
                 EntityType::class,
@@ -132,11 +136,11 @@ class EventAdmin extends AbstractBaseAdmin
                     'multiple' => true,
                     'class' => Student::class,
                     'choice_label' => 'fullCanonicalName',
-                    'query_builder' => $this->getConfigurationPool()->getContainer()->get('app.student_repository')->getEnabledSortedByNameQB(),
+                    'query_builder' => $this->em->getRepository(Student::class)->getAllSortedBySurnameQB(),
                 ]
             )
             ->end()
-            ->with('backend.admin.assistance', $this->getFormMdSuccessBoxArray(6))
+            ->with('backend.admin.assistance', $this->getFormMdSuccessBoxArray('backend.admin.assistance'))
             ->end()
         ;
     }
@@ -150,12 +154,10 @@ class EventAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.event.begin',
                     'field_type' => DateTimePickerType::class,
-                    'format' => 'd-m-Y H:i',
-                ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy HH:mm',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy HH:mm',
+                    ],
                 ]
             )
             ->add(
@@ -164,12 +166,10 @@ class EventAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.event.end',
                     'field_type' => DateTimePickerType::class,
-                    'format' => 'd-m-Y H:i',
-                ],
-                null,
-                [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy HH:mm',
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy HH:mm',
+                    ],
                 ]
             )
             ->add(
@@ -177,12 +177,12 @@ class EventAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.event.classroom',
-                ],
-                ChoiceType::class,
-                [
-                    'expanded' => false,
-                    'multiple' => false,
-                    'choices' => EventClassroomTypeEnum::getEnumArray(),
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'expanded' => false,
+                        'multiple' => false,
+                        'choices' => EventClassroomTypeEnum::getEnumArray(),
+                    ],
                 ]
             )
             ->add(
@@ -209,15 +209,16 @@ class EventAdmin extends AbstractBaseAdmin
         ;
     }
 
-    public function createQuery($context = 'list'): ProxyQueryInterface
+    protected function configureQuery(ProxyQueryInterface $query): ProxyQueryInterface
     {
-        $queryBuilder = parent::createQuery($context);
-        $queryBuilder
-            ->andWhere($queryBuilder->getRootAliases()[0].'.enabled = :enabled')
+        $query = parent::configureQuery($query);
+        $rootAlias = current($query->getRootAliases());
+        $query
+            ->andWhere($rootAlias.'.enabled = :enabled')
             ->setParameter('enabled', true)
         ;
 
-        return $queryBuilder;
+        return $query;
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -282,12 +283,15 @@ class EventAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.event.students',
                     'template' => 'Admin/Cells/list__cell_classroom_students_amount.html.twig',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
@@ -295,12 +299,11 @@ class EventAdmin extends AbstractBaseAdmin
                         'batchedit' => ['template' => 'Admin/Buttons/list__action_event_batch_edit_button.html.twig'],
                         'batchdelete' => ['template' => 'Admin/Buttons/list__action_batch_delete_button.html.twig'],
                     ],
-                    'label' => 'backend.admin.actions',
                 ]
             );
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'beginString',
@@ -323,7 +326,6 @@ class EventAdmin extends AbstractBaseAdmin
     public function postPersist($object): void
     {
         if ($object->getDayFrequencyRepeat() && $object->getUntil()) {
-            $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
             $currentBegin = $object->getBegin();
             $currentEnd = $object->getEnd();
             $currentBegin->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
@@ -343,8 +345,8 @@ class EventAdmin extends AbstractBaseAdmin
                     ->setPrevious($previousEvent)
                 ;
 
-                $em->persist($event);
-                $em->flush();
+                $this->em->persist($event);
+                $this->em->flush();
 
                 $currentBegin->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
                 $currentEnd->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
@@ -356,7 +358,7 @@ class EventAdmin extends AbstractBaseAdmin
                 $previousEvent = $event->getPrevious();
                 while (!is_null($previousEvent)) {
                     $previousEvent->setNext($event);
-                    $em->flush();
+                    $this->em->flush();
                     $event = $previousEvent;
                     $previousEvent = $previousEvent->getPrevious();
                 }

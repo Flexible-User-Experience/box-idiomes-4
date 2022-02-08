@@ -123,6 +123,17 @@ frontend:
 
 backend:
     admin:
+        login:
+            title: "Login"
+            submit: "Enviar"
+            username: "Usuari"
+            password: "Contrasenya"
+        is_stage_warning: "Entorn de proves"
+        modal:
+            pdf_preview_window_title: "Previsualització PDF"
+            pdf_preview_page: "Pàgina"
+            pdf_preview_page_of: "de"
+            close_window: "Tancar"
         yes: Sí
         no: No
         actions: Accions
@@ -366,6 +377,7 @@ backend:
             second_paragraph_4: ", amb una quantitat de "
             third_paragraph: "Atentament,"
         receipt:
+            mark_as_payed_batch_action: "Marcar com a rebuts pagats"
             receipt: Rebut
             date: Data
             generate_only: Generar rebuts
@@ -420,7 +432,7 @@ backend:
             paymentDate: Data pagament
             isSended: Enviada
             sendDate: Data enviament
-            baseAmount: Base imposable
+            baseAmount: "Import"
             id: Núm. Factura
             taxPercentage: IVA
             irpfPercentage: IRPF

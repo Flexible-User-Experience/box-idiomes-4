@@ -1,31 +1,38 @@
-import { Calendar } from "@fullcalendar/core";
-import interactionPlugin from "@fullcalendar/interaction";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
+import '@fullcalendar/common/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/timegrid/main.css';
+import '@fullcalendar/list/main.css';
+import '@fullcalendar/bootstrap/main.css';
+
+import { Calendar } from '@fullcalendar/core';
+import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import caLocale from '@fullcalendar/core/locales/ca';
 import Routing from '../../public/bundles/fosjsrouting/js/router.min';
-
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
-import "@fullcalendar/list/main.css";
 
 const routes = require('../../public/js/fos_js_routes.json');
 Routing.setRoutingData(routes);
 
 document.addEventListener('DOMContentLoaded', () => {
     let calendarEl = document.getElementById('calendar-holder');
+    let eventsUrl = calendarEl.getAttribute('data-events-url');
+    let googleCalendarApiKey = calendarEl.getAttribute('data-gmap-api-key');
+    console.log(googleCalendarApiKey, calendarEl, eventsUrl);
     let calendar = new Calendar(calendarEl, {
-        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-        timeZone: 'UTC',
-        header: {
-            left: 'prev today next',
+        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
+        initialView: 'timeGridWeek',
+        timeZone: 'Europe/Madrid',
+        headerToolbar: {
+            start: 'prev,today,next',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay listWeek'
+            end: 'timeGridDay,timeGridWeek,dayGridMonth listWeek'
         },
         views: {
             timeGrid: {
+                nowIndicator: true,
                 allDaySlot: true,
                 slotLabelFormat: {
                     hour: '2-digit',
@@ -34,33 +41,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     meridiem: 'short'
                 },
                 scrollTime: '12:00:00',
-                minTime: '07:00:00',
-                maxTime: '22:00:00',
+                slotMinTime: '07:00:00',
+                slotMaxTime: '22:00:00',
                 hiddenDays: [ 0 ]
             }
         },
-        height: 750,
+        height: 780,
         locale: caLocale,
-        timeFormat: 'HH:mm',
         firstDay: 1,
         lazyFetching: false,
-        editable: true,
+        editable: false,
         navLinks: true,
-        eventLimit: true,
         businessHours: false,
         displayEventTime: true,
         fixedWeekCount: false,
         weekNumbers: false,
-        defaultView: 'timeGridWeek',
         themeSystem: 'bootstrap3',
-        googleCalendarApiKey: 'AIzaSyCZZYZV-LqX2qDtggiEo1GmeNhxe3SAhfI',
+        googleCalendarApiKey: googleCalendarApiKey,
         eventSources: [
             {
-                url: Routing.generate('fc_load_events'),
+                googleCalendarId: 'es.spain#holiday@group.v.calendar.google.com',
+                backgroundColor: '#FED3D7',
+                textColor: '#FF0000',
+                color: '#FED3D7'
+            },
+            {
+                url: eventsUrl,
                 type: 'POST',
                 data: {},
                 error: function(data) {
-                    console.log('error!', data.responseText);
+                    console.error('error!', data.responseText);
                 }
             }
         ]

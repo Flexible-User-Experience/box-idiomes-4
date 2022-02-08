@@ -2,57 +2,53 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Enum\TeacherColorEnum;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-/**
- * Class TeacherAdmin.
- *
- * @category Admin
- */
-class TeacherAdmin extends AbstractBaseAdmin
+final class TeacherAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Teacher';
     protected $baseRoutePattern = 'teachers/teacher';
-    protected $datagridValues = [
-        '_sort_by' => 'position',
-        '_sort_order' => 'asc',
-    ];
 
-    /**
-     * Configure route collection.
-     */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureDefaultSortValues(array &$sortValues): void
+    {
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'position';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
         $collection
-            ->remove('delete')
             ->add('detail', $this->getRouterIdParameter().'/detail')
+            ->remove('delete')
         ;
     }
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
-            ->with('backend.admin.image', $this->getFormMdSuccessBoxArray(4))
+        $form
+            ->with('backend.admin.image', $this->getFormMdSuccessBoxArray('backend.admin.image', 4))
             ->add(
                 'imageFile',
-                FileType::class,
+                VichImageType::class,
                 [
                     'label' => 'backend.admin.image',
-                    'help' => $this->getImageHelperFormMapperWithThumbnailAspectRatio(),
                     'required' => false,
                 ]
             )
             ->end()
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general'))
             ->add(
                 'name',
                 null,
@@ -69,7 +65,7 @@ class TeacherAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray(2))
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 2))
             ->add(
                 'position',
                 null,
@@ -107,9 +103,9 @@ class TeacherAdmin extends AbstractBaseAdmin
             ->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'name',
                 null,
@@ -141,9 +137,9 @@ class TeacherAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'position',
                 'decimal',
@@ -153,7 +149,7 @@ class TeacherAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'image',
+                'imageName',
                 null,
                 [
                     'label' => 'backend.admin.image',
@@ -174,8 +170,6 @@ class TeacherAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.teacher.color',
                     'template' => 'Admin/Cells/list__cell_teacher_color.html.twig',
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
                 ]
             )
             ->add(
@@ -199,24 +193,26 @@ class TeacherAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
-                        'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
+                        'edit' => [
+                            'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
                         'detail' => [
                             'template' => 'Admin/Cells/list__action_teacher_detail.html.twig',
                         ],
                     ],
-                    'label' => 'backend.admin.actions',
                 ]
             )
         ;
     }
 
-    public function getExportFields(): array
+    public function configureExportFields(): array
     {
         return [
             'name',

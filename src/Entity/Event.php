@@ -3,256 +3,169 @@
 namespace App\Entity;
 
 use App\Enum\EventClassroomTypeEnum;
-use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * Class Event.
- *
- * @category Entity
- *
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  * @ORM\Table(name="event")
  */
 class Event extends AbstractBase
 {
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime")
      */
-    private $begin;
+    private DateTimeInterface $begin;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime")
      */
-    private $end;
+    private DateTimeInterface $end;
 
     /**
-     * @var Teacher
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
      */
-    private $teacher;
+    private Teacher $teacher;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default"=0})
      */
-    private $classroom = 0;
+    private int $classroom = 0;
 
     /**
-     * @var ClassGroup
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\ClassGroup")
      */
-    private $group;
+    private ClassGroup $group;
 
     /**
-     * @var ArrayCollection
-     *
      * @ORM\ManyToMany(targetEntity="App\Entity\Student", inversedBy="events")
-     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     * @ORM\OrderBy({"surname"="ASC", "name"="ASC"})
      */
-    private $students;
+    private Collection $students;
 
     /**
-     * @var Event
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Event")
      * @ORM\JoinColumn(name="previous_id", referencedColumnName="id", nullable=true)
      */
-    private $previous;
+    private ?Event $previous = null;
 
     /**
-     * @var Event
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Event")
      * @ORM\JoinColumn(name="next_id", referencedColumnName="id", nullable=true)
      */
-    private $next;
+    private ?Event $next = null;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\GreaterThanOrEqual(1)
      */
-    private $dayFrequencyRepeat;
+    private ?int $dayFrequencyRepeat = null;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $until;
+    private ?DateTimeInterface $until = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * Event constructor.
-     */
     public function __construct()
     {
         $this->students = new ArrayCollection();
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getBegin()
+    public function getBegin(): DateTimeInterface
     {
         return $this->begin;
     }
 
-    /**
-     * @return string
-     */
-    public function getBeginString()
+    public function getBeginString(): string
     {
-        return $this->getBegin() ? $this->getBegin()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateTimeAsString($this->getBegin());
     }
 
-    /**
-     * @return Event
-     */
-    public function setBegin(DateTime $begin)
+    public function setBegin(DateTimeInterface $begin): self
     {
         $this->begin = $begin;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getEnd()
+    public function getEnd(): DateTimeInterface
     {
         return $this->end;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndString()
+    public function getEndString(): string
     {
-        return $this->getEnd() ? $this->getEnd()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateTimeAsString($this->getEnd());
     }
 
-    /**
-     * @return Event
-     */
-    public function setEnd(DateTime $end)
+    public function setEnd(DateTimeInterface $end): self
     {
         $this->end = $end;
 
         return $this;
     }
 
-    /**
-     * @return Teacher
-     */
-    public function getTeacher()
+    public function getTeacher(): Teacher
     {
         return $this->teacher;
     }
 
-    /**
-     * @param Teacher $teacher
-     *
-     * @return Event
-     */
-    public function setTeacher($teacher)
+    public function setTeacher(Teacher $teacher): self
     {
         $this->teacher = $teacher;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getClassroom()
+    public function getClassroom(): int
     {
         return $this->classroom;
     }
 
-    /**
-     * @return string
-     */
-    public function getClassroomString()
+    public function getClassroomString(): string
     {
         return EventClassroomTypeEnum::getTranslatedEnumArray()[$this->classroom];
     }
 
-    /**
-     * @return string
-     */
-    public function getShortClassroomString()
+    public function getShortClassroomString(): string
     {
         return EventClassroomTypeEnum::getShortTranslatedEnumArray()[$this->classroom];
     }
 
-    /**
-     * @param int $classroom
-     *
-     * @return Event
-     */
-    public function setClassroom($classroom)
+    public function setClassroom(int $classroom): self
     {
         $this->classroom = $classroom;
 
         return $this;
     }
 
-    /**
-     * @return ClassGroup
-     */
-    public function getGroup()
+    public function getGroup(): ClassGroup
     {
         return $this->group;
     }
 
-    /**
-     * @param ClassGroup $group
-     *
-     * @return Event
-     */
-    public function setGroup($group)
+    public function setGroup(ClassGroup $group): self
     {
         $this->group = $group;
 
         return $this;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getStudents()
+    public function getStudents(): Collection
     {
         return $this->students;
     }
 
-    /**
-     * @return int
-     */
-    public function getStudentsAmount()
+    public function getStudentsAmount(): int
     {
         return count($this->getStudents());
     }
 
-    /**
-     * @return string
-     */
-    public function getStudentsString()
+    public function getStudentsString(): string
     {
         $result = [];
         /** @var Student $student */
@@ -263,22 +176,14 @@ class Event extends AbstractBase
         return implode(' · ', $result);
     }
 
-    /**
-     * @param ArrayCollection $students
-     *
-     * @return Event
-     */
-    public function setStudents($students)
+    public function setStudents(Collection $students): self
     {
         $this->students = $students;
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function addStudent(Student $student)
+    public function addStudent(Student $student): self
     {
         if (!$this->students->contains($student)) {
             $this->students->add($student);
@@ -287,10 +192,7 @@ class Event extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function removeStudent(Student $student)
+    public function removeStudent(Student $student): self
     {
         if ($this->students->contains($student)) {
             $this->students->removeElement($student);
@@ -299,80 +201,53 @@ class Event extends AbstractBase
         return $this;
     }
 
-    /**
-     * @return Event
-     */
-    public function getPrevious()
+    public function getPrevious(): ?Event
     {
         return $this->previous;
     }
 
-    /**
-     * @param Event $previous
-     *
-     * @return Event
-     */
-    public function setPrevious($previous)
+    public function setPrevious(?Event $previous): self
     {
         $this->previous = $previous;
 
         return $this;
     }
 
-    /**
-     * @return Event
-     */
-    public function getNext()
+    public function getNext(): ?Event
     {
         return $this->next;
     }
 
-    /**
-     * @param Event $next
-     *
-     * @return Event
-     */
-    public function setNext($next)
+    public function setNext(?Event $next): self
     {
         $this->next = $next;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getDayFrequencyRepeat()
+    public function getDayFrequencyRepeat(): ?int
     {
         return $this->dayFrequencyRepeat;
     }
 
-    /**
-     * @param int|null $dayFrequencyRepeat
-     *
-     * @return Event
-     */
-    public function setDayFrequencyRepeat($dayFrequencyRepeat)
+    public function setDayFrequencyRepeat(?int $dayFrequencyRepeat): self
     {
         $this->dayFrequencyRepeat = $dayFrequencyRepeat;
 
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUntil()
+    public function getUntil(): ?DateTimeInterface
     {
         return $this->until;
     }
 
-    /**
-     * @param DateTime|null $until
-     *
-     * @return Event
-     */
-    public function setUntil($until)
+    public function getUntilString(): string
+    {
+        return self::convertDateTimeAsString($this->getUntil());
+    }
+
+    public function setUntil(?DateTimeInterface $until): self
     {
         $this->until = $until;
 
@@ -382,7 +257,7 @@ class Event extends AbstractBase
     /**
      * @Assert\Callback
      */
-    public function validateEnd(ExecutionContextInterface $context)
+    public function validateEnd(ExecutionContextInterface $context): void
     {
         if ($this->getEnd() < $this->getBegin()) {
             $context
@@ -395,7 +270,7 @@ class Event extends AbstractBase
     /**
      * @Assert\Callback
      */
-    public function validateUntil(ExecutionContextInterface $context)
+    public function validateUntil(ExecutionContextInterface $context): void
     {
         if (!is_null($this->getUntil()) && $this->getUntil() < $this->getEnd()) {
             $context
@@ -405,9 +280,6 @@ class Event extends AbstractBase
         }
     }
 
-    /**
-     * @return string
-     */
     public function getCalendarTitle(): string
     {
         return '['.$this->getShortClassroomString().'] '.$this->getGroup()->getCode().' '.$this->getTeacher()->getName();

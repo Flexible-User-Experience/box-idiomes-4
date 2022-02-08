@@ -16,43 +16,43 @@ abstract class AbstractPerson extends AbstractBase
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?DateTimeInterface $dischargeDate;
+    protected ?DateTimeInterface $dischargeDate = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected ?string $dni;
+    protected ?string $dni = null;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected string $name;
+    protected ?string $name = null;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected string $surname;
+    protected ?string $surname = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected ?string $phone;
+    protected ?string $phone = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Email(strict="true", checkMX=true, checkHost=true)
+     * @Assert\Email()
      */
-    protected ?string $email;
+    protected ?string $email = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected ?string $address;
+    protected ?string $address = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\City")
      */
-    protected ?City $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
@@ -68,7 +68,7 @@ abstract class AbstractPerson extends AbstractBase
 
     public function getDischargeDateString(): string
     {
-        return $this->getDischargeDate() ? $this->getDischargeDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return self::convertDateAsString($this->getDischargeDate());
     }
 
     public function setDischargeDate(?DateTimeInterface $dischargeDate): self
@@ -90,7 +90,7 @@ abstract class AbstractPerson extends AbstractBase
         return $this;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -105,19 +105,19 @@ abstract class AbstractPerson extends AbstractBase
         return $this->surname.', '.$this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getSurname(): string
+    public function getSurname(): ?string
     {
         return $this->surname;
     }
 
-    public function setSurname(string $surname): self
+    public function setSurname(?string $surname): self
     {
         $this->surname = $surname;
 

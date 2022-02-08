@@ -5,10 +5,11 @@ namespace App\Controller\Admin;
 use App\Manager\EventManager;
 use App\Pdf\ExportCalendarToListBuilderPdf;
 use DateTime;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ExtraHelperManagerAdminController extends BaseAdminController
+final class ExtraHelperManagerAdminController extends CRUDController
 {
     public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, string $start, string $end): Response
     {
@@ -20,7 +21,7 @@ class ExtraHelperManagerAdminController extends BaseAdminController
                 if ($exportCalendarList->hasDays()) {
                     $pdf = $eclb->build($exportCalendarList);
 
-                    return new Response($pdf->Output('box_idiomes_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+                    return new Response($pdf->Output('box_idiomes_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf'), 200, ['Content-type' => 'application/pdf']);
                 }
                 $this->addFlash('warning', $ts->trans('backend.admin.calendar.export.error.no_items_found', [
                     '%start%' => $startDate->format('d/m/Y'),

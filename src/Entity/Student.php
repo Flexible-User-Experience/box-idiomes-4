@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Traits\BankCreditorSepaTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,24 +22,24 @@ class Student extends AbstractPerson
     public const DISCOUNT_PER_EXTRA_SON = 5;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
-    private DateTimeInterface $birthDate;
+    private ?DateTimeInterface $birthDate = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private ?string $schedule;
+    private ?string $schedule = null;
 
     /**
      * @ORM\Column(type="text", length=4000, nullable=true)
      */
-    private ?string $comments;
+    private ?string $comments = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="students")
      */
-    private ?Person $parent;
+    private ?Person $parent = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
@@ -50,12 +51,12 @@ class Student extends AbstractPerson
      * @ORM\ManyToOne(targetEntity="App\Entity\Tariff")
      * @ORM\JoinColumn(name="tariff_id", referencedColumnName="id")
      */
-    private ?Tariff $tariff;
+    private ?Tariff $tariff = null;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="students")
      */
-    private $events;
+    private Collection $events;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
@@ -82,7 +83,7 @@ class Student extends AbstractPerson
         $this->events = new ArrayCollection();
     }
 
-    public function getBirthDate(): DateTimeInterface
+    public function getBirthDate(): ?DateTimeInterface
     {
         return $this->birthDate;
     }
@@ -92,24 +93,18 @@ class Student extends AbstractPerson
         return $this->getBirthDate() ? $this->getBirthDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    public function setBirthDate(DateTimeInterface $birthDate): self
+    public function setBirthDate(?DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
 
         return $this;
     }
 
-    /**
-     * @return int
-     *
-     * @throws \Exception
-     */
-    public function getYearsOld()
+    public function getYearsOld(): int
     {
-        $today = new \DateTime();
-        $interval = $today->diff($this->birthDate);
+        $today = new DateTimeImmutable();
 
-        return $interval->y;
+        return $today->diff($this->birthDate)->y;
     }
 
     public function getSchedule(): ?string
@@ -124,40 +119,24 @@ class Student extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getComments()
+    public function getComments(): ?string
     {
         return $this->comments;
     }
 
-    /**
-     * @param string $comments
-     *
-     * @return Student
-     */
-    public function setComments($comments)
+    public function setComments(?string $comments): self
     {
         $this->comments = $comments;
 
         return $this;
     }
 
-    /**
-     * @return Person
-     */
-    public function getParent()
+    public function getParent(): ?Person
     {
         return $this->parent;
     }
 
-    /**
-     * @param Person $parent
-     *
-     * @return Student
-     */
-    public function setParent($parent)
+    public function setParent(?Person $parent): self
     {
         $this->parent = $parent;
 
@@ -176,179 +155,122 @@ class Student extends AbstractPerson
         return $this;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getEvents()
+    public function getEvents(): Collection
     {
         return $this->events;
     }
 
-    /**
-     * @param ArrayCollection $events
-     *
-     * @return Student
-     */
-    public function setEvents($events)
+    public function setEvents(Collection $events): self
     {
         $this->events = $events;
 
         return $this;
     }
 
-    public function addEvent(Event $event)
+    public function addEvent(Event $event): self
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
         }
+
+        return $this;
     }
 
-    public function removeEvent(Event $event)
+    public function removeEvent(Event $event): self
     {
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
         }
+
+        return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHasImageRightsAccepted()
+    public function isHasImageRightsAccepted(): ?bool
     {
         return $this->hasImageRightsAccepted;
     }
 
-    /**
-     * @return bool
-     */
-    public function getHasImageRightsAccepted()
+    public function getHasImageRightsAccepted(): ?bool
     {
         return $this->isHasImageRightsAccepted();
     }
 
-    /**
-     * @param bool $hasImageRightsAccepted
-     *
-     * @return $this
-     */
-    public function setHasImageRightsAccepted($hasImageRightsAccepted)
+    public function setHasImageRightsAccepted(?bool $hasImageRightsAccepted): self
     {
         $this->hasImageRightsAccepted = $hasImageRightsAccepted;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHasSepaAgreementAccepted()
+    public function isHasSepaAgreementAccepted(): ?bool
     {
         return $this->hasSepaAgreementAccepted;
     }
 
-    /**
-     * @return bool
-     */
-    public function getHasSepaAgreementAccepted()
+    public function getHasSepaAgreementAccepted(): ?bool
     {
         return $this->isHasSepaAgreementAccepted();
     }
 
-    /**
-     * @param bool $hasSepaAgreementAccepted
-     *
-     * @return $this
-     */
-    public function setHasSepaAgreementAccepted($hasSepaAgreementAccepted)
+    public function setHasSepaAgreementAccepted(?bool $hasSepaAgreementAccepted): self
     {
         $this->hasSepaAgreementAccepted = $hasSepaAgreementAccepted;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPaymentExempt()
+    public function isPaymentExempt(): ?bool
     {
         return $this->isPaymentExempt;
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsPaymentExempt()
+    public function getIsPaymentExempt(): ?bool
     {
         return $this->isPaymentExempt();
     }
 
-    /**
-     * @param bool $isPaymentExempt
-     *
-     * @return $this
-     */
-    public function setIsPaymentExempt($isPaymentExempt)
+    public function setIsPaymentExempt(?bool $isPaymentExempt): self
     {
         $this->isPaymentExempt = $isPaymentExempt;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getHasAcceptedInternalRegulations()
+    public function getHasAcceptedInternalRegulations(): ?bool
     {
         return $this->hasAcceptedInternalRegulations;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHasAcceptedInternalRegulations()
+    public function isHasAcceptedInternalRegulations(): ?bool
     {
         return $this->getHasAcceptedInternalRegulations();
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAcceptedInternalRegulations()
+    public function hasAcceptedInternalRegulations(): ?bool
     {
         return $this->getHasAcceptedInternalRegulations();
     }
 
-    /**
-     * @param bool $hasAcceptedInternalRegulations
-     *
-     * @return $this
-     */
-    public function setHasAcceptedInternalRegulations($hasAcceptedInternalRegulations)
+    public function setHasAcceptedInternalRegulations(?bool $hasAcceptedInternalRegulations): self
     {
         $this->hasAcceptedInternalRegulations = $hasAcceptedInternalRegulations;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function calculateMonthlyTariff()
+    public function calculateMonthlyTariff(): float
     {
         $price = $this->getTariff()->getPrice();
         if ($this->getParent()) {
             $enabledSonsAmount = $this->getParent()->getEnabledSonsAmount();
             $discount = $enabledSonsAmount ? ((($enabledSonsAmount - 1) * self::DISCOUNT_PER_EXTRA_SON) / $enabledSonsAmount) : 0;
-            $price = $price - $discount;
+            $price -= $discount;
         }
 
         return $price;
     }
 
-    /**
-     * @return float|int
-     */
-    public function calculateMonthlyDiscount()
+    public function calculateMonthlyDiscount(): float
     {
         $discount = 0;
         if ($this->getParent()) {
@@ -359,22 +281,16 @@ class Student extends AbstractPerson
         return $discount;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDiscount()
+    public function hasDiscount(): bool
     {
         if ($this->getParent()) {
-            return $this->getParent()->getEnabledSonsAmount() > 1 ? true : false;
+            return $this->getParent()->getEnabledSonsAmount() > 1;
         }
 
         return false;
     }
 
-    /**
-     * @return string
-     */
-    public function getMainEmailSubject()
+    public function getMainEmailSubject(): string
     {
         $email = $this->getEmail();
         if ($this->getParent() && $this->getParent()->getEmail()) {
@@ -384,7 +300,7 @@ class Student extends AbstractPerson
         return $email;
     }
 
-    public function canBeDeletedSafely()
+    public function canBeDeletedSafely(): bool
     {
         $result = false;
         if (is_null($this->getParent()) && 0 === count($this->getEvents())) {

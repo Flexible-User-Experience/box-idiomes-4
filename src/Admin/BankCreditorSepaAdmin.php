@@ -2,29 +2,29 @@
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
+use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-/**
- * Class BankCreditorSepaAdmin.
- *
- * @category Admin
- */
-class BankCreditorSepaAdmin extends AbstractBaseAdmin
+final class BankCreditorSepaAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'BankCreditorSepa';
     protected $baseRoutePattern = 'administrations/bank-creditor-sepa';
-    protected $datagridValues = [
-        '_sort_by' => 'name',
-        '_sort_order' => 'asc',
-    ];
 
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureDefaultSortValues(array &$sortValues): void
     {
-        $formMapper
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray(6))
+        $sortValues[DatagridInterface::PAGE] = 1;
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    protected function configureFormFields(FormMapper $form): void
+    {
+        $form
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general'))
             ->add(
                 'name',
                 null,
@@ -79,9 +79,9 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add(
                 'name',
                 null,
@@ -127,9 +127,9 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add(
                 'name',
                 null,
@@ -175,22 +175,36 @@ class BankCreditorSepaAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.enabled',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
                     'editable' => true,
                 ]
             )
             ->add(
-                '_action',
-                'actions',
+                ListMapper::NAME_ACTIONS,
+                null,
                 [
+                    'label' => 'backend.admin.actions',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
                         'edit' => ['template' => 'Admin/Buttons/list__action_edit_button.html.twig'],
                         'delete' => ['template' => 'Admin/Buttons/list__action_delete_button.html.twig'],
                     ],
-                    'label' => 'Accions',
                 ]
             )
         ;
+    }
+
+    public function configureExportFields(): array
+    {
+        return [
+            'name',
+            'organizationId',
+            'creditorName',
+            'iban',
+            'bic',
+            'enabled',
+        ];
     }
 }

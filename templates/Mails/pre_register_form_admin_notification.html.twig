@@ -3,67 +3,56 @@
 {% block subject %}Formulari preinscripció{% endblock %}
 
 {% block content %}
-    <table class="row">
-        <tbody>
-        <tr>
-            <th class="small-12 large-12 columns first last vertical-padding">
-                <table>
-                    <tr>
-                        <th>
-                            <h5 class="grey-color">S'ha rebut un nova preinscipció a través del formulari de la pàgina web</h5>
-                            <p class="blue-color normal-m-top">
-                                {{ preRegister | write_pre_register_season_string | trans }}
-                            </p>
-                            <p class="grey-color">{{ 'frontend.forms.preregister.name' | trans }}</p>
-                            <p>{{ preRegister.name }}</p>
-                            <br>
-                            <p class="grey-color">{{ 'frontend.forms.preregister.surname' | trans }}</p>
-                            <p>{{ preRegister.surname }}</p>
-                            <br>
-                            {% if preRegister.phone %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.phone' | trans }}</p>
-                                <p>{{ preRegister.phone }}</p>
-                                <br>
-                            {% endif %}
-                            <p class="grey-color">{{ 'frontend.forms.preregister.email' | trans }}</p>
-                            <p><a href="mailto:{{ preRegister.email }}">{{ preRegister.email }}</a></p>
-                            <br>
-                            {% if preRegister.age %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.age' | trans }}</p>
-                                <p>{{ preRegister.age }}</p>
-                                <br>
-                            {% endif %}
-                            {% if preRegister.courseLevel %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.course_level' | trans }}</p>
-                                <p>{{ preRegister.courseLevel }}</p>
-                                <br>
-                            {% endif %}
-                            {% if preRegister.preferredTimetable %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.preferred_timetable' | trans }}</p>
-                                <p>{{ preRegister.preferredTimetable }}</p>
-                                <br>
-                            {% endif %}
-                            {% if preRegister.previousAcademy %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.previous_academy' | trans }}</p>
-                                <p>{{ preRegister.previousAcademy }}</p>
-                                <br>
-                            {% endif %}
-                            {% if preRegister.comments %}
-                                <p class="grey-color">{{ 'frontend.forms.preregister.comments' | trans }}</p>
-                                <p>{{ preRegister.comments | nl2br }}</p>
-                                <br>
-                            {% endif %}
-                            <p class="grey-color">{{ 'frontend.forms.preregister.has_been_previous_customer' | trans }}</p>
-                            <p>{{ preRegister.hasBeenPreviousCustomerString | nl2br }}</p>
-                            <br>
-                            <p class="grey-color">{{ 'frontend.forms.preregister.wants_to_make_official_exam' | trans }}</p>
-                            <p>{{ preRegister.wantsToMakeOfficialExamString | nl2br }}</p>
-                        </th>
-                        <th class="expander"></th>
-                    </tr>
-                </table>
-            </th>
-        </tr>
-        </tbody>
-    </table>
+    <row>
+        <columns small="12" large="12">
+            <h5 class="grey-color">S'ha rebut un nova preinscipció a través del formulari de la pàgina web</h5>
+            <p class="blue-color normal-m-top">
+                {{ preRegister | write_pre_register_season_string | trans }}
+            </p>
+            <p class="grey-color">{{ 'frontend.forms.preregister.name' | trans }}</p>
+            <p>{{ preRegister.name }}</p>
+            <br>
+            <p class="grey-color">{{ 'frontend.forms.preregister.surname' | trans }}</p>
+            <p>{{ preRegister.surname }}</p>
+            <br>
+            {% if preRegister.phone %}
+                <p class="grey-color">{{ 'frontend.forms.preregister.phone' | trans }}</p>
+                <p>{{ preRegister.phone }}</p>
+                <br>
+            {% endif %}
+            <p class="grey-color">{{ 'frontend.forms.preregister.email' | trans }}</p>
+            <p><a href="mailto:{{ preRegister.email }}">{{ preRegister.email }}</a></p>
+            <br>
+            {% if preRegister.age %}
+                <p class="grey-color">{{ 'frontend.forms.preregister.age' | trans }}</p>
+                <p>{{ preRegister.age }}</p>
+                <br>
+            {% endif %}
+            {% if preRegister.courseLevel %}
+                <p class="grey-color">{{ 'frontend.forms.preregister.course_level' | trans }}</p>
+                <p>{{ preRegister.courseLevel }}</p>
+                <br>
+            {% endif %}
+            {% if preRegister.preferredTimetable %}
+                <p class="grey-color">{{ 'frontend.forms.preregister.preferred_timetable' | trans }}</p>
+                <p>{{ preRegister.preferredTimetable }}</p>
+                <br>
+            {% endif %}
+            {% if preRegister.previousAcademy %}
+                <p class="grey-color">{{ 'frontend.forms.preregister.previous_academy' | trans }}</p>
+                <p>{{ preRegister.previousAcademy }}</p>
+                <br>
+            {% endif %}
+            {% if preRegister.comments %}
+                <p class="grey-color">{{ 'frontend.forms.preregister.comments' | trans }}</p>
+                <p>{{ preRegister.comments | nl2br }}</p>
+                <br>
+            {% endif %}
+            <p class="grey-color">{{ 'frontend.forms.preregister.has_been_previous_customer' | trans }}</p>
+            <p>{{ preRegister.hasBeenPreviousCustomerString | nl2br }}</p>
+            <br>
+            <p class="grey-color">{{ 'frontend.forms.preregister.wants_to_make_official_exam' | trans }}</p>
+            <p>{{ preRegister.wantsToMakeOfficialExamString | nl2br }}</p>
+        </columns>
+    </row>
 {% endblock %}

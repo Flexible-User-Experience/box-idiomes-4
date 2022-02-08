@@ -1,58 +1,45 @@
 imports:
-    - { resource: 'services/repositories.yaml' }
     - { resource: 'services/admins.yaml' }
 
 parameters:
-    default_locale:              '%env(string:DEFAULT_LOCALE)%'
-    project_web_title:           '%env(string:PROJECT_WEB_TITLE)%'
-    project_url_base:            '%env(string:PROJECT_BASE_URL)%'
-    project_backend_title:       '%env(string:PROJECT_BACKEND_TITLE)%'
-    google_analytics_enabled:    '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
-    google_analytics_account:    '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
-    google_maps_api_key:         '%env(string:GOOGLE_MAPS_API_KEY)%'
-    facebook_pixel_enabled:      '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
-    facebook_pixel_id:           '%env(string:FACEBOOK_PIXEL_ID)%'
-    mailchimp_api_key:           '%env(string:MAILCHIMP_API_KEY)%'
-    mailchimp_list_id:           '%env(string:MAILCHIMP_LIST_ID)%'
-    boss_name:                   '%env(string:BOSS_NAME)%'
-    boss_dni:                    '%env(string:BOSS_DNI)%'
-    boss_phone_number_1:         '%env(string:BOSS_PHONE_NUMBER_1)%'
-    boss_phone_number_2:         '%env(string:BOSS_PHONE_NUMBER_2)%'
-    boss_address:                '%env(string:BOSS_ADDRESS)%'
-    boss_city:                   '%env(string:BOSS_CITY)%'
-    iban_business:               '%env(string:IBAN_BUSINESS)%'
-    bic_number:                  '%env(string:BIC_NUMBER)%'
-    mailer_destination:          '%env(string:MAILER_DESTINATION)%'
-    delivery_dev_address:        '%env(string:DEV_DELIVERY_ADDRESS)%'
-    google_recaptcha_site_key:   '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
-    preregister_period_is_open:  false
+    default_locale:             '%env(string:DEFAULT_LOCALE)%'
+    project_web_title:          '%env(string:PROJECT_WEB_TITLE)%'
+    project_url_base:           '%env(string:PROJECT_BASE_URL)%'
+    project_backend_title:      '%env(string:PROJECT_BACKEND_TITLE)%'
+    google_analytics_enabled:   '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
+    google_analytics_account:   '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
+    google_maps_api_key:        '%env(string:GOOGLE_MAPS_API_KEY)%'
+    facebook_pixel_enabled:     '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
+    facebook_pixel_id:          '%env(string:FACEBOOK_PIXEL_ID)%'
+    mailchimp_api_key:          '%env(string:MAILCHIMP_API_KEY)%'
+    mailchimp_list_id:          '%env(string:MAILCHIMP_LIST_ID)%'
+    boss_name:                  '%env(string:BOSS_NAME)%'
+    boss_dni:                   '%env(string:BOSS_DNI)%'
+    boss_phone_number_1:        '%env(string:BOSS_PHONE_NUMBER_1)%'
+    boss_phone_number_2:        '%env(string:BOSS_PHONE_NUMBER_2)%'
+    boss_address:               '%env(string:BOSS_ADDRESS)%'
+    boss_city:                  '%env(string:BOSS_CITY)%'
+    iban_business:              '%env(string:IBAN_BUSINESS)%'
+    bic_number:                 '%env(string:BIC_NUMBER)%'
+    mailer_destination:         '%env(string:MAILER_DESTINATION)%'
+    delivery_dev_address:       '%env(string:DEV_DELIVERY_ADDRESS)%'
+    google_recaptcha_site_key:  '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
+    admin_logo:                 '%env(string:ADMIN_LOGO)%'
+    admin_color:                '%env(string:ADMIN_COLOR)%'
+    admin_is_stage:             '%env(bool:ADMIN_IS_STAGE)%'
+    preregister_period_is_open: false
 
 services:
     _defaults:
         autowire:      true
         autoconfigure: true
-        bind:
-            $amd:    '%mailer_destination%'
-            $pwt:    '%project_web_title%'
-            $pub:    '%project_url_base%'
-            $mak:    '%mailchimp_api_key%'
-            $ppo:    '%preregister_period_is_open%'
-            $bn:     '%boss_name%'
-            $bd:     '%boss_dni%'
-            $ba:     '%boss_address%'
-            $bc:     '%boss_city%'
-            $ib:     '%iban_business%'
-            $bba:    '%boss_address%'
-            $bpn:    '%boss_phone_number_1%'
-            $locale: '%default_locale%'
     # Commons
     App\:
-        resource: '../src/*'
-        exclude:  '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-    # Controllers
-    App\Controller\:
-        resource: '../src/Controller'
-        tags:     [ 'controller.service_arguments' ]
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
     Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
     # Template Blocks
     app.block.event_calendar:
@@ -81,8 +68,7 @@ services:
         arguments:
             - '@app.courier'
             - '@twig'
-            - '%mailer_destination%'
-            - '%project_url_base%'
+            - '@parameter_bag'
     # Factories
     app.event_transformer_factory:
         class: App\Service\EventTransformerFactoryService
@@ -94,16 +80,16 @@ services:
         public: true
         arguments:
             - '@translator'
-            - '@app.receipt_repository'
-            - '@app.invoice_repository'
-            - '@app.spending_repository'
+            - '@App\Repository\ReceiptRepository'
+            - '@App\Repository\InvoiceRepository'
+            - '@App\Repository\SpendingRepository'
     # Menus
     app.backend_top_nav_menu_builder:
         class: App\Menu\BackendTopNavMenuBuilder
         arguments:
             - '@knp_menu.factory'
             - '@security.helper'
-            - '@app.contact_message_repository'
+            - '@App\Repository\ContactMessageRepository'
     app.backend_top_nav_menu:
         class: Knp\Menu\MenuItem
         factory: [ '@app.backend_top_nav_menu_builder', createTopNavMenu ]
@@ -136,7 +122,8 @@ services:
         arguments:
             - '@knp_menu.factory'
             - '@security.helper'
-            - '%preregister_period_is_open%'
+            - '@request_stack'
+            - '@parameter_bag'
     app.frontend_top_menu:
         class: Knp\Menu\MenuItem
         factory: [ '@app.frontend_menu_builder', createTopMenu ]
@@ -150,27 +137,24 @@ services:
         public: true
         arguments:
             - '@kernel'
-            - '%project_url_base%'
-            - '%mailer_destination%'
-            - '%boss_address%'
-            - '%boss_phone_number_1%'
+            - '@parameter_bag'
     app.mailchimp_manager:
         class: App\Manager\MailchimpManager
         public: true
         arguments:
             - '@app.notification'
-            - '%mailchimp_api_key%'
+            - '@parameter_bag'
     app.receipt_manager:
         class: App\Manager\ReceiptManager
         public: true
         arguments:
-            - '@app.invoice_repository'
+            - '@App\Repository\InvoiceRepository'
     app.event_manager:
         class: App\Manager\EventManager
         public: true
         arguments:
-            - '@app.event_repository'
-            - '@app.tariff_repository'
+            - '@App\Repository\EventRepository'
+            - '@App\Repository\TariffRepository'
     app.generate_receipt_form_manager:
         class: App\Manager\GenerateReceiptFormManager
         public: true
@@ -179,9 +163,9 @@ services:
             - '@kernel'
             - '@doctrine.orm.entity_manager'
             - '@translator.default'
-            - '@app.student_repository'
-            - '@app.event_repository'
-            - '@app.receipt_repository'
+            - '@App\Repository\StudentRepository'
+            - '@App\Repository\EventRepository'
+            - '@App\Repository\ReceiptRepository'
             - '@app.event_manager'
     app.generate_invoice_form_manager:
         class: App\Manager\GenerateInvoiceFormManager
@@ -191,9 +175,9 @@ services:
             - '@kernel'
             - '@doctrine.orm.entity_manager'
             - '@translator.default'
-            - '@app.student_repository'
-            - '@app.event_repository'
-            - '@app.invoice_repository'
+            - '@App\Repository\StudentRepository'
+            - '@App\Repository\EventRepository'
+            - '@App\Repository\InvoiceRepository'
     # PDF Builders
     app.student_image_rights_pdf_builder:
         class: App\Pdf\StudentImageRightsBuilderPdf
@@ -202,7 +186,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
+            - '@parameter_bag'
     app.sepa_agreement_pdf_builder:
         class: App\Pdf\SepaAgreementBuilderPdf
         public: true
@@ -210,8 +194,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
+            - '@parameter_bag'
     app.receipt_reminder_pdf_builder:
         class: App\Pdf\ReceiptReminderBuilderPdf
         public: true
@@ -219,13 +202,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.receipt_pdf_builder:
         class: App\Pdf\ReceiptBuilderPdf
         public: true
@@ -233,13 +210,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.invoice_pdf_builder:
         class: App\Pdf\InvoiceBuilderPdf
         public: true
@@ -247,13 +218,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.class_group_pdf_builder:
         class: App\Pdf\ClassGroupBuilderPdf
         public: true
@@ -261,13 +226,7 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%boss_address%'
-            - '%boss_city%'
-            - '%iban_business%'
-            - '%default_locale%'
+            - '@parameter_bag'
     app.export_calendar_to_list_pdf_builder:
         class: App\Pdf\ExportCalendarToListBuilderPdf
         public: true
@@ -275,27 +234,21 @@ services:
             - '@qipsius.tcpdf'
             - '@app.smart_assets_helper'
             - '@translator.default'
-            - '%project_web_title%'
+            - '@parameter_bag'
     # SEPA
     app.xml_sepa_builder:
         class: App\Service\XmlSepaBuilderService
         public: true
         arguments:
-            - '@app.spanish_sepa_helper'
-            - '%boss_name%'
-            - '%boss_dni%'
-            - '%iban_business%'
-            - '%bic_number%'
-    app.spanish_sepa_helper:
-        class: App\Service\SpanishSepaHelperService
-        public: true
+            - '@App\Service\SpanishSepaHelperService'
+            - '@parameter_bag'
     # File
     app.file_service:
         class: App\Service\FileService
         public: true
         arguments:
-            - '@vich_uploader.templating.helper.uploader_helper'
-            - '%kernel.project_dir%'
+            - '@Vich\UploaderBundle\Templating\Helper\UploaderHelper'
+            - '@parameter_bag'
     # Forms
     app.form.type.generate_receipt:
         class: App\Form\Type\GenerateReceiptType
@@ -315,9 +268,9 @@ services:
         class: App\Form\Type\EventType
         public: true
         arguments:
-            - '@app.teacher_repository'
-            - '@app.class_group_repository'
-            - '@app.student_repository'
+            - '@App\Repository\TeacherRepository'
+            - '@App\Repository\ClassGroupRepository'
+            - '@App\Repository\StudentRepository'
             - '@app.event_manager'
         tags:
             - { name: form.type }
@@ -329,10 +282,16 @@ services:
         tags:
             - { name: form.type }
     # Listeners
-    app.sitemap.blog_post_subscriber:
+    app.sitemap.subscriber:
         class: App\Listener\SitemapListener
         arguments:
-            - "@router"
-            - "@doctrine.orm.default_entity_manager"
+            - '@router'
         tags:
-            - { name: "kernel.event_subscriber", priority: 100 }
+            - { name: 'kernel.event_subscriber', priority: 100 }
+    app.doctrine_user_event:
+        class: App\Doctrine\Listener\UserListener
+        arguments:
+            - '@security.user_password_hasher'
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: prePersist, entity: 'App\Entity\User', priority: 2 }
+            - { name: 'doctrine.orm.entity_listener', event: preUpdate, entity: 'App\Entity\User', priority: 2 }

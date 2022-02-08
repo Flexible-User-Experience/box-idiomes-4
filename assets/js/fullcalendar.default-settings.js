@@ -1,31 +1,37 @@
-import { Calendar } from "@fullcalendar/core";
-import interactionPlugin from "@fullcalendar/interaction";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import listPlugin from "@fullcalendar/list";
-import caLocale from "@fullcalendar/core/locales/ca";
-import Routing from '../../public/bundles/fosjsrouting/js/router.min';
+import '@fullcalendar/common/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/timegrid/main.css';
+import '@fullcalendar/list/main.css';
+import '@fullcalendar/bootstrap/main.css';
 
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
-import "@fullcalendar/list/main.css";
+import { Calendar } from '@fullcalendar/core';
+import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import googleCalendarPlugin from '@fullcalendar/google-calendar';
+import caLocale from '@fullcalendar/core/locales/ca';
+import Routing from '../../public/bundles/fosjsrouting/js/router.min';
 
 const routes = require('../../public/js/fos_js_routes.json');
 Routing.setRoutingData(routes);
 
 document.addEventListener('DOMContentLoaded', () => {
     let calendarEl = document.getElementById('calendar-holder');
+    let eventsUrl = calendarEl.getAttribute('data-events-url');
+    let googleCalendarApiKey = calendarEl.getAttribute('data-gmap-api-key');
     let calendar = new Calendar(calendarEl, {
-        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-        timeZone: 'UTC',
-        header: {
-            left: 'prev today next',
+        plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
+        initialView: 'timeGridWeek',
+        timeZone: 'Europe/Madrid',
+        headerToolbar: {
+            start: 'prev,today,next',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay listWeek'
+            end: 'timeGridDay,timeGridWeek,dayGridMonth listWeek'
         },
         views: {
             timeGrid: {
+                nowIndicator: true,
                 allDaySlot: true,
                 slotLabelFormat: {
                     hour: '2-digit',
@@ -34,26 +40,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     meridiem: 'short'
                 },
                 scrollTime: '12:00:00',
-                minTime: '07:00:00',
-                maxTime: '22:00:00',
+                slotMinTime: '07:00:00',
+                slotMaxTime: '22:00:00',
                 hiddenDays: [ 0 ]
             }
         },
-        height: 750,
+        height: 780,
         locale: caLocale,
-        timeFormat: 'HH:mm',
         firstDay: 1,
         lazyFetching: false,
-        editable: true,
+        editable: false,
         navLinks: true,
-        eventLimit: true,
         businessHours: false,
         displayEventTime: true,
         fixedWeekCount: false,
         weekNumbers: false,
-        defaultView: 'timeGridWeek',
         themeSystem: 'bootstrap3',
-        googleCalendarApiKey: 'AIzaSyCZZYZV-LqX2qDtggiEo1GmeNhxe3SAhfI',
+        googleCalendarApiKey: googleCalendarApiKey,
         eventSources: [
             {
                 googleCalendarId: 'es.spain#holiday@group.v.calendar.google.com',
@@ -62,19 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: '#FED3D7'
             },
             {
-                url: Routing.generate('fc_load_events'),
+                url: eventsUrl,
                 type: 'POST',
                 data: {},
                 error: function(data) {
-                    console.log('error!', data.responseText);
+                    console.error('error!', data.responseText);
                 }
             }
         ],
-        datesRender: function (calendar) {
-            if (calendar.hasOwnProperty('view') && calendar.view.hasOwnProperty('props') && calendar.view.props.hasOwnProperty('dateProfile') && calendar.view.props.dateProfile.hasOwnProperty('currentRangeUnit') && calendar.view.props.dateProfile.hasOwnProperty('currentRange') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('start') && calendar.view.props.dateProfile.currentRange.hasOwnProperty('end') && calendar.view.props.dateProfile.currentRange.start instanceof Date && calendar.view.props.dateProfile.currentRange.end instanceof Date) {
+        datesSet: function (datesSet) {
+            if (datesSet.hasOwnProperty('start') && datesSet.hasOwnProperty('end')) {
                 let exportCalendarPdfListAnchorNode = jQuery('#export_calendar_pdf_list_anchor');
-                let start = calendar.view.props.dateProfile.currentRange.start;
-                let end = calendar.view.props.dateProfile.currentRange.end;
+                let start = datesSet.start;
+                let end = datesSet.end;
                 let route = Routing.generate('admin_app_filedummy_exportCalendarPdfList', {start: start.getFullYear() + '-' + twoDigitsPadWithZeros(start.getMonth() + 1) + '-' + twoDigitsPadWithZeros(start.getDate()), end: end.getFullYear() + '-' + twoDigitsPadWithZeros(end.getMonth() + 1) + '-' + twoDigitsPadWithZeros(end.getDate())});
                 exportCalendarPdfListAnchorNode.attr('href', route);
             }

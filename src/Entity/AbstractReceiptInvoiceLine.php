@@ -4,182 +4,112 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Abstract class AbstractReceiptInvoiceLine.
- *
- * @category Entity
- */
 abstract class AbstractReceiptInvoiceLine extends AbstractBase
 {
     /**
-     * @var Student
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Student")
      * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
-    protected $student;
+    protected Student $student;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      */
-    protected $units;
+    protected float $units = 0.0;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      */
-    protected $priceUnit;
+    protected float $priceUnit = 0.0;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $discount;
+    protected ?float $discount = null;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $total;
+    protected ?float $total = null;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return Student
-     */
-    public function getStudent()
+    public function getStudent(): Student
     {
         return $this->student;
     }
 
-    /**
-     * @return $this
-     */
-    public function setStudent(Student $student)
+    public function setStudent(Student $student): self
     {
         $this->student = $student;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return $this
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getUnits()
+    public function getUnits(): float
     {
         return $this->units;
     }
 
-    /**
-     * @param float $units
-     *
-     * @return $this
-     */
-    public function setUnits($units)
+    public function setUnits(float $units): self
     {
         $this->units = $units;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getPriceUnit()
+    public function getPriceUnit(): float
     {
         return $this->priceUnit;
     }
 
-    /**
-     * @param float $priceUnit
-     *
-     * @return $this
-     */
-    public function setPriceUnit($priceUnit)
+    public function setPriceUnit(float $priceUnit): self
     {
         $this->priceUnit = $priceUnit;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getDiscount()
+    public function getDiscount(): ?float
     {
         return $this->discount;
     }
 
-    /**
-     * @param float $discount
-     *
-     * @return $this
-     */
-    public function setDiscount($discount)
+    public function setDiscount(?float $discount): self
     {
         $this->discount = $discount;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getTotal()
+    public function getTotal(): ?float
     {
         return $this->total;
     }
 
-    /**
-     * @param float $total
-     *
-     * @return $this
-     */
-    public function setTotal($total)
+    public function setTotal(?float $total): self
     {
         $this->total = $total;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function calculateBaseAmount()
+    public function calculateBaseAmount(): float
     {
         return $this->units * $this->priceUnit - $this->discount;
     }

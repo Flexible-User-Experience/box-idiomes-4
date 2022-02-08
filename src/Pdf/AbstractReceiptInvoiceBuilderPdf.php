@@ -4,6 +4,7 @@ namespace App\Pdf;
 
 use App\Service\SmartAssetsHelperService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class AbstractReceiptInvoiceBuilderPdf
@@ -19,18 +20,18 @@ abstract class AbstractReceiptInvoiceBuilderPdf
     protected string $ib;     // IBAN bussines
     protected string $locale; // default locale useful in CLI
 
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, string $pwt, string $bn, string $bd, string $ba, string $bc, string $ib, string $locale)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, ParameterBagInterface $pb)
     {
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
-        $this->pwt = $pwt;
-        $this->bn = $bn;
-        $this->bd = $bd;
-        $this->ba = $ba;
-        $this->bc = $bc;
-        $this->ib = $ib;
-        $this->locale = $locale;
+        $this->pwt = $pb->get('project_web_title');
+        $this->bn = $pb->get('boss_name');
+        $this->bd = $pb->get('boss_dni');
+        $this->ba = $pb->get('boss_address');
+        $this->bc = $pb->get('boss_city');
+        $this->ib = $pb->get('iban_business');
+        $this->locale = $pb->get('default_locale');
     }
 
     protected function floatStringFormat($val): string
@@ -50,9 +51,9 @@ abstract class AbstractReceiptInvoiceBuilderPdf
      * @param bool   $returnAsString (if set true, returns the value separated by the separator character. Otherwise returns associative array)
      * @param string $seperator      (to separate RGB values. Applicable only if second parameter is true.)
      *
-     * @return array|string|bool (depending on second parameter. Returns False if invalid hex color value)
+     * @return string|array|bool (depending on second parameter. Returns False if invalid hex color value)
      */
-    protected function hex2RGBarray(string $hexStr, bool $returnAsString = false, string $seperator = ',')
+    protected function hex2RGBarray(string $hexStr, bool $returnAsString = false, string $seperator = ','): string | array | bool
     {
         $hexStr = preg_replace('/[^0-9A-Fa-f]/', '', $hexStr); // Gets a proper hex string
         $rgbArray = [];

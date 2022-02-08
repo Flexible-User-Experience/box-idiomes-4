@@ -6,6 +6,7 @@ use App\Entity\Student;
 use App\Service\SmartAssetsHelperService;
 use IntlDateFormatter;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
 
@@ -16,12 +17,12 @@ class StudentImageRightsBuilderPdf
     private TranslatorInterface $ts;
     private string $pwt;
 
-    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, $pwt)
+    public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, ParameterBagInterface $pb)
     {
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
-        $this->pwt = $pwt;
+        $this->pwt = $pb->get('project_web_title');
     }
 
     public function build(Student $student): TCPDF

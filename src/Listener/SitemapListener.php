@@ -2,59 +2,33 @@
 
 namespace App\Listener;
 
-use Doctrine\ORM\EntityManagerInterface;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class SitemapListener.
- *
- * @category Listener
- *
- * @author   Anton Serra <aserratorta@gmail.com>
- */
 class SitemapListener implements EventSubscriberInterface
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private UrlGeneratorInterface $router;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * SitemapListener constructor.
-     */
-    public function __construct(RouterInterface $router, EntityManagerInterface $em)
+    public function __construct(UrlGeneratorInterface $router)
     {
         $this->router = $router;
-        $this->em = $em;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            SitemapPopulateEvent::ON_SITEMAP_POPULATE => 'populateSitemap',
+            SitemapPopulateEvent::class => 'populate',
         ];
     }
 
-    public function populateSitemap(SitemapPopulateEvent $event)
+    public function populate(SitemapPopulateEvent $event): void
     {
         $section = $event->getSection();
-        if (is_null($section) || 'default' == $section) {
+        if (is_null($section) || 'default' === $section) {
             // Homepage
             $url = $this->makeUrl('app_homepage');
             $event
@@ -88,30 +62,18 @@ class SitemapListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param string $routeName
-     *
-     * @return string
-     */
-    private function makeUrl($routeName)
+    private function makeUrl(string $routeName): string
     {
         return $this->router->generate(
             $routeName, [], UrlGeneratorInterface::ABSOLUTE_URL
         );
     }
 
-    /**
-     * @param string         $url
-     * @param int            $priority
-     * @param \DateTime|null $date
-     *
-     * @return UrlConcrete
-     */
-    private function makeUrlConcrete($url, $priority = 1, $date = null)
+    private function makeUrlConcrete(string $url, int $priority = 1, ?DateTimeInterface $date = null): UrlConcrete
     {
         return new UrlConcrete(
             $url,
-            null === $date ? new \DateTime() : $date,
+            $date ?? new DateTimeImmutable(),
             UrlConcrete::CHANGEFREQ_WEEKLY,
             $priority
         );

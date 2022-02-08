@@ -3,8 +3,12 @@ twig:
     debug:                '%kernel.debug%'
     strict_variables:     '%kernel.debug%'
     exception_controller: null
+    paths:
+        'assets/css': 'styles'
+        'assets/img': 'images'
     form_themes:
-        - 'bootstrap_3_layout.html.twig'
+        - 'bootstrap_5_layout.html.twig'
+        - 'form/templates/vich_uploader_form_fields.html.twig'
         - '@SonataForm/Form/datepicker.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
         - '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig'
@@ -19,4 +23,11 @@ twig:
         main_brand_city:          '%boss_city%'
         main_brand_phone_1:       '%boss_phone_number_1%'
         main_brand_phone_2:       '%boss_phone_number_2%'
-        admin_tag_version:        'v4.7.17'
+        admin_logo:               '%admin_logo%'
+        admin_color:              '%admin_color%'
+        admin_is_stage:           '%admin_is_stage%'
+        admin_tag_version:        'v5.0.00'
+
+when@test:
+    twig:
+        strict_variables: true

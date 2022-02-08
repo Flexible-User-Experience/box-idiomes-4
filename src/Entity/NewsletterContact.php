@@ -5,65 +5,36 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class NewsletterContact.
- *
- * @category Entity
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\NewsletterContactRepository")
  */
 class NewsletterContact extends AbstractBase
 {
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private string $email;
 
-    /**
-     * @var bool
-     */
-    private $privacy;
+    private bool $privacy;
 
-    /**
-     * Methods.
-     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
 
-    /**
-     * @param string $email
-     *
-     * @return $this
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPrivacy()
+    public function isPrivacy(): bool
     {
         return $this->privacy;
     }
 
-    /**
-     * @param bool $privacy
-     *
-     * @return $this
-     */
-    public function setPrivacy($privacy)
+    public function setPrivacy(bool $privacy): self
     {
         $this->privacy = $privacy;
 

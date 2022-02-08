@@ -7,18 +7,20 @@ liip_imagine:
     resolvers:
         default:
             web_path: ~
+    twig:
+        mode: 'lazy'
     filter_sets:
         cache: ~
         585x756_teacher_mask:
             filters:
                 thumbnail: { size: [ 585, 756 ], mode: outbound }
-                watermark:
+                watermark_image:
                     image:    '../assets/watermark/teacher-mask-big.png'
                     position: center
         480x620_teacher_mask:
             filters:
                 thumbnail: { size: [ 480, 620 ], mode: outbound }
-                watermark:
+                watermark_image:
                     image:    '../assets/watermark/teacher-mask.png'
                     position: center
         2400xY:

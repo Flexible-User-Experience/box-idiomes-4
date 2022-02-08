@@ -1,0 +1,205 @@
+// Imports
+@import "colors.scss";
+
+// Fonts
+$icon-font-path: "../../fonts/bootstrap/";
+
+@font-face {
+    font-family: 'futura';
+    src:url('../fonts/original_FuturaStd-Medium.eot');
+    src:url('../fonts/original_FuturaStd-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/original_FuturaStd-Medium.ttf') format('truetype'),
+    url('../fonts/original_FuturaStd-Medium.woff') format('woff'),
+    url('../fonts/original_FuturaStd-Medium.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+$font-family-sans-serif: "futura", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// Custom Bootstrap vars
+$link-color: $ek-c-grey;
+
+// Custom vars
+$ek-s-base:               20px;
+$ek-s-base-plus:          60px;
+$ek-s-base-minus:         10px;
+$ek-font-size-base:       16px;
+$ek-custom-navbar-height: 90px;
+$screen-xs: 480px !default;
+$screen-sm: 768px !default;
+$screen-md: 992px !default;
+$screen-lg: 1200px !default;
+
+// Custom Navbar
+$navbar-light-brand-color:       $ek-c-blue;
+$navbar-light-brand-hover-color: darken($navbar-light-brand-color, 25%);
+$navbar-light-color:             $navbar-light-brand-color;
+$navbar-light-hover-color:       $navbar-light-brand-hover-color;
+$navbar-light-active-color:      $ek-c-violet;
+
+body {
+    padding-top: $ek-custom-navbar-height;
+}
+
+.navbar {
+    margin-bottom: 0;
+    border: 0;
+    .navbar li a:hover{
+        background-color: $ek-c-black;
+    }
+}
+
+.navbar-brand-logo {
+    padding: 20px 15px;
+    & svg {
+        margin-top: -10px;
+    }
+}
+
+.navbar-logo {
+    margin-top: -25px;
+}
+
+.navbar-default .navbar-nav > li > a.c-white {
+    color: $ek-c-white;
+}
+
+.navbar-default .navbar-nav > li > a.c-white:hover {
+    color: $ek-c-white;
+}
+
+.navbar-default .navbar-nav > .active.violet-background > a {
+    background-color: $ek-c-violet;
+}
+
+// Newsletter form
+.newsletter-email {
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 2px $ek-c-white;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 6px 0;
+    //.placeholder-newsletter-mixin(0%);
+    &:focus {
+        outline: none !important;
+        border: 0;
+        box-shadow: none;
+        border-bottom: solid 2px $ek-c-white;
+        //.placeholder-newsletter-mixin(20%);
+    }
+}
+
+.btn-newsletter {
+    color: $ek-c-white;
+    background-color: $ek-c-violet;
+    border-color: $ek-c-white;
+    border-radius: 8px;
+    width: 50%;
+    &:hover {
+        color: $ek-c-grey;
+        background-color: $ek-c-light-grey;
+    }
+}
+
+//Contact Message Form
+.common-fields {
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 2px darken($ek-c-light-grey, 20%);
+    border-radius: 0;
+    box-shadow: none;
+    padding: 6px 0;
+    //.placeholder-contact-message-mixin(20%);
+    &:focus {
+        outline: none !important;
+        border: 0;
+        box-shadow: none;
+        border-bottom: solid 2px darken($ek-c-light-grey, 20%);
+        //.placeholder-contact-message-mixin(0%);
+    }
+}
+
+.message-field {
+    resize: none;
+    background-color: transparent;
+    border: solid 2px darken($ek-c-light-grey, 20%);
+    border-radius: 16px;
+    box-shadow: none;
+    padding: 6px 0;
+    &:focus {
+        outline: none !important;
+        border: solid 2px darken($ek-c-light-grey, 20%);;
+        box-shadow: none;
+    }
+}
+
+// Pagination
+ul.pagination {
+    li.active {
+        span.c-green {
+            background-color: $ek-c-green;
+            border-color: $ek-c-green;
+        }
+    }
+}
+
+ul.categories-selector {
+    li.active {
+        font-weight: bold;
+    }
+}
+
+// Scroll to top
+.scroll-top-wrapper {
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    text-align: center;
+    z-index: 2000;
+    background-color: $ek-c-violet;
+    color: $ek-c-white;
+    width: 50px;
+    height: 48px;
+    line-height: 42px;
+    right: 15px;
+    bottom: 15px;
+    padding-top: 2px;
+    border-radius: 4px;
+    transition: all 0.5s ease-in-out;
+    &.show {
+        visibility: visible;
+        cursor: pointer;
+        opacity: 0.85;
+    }
+    i.fa {
+        line-height: inherit;
+    }
+}
+
+// Footer
+footer {
+    color: $ek-c-grey;
+    padding: 40px 0;
+    margin: 0;
+    &.footer {
+        background-color: $ek-c-light-grey;
+    }
+    a {
+        color: $ek-c-grey;
+        &:hover {
+            text-decoration: none;
+            color: $ek-c-violet;
+        }
+    }
+}
+
+textarea { resize: vertical; }
+
+@import '~bootstrap/scss/bootstrap';
+@import '~icheck-bootstrap/icheck-bootstrap.css';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';

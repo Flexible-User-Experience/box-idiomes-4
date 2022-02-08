@@ -13,12 +13,11 @@ doctrine:
                 dir:       '%kernel.project_dir%/src/Entity'
                 prefix:    'App\Entity'
                 is_bundle: false
-                type:      annotation
                 alias:     App
         dql:
             datetime_functions:
                 timestampdiff: DoctrineExtensions\Query\Mysql\TimestampDiff
                 year:          DoctrineExtensions\Query\Mysql\Year
                 month:         DoctrineExtensions\Query\Mysql\Month
-                date:           DoctrineExtensions\Query\Mysql\Date
+                date:          DoctrineExtensions\Query\Mysql\Date
                 now:           DoctrineExtensions\Query\Mysql\Now
