@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.0.03 (WIP)
  * fix minor bugs
+ * apply danger class in admin delete icon action buttons
 
 ##### Version 5.0.02 (2022-02-08)
  * fix User salt attribute null field
