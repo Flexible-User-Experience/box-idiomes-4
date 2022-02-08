@@ -84,8 +84,12 @@ final class SpendingAdmin extends AbstractBaseAdmin
                 VichFileType::class,
                 [
                     'label' => 'backend.admin.spending.document',
-                    'download_uri' => $this->getSmartHelper('getDocument', 'documentFile'),
+                    'download_uri' => true,
+                    'allow_delete' => true,
+                    'asset_helper' => true,
+                    'download_label' => 'document',
                     'required' => false,
+                    'help' => 'Pots adjuntar qualsevol document amb format PDF de fins a 10MB',
                 ]
             )
             ->end()

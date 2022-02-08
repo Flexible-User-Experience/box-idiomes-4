@@ -90,31 +90,4 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     {
         return $this->hasParentFieldDescription();
     }
-
-    /**
-     * Get image helper form mapper with thumbnail.
-     */
-    protected function getSmartHelper(string $attribute, string $uploaderMapping): string
-    {
-        if ($this->getSubject() && $this->getSubject()->$attribute()) {
-            if ($this->fs->isPdf($this->getSubject(), $uploaderMapping)) {
-                // PDF case
-                return $this->twig->render('Admin/Helpers/pdf.html.twig', [
-                    'attribute' => $this->getSubject()->$attribute(),
-                    'subject' => $this->getSubject(),
-                    'uploaderMapping' => $uploaderMapping,
-                ]);
-            } else {
-                // Image case
-                return $this->twig->render('Admin/Helpers/image.html.twig', [
-                    'attribute' => $this->getSubject()->$attribute(),
-                    'subject' => $this->getSubject(),
-                    'uploaderMapping' => $uploaderMapping,
-                ]);
-            }
-        } else {
-            // Undefined case
-            return '<span style="width:100%;display:block;">Pots adjuntar un PDF o una imatge. Pes màxim 10MB.</span>';
-        }
-    }
 }

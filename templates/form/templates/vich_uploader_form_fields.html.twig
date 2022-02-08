@@ -22,10 +22,18 @@
                         <source src="{{ download_uri }}" type="video/ogg" />
                     </video>
                 {% endif %}
-                <a class="btn btn-warning btn-xs" href="{{ download_uri }}" download>
-                    {# set PDF #}
-                    <i class="fas fa-download"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
-                </a>
+                {% if download_label == 'document' %}
+                    <div id="{{ form.vars.object.id }}" data-holder="pdf" data-download="{{ path('media_inline_spending_item', {id: form.vars.object.id}) }}" class="d-block p-5">
+                        <canvas id="pdf-{{ form.vars.object.id }}" class="pdf-canvas" style="width:100%">
+                            <i class="fas fa-5x fa-circle-o-notch" aria-hidden="true"></i>
+                        </canvas>
+                    </div>
+                {% endif %}
+                {%- if form.delete is defined -%}
+                    <a class="btn btn-warning btn-xs" href="{{ path('media_download_spending_item', {id: form.vars.object.id}) }}" download>
+                        <i class="fas fa-cloud-download-alt"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
+                    </a>
+                {%- endif -%}
             {%- endif -%}
             {%- if form.delete is defined -%}
                 {{- form_row(form.delete) -}}
@@ -48,7 +56,7 @@
                 <img class="img-responsive" src="{{ imgSrc | imagine_filter('480xY') }}" alt="image">
             </a>
             <a class="btn btn-warning btn-xs" style="margin-top:5px" href="{{ asset_helper is same as(true) ? asset(download_uri) : download_uri }}" download>
-                <i class="fas fa-download"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
+                <i class="fas fa-cloud-download-alt"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
             </a>
         {%- endif -%}
         {%- if form.delete is defined -%}
