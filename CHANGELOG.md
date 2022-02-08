@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.0.02 (WIP)
+##### Version 5.0.03 (WIP)
  * fix minor bugs
+
+##### Version 5.0.02 (2022-02-08)
+ * fix User salt attribute null field
 
 ##### Version 5.0.01 (2022-02-08)
  * fix Ansible broken deploy process

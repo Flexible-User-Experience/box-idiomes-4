@@ -139,7 +139,7 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     /**
      * @ORM\Column(name="salt", type="string", length=255, nullable=true)
      */
-    private string $salt;
+    private ?string $salt = null;
 
     /**
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
@@ -151,22 +151,22 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     /**
      * @ORM\Column(name="confirmation_token", type="string", length=255, nullable=true)
      */
-    private ?string $confirmationToken;
+    private ?string $confirmationToken = null;
 
     /**
      * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $passwordRequestedAt;
+    private ?DateTimeInterface $passwordRequestedAt = null;
 
     /**
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $lastLogin;
+    private ?DateTimeInterface $lastLogin = null;
 
     /**
      * @ORM\Column(name="date_of_birth", type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $dateOfBirth;
+    private ?DateTimeInterface $dateOfBirth = null;
 
     /**
      * @ORM\Column(name="roles", type="json")
@@ -214,12 +214,12 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return $this;
     }
 
-    public function getSalt(): string
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
 
-    public function setSalt(string $salt): self
+    public function setSalt(?string $salt): self
     {
         $this->salt = $salt;
 
