@@ -5,6 +5,7 @@ twig:
     exception_controller: null
     form_themes:
         - 'bootstrap_5_layout.html.twig'
+        - 'form/templates/vich_uploader_form_fields.html.twig'
         - '@SonataForm/Form/datepicker.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
         - '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig'

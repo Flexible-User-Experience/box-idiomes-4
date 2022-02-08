@@ -2,50 +2,50 @@ services:
     # Students
     admin.student:
         class: App\Admin\StudentAdmin
-        arguments: [ ~, App\Entity\Student, App\Controller\Admin\StudentAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Student, App\Controller\Admin\StudentAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Student', controller: 'App\Controller\Admin\StudentAdminController', label: 'Alumne', group: 'Alumnes' }
         calls:
             - [ setTemplate, [ edit, "Admin/Student/edit.html.twig" ] ]
     admin.student_absence:
         class: App\Admin\StudentAbsenceAdmin
-        arguments: [ ~, App\Entity\StudentAbsence, App\Controller\Admin\StudentAbsenceAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\StudentAbsence, App\Controller\Admin\StudentAbsenceAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Absència alumne", group: "Alumnes" }
     admin.parent:
         class: App\Admin\PersonAdmin
-        arguments: [ ~, App\Entity\Person, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Person, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Pare, mare o tutor", group: "Alumnes" }
         calls:
             - [ setTemplate, [ edit, "Admin/Student/edit.html.twig" ] ]
     admin.pre_register:
         class: App\Admin\PreRegisterAdmin
-        arguments: [ ~, App\Entity\PreRegister, App\Controller\Admin\PreRegisterAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\PreRegister, App\Controller\Admin\PreRegisterAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Preinscipcions", group: "Alumnes" }
     # Teachers
     admin.teacher:
         class: App\Admin\TeacherAdmin
-        arguments: [ ~, App\Entity\Teacher, App\Controller\Admin\TeacherAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Teacher, App\Controller\Admin\TeacherAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Professor", group: "Professors" }
     admin.teacher_absence:
         class: App\Admin\TeacherAbsenceAdmin
-        arguments: [ ~, App\Entity\TeacherAbsence, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\TeacherAbsence, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Absència professor", group: "Professors" }
     # Classrooms
     admin.class_group:
         class: App\Admin\ClassGroupAdmin
-        arguments: [ ~, App\Entity\ClassGroup, App\Controller\Admin\ClassGroupAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\ClassGroup, App\Controller\Admin\ClassGroupAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Grup", group: "Aules" }
         calls:
             - [ setTemplate, [ edit, "Admin/ClassGroup/edit.html.twig" ] ]
     admin.event:
         class: App\Admin\EventAdmin
-        arguments: [ ~, App\Entity\Event, App\Controller\Admin\EventAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Event, App\Controller\Admin\EventAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Horari", group: "Aules" }
         calls:
@@ -53,12 +53,12 @@ services:
     # Billings
     admin.tariff:
         class: App\Admin\TariffAdmin
-        arguments: [ ~, App\Entity\Tariff, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Tariff, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Tarifa", group: "Facturació" }
     admin.receipt:
         class: App\Admin\ReceiptAdmin
-        arguments: [ ~, App\Entity\Receipt, App\Controller\Admin\ReceiptAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Receipt, App\Controller\Admin\ReceiptAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Rebut", group: "Facturació" }
         calls:
@@ -66,88 +66,88 @@ services:
             - [ setTemplate, [ list, "Admin/Receipt/list.html.twig" ] ]
     admin.receipt_line:
         class: App\Admin\ReceiptLineAdmin
-        arguments: [ ~, App\Entity\ReceiptLine, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\ReceiptLine, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Línies rebut", group: "Facturació", show_in_dashboard: false }
     admin.invoice:
         class: App\Admin\InvoiceAdmin
-        arguments: [ ~, App\Entity\Invoice, App\Controller\Admin\InvoiceAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Invoice, App\Controller\Admin\InvoiceAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Factura", group: "Facturació" }
         calls:
             - [ setTemplate, [ edit, "Admin/Invoice/edit.html.twig" ] ]
     admin.invoice_line:
         class: App\Admin\InvoiceLineAdmin
-        arguments: [ ~, App\Entity\InvoiceLine, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\InvoiceLine, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Línies factura", group: "Facturació", show_in_dashboard: false }
     # Purchases
     admin.purchases.provider:
         class: App\Admin\ProviderAdmin
-        arguments: [ ~, App\Entity\Provider, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Provider, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Proveïdor", group: "Despeses" }
     admin.purchases.spending_category:
         class: App\Admin\SpendingCategoryAdmin
-        arguments: [ ~, App\Entity\SpendingCategory, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\SpendingCategory, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Tipus Despesa", group: "Despeses" }
     admin.purchases.spending:
         class: App\Admin\SpendingAdmin
-        arguments: [ ~, App\Entity\Spending, App\Controller\Admin\SpendingAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Spending, App\Controller\Admin\SpendingAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Despesa", group: "Despeses" }
     # Services
     admin.service:
         class: App\Admin\ServiceAdmin
-        arguments: [ ~, App\Entity\Service, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Service, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Servei", group: "Serveis" }
     # Contacts
     admin.contactmessage:
         class: App\Admin\ContactMessageAdmin
-        arguments: [ ~, App\Entity\ContactMessage, App\Controller\Admin\ContactMessageAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\ContactMessage, App\Controller\Admin\ContactMessageAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Missatge de contacte", group: "Contactes" }
     admin.newslettercontact:
         class: App\Admin\NewsletterContactAdmin
-        arguments: [ ~, App\Entity\NewsletterContact, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\NewsletterContact, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Butlletí de contacte", group: "Contactes" }
     # Configurations
     admin.bank_creditor_sepa:
         class: App\Admin\BankCreditorSepaAdmin
-        arguments: [ ~, App\Entity\BankCreditorSepa, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\BankCreditorSepa, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Banc", group: "Configuració" }
     admin.province:
         class: App\Admin\ProvinceAdmin
-        arguments: [ ~, App\Entity\Province, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Province, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Província", group: "Configuració" }
     admin.city:
         class: App\Admin\CityAdmin
-        arguments: [ ~, App\Entity\City, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\City, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Ciutat", group: "Configuració" }
     admin.user:
         class: App\Admin\UserAdmin
-        arguments: [ ~, App\Entity\User, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\User, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Usuari", group: "Configuració" }
     admin.bank:
         class: App\Admin\BankAdmin
-        arguments: [ ~, App\Entity\Bank, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Entity\Bank, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Bank", group: "Configuració", show_in_dashboard: false }
     # Extra Helper (admins without a related entity, for extra features like file manager or calendar)
     admin.file_manager_dummy:
         class: App\Admin\FileDummyAdmin
-        arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\FileManagerAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\FileManagerAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "File Manager", group: "Dummy", show_in_dashboard: false }
     admin.extra_helper_manager_dummy:
         class: App\Admin\ExtraHelperManagerAdmin
-        arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\ExtraHelperManagerAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@Vich\UploaderBundle\Templating\Helper\UploaderHelper', '@liip_imagine.cache.manager' , '@App\Service\FileService' ]
+        arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\ExtraHelperManagerAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Extra Manager", group: "Dummy", show_in_dashboard: false }

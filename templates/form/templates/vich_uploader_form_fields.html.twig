@@ -1,0 +1,58 @@
+{%- block vich_file_row -%}
+    {%- set force_error = true -%}
+    {{- block('form_row') -}}
+{%- endblock -%}
+
+{%- block vich_file_widget -%}
+    {% if download_label == 'image' %}
+        {{ block('vich_image_widget') }}
+    {% else %}
+        <div class="vich-file">
+            {{- form_widget(form.file) -}}
+            {%- if download_uri -%}
+                {% if download_label == 'audio' %}
+                    <audio style="width:100%" controls>
+                        <source src="{{ download_uri }}" type="audio/mpeg" />
+                    </audio>
+                {% endif %}
+                {% if download_label == 'video' %}
+                    <video style="width:100%" controls>
+                        <source src="{{ download_uri }}" type="video/mp4" />
+                        <source src="{{ download_uri }}" type="video/webm" />
+                        <source src="{{ download_uri }}" type="video/ogg" />
+                    </video>
+                {% endif %}
+                <a class="btn btn-warning btn-xs" href="{{ download_uri }}" download>
+                    {# set PDF #}
+                    <i class="fas fa-download"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
+                </a>
+            {%- endif -%}
+            {%- if form.delete is defined -%}
+                {{- form_row(form.delete) -}}
+            {%- endif -%}
+        </div>
+    {% endif %}
+{%- endblock -%}
+
+{%- block vich_image_row -%}
+    {%- set force_error = true -%}
+    {{- block('form_row') -}}
+{%- endblock -%}
+
+{%- block vich_image_widget -%}
+    <div class="vich-image">
+        {{- form_widget(form.file) -}}
+        {% set imgSrc = asset_helper is same as(true) ? asset(download_uri) : download_uri %}
+        {%- if download_uri -%}
+            <a href="{{ asset_helper is same as(true) ? asset(image_uri) : image_uri }}" download>
+                <img class="img-responsive" src="{{ imgSrc | imagine_filter('480xY') }}" alt="image">
+            </a>
+            <a class="btn btn-warning btn-xs" style="margin-top:5px" href="{{ asset_helper is same as(true) ? asset(download_uri) : download_uri }}" download>
+                <i class="fas fa-download"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
+            </a>
+        {%- endif -%}
+        {%- if form.delete is defined -%}
+            {{- form_row(form.delete) -}}
+        {%- endif -%}
+    </div>
+{%- endblock -%}

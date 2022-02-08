@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 final class ServiceAdmin extends AbstractBaseAdmin
 {
@@ -34,15 +34,6 @@ final class ServiceAdmin extends AbstractBaseAdmin
         $form
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general'))
             ->add(
-                'imageFile',
-                FileType::class,
-                [
-                    'label' => 'backend.admin.image',
-                    'help' => $this->getImageHelperFormMapperWithThumbnail(),
-                    'required' => false,
-                ]
-            )
-            ->add(
                 'title',
                 null,
                 [
@@ -59,6 +50,14 @@ final class ServiceAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
+            ->add(
+                'imageFile',
+                VichImageType::class,
+                [
+                    'label' => 'backend.admin.image',
+                    'required' => false,
+                ]
+            )
             ->add(
                 'position',
                 null,

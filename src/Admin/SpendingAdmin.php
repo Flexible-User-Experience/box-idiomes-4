@@ -16,7 +16,7 @@ use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 final class SpendingAdmin extends AbstractBaseAdmin
 {
@@ -81,10 +81,10 @@ final class SpendingAdmin extends AbstractBaseAdmin
             ->with('backend.admin.documents', $this->getFormMdSuccessBoxArray('backend.admin.documents', 4))
             ->add(
                 'documentFile',
-                FileType::class,
+                VichFileType::class,
                 [
                     'label' => 'backend.admin.spending.document',
-                    'help' => $this->getSmartHelper('getDocument', 'documentFile'),
+                    'download_uri' => $this->getSmartHelper('getDocument', 'documentFile'),
                     'required' => false,
                 ]
             )
