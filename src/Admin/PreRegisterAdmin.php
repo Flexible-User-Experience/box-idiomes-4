@@ -334,6 +334,8 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => [
                         'show' => [
                             'template' => 'Admin/Buttons/list__action_show_button.html.twig',

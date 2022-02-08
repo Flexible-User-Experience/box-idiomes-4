@@ -62,7 +62,7 @@ class Spending extends AbstractBase
      * @Vich\UploadableField(mapping="spending", fileNameProperty="document")
      * @Assert\File(
      *     maxSize="10M",
-     *     mimeTypes={"image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf", "application/x-pdf"}
+     *     mimeTypes={"application/pdf", "application/x-pdf"}
      * )
      */
     private ?File $documentFile = null;

@@ -142,8 +142,8 @@ final class ReceiptAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.receipt.date',
                     'format' => 'd/M/y',
-                    'required' => !$this->id($this->getSubject()),
-                    'disabled' => (bool) $this->id($this->getSubject()),
+                    'required' => $this->isFormToCreateNewRecord(),
+                    'disabled' => !$this->isFormToCreateNewRecord(),
                 ]
             )
             ->add(
@@ -176,7 +176,7 @@ final class ReceiptAdmin extends AbstractBaseAdmin
                 ]
             )
         ;
-        if (!$this->id($this->getSubject()) || ($this->id($this->getSubject()) && !$this->getSubject()->getStudent()->isPaymentExempt())) {
+        if ($this->isFormToCreateNewRecord() || (!$this->isFormToCreateNewRecord() && !$this->getSubject()->getStudent()->isPaymentExempt())) {
             $form
                 ->add(
                     'isSepaXmlGenerated',

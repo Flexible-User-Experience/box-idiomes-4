@@ -151,6 +151,8 @@ final class ServiceAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                     'actions' => [
                         'edit' => [
                             'template' => 'Admin/Buttons/list__action_edit_button.html.twig',

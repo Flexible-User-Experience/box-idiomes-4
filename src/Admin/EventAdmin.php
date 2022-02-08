@@ -69,7 +69,7 @@ final class EventAdmin extends AbstractBaseAdmin
                     'required' => true,
                 ]
             );
-        if (!$this->id($this->getSubject())) {
+        if ($this->isFormToCreateNewRecord()) {
             $form
                 ->add(
                     'dayFrequencyRepeat',

@@ -1,5 +1,5 @@
 {% if not object.student.isPaymentExempt %}
-    <a class="btn btn-sm btn-default" href="{{ admin.generateObjectUrl('pdf', object) }}" title="{{ 'backend.admin.invoice.download' | trans }}">
-        <i class="far fa-file-alt"></i>
+    <a data-controller="pdf-button" data-action="pdf-button#clicked" data-toggle="modal" data-target="#pdf-preview-modal" data-pdf-button-attachment-value="{{ admin.generateObjectUrl('pdf', object) }}" data-pdf-button-path-value="{{ admin.generateObjectUrl('pdf', object) }}" class="btn btn-sm btn-default" title="{{ 'admin.pdf_preview' | trans }}">
+        <i class="fas fa-cloud-download-alt"></i>
     </a>
 {% endif %}
