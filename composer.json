@@ -25,7 +25,6 @@
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
-        "gremo/zurb-ink-bundle": "dev-master",
         "liip/imagine-bundle": "^2.5",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpoffice/phpspreadsheet": "^1.21",

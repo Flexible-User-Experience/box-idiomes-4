@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d445f8cb15b8d9b15cc2b8dc79e3979",
+    "content-hash": "4a24389f81ab7ada5f4753be734f8a9f",
     "packages": [
         {
             "name": "artgris/filemanager-bundle",
@@ -2400,59 +2400,6 @@
                 "source": "https://github.com/google/recaptcha"
             },
             "time": "2020-03-31T17:50:54+00:00"
-        },
-        {
-            "name": "gremo/zurb-ink-bundle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/gremo/ZurbInkBundle.git",
-                "reference": "30e37568f04815aae669c72797b3f21057af01df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/gremo/ZurbInkBundle/zipball/30e37568f04815aae669c72797b3f21057af01df",
-                "reference": "30e37568f04815aae669c72797b3f21057af01df",
-                "shasum": ""
-            },
-            "require": {
-                "lorenzo/pinky": "^1.0",
-                "php": ">=7.1.3",
-                "symfony/framework-bundle": "^4.0. || ^5.0",
-                "tijsverkoyen/css-to-inline-styles": "^2.0",
-                "twig/twig": "^3.0.4"
-            },
-            "default-branch": true,
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Gremo\\ZurbInkBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Polichetti",
-                    "email": "gremo1982@gmail.com",
-                    "homepage": "http://github.com/gremo"
-                }
-            ],
-            "description": "Creating email templates is hard. This Bundle provides help.",
-            "homepage": "http://github.com/gremo/ZurbInkBundle",
-            "keywords": [
-                "email",
-                "ink",
-                "template",
-                "zurb"
-            ],
-            "support": {
-                "issues": "https://github.com/gremo/ZurbInkBundle/issues",
-                "source": "https://github.com/gremo/ZurbInkBundle/tree/master"
-            },
-            "time": "2022-01-23T10:41:40+00:00"
         },
         {
             "name": "imagine/imagine",
@@ -14828,7 +14775,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gremo/zurb-ink-bundle": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,

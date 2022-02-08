@@ -166,9 +166,6 @@
             "config/packages/google_recaptcha.yaml"
         ]
     },
-    "gremo/zurb-ink-bundle": {
-        "version": "v4.1.0"
-    },
     "hautelook/alice-bundle": {
         "version": "2.1",
         "recipe": {
