@@ -158,7 +158,6 @@ final class EventAdmin extends AbstractBaseAdmin
                         'widget' => 'single_text',
                         'format' => 'dd-MM-yyyy HH:mm',
                     ],
-//                    'format' => 'd-m-Y H:i',
                 ]
             )
             ->add(
@@ -171,7 +170,6 @@ final class EventAdmin extends AbstractBaseAdmin
                         'widget' => 'single_text',
                         'format' => 'dd-MM-yyyy HH:mm',
                     ],
-//                    'format' => 'd-m-Y H:i',
                 ]
             )
             ->add(

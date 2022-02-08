@@ -11,8 +11,10 @@ export default class extends Controller {
     connect() {
         let self = this;
         this.element.innerHTML = '<i class="fa fa-5x fa-spinner fa-spin" aria-hidden="true"></i>';
+        console.log('HIT');
         axios.get(Routing.generate('admin_app_event_apiget', { id: this.eidValue }))
             .then(function (response) {
+                console.log('response', response);
                 if (response.hasOwnProperty('data') && response.data.hasOwnProperty('html')) {
                     self.element.innerHTML = response.data.html;
                 }
