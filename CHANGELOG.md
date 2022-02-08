@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 5.0.01 (WIP)
+##### Version 5.0.02 (WIP)
  * fix minor bugs
+
+##### Version 5.0.01 (2022-02-08)
+ * fix Ansible broken deploy process
+ * set monolog rotating files strategy
 
 ##### Version 5.0.00 (2022-02-08)
  * Symfony 5.4 LTS upgrade
