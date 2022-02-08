@@ -2,9 +2,11 @@
 
 {% form_theme form _self %}
 
-{#{% block checkbox_radio_label %}#}
-{#    {{- widget | raw }}#}
-{#{% endblock checkbox_radio_label %}#}
+{% block checkbox_radio_label %}
+    {%- if widget is defined -%}
+        {{- widget | raw }}
+    {% endif %}
+{% endblock checkbox_radio_label %}
 
 {% block sonata_admin_content %}
     <div class="sonata-ba-show">
@@ -25,7 +27,6 @@
                             <div class="form-group">
                                 {{ form_row(year_month_form.preview) }}
                             </div>
-
                         {{ form_rest(year_month_form) }}
                         {{ form_end(year_month_form) }}
                     </div>
