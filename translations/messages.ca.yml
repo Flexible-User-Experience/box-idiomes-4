@@ -129,6 +129,11 @@ backend:
             username: "Usuari"
             password: "Contrasenya"
         is_stage_warning: "Entorn de proves"
+        modal:
+            pdf_preview_window_title: "Previsualització PDF"
+            pdf_preview_page: "Pàgina"
+            pdf_preview_page_of: "de"
+            close_window: "Tancar"
         yes: Sí
         no: No
         actions: Accions
