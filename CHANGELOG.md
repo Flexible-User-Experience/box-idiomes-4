@@ -15,6 +15,9 @@ Changelog
  * improve backend dashboard Google Chart 3.0
  * improve backend dashboard Full Calendar 5.0
  * add better admin PDF previews
+ * replace base amount by amount Spending attribute name
+ * add mark as payed batch action in ReceiptAdminController
+ * add Provider tax identification number in Spending admin export action
 
 ##### Version 4.7.17 (2022-01-20)
  * fix missing download PDF button template in SpendingAdmin edit view
