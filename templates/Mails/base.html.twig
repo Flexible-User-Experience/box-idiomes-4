@@ -1,34 +1,38 @@
 {% apply inky_to_html | inline_css(source('@styles/foundation-emails.css'), source('@styles/mail.css')) %}
 <container>
-    <row class="header">
+    <row>
         <columns>
-            <a href="{{ url('app_homepage') }}">
-                <img src="{{ source('@images/email-logo.png') }}" class="text-center" alt="Logo">
-            </a>
+            <spacer size="30"></spacer>
+            <center>
+                <a href="{{ absolute_url(path('app_homepage')) }}">
+                    <img class="float-center" src="{{ absolute_url(asset('build/img/email-logo.png')) }}" alt="Logo">
+                </a>
+            </center>
+            <spacer size="30"></spacer>
         </columns>
     </row>
     {% block content %}{% endblock %}
     {% block footer %}
         <row class="light-grey-background">
             <columns small="4" large="4">
-                <h6 class="grey-color only-normal-m-top">Segueix-nos</h6>
+                <h6 class="grey-color only-normal-m-top">{{ 'frontend.footer.follow_us' | trans }}</h6>
             </columns>
             <columns small="4" large="4">
-                <h6 class="grey-color only-normal-m-top">Telèfons</h6>
+                <h6 class="grey-color only-normal-m-top">{{ 'frontend.footer.phones' | trans }}</h6>
             </columns>
             <columns small="4" large="4">
-                <h6 class="grey-color only-normal-m-top">Adreça</h6>
+                <h6 class="grey-color only-normal-m-top">{{ 'frontend.footer.address' | trans }}</h6>
             </columns>
         </row>
         <row class="light-grey-background">
             <columns small="1" large="1">
                 <a href="https://www.facebook.com/boxviuelsidiomes/">
-                    <img class="footer-icon" src="{{ source('@images/email_facebook.png') }}" alt="facebook logo">
+                    <img style="width:35px" src="{{ absolute_url(asset('build/img/email_facebook.png')) }}" alt="Facebook logo">
                 </a>
             </columns>
             <columns small="3" large="3">
                 <a href="https://www.instagram.com/explore/locations/524502350/">
-                    <img class="footer-icon" src="{{ source('@images/email-instagram.png') }}" alt="instagram logo">
+                    <img style="width:35px" src="{{ absolute_url(asset('build/img/email-instagram.png')) }}" alt="Instagram logo">
                 </a>
             </columns>
             <columns small="4" large="4">
