@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\BankCreditorSepaTrait;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
