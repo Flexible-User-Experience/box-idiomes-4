@@ -203,7 +203,7 @@ class BackendControllerTest extends WebTestCase
     private function getAuthenticatedClient(): KernelBrowser
     {
         return WebTestCase::createClient([], [
-            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_USER' => 'admin@email.com',
             'PHP_AUTH_PW'   => 'passwd',
         ]);
     }

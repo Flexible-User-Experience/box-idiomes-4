@@ -300,8 +300,8 @@ App\Entity\User:
         username: admin
         usernameCanonical: admin
         plainPassword: passwd
-        email: <safeEmail()>
-        emailCanonical: <safeEmail()>
+        email: admin@email.com
+        emailCanonical: admin@email.com
         enabled: true
         roles:
             - ROLE_SUPER_ADMIN

@@ -8,66 +8,28 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use TCPDF;
 
-/**
- * Class CourierService.
- *
- * @category Service
- */
 class CourierService
 {
-    /**
-     * @var MailerInterface
-     */
-    private $mailer;
+    private MailerInterface $mailer;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * CourierService constructor.
-     */
     public function __construct(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
     }
 
     /**
-     * Send an email.
-     *
-     * @param string      $from
-     * @param string      $toEmail
-     * @param string      $subject
-     * @param string      $body
-     * @param string|null $replyAddress
-     * @param string|null $toName
-     *
-     * @return void
-     *
      * @throws TransportExceptionInterface
      */
-    public function sendEmail($from, $toEmail, $subject, $body, $replyAddress = null, $toName = null)
+    public function sendEmail(string $from, string $toEmail, string $subject, string $body, ?string $replyAddress = null, ?string $toName = null): void
     {
         $message = $this->buildEmail($from, $toEmail, $subject, $body, $replyAddress, $toName);
-
         $this->mailer->send($message);
     }
 
     /**
-     * Send an email with an attatchment PDF.
-     *
-     * @param string $from
-     * @param string $toEmail
-     * @param string $toName
-     * @param string $subject
-     * @param string $body
-     * @param string $pdfFilename
-     *
-     * @return void
-     *
      * @throws TransportExceptionInterface
      */
-    public function sendEmailWithPdfAttached($from, $toEmail, $toName, $subject, $body, $pdfFilename, TCPDF $pdf)
+    public function sendEmailWithPdfAttached(string $from, string $toEmail, string $toName, string $subject, string $body, string $pdfFilename, TCPDF $pdf): void
     {
         $message = $this->buildEmail($from, $toEmail, $subject, $body, null, $toName);
         $pathToTemporaryStoredPdfFile = DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pdfFilename;
@@ -77,19 +39,7 @@ class CourierService
         $this->mailer->send($message);
     }
 
-    /**
-     * Build an email.
-     *
-     * @param string      $from
-     * @param string      $toEmail
-     * @param string      $subject
-     * @param string      $body
-     * @param string|null $replyAddress
-     * @param string|null $toName
-     *
-     * @return Email
-     */
-    private function buildEmail($from, $toEmail, $subject, $body, $replyAddress = null, $toName = null)
+    private function buildEmail(string $from, string $toEmail, string $subject, string $body, ?string $replyAddress = null, ?string $toName = null): Email
     {
         $message = new Email();
         $message

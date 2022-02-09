@@ -22,7 +22,11 @@
 
 {% block sonata_wrapper %}
     <div class="login-box" style="background-color:{{ admin_color }}">
-        {% include 'Admin/Security/login_logo_fragment.html.twig' %}
+        <div class="login-logo no-margin">
+            <a href="{{ path('sonata_admin_dashboard') }}">
+                <img style="margin:10px" src="{{ asset(admin_logo) | imagine_filter('200xY')}}" alt="{{ main_brand_title }} logo">
+            </a>
+        </div>
         <div class="login-box-body">
             {% block sonata_user_login_form %}
                 {% if admin_is_stage %}
@@ -48,23 +52,32 @@
                         </div>
                     {% endfor %}
                 {% endfor %}
-                {{ form_start(form) }}
-                    <div class="form-group">
-                        {{ form_row(form.username) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_row(form.password) }}
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <button type="submit" class="btn btn-primary btn-block">{{ 'backend.admin.login.submit' | trans }}</button>
+                {% block main_form %}
+                    {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_row(form.username) }}
                         </div>
-                    </div>
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                    {{ form_rest(form) }}
-                {{ form_end(form) }}
+                        <div class="form-group">
+                            {{ form_row(form.password) }}
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="submit" class="btn btn-primary btn-block">{{ 'backend.admin.login.submit' | trans }}</button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                {% endblock %}
             {% endblock %}
         </div>
-        {% include 'Admin/Security/login_footer_fragment.html.twig' %}
+        <div class="login-box-bottom">
+            <p style="padding:15px">
+                {% block footer_router %}
+                    <a href="{{ path('app_forgot_password_request') }}"><i class="fa fa-key"></i> He oblidat la contrasenya</a>
+                {% endblock %}
+                <span style="margin-top:5px;display:block;">{{ admin_tag_version }}</span>
+            </p>
+        </div>
     </div>
 {% endblock sonata_wrapper %}

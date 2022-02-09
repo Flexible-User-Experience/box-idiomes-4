@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.0.03 (WIP)
+##### Version 5.1.01 (WIP)
  * fix minor bugs
+
+##### Version 5.1.00 (2022-02-09)
+ * apply danger class in admin delete icon action buttons
+ * add reset password behaviour
+ * fix mail templates problem
 
 ##### Version 5.0.02 (2022-02-08)
  * fix User salt attribute null field

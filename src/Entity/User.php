@@ -57,66 +57,6 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     private ?string $phone = null;
 
     /**
-     * @ORM\Column(name="website", type="string", length=64, nullable=true)
-     */
-    private ?string $website = null;
-
-    /**
-     * @ORM\Column(name="timezone", type="string", length=64, nullable=true)
-     */
-    private ?string $timezone = null;
-
-    /**
-     * @ORM\Column(name="facebook_uid", type="string", length=255, nullable=true)
-     */
-    private ?string $facebookUid = null;
-
-    /**
-     * @ORM\Column(name="facebook_name", type="string", length=255, nullable=true)
-     */
-    private ?string $facebookName = null;
-
-    /**
-     * @ORM\Column(name="facebook_data", type="json", nullable=true)
-     */
-    private ?array $facebookData = null;
-
-    /**
-     * @ORM\Column(name="twitter_uid", type="string", length=255, nullable=true)
-     */
-    private ?string $twitterUid = null;
-
-    /**
-     * @ORM\Column(name="twitter_name", type="string", length=255, nullable=true)
-     */
-    private ?string $twitterName = null;
-
-    /**
-     * @ORM\Column(name="twitter_data", type="json", nullable=true)
-     */
-    private ?array $twitterData = null;
-
-    /**
-     * @ORM\Column(name="gplus_uid", type="string", length=255, nullable=true)
-     */
-    private ?string $gplusUid = null;
-
-    /**
-     * @ORM\Column(name="gplus_name", type="string", length=255, nullable=true)
-     */
-    private ?string $gplusName = null;
-
-    /**
-     * @ORM\Column(name="gplus_data", type="json", nullable=true)
-     */
-    private ?array $gplusData = null;
-
-    /**
-     * @ORM\Column(name="biography", type="string", length=1000, nullable=true)
-     */
-    private ?string $biography = null;
-
-    /**
      * @ORM\Column(name="gender", type="string", length=1, nullable=true)
      */
     private ?string $gender = null;
@@ -154,19 +94,9 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     private ?string $confirmationToken = null;
 
     /**
-     * @ORM\Column(name="password_requested_at", type="datetime", nullable=true)
-     */
-    private ?DateTimeInterface $passwordRequestedAt = null;
-
-    /**
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
     private ?DateTimeInterface $lastLogin = null;
-
-    /**
-     * @ORM\Column(name="date_of_birth", type="datetime", nullable=true)
-     */
-    private ?DateTimeInterface $dateOfBirth = null;
 
     /**
      * @ORM\Column(name="roles", type="json")
@@ -175,7 +105,7 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
 
     public function getUserIdentifier(): string
     {
-        return $this->getUsername();
+        return $this->getEmail();
     }
 
     public function getUsername(): string
@@ -263,18 +193,6 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return $this;
     }
 
-    public function getPasswordRequestedAt(): ?DateTimeInterface
-    {
-        return $this->passwordRequestedAt;
-    }
-
-    public function setPasswordRequestedAt(?DateTimeInterface $passwordRequestedAt): self
-    {
-        $this->passwordRequestedAt = $passwordRequestedAt;
-
-        return $this;
-    }
-
     public function getLastLogin(): ?DateTimeInterface
     {
         return $this->lastLogin;
@@ -283,18 +201,6 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     public function setLastLogin(?DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
-
-    public function getDateOfBirth(): ?DateTimeInterface
-    {
-        return $this->dateOfBirth;
-    }
-
-    public function setDateOfBirth(?DateTimeInterface $dateOfBirth): self
-    {
-        $this->dateOfBirth = $dateOfBirth;
 
         return $this;
     }
@@ -350,150 +256,6 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     public function getFullName(): string
     {
         return $this->getFirstname() && $this->getLastname() ? $this->getFirstname().' '.$this->getLastname() : $this->getUsername();
-    }
-
-    public function getWebsite(): ?string
-    {
-        return $this->website;
-    }
-
-    public function setWebsite(?string $website): self
-    {
-        $this->website = $website;
-
-        return $this;
-    }
-
-    public function getTimezone(): ?string
-    {
-        return $this->timezone;
-    }
-
-    public function setTimezone(?string $timezone): self
-    {
-        $this->timezone = $timezone;
-
-        return $this;
-    }
-
-    public function getFacebookUid(): ?string
-    {
-        return $this->facebookUid;
-    }
-
-    public function setFacebookUid(?string $facebookUid): self
-    {
-        $this->facebookUid = $facebookUid;
-
-        return $this;
-    }
-
-    public function getFacebookName(): ?string
-    {
-        return $this->facebookName;
-    }
-
-    public function setFacebookName(?string $facebookName): self
-    {
-        $this->facebookName = $facebookName;
-
-        return $this;
-    }
-
-    public function getFacebookData(): ?array
-    {
-        return $this->facebookData;
-    }
-
-    public function setFacebookData(?array $facebookData): self
-    {
-        $this->facebookData = $facebookData;
-
-        return $this;
-    }
-
-    public function getTwitterUid(): ?string
-    {
-        return $this->twitterUid;
-    }
-
-    public function setTwitterUid(?string $twitterUid): self
-    {
-        $this->twitterUid = $twitterUid;
-
-        return $this;
-    }
-
-    public function getTwitterName(): ?string
-    {
-        return $this->twitterName;
-    }
-
-    public function setTwitterName(?string $twitterName): self
-    {
-        $this->twitterName = $twitterName;
-
-        return $this;
-    }
-
-    public function getTwitterData(): ?array
-    {
-        return $this->twitterData;
-    }
-
-    public function setTwitterData(?array $twitterData): self
-    {
-        $this->twitterData = $twitterData;
-
-        return $this;
-    }
-
-    public function getGplusUid(): ?string
-    {
-        return $this->gplusUid;
-    }
-
-    public function setGplusUid(?string $gplusUid): self
-    {
-        $this->gplusUid = $gplusUid;
-
-        return $this;
-    }
-
-    public function getGplusName(): ?string
-    {
-        return $this->gplusName;
-    }
-
-    public function setGplusName(?string $gplusName): self
-    {
-        $this->gplusName = $gplusName;
-
-        return $this;
-    }
-
-    public function getGplusData(): ?array
-    {
-        return $this->gplusData;
-    }
-
-    public function setGplusData(?array $gplusData): self
-    {
-        $this->gplusData = $gplusData;
-
-        return $this;
-    }
-
-    public function getBiography(): ?string
-    {
-        return $this->biography;
-    }
-
-    public function setBiography(?string $biography): self
-    {
-        $this->biography = $biography;
-
-        return $this;
     }
 
     public function getGender(): ?string
