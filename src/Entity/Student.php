@@ -291,7 +291,7 @@ class Student extends AbstractPerson
         return false;
     }
 
-    public function getMainEmailSubject(): string
+    public function getMainEmailSubject(): ?string
     {
         $email = $this->getEmail();
         if ($this->getParent() && $this->getParent()->getEmail()) {
