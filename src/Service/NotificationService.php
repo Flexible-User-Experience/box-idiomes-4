@@ -330,6 +330,7 @@ class NotificationService
                 $this->twig->render('Mails/reset_password.html.twig', [
                     'resetToken' => $resetToken,
                 ]),
+                null,
                 $user->getFullName()
             );
         } catch (TransportExceptionInterface | Exception $exception) {

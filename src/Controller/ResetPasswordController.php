@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
@@ -137,7 +138,10 @@ class ResetPasswordController extends AbstractController
         }
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-            $ns->sendUserPasswordRequestNotification($user, $resetToken);
+            $result = $ns->sendUserPasswordRequestNotification($user, $resetToken);
+            if (0 === $result) {
+                throw new AccessDeniedHttpException();
+            }
             $this->setTokenObjectInSession($resetToken);
         } catch (ResetPasswordExceptionInterface $e) {
             return $this->redirectToRoute('app_check_email');
