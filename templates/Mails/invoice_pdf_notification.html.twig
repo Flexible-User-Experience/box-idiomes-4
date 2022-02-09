@@ -15,12 +15,11 @@
                     {{ invoice.lines[0].description }}
                 </p>
             {% endif %}
-            <h-line></h-line>
             <p>
                 Base imposable: {{ invoice.baseAmountString }}<br>
                 <strong>Import total: {{ invoice.totalAmountString }}</strong>
             </p>
-            <p class="blue-color text-center normal-m-top">
+            <p class="blue-color text-center only-normal-m-top">
                 Moltes gràcies per confiar amb {{ main_brand_title }}.
             </p>
         </columns>
