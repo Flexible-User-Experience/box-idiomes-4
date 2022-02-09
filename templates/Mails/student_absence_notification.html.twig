@@ -5,6 +5,12 @@
 {% block content %}
     <row>
         <columns small="12" large="12">
+            <h3 class="grey-color">Falta a classe {{ studentAbsence.dayString }}</h3>
+            <spacer size="15"></spacer>
+        </columns>
+    </row>
+    <row>
+        <columns small="12" large="12">
             <h4 class="grey-color text-center">Registre no assistència</h4>
             <p class="normal-m-top">
                 Us informem que amb data {{ studentAbsence.dayString }} l'alumne {{ studentAbsence.student.fullName }} <strong>no</strong> ha assistit a la seva classe prevista.<br><br>

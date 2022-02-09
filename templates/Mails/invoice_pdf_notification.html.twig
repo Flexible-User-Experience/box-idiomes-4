@@ -3,12 +3,19 @@
 {% block content %}
     <row>
         <columns small="12" large="12">
+            <h3 class="grey-color">Factura núm. {{ invoice.invoiceNumber }}</h3>
+            <spacer size="15"></spacer>
+        </columns>
+    </row>
+    <row>
+        <columns small="12" large="12">
             <h5 class="grey-color">A contiuació trobaràs adjunt la factura número {{ invoice.invoiceNumber }} amb data {{ invoice.dateString }}</h5>
             {% if invoice.lines | length > 0 %}
                 <p>
                     {{ invoice.lines[0].description }}
                 </p>
             {% endif %}
+            <h-line></h-line>
             <p>
                 Base imposable: {{ invoice.baseAmountString }}<br>
                 <strong>Import total: {{ invoice.totalAmountString }}</strong>

@@ -3,6 +3,12 @@
 {% block content %}
     <row>
         <columns small="12" large="12">
+            <h3 class="grey-color">Formulari preinscripció</h3>
+            <spacer size="15"></spacer>
+        </columns>
+    </row>
+    <row>
+        <columns small="12" large="12">
             <h5 class="grey-color">S'ha rebut un nova preinscipció a través del formulari de la pàgina web</h5>
             <p class="blue-color normal-m-top">
                 {{ preRegister | write_pre_register_season_string | trans }}
