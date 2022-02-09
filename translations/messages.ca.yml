@@ -138,6 +138,7 @@ backend:
             pdf_preview_page: "Pàgina"
             pdf_preview_page_of: "de"
             close_window: "Tancar"
+        pdf_preview: "Previsualitzar PDF"
         yes: Sí
         no: No
         actions: Accions

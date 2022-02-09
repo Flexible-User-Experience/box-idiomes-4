@@ -1,17 +1,14 @@
 {% extends "Mails/base.html.twig" %}
 
-{% block subject %}Falta a classe {{ studentAbsence.dayString }}{% endblock %}
-
 {% block content %}
     <row>
         <columns small="12" large="12">
-            <h4 class="grey-color text-center">Registre no assistència</h4>
-            <p class="normal-m-top">
+            <h4 class="grey-color text-center normal-m-top">Registre no assistència</h4>
+            <p>
                 Us informem que amb data {{ studentAbsence.dayString }} l'alumne {{ studentAbsence.student.fullName }} <strong>no</strong> ha assistit a la seva classe prevista.<br><br>
                 Recordeu que es preferible comunicar l'absència si es pot en antelació però que, tot i així, aquest correu us arribarà per tal de tenir-ne constància i registre tots.
             </p>
-            <hr>
-            <p class="normal-m-top">
+            <p class="blue-color text-center only-normal-m-top">
                 Moltes gràcies per confiar amb {{ main_brand_title }}.
             </p>
         </columns>

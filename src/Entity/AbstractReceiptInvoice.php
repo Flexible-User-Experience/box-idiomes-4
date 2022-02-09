@@ -317,7 +317,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     /**
      * Get parent's email first, or student's one if it's not set.
      */
-    public function getMainEmail(): string
+    public function getMainEmail(): ?string
     {
         return $this->getMainSubject()->getEmail();
     }

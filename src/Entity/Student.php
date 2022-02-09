@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\BankCreditorSepaTrait;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -290,7 +291,7 @@ class Student extends AbstractPerson
         return false;
     }
 
-    public function getMainEmailSubject(): string
+    public function getMainEmailSubject(): ?string
     {
         $email = $this->getEmail();
         if ($this->getParent() && $this->getParent()->getEmail()) {

@@ -3,6 +3,12 @@
 {% block content %}
     <row>
         <columns small="12" large="12">
+            <h3 class="grey-color">Notificació de contacte</h3>
+            <spacer size="15"></spacer>
+        </columns>
+    </row>
+    <row>
+        <columns small="12" large="12">
             <h4>Persona interessada en contactar</h4>
             <p class="grey-color">
                 {{ contact.name }}, amb correu elèctrònic <a href="mailto:{{ contact.email }}">{{ contact.email }}</a> {% if contact.phone %}i telèfon {{ contact.phone }} {% endif %}ha emplenat el formulari de contacte amb el següent missatge:

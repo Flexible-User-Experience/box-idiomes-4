@@ -1,4 +1,4 @@
-{% if object.mainSubject.payment != constant('App\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') and not object.student.isPaymentExempt %}
+{% if object.mainSubject.payment != constant('App\\Enum\\StudentPaymentEnum::BANK_ACCOUNT_NUMBER') and not object.student.isPaymentExempt and object.student.mainEmailSubject %}
     <a class="btn btn-sm btn-default" href="{{ admin.generateObjectUrl('reminder', object) }}" title="{{ 'backend.admin.receipt_reminder.list_button' | trans }}">
         <i class="far fa-file-alt"></i>
     </a>

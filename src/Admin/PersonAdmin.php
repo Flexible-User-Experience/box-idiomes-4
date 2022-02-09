@@ -20,6 +20,7 @@ use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 final class PersonAdmin extends AbstractBaseAdmin
 {
@@ -68,10 +69,10 @@ final class PersonAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'email',
-                null,
+                EmailType::class,
                 [
                     'label' => 'backend.admin.parent.email',
-                    'required' => false,
+                    'required' => true,
                 ]
             )
             ->add(
