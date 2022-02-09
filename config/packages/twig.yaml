@@ -4,8 +4,8 @@ twig:
     strict_variables:     '%kernel.debug%'
     exception_controller: null
     paths:
-        'assets/css': 'styles'
-        'assets/img': 'images'
+        '%kernel.project_dir%/assets/css': 'styles'
+        '%kernel.project_dir%/assets/img': 'images'
     form_themes:
         - 'bootstrap_5_layout.html.twig'
         - 'form/templates/vich_uploader_form_fields.html.twig'

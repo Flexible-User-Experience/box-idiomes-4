@@ -81,7 +81,7 @@
             <div class="row">
                 <div class="col-sm-6 col-md-4 mb-4">
                     <p class="m-0">
-                        <strong class="d-block mb-2">Segueix-nos</strong>
+                        <strong class="d-block mb-2">{{ 'frontend.footer.follow_us' | trans }}</strong>
                         <a target="_blank" href="https://www.facebook.com/boxviuelsidiomes/" class="text-decoration-none">
                             <i class="fab fa-2x fa-facebook-square" aria-hidden="true"></i>
                         </a>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-sm-6 col-md-4 mb-4">
                     <p class="m-0">
-                        <strong class="d-block mb-2">Adreça</strong>
+                        <strong class="d-block mb-2">{{ 'frontend.footer.address' | trans }}</strong>
                         {{ main_brand_address }}<br>
                         {{ main_brand_city }}<br>
                         <i class="fas fa-phone-alt" aria-hidden="true"></i> <a href="tel:{{ main_brand_phone_2 | replace({' ': ''}) }}" class="text-decoration-none">{{ main_brand_phone_2 }}</a><br>

@@ -120,6 +120,10 @@ frontend:
             season: "Temporada"
             enabled: "Alumne creat"
             submit: "Registrar"
+    footer:
+        follow_us: "Segueix-nos"
+        phones: "Telèfons"
+        address: "Adreça"
 
 backend:
     admin:
