@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.1.01 (WIP)
+##### Version 5.1.02 (WIP)
  * fix minor bugs
+
+##### Version 5.1.01 (2022-02-09)
+ * fix emails rendering
+ * remove hardcoded GoogleCharts unused dependency in Admin dashboard view
+ * fix student calendar show view problem
 
 ##### Version 5.1.00 (2022-02-09)
  * apply danger class in admin delete icon action buttons
