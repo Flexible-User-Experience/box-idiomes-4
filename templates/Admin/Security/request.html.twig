@@ -1,0 +1,29 @@
+{% extends "Admin/Security/login.html.twig" %}
+
+{% block sonata_head_title %}Regenerar contrasenya{% endblock %}
+
+{% block sonata_user_login_error %}
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ flashError }}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block main_form %}
+    <h3 style="margin-top:0;margin-bottom:20px">Regenerar contrasenya</h3>
+    {{ form_start(requestForm) }}
+        <div class="form-group">
+            {{ form_row(requestForm.email) }}
+        </div>
+        <div class="row">
+            <div class="col-xs-10">
+                <button class="btn btn-primary btn-block">Enviar enllaç de recuperació al email</button>
+            </div>
+        </div>
+    {{ form_end(requestForm) }}
+{% endblock %}
+
+{% block footer_router %}
+    <a href="{{ path('admin_app_login') }}"><i class="fa fa-lock-open"></i> Tornar al formulari d'accès</a>
+{% endblock %}

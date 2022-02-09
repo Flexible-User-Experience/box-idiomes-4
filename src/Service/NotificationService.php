@@ -8,9 +8,11 @@ use App\Entity\NewsletterContact;
 use App\Entity\PreRegister;
 use App\Entity\Receipt;
 use App\Entity\StudentAbsence;
+use App\Entity\User;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use TCPDF;
 use Twig\Environment;
 
@@ -309,6 +311,26 @@ class NotificationService
                     'preRegister' => $preRegister,
                 ]),
                 $preRegister->getEmail()
+            );
+        } catch (TransportExceptionInterface | Exception $exception) {
+            $result = 0;
+        }
+
+        return $result;
+    }
+
+    public function sendUserPasswordRequestNotification(User $user, ResetPasswordToken $resetToken): int
+    {
+        $result = 1;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $user->getEmail(),
+                'Enllaç recuperació contrasenya aplicació gestió web '.$this->pub,
+                $this->twig->render('Mails/reset_password.html.twig', [
+                    'resetToken' => $resetToken,
+                ]),
+                $user->getFullName()
             );
         } catch (TransportExceptionInterface | Exception $exception) {
             $result = 0;
