@@ -60,21 +60,27 @@ final class PersonAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('backend.admin.contact.contact', $this->getFormMdSuccessBoxArray('backend.admin.contact.contact', 3))
-            ->add(
-                'phone',
-                null,
-                [
-                    'label' => 'backend.admin.parent.phone',
-                ]
-            )
-            ->add(
-                'email',
-                EmailType::class,
-                [
-                    'label' => 'backend.admin.parent.email',
-                    'required' => true,
-                ]
-            )
+        ;
+        if ($this->isAdminUser()) {
+            $form
+                ->add(
+                    'phone',
+                    null,
+                    [
+                        'label' => 'backend.admin.parent.phone',
+                    ]
+                )
+                ->add(
+                    'email',
+                    EmailType::class,
+                    [
+                        'label' => 'backend.admin.parent.email',
+                        'required' => true,
+                    ]
+                )
+            ;
+        }
+        $form
             ->add(
                 'address',
                 null,
@@ -191,20 +197,26 @@ final class PersonAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.parent.surname',
                 ]
             )
-            ->add(
-                'phone',
-                null,
-                [
-                    'label' => 'backend.admin.parent.phone',
-                ]
-            )
-            ->add(
-                'email',
-                null,
-                [
-                    'label' => 'backend.admin.parent.email',
-                ]
-            )
+        ;
+        if ($this->isAdminUser()) {
+            $filter
+                ->add(
+                    'phone',
+                    null,
+                    [
+                        'label' => 'backend.admin.parent.phone',
+                    ]
+                )
+                ->add(
+                    'email',
+                    null,
+                    [
+                        'label' => 'backend.admin.parent.email',
+                    ]
+                )
+            ;
+        }
+        $filter
             ->add(
                 'address',
                 null,
@@ -312,22 +324,28 @@ final class PersonAdmin extends AbstractBaseAdmin
                     'editable' => true,
                 ]
             )
-            ->add(
-                'phone',
-                null,
-                [
-                    'label' => 'backend.admin.parent.phone',
-                    'editable' => true,
-                ]
-            )
-            ->add(
-                'email',
-                null,
-                [
-                    'label' => 'backend.admin.parent.email',
-                    'editable' => true,
-                ]
-            )
+        ;
+        if ($this->isAdminUser()) {
+            $list
+                ->add(
+                    'phone',
+                    null,
+                    [
+                        'label' => 'backend.admin.parent.phone',
+                        'editable' => true,
+                    ]
+                )
+                ->add(
+                    'email',
+                    null,
+                    [
+                        'label' => 'backend.admin.parent.email',
+                        'editable' => true,
+                    ]
+                )
+            ;
+        }
+        $list
             ->add(
                 'enabled',
                 null,
@@ -355,7 +373,7 @@ final class PersonAdmin extends AbstractBaseAdmin
 
     public function configureExportFields(): array
     {
-        return [
+        $result = [
             'dni',
             'name',
             'surname',
@@ -372,6 +390,11 @@ final class PersonAdmin extends AbstractBaseAdmin
             'dischargeDateString',
             'enabled',
         ];
+        if (!$this->isAdminUser()) {
+            unset($result[3], $result[4]);
+        }
+
+        return $result;
     }
 
     /**
