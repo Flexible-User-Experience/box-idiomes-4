@@ -1,4 +1,4 @@
-{% if object.email %}
+{% if object.email and is_granted(constant('App\\Enum\\UserRolesEnum::ROLE_ADMIN')) %}
     <tr class="sonata-ba-view-container">
         <th>{{ 'backend.admin.student.email' | trans }}</th>
         <td><a href="mailto:{{ object.email }}">{{ object.email }}</a></td>

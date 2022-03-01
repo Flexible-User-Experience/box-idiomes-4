@@ -95,21 +95,28 @@ final class StudentAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('backend.admin.contact.contact', $this->getFormMdSuccessBoxArray('backend.admin.contact.contact', 3))
-            ->add(
-                'phone',
-                null,
-                [
-                    'label' => 'backend.admin.student.phone',
-                ]
-            )
-            ->add(
-                'email',
-                null,
-                [
-                    'label' => 'backend.admin.student.email',
-                    'required' => false,
-                ]
-            )
+        ;
+        if ($this->isAdminUser()) {
+            $form
+                ->add(
+                    'phone',
+                    null,
+                    [
+                        'label' => 'backend.admin.student.phone',
+                        'required' => false,
+                    ]
+                )
+                ->add(
+                    'email',
+                    null,
+                    [
+                        'label' => 'backend.admin.student.email',
+                        'required' => false,
+                    ]
+                )
+            ;
+        }
+        $form
             ->add(
                 'address',
                 null,
@@ -295,20 +302,26 @@ final class StudentAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.student.comments',
                 ]
             )
-            ->add(
-                'phone',
-                null,
-                [
-                    'label' => 'backend.admin.student.phone',
-                ]
-            )
-            ->add(
-                'email',
-                null,
-                [
-                    'label' => 'backend.admin.student.email',
-                ]
-            )
+        ;
+        if ($this->isAdminUser()) {
+            $filter
+                ->add(
+                    'phone',
+                    null,
+                    [
+                        'label' => 'backend.admin.student.phone',
+                    ]
+                )
+                ->add(
+                    'email',
+                    null,
+                    [
+                        'label' => 'backend.admin.student.email',
+                    ]
+                )
+            ;
+        }
+        $filter
             ->add(
                 'address',
                 null,
@@ -524,22 +537,28 @@ final class StudentAdmin extends AbstractBaseAdmin
                     'editable' => true,
                 ]
             )
-            ->add(
-                'phone',
-                null,
-                [
-                    'label' => 'backend.admin.student.phone',
-                    'editable' => true,
-                ]
-            )
-            ->add(
-                'email',
-                null,
-                [
-                    'label' => 'backend.admin.student.email',
-                    'editable' => true,
-                ]
-            )
+        ;
+        if ($this->isAdminUser()) {
+            $list
+                ->add(
+                    'phone',
+                    null,
+                    [
+                        'label' => 'backend.admin.student.phone',
+                        'editable' => true,
+                    ]
+                )
+                ->add(
+                    'email',
+                    null,
+                    [
+                        'label' => 'backend.admin.student.email',
+                        'editable' => true,
+                    ]
+                )
+            ;
+        }
+        $list
             ->add(
                 'hasImageRightsAccepted',
                 null,
@@ -611,7 +630,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function configureExportFields(): array
     {
-        return [
+        $result = [
             'dni',
             'name',
             'surname',
@@ -636,6 +655,11 @@ final class StudentAdmin extends AbstractBaseAdmin
             'hasAcceptedInternalRegulations',
             'enabled',
         ];
+        if (!$this->isAdminUser()) {
+            unset($result[5], $result[6]);
+        }
+
+        return $result;
     }
 
     public function preRemove($object): void

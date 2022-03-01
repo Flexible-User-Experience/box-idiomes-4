@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.1.02 (WIP)
+##### Version 5.1.03 (WIP)
  * fix minor bugs
+
+##### Version 5.1.02 (2022-03-01)
+ * Symfony 5.4.5 update
+ * remove unnecessary JS console log outputs
+ * hide email & phone attr from StudentAdmin & PersonAdmin
 
 ##### Version 5.1.01 (2022-02-09)
  * fix emails rendering
