@@ -31,7 +31,7 @@
                                     <td>{{ object.comments }}</td>
                                 </tr>
                             {% endif %}
-                            {% if object.phone %}
+                            {% if object.phone and is_granted(constant('App\\Enum\\UserRolesEnum::ROLE_ADMIN')) %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.phone' | trans }}</th>
                                     <td>{{ object.phone }}</td>

@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
+use App\Enum\UserRolesEnum;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -89,5 +90,10 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
     protected function isChildForm(): bool
     {
         return $this->hasParentFieldDescription();
+    }
+
+    protected function isAdminUser(): bool
+    {
+        return $this->isGranted(UserRolesEnum::ROLE_ADMIN);
     }
 }
