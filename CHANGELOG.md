@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.1.03 (WIP)
+##### Version 5.1.04 (WIP)
  * fix minor bugs
+
+##### Version 5.1.03 (2022-03-02)
+ * change to DateRangeFilter in SpendingAdmin
 
 ##### Version 5.1.02 (2022-03-01)
  * Symfony 5.4.5 update
