@@ -9,7 +9,6 @@ use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
 use App\Kernel;
-use App\Repository\BankCreditorSepaRepository;
 use DateTime;
 use DateTimeImmutable;
 use Digitick\Sepa\Util\StringHelper;
@@ -226,14 +225,14 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, BankCreditorSepaRepository $bcsr): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
         try {
             $paymentUniqueId = uniqid('', true);
             $xmlsArray = [];
-            $banksCreditorSepa = $bcsr->getEnabledSortedByName();
+            $banksCreditorSepa = $this->bcsr->getEnabledSortedByName();
             /** @var BankCreditorSepa $bankCreditorSepa */
             foreach ($banksCreditorSepa as $bankCreditorSepa) {
                 $xmlsArray[] = $this->xsbs->buildDirectDebitReceiptsXmlForBankCreditorSepa($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels, $bankCreditorSepa);
