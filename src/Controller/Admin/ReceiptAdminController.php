@@ -2,15 +2,19 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\BankCreditorSepa;
 use App\Entity\Receipt;
 use App\Enum\StudentPaymentEnum;
 use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
 use App\Kernel;
+use App\Repository\BankCreditorSepaRepository;
 use DateTime;
 use DateTimeImmutable;
+use Digitick\Sepa\Util\StringHelper;
 use Exception;
+use PhpZip\ZipFile;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -99,7 +103,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
         $pdf = $this->rbp->build($object);
 
-        return new Response($pdf->Output('box_idiomes_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('box_idiomes_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
     public function sendReminderAction(Request $request): RedirectResponse
@@ -136,7 +140,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
         $pdf = $this->rbp->build($object);
 
-        return new Response($pdf->Output('box_idiomes_receipt_'.$object->getSluggedReceiptNumber().'.pdf', 'I'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('box_idiomes_receipt_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
     public function sendAction(Request $request): RedirectResponse
@@ -222,13 +226,18 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
-    public function batchActionGeneratefirstsepaxmls(ProxyQueryInterface $selectedModelQuery): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, BankCreditorSepaRepository $bcsr): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
         try {
             $paymentUniqueId = uniqid('', true);
-            $xmls = $this->xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
+            $xmlsArray = [];
+            $banksCreditorSepa = $bcsr->getEnabledSortedByName();
+            /** @var BankCreditorSepa $bankCreditorSepa */
+            foreach ($banksCreditorSepa as $bankCreditorSepa) {
+                $xmlsArray[] = $this->xsbs->buildDirectDebitReceiptsXmlForBankCreditorSepa($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels, $bankCreditorSepa);
+            }
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
@@ -239,15 +248,18 @@ final class ReceiptAdminController extends AbstractAdminController
                 }
             }
             $this->mr->getManager()->flush();
-            if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
-                return new Response($xmls, 200, ['Content-type' => 'application/xml']);
-            }
             $now = new DateTimeImmutable();
-            $fileSystem = new Filesystem();
-            $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_FRST_receipts_'.$now->format('Y-m-d_H-i').'.xml';
-            $fileSystem->touch($fileNamePath);
-            $fileSystem->dumpFile($fileNamePath, $xmls);
-            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
+            $fileName = 'SEPA_receipts_'.$now->format('Y-m-d_H-i').'.zip';
+            $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$fileName;
+            $zipFile = new ZipFile();
+            $index = 0;
+            /** @var BankCreditorSepa $bankCreditorSepa */
+            foreach ($banksCreditorSepa as $bankCreditorSepa) {
+                $zipFile->addFromString('SEPA_'.StringHelper::sanitizeString($bankCreditorSepa->getName()).'.xml', $xmlsArray[$index]);
+                ++$index;
+            }
+            $zipFile->saveAsFile($fileNamePath)->close();
+            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/zip']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;
@@ -263,48 +275,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, Request $request): Response
-    {
-        $this->admin->checkAccess('edit');
-        $selectedModels = $selectedModelQuery->execute();
-        try {
-            $paymentUniqueId = uniqid('', true);
-            $xmls = $this->xsbs->buildDirectDebitReceiptsXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
-            /** @var Receipt $selectedModel */
-            foreach ($selectedModels as $selectedModel) {
-                if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
-                    $selectedModel
-                        ->setIsSepaXmlGenerated(true)
-                        ->setSepaXmlGeneratedDate(new DateTimeImmutable())
-                    ;
-                }
-            }
-            $this->mr->getManager()->flush();
-            if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
-                return new Response($xmls, 200, ['Content-type' => 'application/xml']);
-            }
-            $now = new DateTimeImmutable();
-            $fileSystem = new Filesystem();
-            $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_RCUR_receipts_'.$now->format('Y-m-d_H-i').'.xml';
-            $fileSystem->touch($fileNamePath);
-            $fileSystem->dumpFile($fileNamePath, $xmls);
-            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
-            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
-
-            return $response;
-        } catch (Exception $e) {
-            $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu SEPA amb format XML. Revisa els rebuts seleccionats.');
-            $this->addFlash('error', $e->getMessage());
-
-            return new RedirectResponse(
-                $this->admin->generateUrl('list', [
-                    'filter' => $this->admin->getFilterParameters(),
-                ])
-            );
-        }
-    }
-
-    public function batchActionMarkaspayed(ProxyQueryInterface $selectedModelQuery, Request $request): RedirectResponse
+    public function batchActionMarkaspayed(ProxyQueryInterface $selectedModelQuery): RedirectResponse
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
