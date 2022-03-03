@@ -4,6 +4,9 @@ Changelog
 ##### Version 5.1.04 (WIP)
  * fix minor bugs
 
+##### Version 5.1.04 (2020-03-03)
+ * fix ZIP generation during ReceiptAdminController action
+
 ##### Version 5.1.03 (2022-03-02)
  * change to DateRangeFilter in SpendingAdmin
 
