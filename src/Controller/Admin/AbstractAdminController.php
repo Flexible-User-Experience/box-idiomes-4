@@ -9,6 +9,7 @@ use App\Manager\ReceiptManager;
 use App\Pdf\InvoiceBuilderPdf;
 use App\Pdf\ReceiptBuilderPdf;
 use App\Pdf\ReceiptReminderBuilderPdf;
+use App\Repository\BankCreditorSepaRepository;
 use App\Service\NotificationService;
 use App\Service\XmlSepaBuilderService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,6 +23,7 @@ abstract class AbstractAdminController extends CRUDController
     protected GenerateInvoiceFormManager $gifm;
     protected EventManager $em;
     protected ReceiptManager $rm;
+    protected BankCreditorSepaRepository $bcsr;
     protected ReceiptBuilderPdf $rbp;
     protected InvoiceBuilderPdf $ibp;
     protected ReceiptReminderBuilderPdf $rrbp;
@@ -29,13 +31,14 @@ abstract class AbstractAdminController extends CRUDController
     protected NotificationService $ns;
     protected TranslatorInterface $ts;
 
-    public function __construct(ManagerRegistry $mr, GenerateReceiptFormManager $grfm, GenerateInvoiceFormManager $gifm, EventManager $em, ReceiptManager $rm, ReceiptBuilderPdf $rbp, InvoiceBuilderPdf $ibp, ReceiptReminderBuilderPdf $rrbp, XmlSepaBuilderService $xsbs, NotificationService $ns, TranslatorInterface $ts)
+    public function __construct(ManagerRegistry $mr, GenerateReceiptFormManager $grfm, GenerateInvoiceFormManager $gifm, EventManager $em, ReceiptManager $rm, BankCreditorSepaRepository $bcsr, ReceiptBuilderPdf $rbp, InvoiceBuilderPdf $ibp, ReceiptReminderBuilderPdf $rrbp, XmlSepaBuilderService $xsbs, NotificationService $ns, TranslatorInterface $ts)
     {
         $this->mr = $mr;
         $this->grfm = $grfm;
         $this->gifm = $gifm;
         $this->em = $em;
         $this->rm = $rm;
+        $this->bcsr = $bcsr;
         $this->rbp = $rbp;
         $this->ibp = $ibp;
         $this->rrbp = $rrbp;

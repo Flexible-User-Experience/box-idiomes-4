@@ -232,6 +232,9 @@
     "myclabs/php-enum": {
         "version": "1.8.3"
     },
+    "nelexa/zip": {
+        "version": "4.0.1"
+    },
     "nelmio/alice": {
         "version": "3.2",
         "recipe": {
