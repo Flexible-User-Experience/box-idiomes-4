@@ -22,7 +22,7 @@
         "icheck-bootstrap": "^3.0.1",
         "jquery": "^3.6.0",
         "node-sass": "^7.0.0",
-        "pdfjs-dist": "^2.12",
+        "pdfjs-dist": "2.12.313",
         "regenerator-runtime": "^0.13.2",
         "sass": "^1.49.7",
         "sass-loader": "^12.4.0",
