@@ -186,7 +186,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery, Request $request): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
