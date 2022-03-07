@@ -1,10 +1,14 @@
 Changelog
 =========
 
-##### Version 5.1.04 (WIP)
+##### Version 5.1.05 (WIP)
  * fix minor bugs
 
-##### Version 5.1.04 (2020-03-03)
+##### Version 5.1.04 (2022-03-07)
+ * Symfony 5.4.6 update
+ * fix pdfjs-dist version to 2.12.313 due to problem after yarn auto upgrade
+
+##### Version 5.1.04 (2022-03-03)
  * fix ZIP generation during ReceiptAdminController action
 
 ##### Version 5.1.03 (2022-03-02)
