@@ -89,6 +89,26 @@
                                 </td>
                             </tr>
                             <tr class="sonata-ba-view-container">
+                                <th>{{ 'backend.admin.student.is_payment_excempt' | trans }}</th>
+                                <td>
+                                    {% if object.isPaymentExempt %}
+                                        <span class="label label-success">{{ 'backend.admin.yes' | trans }}</span>
+                                    {% else %}
+                                        <span class="label label-danger">{{ 'backend.admin.no' | trans }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="sonata-ba-view-container">
+                                <th>{{ 'backend.admin.internalregulations.checkbox_label' | trans }}</th>
+                                <td>
+                                    {% if object.hasAcceptedInternalRegulations %}
+                                        <span class="label label-success">{{ 'backend.admin.yes' | trans }}</span>
+                                    {% else %}
+                                        <span class="label label-danger">{{ 'backend.admin.no' | trans }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="sonata-ba-view-container">
                                 <th>{{ 'backend.admin.enabled' | trans }}</th>
                                 <td>
                                     {% if object.enabled %}
