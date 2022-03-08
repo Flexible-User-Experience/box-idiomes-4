@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.1.07 (WIP)
+##### Version 5.1.08 (WIP)
  * fix minor bugs
+
+##### Version 5.1.07 (2022-03-08)
+ * fix error on sending student absence action button
 
 ##### Version 5.1.06 (2022-03-08)
  * show payment excemption & internal regulations attr Student details
