@@ -1,4 +1,4 @@
-{% if not object.student.isPaymentExempt and object.student.mainEmailSubject %}
+{% if not object.student.isPaymentExempt and object.mainEmail %}
     {% if not object.sended %}
         <a class="btn btn-sm btn-default" href="{{ admin.generateObjectUrl('send', object) }}" title="{{ 'backend.admin.invoice.send' | trans }}">
             <i class="far fa-envelope"></i>
