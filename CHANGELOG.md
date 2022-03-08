@@ -1,10 +1,16 @@
 Changelog
 =========
 
-##### Version 5.1.05 (WIP)
+##### Version 5.1.08 (WIP)
  * fix minor bugs
 
-##### Version 5.1.04 (2022-03-07)
+##### Version 5.1.07 (2022-03-08)
+ * fix error on sending student absence action button
+
+##### Version 5.1.06 (2022-03-08)
+ * show payment excemption & internal regulations attr Student details
+
+##### Version 5.1.05 (2022-03-07)
  * Symfony 5.4.6 update
  * fix pdfjs-dist version to 2.12.313 due to problem after yarn auto upgrade
 
