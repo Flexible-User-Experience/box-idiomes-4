@@ -211,7 +211,7 @@ backend:
             email: Email
             address: Adreça
             city: Ciutat
-            payment: Pagament
+            payment: "Forma pagament"
             parent_payment: "Forma pagament progenitor"
             payment_no_parent_help: "Vàlid sempre que l'alumne no tingui un pare assignat"
             is_payment_excempt: Exempt de pagament

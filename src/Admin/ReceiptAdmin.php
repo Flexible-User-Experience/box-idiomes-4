@@ -328,7 +328,20 @@ final class ReceiptAdmin extends AbstractBaseAdmin
                 'student.payment',
                 null,
                 [
-                    'label' => 'backend.admin.parent.payment',
+                    'label' => 'backend.admin.student.payment',
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => StudentPaymentEnum::getEnumArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
+                ]
+            )
+            ->add(
+                'person.payment',
+                null,
+                [
+                    'label' => 'backend.admin.student.parent_payment',
                     'field_type' => ChoiceType::class,
                     'field_options' => [
                         'choices' => StudentPaymentEnum::getEnumArray(),
