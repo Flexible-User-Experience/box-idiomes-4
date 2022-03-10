@@ -132,6 +132,11 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this->isPayed();
     }
 
+    public function getIsPayedString(): string
+    {
+        return self::convertBooleanValueAsString($this->isPayed());
+    }
+
     public function setIsPayed(?bool $isPayed): self
     {
         $this->isPayed = $isPayed;
@@ -164,6 +169,11 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     public function getIsSended(): ?bool
     {
         return $this->isSended();
+    }
+
+    public function getIsSendedString(): string
+    {
+        return self::convertBooleanValueAsString($this->isSended());
     }
 
     public function setIsSended(?bool $isSended): self
@@ -215,6 +225,11 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this->isSepaXmlGenerated();
     }
 
+    public function getSepaXmlGeneratedString(): string
+    {
+        return self::convertBooleanValueAsString($this->isSepaXmlGenerated());
+    }
+
     public function setIsSepaXmlGenerated(?bool $isSepaXmlGenerated): self
     {
         $this->isSepaXmlGenerated = $isSepaXmlGenerated;
@@ -261,6 +276,16 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this->discountApplied;
     }
 
+    public function getDiscountApplied(): ?bool
+    {
+        return $this->isDiscountApplied();
+    }
+
+    public function getDiscountAppliedString(): string
+    {
+        return self::convertBooleanValueAsString($this->isDiscountApplied());
+    }
+
     public function setDiscountApplied(?bool $discountApplied): self
     {
         $this->discountApplied = $discountApplied;
@@ -305,6 +330,11 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     public function getIsForPrivateLessons(): ?bool
     {
         return $this->isForPrivateLessons();
+    }
+
+    public function getIsForPrivateLessonsString(): string
+    {
+        return self::convertBooleanValueAsString($this->isForPrivateLessons());
     }
 
     public function setIsForPrivateLessons(?bool $isForPrivateLessons): self
