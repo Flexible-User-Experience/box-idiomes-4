@@ -6,6 +6,7 @@ Changelog
 
 ##### Version 5.2.00 (2022-03-10)
  * add parent payment filter in Student Admin
+ * improve Student show view
 
 ##### Version 5.1.07 (2022-03-08)
  * fix error on sending student absence action button
