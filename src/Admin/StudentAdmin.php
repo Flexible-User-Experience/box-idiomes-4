@@ -350,6 +350,19 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'parent.payment',
+                null,
+                [
+                    'label' => 'backend.admin.student.parent_payment',
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => StudentPaymentEnum::getEnumArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
+                ]
+            )
+            ->add(
                 'bankCreditorSepa',
                 null,
                 [

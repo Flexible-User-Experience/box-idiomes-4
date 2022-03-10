@@ -48,12 +48,22 @@
                                         <th>{{ 'backend.admin.bank.accountNumber' | trans }}</th>
                                         <td>{{ object.bank.accountNumber }}</td>
                                     </tr>
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'backend.admin.bank.creditor_bank_name' | trans }}</th>
+                                        <td>{{ object.bankCreditorSepa }}</td>
+                                    </tr>
                                 {% endif %}
                             {% endif %}
                             {% if object.birthDate %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.birthDate' | trans }}</th>
                                     <td>{{ object.birthDateString }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if object.dischargeDate %}
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'backend.admin.student.dischargeDate' | trans }}</th>
+                                    <td>{{ object.dischargeDateString }}</td>
                                 </tr>
                             {% endif %}
                             {% if object.schedule %}
@@ -132,6 +142,12 @@
                                     <th>{{ 'backend.admin.student.name' | trans }}</th>
                                     <td>{{ object.parent }}</td>
                                 </tr>
+                                {% if object.parent.phone and is_granted(constant('App\\Enum\\UserRolesEnum::ROLE_ADMIN')) %}
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'backend.admin.parent.phone' | trans }}</th>
+                                        <td>{{ object.parent.phone }}</td>
+                                    </tr>
+                                {% endif %}
                                 {% include "Admin/Helpers/common_student_parent_show_include.html.twig" with {object: object.parent} %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.payment' | trans }}</th>
@@ -142,7 +158,15 @@
                                         <th>{{ 'backend.admin.bank.accountNumber' | trans }}</th>
                                         <td>{{ object.parent.bank.accountNumber }}</td>
                                     </tr>
+                                    <tr class="sonata-ba-view-container">
+                                        <th>{{ 'backend.admin.bank.creditor_bank_name' | trans }}</th>
+                                        <td>{{ object.parent.bankCreditorSepa }}</td>
+                                    </tr>
                                 {% endif %}
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'backend.admin.student.dischargeDate' | trans }}</th>
+                                    <td>{{ object.parent.dischargeDateString }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

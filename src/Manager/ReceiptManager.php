@@ -63,6 +63,6 @@ class ReceiptManager
             ]
         );
 
-        return is_null($searchedInvoice) ? false : true;
+        return !is_null($searchedInvoice);
     }
 }
