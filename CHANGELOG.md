@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.01 (WIP)
+##### Version 5.2.02 (WIP)
  * fix minor bugs
+
+##### Version 5.2.01 (2022-03-10)
+ * add parent payment datagrid filtes in Receipt & Invoice admins
 
 ##### Version 5.2.00 (2022-03-10)
  * add parent payment filter in Student Admin
