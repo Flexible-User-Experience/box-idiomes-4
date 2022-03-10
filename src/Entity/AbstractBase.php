@@ -94,6 +94,11 @@ abstract class AbstractBase
         return $this->getEnabled();
     }
 
+    public static function convertBooleanValueAsString(?bool $value): string
+    {
+        return $value ? 'yes' : 'no';
+    }
+
     public static function convertDateAsString(?DateTimeInterface $date): string
     {
         return $date ? $date->format(self::DATE_STRING_FORMAT) : self::DEFAULT_NULL_DATE_STRING;

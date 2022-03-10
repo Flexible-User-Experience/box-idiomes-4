@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.02 (WIP)
+##### Version 5.2.03 (WIP)
  * fix minor bugs
+
+##### Version 5.2.02 (2022-03-10)
+ * usage of boolean string conversion in Receipt & Invoice export action admins
 
 ##### Version 5.2.01 (2022-03-10)
  * add parent payment datagrid filtes in Receipt & Invoice admins
