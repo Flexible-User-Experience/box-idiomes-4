@@ -225,7 +225,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this->isSepaXmlGenerated();
     }
 
-    public function getSepaXmlGeneratedString(): string
+    public function getIsSepaXmlGeneratedString(): string
     {
         return self::convertBooleanValueAsString($this->isSepaXmlGenerated());
     }
