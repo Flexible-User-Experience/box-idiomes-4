@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.03 (WIP)
+##### Version 5.2.04 (WIP)
  * fix minor bugs
+
+##### Version 5.2.03 (2022-03-31)
+ * composer & yarn vendors update
 
 ##### Version 5.2.02 (2022-03-10)
  * usage of boolean string conversion in Receipt & Invoice export action admins
