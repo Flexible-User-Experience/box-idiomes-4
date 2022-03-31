@@ -1,8 +1,8 @@
 admin_area:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix:   /admin
+    prefix:   '/admin'
 
 _sonata_admin:
     resource: .
-    prefix:   /admin
+    prefix:   '/admin'
     type:     sonata_admin
