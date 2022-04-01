@@ -9,6 +9,7 @@ Changelog
  * upgrade EWZRecaptcha up to v3
  * add export filename parameter
  * add discount per extra son parameter
+ * remove hardcoded project web title from email subjects
 
 ##### Version 5.2.03 (2022-03-31)
  * composer & yarn vendors update

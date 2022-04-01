@@ -21,6 +21,7 @@ class NotificationService
     private CourierService $messenger;
     private Environment $twig;
     private string $amd; // system's App Mail Destionation
+    private string $pwt; // project web title
     private string $pub; // project URL base
 
     public function __construct(CourierService $messenger, Environment $twig, ParameterBagInterface $pb)
@@ -28,6 +29,7 @@ class NotificationService
         $this->messenger = $messenger;
         $this->twig = $twig;
         $this->amd = $pb->get('mailer_destination');
+        $this->pwt = $pb->get('project_web_title');
         $this->pub = $pb->get('project_url_base');
     }
 
@@ -204,7 +206,7 @@ class NotificationService
                 $this->amd,
                 $receipt->getMainEmail(),
                 $receipt->getMainEmailName(),
-                'Recordatori de pagament rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
+                'Recordatori de pagament rebut '.$this->pwt.' núm. '.$receipt->getReceiptNumber(),
                 $this->twig->render('Mails/receipt_reminder_pdf_notification.html.twig', [
                     'receipt' => $receipt,
                 ]),
@@ -231,7 +233,7 @@ class NotificationService
                 $this->amd,
                 $receipt->getMainEmail(),
                 $receipt->getMainEmailName(),
-                'Rebut Box Idiomes núm. '.$receipt->getReceiptNumber(),
+                'Rebut '.$this->pwt.' núm. '.$receipt->getReceiptNumber(),
                 $this->twig->render('Mails/receipt_pdf_notification.html.twig', [
                     'receipt' => $receipt,
                 ]),
@@ -258,7 +260,7 @@ class NotificationService
                 $this->amd,
                 $invoice->getMainEmail(),
                 $invoice->getMainEmailName(),
-                'Factura Box Idiomes núm. '.$invoice->getInvoiceNumber(),
+                'Factura '.$this->pwt.' núm. '.$invoice->getInvoiceNumber(),
                 $this->twig->render('Mails/invoice_pdf_notification.html.twig', [
                     'invoice' => $invoice,
                 ]),

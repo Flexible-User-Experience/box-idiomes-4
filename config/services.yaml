@@ -7,7 +7,7 @@ parameters:
     project_url_base:           '%env(string:PROJECT_BASE_URL)%'
     project_backend_title:      '%env(string:PROJECT_BACKEND_TITLE)%'
     project_export_filename:    '%env(string:PROJECT_EXPORT_FILENAME_BASE)%'
-    project_discount_extra_son: '%env(integer:PROJECT_DISCOUT_PER_EXTRA_SON)%'
+    project_discount_extra_son: '%env(int:PROJECT_DISCOUT_PER_EXTRA_SON)%'
     google_tag_manager_enabled: '%env(bool:GOOGLE_TAG_MANAGER_IS_ENABLED)%'
     google_tag_manager_account: '%env(string:GOOGLE_TAG_MANAGER_ACCOUNT)%'
     google_analytics_enabled:   '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
