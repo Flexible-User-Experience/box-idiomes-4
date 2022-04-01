@@ -2,245 +2,129 @@
 
 namespace App\Form\Model;
 
-/**
- * Class GenerateReceiptItemModel.
- *
- * @category FormModel
- */
 class GenerateReceiptItemModel
 {
-    /**
-     * @var int
-     */
-    protected $studentId;
+    protected int $studentId;
+    protected string $studentName;
+    protected float $units;
+    protected float $unitPrice;
+    protected float $discount;
+    protected bool $isReadyToGenerate;
+    protected bool $isPreviouslyGenerated;
+    protected bool $isPrivateLessonType;
 
-    /**
-     * @var string
-     */
-    protected $studentName;
-
-    /**
-     * @var float
-     */
-    protected $units;
-
-    /**
-     * @var float
-     */
-    protected $unitPrice;
-
-    /**
-     * @var float
-     */
-    protected $discount;
-
-    /**
-     * @var bool
-     */
-    protected $isReadyToGenerate;
-
-    /**
-     * @var bool
-     */
-    protected $isPreviouslyGenerated;
-
-    /**
-     * @var bool
-     */
-    protected $isPrivateLessonType;
-
-    /**
-     * Methods.
-     */
-
-    /**
-     * @return int
-     */
-    public function getStudentId()
+    public function getStudentId(): int
     {
         return $this->studentId;
     }
 
-    /**
-     * @param int $studentId
-     *
-     * @return $this
-     */
-    public function setStudentId($studentId)
+    public function setStudentId(int $studentId): self
     {
         $this->studentId = $studentId;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStudentName()
+    public function getStudentName(): string
     {
         return $this->studentName;
     }
 
-    /**
-     * @param string $studentName
-     *
-     * @return $this
-     */
-    public function setStudentName($studentName)
+    public function setStudentName(string $studentName): self
     {
         $this->studentName = $studentName;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getUnits()
+    public function getUnits(): float
     {
         return $this->units;
     }
 
-    /**
-     * @param float $units
-     *
-     * @return $this
-     */
-    public function setUnits($units)
+    public function setUnits(float $units): self
     {
         $this->units = $units;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getUnitPrice()
+    public function getUnitPrice(): float
     {
         return $this->unitPrice;
     }
 
-    /**
-     * @param float $unitPrice
-     *
-     * @return $this
-     */
-    public function setUnitPrice($unitPrice)
+    public function setUnitPrice(float $unitPrice): self
     {
         $this->unitPrice = $unitPrice;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getDiscount()
+    public function getDiscount(): float
     {
         return $this->discount;
     }
 
-    /**
-     * @param float $discount
-     *
-     * @return $this
-     */
-    public function setDiscount($discount)
+    public function setDiscount(float $discount): self
     {
         $this->discount = $discount;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isReadyToGenerate()
+    public function isReadyToGenerate(): bool
     {
         return $this->isReadyToGenerate;
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsReadyToGenerate()
+    public function getIsReadyToGenerate(): bool
     {
         return $this->isReadyToGenerate();
     }
 
-    /**
-     * @param bool $isReadyToGenerate
-     *
-     * @return $this
-     */
-    public function setIsReadyToGenerate($isReadyToGenerate)
+    public function setIsReadyToGenerate(bool $isReadyToGenerate): self
     {
         $this->isReadyToGenerate = $isReadyToGenerate;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPreviouslyGenerated()
+    public function isPreviouslyGenerated(): bool
     {
         return $this->isPreviouslyGenerated;
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsPreviouslyGenerated()
+    public function getIsPreviouslyGenerated(): bool
     {
         return $this->isPreviouslyGenerated();
     }
 
-    /**
-     * @param bool $isPreviouslyGenerated
-     *
-     * @return $this
-     */
-    public function setIsPreviouslyGenerated($isPreviouslyGenerated)
+    public function setIsPreviouslyGenerated($isPreviouslyGenerated): self
     {
         $this->isPreviouslyGenerated = $isPreviouslyGenerated;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPrivateLessonType()
+    public function isPrivateLessonType(): bool
     {
         return $this->isPrivateLessonType;
     }
 
-    /**
-     * @return bool
-     */
-    public function getPrivateLessonType()
+    public function getPrivateLessonType(): bool
     {
         return $this->isPrivateLessonType();
     }
 
-    /**
-     * @param bool $isPrivateLessonType
-     *
-     * @return $this
-     */
-    public function setIsPrivateLessonType($isPrivateLessonType)
+    public function setIsPrivateLessonType($isPrivateLessonType): self
     {
         $this->isPrivateLessonType = $isPrivateLessonType;
 
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getTotal()
+    public function getTotal(): float
     {
         return $this->getUnits() * $this->getUnitPrice() - $this->getDiscount();
     }

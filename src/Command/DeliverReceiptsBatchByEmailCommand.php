@@ -9,7 +9,7 @@ use App\Pdf\ReceiptReminderBuilderPdf;
 use App\Service\NotificationService;
 use Exception;
 use Symfony\Bridge\Monolog\Logger;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @category Command
  */
-class DeliverReceiptsBatchByEmailCommand extends ContainerAwareCommand
+class DeliverReceiptsBatchByEmailCommand extends Command
 {
     /**
      * Configure command.
@@ -72,7 +72,7 @@ class DeliverReceiptsBatchByEmailCommand extends ContainerAwareCommand
             /** @var Receipt $receipt */
             foreach ($receipts as $receipt) {
                 $output->write('building PDF receipt number '.$receipt->getReceiptNumber().'... ');
-                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $receipt->getMainSubject()->getPayment()) {
+                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $receipt->getMainSubject()->getPayment()) {
                     // build receipt PDF
                     $pdf = $rbp->build($receipt);
                 } else {
@@ -84,7 +84,7 @@ class DeliverReceiptsBatchByEmailCommand extends ContainerAwareCommand
                 if ($input->getOption('force')) {
                     $output->write('delivering PDF receipt number '.$receipt->getReceiptNumber().'... ');
                     if ($receipt->getMainEmail()) {
-                        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER == $receipt->getMainSubject()->getPayment()) {
+                        if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $receipt->getMainSubject()->getPayment()) {
                             // send receipt PDF
                             $result = $messenger->sendReceiptPdfNotification($receipt, $pdf);
                         } else {

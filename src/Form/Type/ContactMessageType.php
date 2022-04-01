@@ -3,8 +3,8 @@
 namespace App\Form\Type;
 
 use App\Entity\ContactMessage;
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3 as RecaptchaTrue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -89,16 +89,10 @@ class ContactMessageType extends AbstractType
             )
             ->add(
                 'captcha',
-                EWZRecaptchaType::class,
+                EWZRecaptchaV3Type::class,
                 [
-                    'label' => ' ',
-                    'attr' => [
-                        'options' => [
-                            'theme' => 'light',
-                            'type' => 'image',
-                            'size' => 'normal',
-                        ],
-                    ],
+                    'label' => false,
+                    'action_name' => 'contact_message',
                     'mapped' => false,
                     'constraints' => [
                         new RecaptchaTrue(),
