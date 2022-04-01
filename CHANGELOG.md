@@ -10,6 +10,7 @@ Changelog
  * add export filename parameter
  * add discount per extra son parameter
  * remove hardcoded project web title from email subjects
+ * remove hardcoded project web title from templates
 
 ##### Version 5.2.03 (2022-03-31)
  * composer & yarn vendors update
