@@ -19,7 +19,7 @@ Routing.setRoutingData(routes);
 document.addEventListener('DOMContentLoaded', () => {
     let calendarEl = document.getElementById('calendar-holder');
     let eventsUrl = calendarEl.getAttribute('data-events-url');
-    let googleCalendarApiKey = calendarEl.getAttribute('data-gmap-api-key');
+    let googleCalendarApiKey = calendarEl.getAttribute('data-gcal-api-key');
     let calendar = new Calendar(calendarEl, {
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
         initialView: 'timeGridWeek',
