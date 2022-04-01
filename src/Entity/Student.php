@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,7 +21,7 @@ class Student extends AbstractPerson
 {
     use BankCreditorSepaTrait;
 
-    public const DISCOUNT_PER_EXTRA_SON = 5;
+    private ParameterBagInterface $parameterBag;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -82,6 +83,11 @@ class Student extends AbstractPerson
     public function __construct()
     {
         $this->events = new ArrayCollection();
+    }
+
+    public function setParameterBag(ParameterBagInterface $parameterBag): void
+    {
+        $this->parameterBag = $parameterBag;
     }
 
     public function getBirthDate(): ?DateTimeInterface
@@ -264,7 +270,7 @@ class Student extends AbstractPerson
         $price = $this->getTariff()->getPrice();
         if ($this->getParent()) {
             $enabledSonsAmount = $this->getParent()->getEnabledSonsAmount();
-            $discount = $enabledSonsAmount ? ((($enabledSonsAmount - 1) * self::DISCOUNT_PER_EXTRA_SON) / $enabledSonsAmount) : 0;
+            $discount = $enabledSonsAmount ? ((($enabledSonsAmount - 1) * $this->parameterBag->get('project_discount_extra_son')) / $enabledSonsAmount) : 0;
             $price -= $discount;
         }
 
@@ -276,7 +282,7 @@ class Student extends AbstractPerson
         $discount = 0;
         if ($this->getParent()) {
             $enabledSonsAmount = $this->getParent()->getEnabledSonsAmount();
-            $discount = $enabledSonsAmount ? round(($enabledSonsAmount - 1) * self::DISCOUNT_PER_EXTRA_SON / $enabledSonsAmount, 2) : 0;
+            $discount = $enabledSonsAmount ? round(($enabledSonsAmount - 1) * $this->parameterBag->get('project_discount_extra_son') / $enabledSonsAmount, 2) : 0;
         }
 
         return $discount;
