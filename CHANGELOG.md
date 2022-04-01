@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.2.04 (WIP)
+##### Version 5.2.05 (WIP)
  * fix minor bugs
+
+##### Version 5.2.04 (2022-04-01)
+ * upgrade EWZRecaptcha up to v3
+ * add export filename parameter
+ * add discount per extra son parameter
 
 ##### Version 5.2.03 (2022-03-31)
  * composer & yarn vendors update
