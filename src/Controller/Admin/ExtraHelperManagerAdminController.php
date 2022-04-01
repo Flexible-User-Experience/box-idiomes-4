@@ -6,12 +6,13 @@ use App\Manager\EventManager;
 use App\Pdf\ExportCalendarToListBuilderPdf;
 use DateTime;
 use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ExtraHelperManagerAdminController extends CRUDController
 {
-    public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, string $start, string $end): Response
+    public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, ParameterBagInterface $parameterBag, string $start, string $end): Response
     {
         $startDate = DateTime::createFromFormat('Y-m-d', $start);
         $endDate = DateTime::createFromFormat('Y-m-d', $end);
@@ -21,7 +22,7 @@ final class ExtraHelperManagerAdminController extends CRUDController
                 if ($exportCalendarList->hasDays()) {
                     $pdf = $eclb->build($exportCalendarList);
 
-                    return new Response($pdf->Output('box_idiomes_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf'), 200, ['Content-type' => 'application/pdf']);
+                    return new Response($pdf->Output($parameterBag->get('project_export_filename').'_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf'), 200, ['Content-type' => 'application/pdf']);
                 }
                 $this->addFlash('warning', $ts->trans('backend.admin.calendar.export.error.no_items_found', [
                     '%start%' => $startDate->format('d/m/Y'),

@@ -6,6 +6,7 @@ use App\Entity\ClassGroup;
 use App\Pdf\ClassGroupBuilderPdf;
 use App\Repository\StudentRepository;
 use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,7 +16,7 @@ final class ClassGroupAdminController extends CRUDController
     /**
      * Get group emails list in PDF action.
      */
-    public function emailsAction(Request $request, StudentRepository $srs, ClassGroupBuilderPdf $cgpbs, TranslatorInterface $translator): Response
+    public function emailsAction(Request $request, StudentRepository $srs, ClassGroupBuilderPdf $cgpbs, TranslatorInterface $translator, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -32,6 +33,6 @@ final class ClassGroupAdminController extends CRUDController
         }
         $pdf = $cgpbs->build($object, $students);
 
-        return new Response($pdf->Output('box_idiomes_class_group_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_class_group_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 }

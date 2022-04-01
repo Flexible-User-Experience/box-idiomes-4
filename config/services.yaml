@@ -7,6 +7,8 @@ parameters:
     project_url_base:           '%env(string:PROJECT_BASE_URL)%'
     project_backend_title:      '%env(string:PROJECT_BACKEND_TITLE)%'
     project_export_filename:    '%env(string:PROJECT_EXPORT_FILENAME_BASE)%'
+    google_tag_manager_enabled: '%env(bool:GOOGLE_TAG_MANAGER_IS_ENABLED)%'
+    google_tag_manager_account: '%env(string:GOOGLE_TAG_MANAGER_ACCOUNT)%'
     google_analytics_enabled:   '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
     google_analytics_account:   '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
     google_maps_api_key:        '%env(string:GOOGLE_MAPS_API_KEY)%'

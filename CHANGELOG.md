@@ -5,6 +5,7 @@ Changelog
  * fix minor bugs
 
 ##### Version 5.2.04 (2022-04-01)
+ * improve config CS files
  * upgrade EWZRecaptcha up to v3
  * add export filename parameter
  * add discount per extra son parameter
