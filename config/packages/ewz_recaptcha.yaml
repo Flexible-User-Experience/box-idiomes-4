@@ -1,6 +1,10 @@
 ewz_recaptcha:
-    public_key:  '%env(EWZ_RECAPTCHA_SITE_KEY)%'
-    private_key: '%env(EWZ_RECAPTCHA_SECRET)%'
+    public_key:          '%env(EWZ_RECAPTCHA_SITE_KEY)%'
+    private_key:         '%env(EWZ_RECAPTCHA_SECRET)%'
+    version:             3
+    enabled:             true
+    hide_badge:          false
+    score_threshold:     0.6
 
 when@dev:
     ewz_recaptcha:

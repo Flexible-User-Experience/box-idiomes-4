@@ -3,21 +3,32 @@ doctrine:
         url:     '%env(resolve:DATABASE_URL)%'
         charset: 'utf8mb4'
         types:
-            json: Sonata\Doctrine\Types\JsonType
+            json: 'Sonata\Doctrine\Types\JsonType'
     orm:
-        auto_generate_proxy_classes: true
-        naming_strategy:             doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping:                true
+        auto_generate_proxy_classes: true
+        naming_strategy:             'doctrine.orm.naming_strategy.underscore_number_aware'
         mappings:
             App:
+                is_bundle: false
+                type:      annotation
                 dir:       '%kernel.project_dir%/src/Entity'
                 prefix:    'App\Entity'
-                is_bundle: false
-                alias:     App
+                alias:     'App'
         dql:
             datetime_functions:
-                timestampdiff: DoctrineExtensions\Query\Mysql\TimestampDiff
-                year:          DoctrineExtensions\Query\Mysql\Year
-                month:         DoctrineExtensions\Query\Mysql\Month
-                date:          DoctrineExtensions\Query\Mysql\Date
-                now:           DoctrineExtensions\Query\Mysql\Now
+                timestampdiff: 'DoctrineExtensions\Query\Mysql\TimestampDiff'
+                year:          'DoctrineExtensions\Query\Mysql\Year'
+                month:         'DoctrineExtensions\Query\Mysql\Month'
+                date:          'DoctrineExtensions\Query\Mysql\Date'
+                now:           'DoctrineExtensions\Query\Mysql\Now'
+
+when@test:
+    doctrine:
+        dbal:
+            driver: 'pdo_sqlite'
+        orm:
+            dql:
+                datetime_functions:
+                    month: 'DoctrineExtensions\Query\Sqlite\Month'
+                    year:  'DoctrineExtensions\Query\Sqlite\Year'

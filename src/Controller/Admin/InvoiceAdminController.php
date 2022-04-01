@@ -13,6 +13,7 @@ use DateTime;
 use DateTimeImmutable;
 use Exception;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -64,7 +65,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    public function pdfAction(Request $request): Response
+    public function pdfAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -75,7 +76,7 @@ final class InvoiceAdminController extends AbstractAdminController
         }
         $pdf = $this->ibp->build($object);
 
-        return new Response($pdf->Output('box_idiomes_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
     /**

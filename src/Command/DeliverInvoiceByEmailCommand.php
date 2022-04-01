@@ -53,7 +53,7 @@ class DeliverInvoiceByEmailCommand extends Command
     {
         $output->writeln('<info>Welcome to '.$this->getName().' command</info>');
         /** @var Invoice|null $invoice */
-        $invoice = $this->getContainer()->get('doctrine')->getRepository(Invoice::class)->find(intval($input->getArgument('invoice')));
+        $invoice = $this->getContainer()->get('doctrine')->getRepository(Invoice::class)->find((int) $input->getArgument('invoice'));
         if ($invoice) {
             $output->write('building PDF invoice number '.$invoice->getInvoiceNumber().'... ');
             /** @var InvoiceBuilderPdf $ibp */
@@ -81,7 +81,7 @@ class DeliverInvoiceByEmailCommand extends Command
                 }
             }
         } else {
-            $output->writeln('<error>No invoice with ID#'.intval($input->getArgument('invoice')).' found. Nothing send.</error>');
+            $output->writeln('<error>No invoice with ID#'.(int) $input->getArgument('invoice').' found. Nothing send.</error>');
         }
 
         $output->writeln('<info>EOF.</info>');

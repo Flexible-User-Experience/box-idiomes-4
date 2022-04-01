@@ -15,6 +15,7 @@ use Digitick\Sepa\Util\StringHelper;
 use Exception;
 use PhpZip\ZipFile;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -88,7 +89,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    public function reminderAction(Request $request): Response
+    public function reminderAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -102,7 +103,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
         $pdf = $this->rbp->build($object);
 
-        return new Response($pdf->Output('box_idiomes_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
     public function sendReminderAction(Request $request): RedirectResponse
@@ -128,7 +129,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    public function pdfAction(Request $request): Response
+    public function pdfAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -139,7 +140,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
         $pdf = $this->rbp->build($object);
 
-        return new Response($pdf->Output('box_idiomes_receipt_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
     public function sendAction(Request $request): RedirectResponse
@@ -197,7 +198,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return $response;
     }
 
-    public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery): Response
+    public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery, ParameterBagInterface $parameterBag): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $selectedModelQuery->execute();
@@ -212,7 +213,7 @@ final class ReceiptAdminController extends AbstractAdminController
                 }
             }
 
-            return new Response($pdf->Output('box_idiomes_receipt_reminders.pdf'), 200, ['Content-type' => 'application/pdf']);
+            return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminders.pdf'), 200, ['Content-type' => 'application/pdf']);
         } catch (Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu de recordatoris de pagaments de rebut amb format PDF. Revisa els rebuts seleccionats.');
             $this->addFlash('error', $e->getMessage());

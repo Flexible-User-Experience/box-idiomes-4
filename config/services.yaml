@@ -6,13 +6,20 @@ parameters:
     project_web_title:          '%env(string:PROJECT_WEB_TITLE)%'
     project_url_base:           '%env(string:PROJECT_BASE_URL)%'
     project_backend_title:      '%env(string:PROJECT_BACKEND_TITLE)%'
+    project_export_filename:    '%env(string:PROJECT_EXPORT_FILENAME_BASE)%'
+    project_discount_extra_son: '%env(int:PROJECT_DISCOUT_PER_EXTRA_SON)%'
+    google_tag_manager_enabled: '%env(bool:GOOGLE_TAG_MANAGER_IS_ENABLED)%'
+    google_tag_manager_account: '%env(string:GOOGLE_TAG_MANAGER_ACCOUNT)%'
     google_analytics_enabled:   '%env(bool:GOOGLE_ANALYTICS_IS_ENABLED)%'
     google_analytics_account:   '%env(string:GOOGLE_ANALYTICS_ACCOUNT)%'
     google_maps_api_key:        '%env(string:GOOGLE_MAPS_API_KEY)%'
-    facebook_pixel_enabled:     '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
-    facebook_pixel_id:          '%env(string:FACEBOOK_PIXEL_ID)%'
+    google_calendar_api_key:    '%env(string:GOOGLE_CALENDAR_API_KEY)%'
     mailchimp_api_key:          '%env(string:MAILCHIMP_API_KEY)%'
     mailchimp_list_id:          '%env(string:MAILCHIMP_LIST_ID)%'
+    facebook_pixel_enabled:     '%env(bool:FACEBOOK_PIXEL_ENABLED)%'
+    facebook_pixel_id:          '%env(string:FACEBOOK_PIXEL_ID)%'
+    facebook_api_key:           '%env(string:FACEBOOK_API_KEY)%'
+    facebook_api_secret:        '%env(string:FACEBOOK_API_SECRET)%'
     boss_name:                  '%env(string:BOSS_NAME)%'
     boss_dni:                   '%env(string:BOSS_DNI)%'
     boss_phone_number_1:        '%env(string:BOSS_PHONE_NUMBER_1)%'
@@ -23,7 +30,6 @@ parameters:
     bic_number:                 '%env(string:BIC_NUMBER)%'
     mailer_destination:         '%env(string:MAILER_DESTINATION)%'
     delivery_dev_address:       '%env(string:DEV_DELIVERY_ADDRESS)%'
-    google_recaptcha_site_key:  '%env(string:GOOGLE_RECAPTCHA_SITE_KEY)%'
     admin_logo:                 '%env(string:ADMIN_LOGO)%'
     admin_color:                '%env(string:ADMIN_COLOR)%'
     admin_is_stage:             '%env(bool:ADMIN_IS_STAGE)%'
@@ -41,6 +47,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
     Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
+    # Entities with ParametersBag
+    App\Entity\Student:
+        class: App\Entity\Student
+        calls:
+            - [ setParameterBag, [ '@parameter_bag' ] ]
     # Template Blocks
     app.block.event_calendar:
         class: App\Block\EventCalendarBlock

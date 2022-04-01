@@ -11,7 +11,7 @@ twig:
         - 'form/templates/vich_uploader_form_fields.html.twig'
         - '@SonataForm/Form/datepicker.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
-        - '@EWZRecaptcha/Form/ewz_recaptcha_widget.html.twig'
+        - '@EWZRecaptcha/Form/v3/ewz_recaptcha_widget.html.twig'
     globals:
         google_analytics_enabled: '%google_analytics_enabled%'
         google_analytics_account: '%google_analytics_account%'
@@ -19,14 +19,19 @@ twig:
         facebook_pixel_enabled:   '%facebook_pixel_enabled%'
         facebook_pixel_id:        '%facebook_pixel_id%'
         main_brand_title:         '%project_web_title%'
+        main_brand_url:           '%project_url_base%'
+        main_brand_email:         '%mailer_destination%'
         main_brand_address:       '%boss_address%'
         main_brand_city:          '%boss_city%'
         main_brand_phone_1:       '%boss_phone_number_1%'
         main_brand_phone_2:       '%boss_phone_number_2%'
+        boss_name:                '%boss_name%'
+        boss_dni:                 '%boss_dni%'
+        boss_city:                '%boss_city%'
         admin_logo:               '%admin_logo%'
         admin_color:              '%admin_color%'
         admin_is_stage:           '%admin_is_stage%'
-        admin_tag_version:        'v5.2.03'
+        admin_tag_version:        'v5.2.04'
 
 when@test:
     twig:
