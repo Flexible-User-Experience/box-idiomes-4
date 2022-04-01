@@ -12,6 +12,7 @@ Changelog
  * remove hardcoded project web title from email subjects
  * remove hardcoded project web title from templates
  * fix bad data-gcal-api-key attribute name
+ * remove hardcoded city from mail base & PDF builder
 
 ##### Version 5.2.03 (2022-03-31)
  * composer & yarn vendors update

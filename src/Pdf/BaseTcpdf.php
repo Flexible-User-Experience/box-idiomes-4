@@ -3,6 +3,7 @@
 namespace App\Pdf;
 
 use App\Service\SmartAssetsHelperService;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use TCPDF;
 
 class BaseTcpdf extends TCPDF
@@ -21,14 +22,16 @@ class BaseTcpdf extends TCPDF
     public const MARGIN_VERTICAL_BIG = 8;
 
     private SmartAssetsHelperService $sahs;
+    private ParameterBagInterface $pb;
     private string $amd;
     private string $bba;
     private string $bpn;
 
-    public function __construct(SmartAssetsHelperService $sahs)
+    public function __construct(SmartAssetsHelperService $sahs, ParameterBagInterface $pb)
     {
         parent::__construct();
         $this->sahs = $sahs;
+        $this->pb = $pb;
         $this->amd = $this->sahs->getAmd();
         $this->bba = $this->sahs->getBba();
         $this->bpn = $this->sahs->getBpn();
@@ -48,7 +51,7 @@ class BaseTcpdf extends TCPDF
         $this->SetXY(self::PDF_MARGIN_LEFT, 297 - self::PDF_MARGIN_BOTTOM + self::MARGIN_VERTICAL_BIG);
         $this->SetTextColor(128, 128, 128);
         $this->setFontStyle(null, '', 8);
-        $this->Write(0, $this->bba.' · 43870 Amposta', '', false, 'C', true);
+        $this->Write(0, $this->bba.' · 43870 '.$this->pb->get('boss_city'), '', false, 'C', true);
         $this->Write(0, $this->amd, '', false, 'C', true);
         $this->Write(0, $this->bpn, '', false, 'C', false);
     }
