@@ -142,7 +142,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $ids[] = $receipt->getId();
                     $receipt
                         ->setIsSended(true)
-                        ->setSendDate(new \DateTime())
+                        ->setSendDate(new DateTimeImmutable())
                     ;
                 }
                 $this->em->flush();
@@ -346,7 +346,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 if (!is_null($previousReceipt)) {
                     // update existing receipt
                     if (1 === count($previousReceipt->getLines())) {
-                        $previousReceipt->setDate(new \DateTime());
+                        $previousReceipt->setDate(new DateTimeImmutable());
                         /** @var ReceiptLine $receiptLine */
                         $receiptLine = $previousReceipt->getLines()[0];
                         $receiptLine

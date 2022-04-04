@@ -4,6 +4,7 @@ namespace App\Pdf;
 
 use App\Entity\Student;
 use App\Service\SmartAssetsHelperService;
+use DateTimeImmutable;
 use IntlDateFormatter;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -15,6 +16,7 @@ class StudentImageRightsBuilderPdf
     private TCPDFController $tcpdf;
     private SmartAssetsHelperService $sahs;
     private TranslatorInterface $ts;
+    private ParameterBagInterface $pb;
     private string $pwt;
 
     public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, ParameterBagInterface $pb)
@@ -22,13 +24,14 @@ class StudentImageRightsBuilderPdf
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
+        $this->pb = $pb;
         $this->pwt = $pb->get('project_web_title');
     }
 
     public function build(Student $student): TCPDF
     {
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
 
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
@@ -78,7 +81,7 @@ class StudentImageRightsBuilderPdf
         $pdf->MultiCell(125, 0, $this->ts->trans('backend.admin.imagerigths.autortization2', ['%student_name%' => $student->getName(), '%years_old%' => $student->getYearsOld()]), 0, 'L', false, 1);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         // Registration date
-        $today = new \DateTime();
+        $today = new DateTimeImmutable();
         $df = new IntlDateFormatter('ca_ES', IntlDateFormatter::SHORT, IntlDateFormatter::NONE);
         $df->setPattern('MMMM');
         $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.registration_date', ['%day%' => $today->format('j'), '%month%' => $df->format($today), '%year%' => $today->format('Y')]), '', false, 'L', true);

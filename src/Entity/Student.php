@@ -97,7 +97,7 @@ class Student extends AbstractPerson
 
     public function getBirthDateString(): string
     {
-        return $this->getBirthDate() ? $this->getBirthDate()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return $this->getBirthDate() ? $this->getBirthDate()->format(AbstractBase::DATE_STRING_FORMAT) : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     public function setBirthDate(?DateTimeInterface $birthDate): self

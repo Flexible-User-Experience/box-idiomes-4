@@ -65,7 +65,7 @@ class TeacherAbsence extends AbstractBase
 
     public function getDayString(): string
     {
-        return $this->getDay() ? $this->getDay()->format('d/m/Y') : AbstractBase::DEFAULT_NULL_DATE_STRING;
+        return $this->getDay() ? $this->getDay()->format(AbstractBase::DATE_STRING_FORMAT) : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
     public function setDay(DateTimeInterface $day): self

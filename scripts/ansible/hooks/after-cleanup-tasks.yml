@@ -1,7 +1,7 @@
 - name: compile yarn assets
   shell: "chdir={{ ansistrano_release_path.stdout }}
     SYMFONY_ENV={{ symfony_env }} yarn install && yarn encore production"
-- name: fix symfony web directory apache ownership
+- name: fix symfony public directory apache ownership
   file:
     recurse: yes
     follow:  yes

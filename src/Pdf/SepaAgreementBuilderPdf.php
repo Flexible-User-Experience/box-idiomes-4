@@ -14,6 +14,7 @@ class SepaAgreementBuilderPdf
     private TCPDFController $tcpdf;
     private SmartAssetsHelperService $sahs;
     private TranslatorInterface $ts;
+    private ParameterBagInterface $pb;
     private string $pwt;
     private string $bn;
 
@@ -22,6 +23,7 @@ class SepaAgreementBuilderPdf
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
+        $this->pb = $pb;
         $this->pwt = $pb->get('project_web_title');
         $this->bn = $pb->get('boss_name');
     }
@@ -29,7 +31,7 @@ class SepaAgreementBuilderPdf
     public function build(Student $student): TCPDF
     {
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
 
         $maxCellWidth = BaseTcpdf::PDF_WIDTH - BaseTcpdf::PDF_MARGIN_LEFT - BaseTcpdf::PDF_MARGIN_RIGHT;
 
