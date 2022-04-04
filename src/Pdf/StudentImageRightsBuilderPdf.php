@@ -16,6 +16,7 @@ class StudentImageRightsBuilderPdf
     private TCPDFController $tcpdf;
     private SmartAssetsHelperService $sahs;
     private TranslatorInterface $ts;
+    private ParameterBagInterface $pb;
     private string $pwt;
 
     public function __construct(TCPDFController $tcpdf, SmartAssetsHelperService $sahs, TranslatorInterface $ts, ParameterBagInterface $pb)
@@ -23,13 +24,14 @@ class StudentImageRightsBuilderPdf
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
+        $this->pb = $pb;
         $this->pwt = $pb->get('project_web_title');
     }
 
     public function build(Student $student): TCPDF
     {
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
 
         // set document information
         $pdf->SetCreator(PDF_CREATOR);

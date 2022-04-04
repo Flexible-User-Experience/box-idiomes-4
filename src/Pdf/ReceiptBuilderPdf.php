@@ -16,7 +16,7 @@ class ReceiptBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         }
 
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
         $subject = $receipt->getMainSubject();
 
         // set document information

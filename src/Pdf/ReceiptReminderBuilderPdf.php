@@ -16,7 +16,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         }
 
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
 
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
@@ -45,7 +45,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
             $this->ts->setLocale($this->locale);
         }
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor($this->pwt);

@@ -24,6 +24,7 @@ class ExportCalendarToListBuilderPdf
     private TCPDFController $tcpdf;
     private SmartAssetsHelperService $sahs;
     private TranslatorInterface $ts;
+    private ParameterBagInterface $pb;
     private string $pwt;
     private Color $defaultCellColor;
     private int $pageCounter = 0;
@@ -33,6 +34,7 @@ class ExportCalendarToListBuilderPdf
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
+        $this->pb = $pb;
         $this->pwt = $pb->get('project_web_title');
         $this->defaultCellColor = new Color('#E0EBFF');
     }
@@ -40,7 +42,7 @@ class ExportCalendarToListBuilderPdf
     public function build(ExportCalendarToList $calendarEventsList): TCPDF
     {
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
 
         $correctorMargin = 20;
         $leftMargin = BaseTcpdf::PDF_MARGIN_LEFT - $correctorMargin;

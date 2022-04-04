@@ -17,8 +17,7 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         }
 
         /** @var BaseTcpdf $pdf */
-        $pdf = $this->tcpdf->create($this->sahs);
-        $subject = $classGroup->getName();
+        $pdf = $this->tcpdf->create($this->sahs, $this->pb);
 
         // set document information
         $pdf->SetCreator(PDF_CREATOR);

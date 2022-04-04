@@ -12,6 +12,7 @@ abstract class AbstractReceiptInvoiceBuilderPdf
     protected TCPDFController $tcpdf;
     protected SmartAssetsHelperService $sahs;
     protected TranslatorInterface $ts;
+    protected ParameterBagInterface $pb;
     protected string $pwt;    // project web title
     protected string $bn;     // boss name
     protected string $bd;     // boss dni
@@ -25,6 +26,7 @@ abstract class AbstractReceiptInvoiceBuilderPdf
         $this->tcpdf = $tcpdf;
         $this->sahs = $sahs;
         $this->ts = $ts;
+        $this->pb = $pb;
         $this->pwt = $pb->get('project_web_title');
         $this->bn = $pb->get('boss_name');
         $this->bd = $pb->get('boss_dni');
