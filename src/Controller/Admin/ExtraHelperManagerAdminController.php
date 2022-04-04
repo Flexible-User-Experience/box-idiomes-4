@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\AbstractBase;
 use App\Manager\EventManager;
 use App\Pdf\ExportCalendarToListBuilderPdf;
 use DateTime;
@@ -25,8 +26,8 @@ final class ExtraHelperManagerAdminController extends CRUDController
                     return new Response($pdf->Output($parameterBag->get('project_export_filename').'_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf'), 200, ['Content-type' => 'application/pdf']);
                 }
                 $this->addFlash('warning', $ts->trans('backend.admin.calendar.export.error.no_items_found', [
-                    '%start%' => $startDate->format('d/m/Y'),
-                    '%end%' => $endDate->format('d/m/Y'),
+                    '%start%' => $startDate->format(AbstractBase::DATE_STRING_FORMAT),
+                    '%end%' => $endDate->format(AbstractBase::DATE_STRING_FORMAT),
                 ]));
             } else {
                 $this->addFlash('danger', $ts->trans('backend.admin.calendar.export.error.end_date_period'));

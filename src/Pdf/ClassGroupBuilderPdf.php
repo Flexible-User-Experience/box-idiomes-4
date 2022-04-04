@@ -2,6 +2,7 @@
 
 namespace App\Pdf;
 
+use App\Entity\AbstractBase;
 use App\Entity\ClassGroup;
 use App\Entity\Student;
 use DateTimeImmutable;
@@ -54,7 +55,7 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $pdf->SetX(BaseTcpdf::PDF_MARGIN_LEFT + 4);
         $pdf->Write(0, strtoupper($this->ts->trans('backend.admin.class_group.pdf.title')), '', false, 'L', false);
         $pdf->SetX($column2Gap);
-        $pdf->Write(0, $today->format('d/m/Y').'    ', '', false, 'R', true);
+        $pdf->Write(0, $today->format(AbstractBase::DATE_STRING_FORMAT).'    ', '', false, 'R', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
         $pdf->setFontStyle(null, '', 9);
 

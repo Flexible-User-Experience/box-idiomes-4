@@ -1,17 +1,17 @@
 Box Idiomes
 ===========
 
-A Symfony 4.4 LTS project to manage [Box Idiomes](http://www.boxidiomes.cat) website content with custom ERP integrated functionalities.
+A Symfony 4.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat) website content with custom ERP integrated functionalities.
 
 ---
 
 #### Installation requirements
 
-* PHP 7.4
-* MySQL 5.7
-* Git
-* Composer
-* Yarn
+* PHP 8.0
+* MySQL 8.0
+* Git 2.0
+* Composer 2.0
+* Yarn 1.0
 * set php.ini config max_input_vars > 10.000
 
 #### Installation instructions
