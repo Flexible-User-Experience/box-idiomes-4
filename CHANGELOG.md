@@ -6,6 +6,7 @@ Changelog
 
 ##### Version 5.2.05 (WIP)
  * remove some hardcoded date formats
+ * fix Abstract PDF builders
  * composer & yarn vendors update
 
 ##### Version 5.2.04 (2022-04-01)
