@@ -3,8 +3,9 @@ Changelog
 
 ##### Version 5.2.06 (WIP)
  * fix minor bugs
+ * add DNI into invoice export admin
 
-##### Version 5.2.05 (WIP)
+##### Version 5.2.05 (2022-04-05)
  * remove some hardcoded date formats
  * remove hardcoded enterprise name
  * fix Abstract PDF builders
