@@ -4,7 +4,7 @@ Changelog
 ##### Version 5.2.06 (WIP)
  * fix minor bugs
 
-##### Version 5.2.05 (WIP)
+##### Version 5.2.05 (2022-04-05)
  * remove some hardcoded date formats
  * remove hardcoded enterprise name
  * fix Abstract PDF builders
