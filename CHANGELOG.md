@@ -6,6 +6,7 @@ Changelog
 
 ##### Version 5.2.05 (WIP)
  * remove some hardcoded date formats
+ * remove hardcoded enterprise name
  * fix Abstract PDF builders
  * composer & yarn vendors update
 
