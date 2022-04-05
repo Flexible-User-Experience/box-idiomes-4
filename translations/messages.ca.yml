@@ -340,18 +340,18 @@ backend:
             registration_date: "Amposta, %day% %month% de %year%"
             sign: Signatura
         sepaagreement:
-            checkbox_label: SEPA Acceptat
-            first_text: Autorització de domiciliació bancària per al pagament de rebuts
+            checkbox_label: "SEPA Acceptat"
+            first_text: "Autorització de domiciliació bancària per al pagament de rebuts"
             text1: "D'acord amb el que estableixen els articles 25, 26 i 31 de la llei 16/2009 de serveis de pagament:"
-            text2: "Autoritzo i consenteixo la present ordre de domiciliació bancària per què, a càrrec del compte del qual s'indica el titular i número, i fins nou avís, Ester Escrihuela Simó procedeixi al cobrament de rebuts bancaris que s'originin mensualment amb relació a les classes impartides."
-            text3: "Tanmateix, autoritzo a Ester Escrihuela Simó perquè traslladi aquesta ordre a l'entitat bancària corresponent per tal que en prenguin coneixement i constància."
-            contact_name: Nom complet del titular del compte
+            text2: "Autoritzo i consenteixo la present ordre de domiciliació bancària per què, a càrrec del compte del qual s'indica el titular i número, i fins nou avís, %boss_name% procedeixi al cobrament de rebuts bancaris que s'originin mensualment amb relació a les classes impartides."
+            text3: "Tanmateix, autoritzo a %boss_name% perquè traslladi aquesta ordre a l'entitat bancària corresponent per tal que en prenguin coneixement i constància."
+            contact_name: "Nom complet del titular del compte"
             contact_dni: "DNI/NIE o CIF"
-            parent_address: Adreça completa del titular
-            contact_phone: Telèfon
-            bank_name: Entitat Bancària
+            parent_address: "Adreça completa del titular"
+            contact_phone: "Telèfon"
+            bank_name: "Entitat Bancària"
             bank_account: "Compte bancari:"
-            end_text: "D'acord amb el que estableix la llei orgànica 15/1999, li fem saber que les seves dades seran incorporades a un fitxer autoritzat sota la responsabilitat de Ester Escrihuela Simó amb la finalitat de poder atendre els compromisos derivats de la relació que mantenim amb vostès."
+            end_text: "D'acord amb el que estableix la llei orgànica 15/1999, li fem saber que les seves dades seran incorporades a un fitxer autoritzat sota la responsabilitat de %boss_name% amb la finalitat de poder atendre els compromisos derivats de la relació que mantenim amb vostès."
         bank:
             organization_id: Identificador
             creditor_name: Nom del creditor
