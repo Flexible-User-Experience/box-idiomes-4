@@ -62,9 +62,9 @@ class SepaAgreementBuilderPdf
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
         $pdf->Write(0, $this->ts->trans('backend.admin.sepaagreement.text1'), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
-        $pdf->Write(0, $this->ts->trans('backend.admin.sepaagreement.text2'), '', false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('backend.admin.sepaagreement.text2', ['%boss_name%' => $this->bn]), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
-        $pdf->Write(0, $this->ts->trans('backend.admin.sepaagreement.text3'), '', false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('backend.admin.sepaagreement.text3', ['%boss_name%' => $this->bn]), '', false, 'L', true);
         // table
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         $pdf->setCellPaddings(2, 1, 0, 0);
@@ -93,7 +93,7 @@ class SepaAgreementBuilderPdf
         $pdf->setCellPaddings(0, 0, 0, 0);
         // description legal
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
-        $pdf->Write(0, $this->ts->trans('backend.admin.sepaagreement.end_text'), '', false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('backend.admin.sepaagreement.end_text', ['%boss_name%' => $this->bn]), '', false, 'L', true);
         // signs
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         $pdf->MultiCell($maxCellWidth / 2, 7, '<strong>'.$this->bn.'</strong>', 0, 'L', false, 0, '', '', true, 0, true, true, 0, 'T', false);

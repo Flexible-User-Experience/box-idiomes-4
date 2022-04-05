@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
 <head>
-    <meta name="description" content="{% block metadescription %}academia anglès box idiomes amposta{% endblock %}">
+    <meta name="description" content="{% block metadescription %}{{ 'frontend.meta' | trans({'%main_brand_title%': main_brand_title}) | lower }}{% endblock %}">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="author" content="www.flux.cat">
     <meta charset="UTF-8">
