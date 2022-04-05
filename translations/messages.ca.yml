@@ -79,6 +79,7 @@ Absència: Absència
 Província: Província
 
 frontend:
+    meta: "academia anglès %main_brand_title% amposta"
     menu:
         academy: "l'acadèmia"
         services: "serveis"
