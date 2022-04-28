@@ -47,11 +47,6 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
     Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
-    # Entities with ParametersBag
-    App\Entity\Student:
-        class: App\Entity\Student
-        calls:
-            - [ setParameterBag, [ '@parameter_bag' ] ]
     # Template Blocks
     app.block.event_calendar:
         class: App\Block\EventCalendarBlock
@@ -178,6 +173,7 @@ services:
             - '@App\Repository\EventRepository'
             - '@App\Repository\ReceiptRepository'
             - '@app.event_manager'
+            - '@parameter_bag'
     app.generate_invoice_form_manager:
         class: App\Manager\GenerateInvoiceFormManager
         public: true
@@ -189,6 +185,7 @@ services:
             - '@App\Repository\StudentRepository'
             - '@App\Repository\EventRepository'
             - '@App\Repository\InvoiceRepository'
+            - '@parameter_bag'
     # PDF Builders
     app.student_image_rights_pdf_builder:
         class: App\Pdf\StudentImageRightsBuilderPdf
