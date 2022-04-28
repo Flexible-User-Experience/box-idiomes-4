@@ -14,6 +14,7 @@ use App\Repository\StudentRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
@@ -23,12 +24,14 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
 {
     private ReceiptRepository $rr;
     private EventManager $eem;
+    private ParameterBagInterface $parameterBag;
 
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem)
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem, ParameterBagInterface $parameterBag)
     {
         parent::__construct($logger, $kernel, $em, $ts, $sr, $er);
         $this->rr = $rr;
         $this->eem = $eem;
+        $this->parameterBag = $parameterBag;
     }
 
     private function commonFastGenerateReciptsForYearAndMonth(int $year, int $month, $enableEmailDelivery = false): int
@@ -51,7 +54,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     ->setDescription($description)
                     ->setUnits(1)
                     ->setPriceUnit($student->getTariff()->getPrice())
-                    ->setDiscount($student->calculateMonthlyDiscount())
+                    ->setDiscount($student->calculateMonthlyDiscountWithExtraSonDiscount($this->parameterBag->get('project_discount_extra_son')))
                     ->setTotal($receiptLine->getPriceUnit() - $receiptLine->getDiscount())
                 ;
                 $receipt = new Receipt();
@@ -212,7 +215,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     ->setStudentName($student->getFullCanonicalName())
                     ->setUnits(1)
                     ->setUnitPrice($student->getTariff()->getPrice())
-                    ->setDiscount($student->calculateMonthlyDiscount())
+                    ->setDiscount($student->calculateMonthlyDiscountWithExtraSonDiscount($this->parameterBag->get('project_discount_extra_son')))
                     ->setIsReadyToGenerate(true)
                     ->setIsPreviouslyGenerated(false)
                     ->setIsPrivateLessonType(false)

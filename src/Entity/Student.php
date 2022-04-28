@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,8 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Student extends AbstractPerson
 {
     use BankCreditorSepaTrait;
-
-    private ParameterBagInterface $parameterBag;
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -83,11 +80,6 @@ class Student extends AbstractPerson
     public function __construct()
     {
         $this->events = new ArrayCollection();
-    }
-
-    public function setParameterBag(ParameterBagInterface $parameterBag): void
-    {
-        $this->parameterBag = $parameterBag;
     }
 
     public function getBirthDate(): ?DateTimeInterface
@@ -265,24 +257,24 @@ class Student extends AbstractPerson
         return $this;
     }
 
-    public function calculateMonthlyTariff(): float
+    public function calculateMonthlyTariffWithExtraSonDiscount(int $discountExtraSon): float
     {
         $price = $this->getTariff()->getPrice();
         if ($this->getParent()) {
             $enabledSonsAmount = $this->getParent()->getEnabledSonsAmount();
-            $discount = $enabledSonsAmount ? ((($enabledSonsAmount - 1) * $this->parameterBag->get('project_discount_extra_son')) / $enabledSonsAmount) : 0;
+            $discount = $enabledSonsAmount ? ((($enabledSonsAmount - 1) * $discountExtraSon) / $enabledSonsAmount) : 0;
             $price -= $discount;
         }
 
         return $price;
     }
 
-    public function calculateMonthlyDiscount(): float
+    public function calculateMonthlyDiscountWithExtraSonDiscount(int $discountExtraSon): float
     {
         $discount = 0;
         if ($this->getParent()) {
             $enabledSonsAmount = $this->getParent()->getEnabledSonsAmount();
-            $discount = $enabledSonsAmount ? round(($enabledSonsAmount - 1) * $this->parameterBag->get('project_discount_extra_son') / $enabledSonsAmount, 2) : 0;
+            $discount = $enabledSonsAmount ? round(($enabledSonsAmount - 1) * $discountExtraSon / $enabledSonsAmount, 2) : 0;
         }
 
         return $discount;

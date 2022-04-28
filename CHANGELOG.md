@@ -1,9 +1,13 @@
 Changelog
 =========
 
-##### Version 5.2.06 (WIP)
+##### Version 5.2.07 (WIP)
  * fix minor bugs
+
+##### Version 5.2.06 (2022-04-28)
+ * fix critical problem setting a service injection in entity
  * add DNI into invoice export admin
+ * Symfony 5.4.8 update
 
 ##### Version 5.2.05 (2022-04-05)
  * remove some hardcoded date formats
