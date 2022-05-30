@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 5.2.07 (WIP)
+##### Version 5.2.08 (WIP)
  * fix minor bugs
+
+##### Version 5.2.07 (2022-05-30)
+ * add Student admin tariff helper
+ * composer & yarn vendors update
 
 ##### Version 5.2.06 (2022-04-28)
  * fix critical problem setting a service injection in entity
