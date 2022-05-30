@@ -223,7 +223,8 @@ backend:
             is_payment_excempt: Exempt de pagament
             schedule: Horari
             comments: Comentaris
-            tariff: Tarifa
+            tariff: "Tarifa"
+            tariff_helper: "Només cal escollir una tarifa de grup, les tarifes particulars es calculen automàticament."
             discountApplied: Descompte
             total: Total
             agenda: Horaris

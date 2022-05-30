@@ -213,6 +213,7 @@ final class StudentAdmin extends AbstractBaseAdmin
                     'required' => true,
                     'class' => Tariff::class,
                     'query_builder' => $this->em->getRepository(Tariff::class)->findAllSortedByYearAndPriceQB(),
+                    'help' => 'backend.admin.student.tariff_helper',
                 ]
             )
             ->add(
@@ -452,6 +453,12 @@ final class StudentAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.student.tariff',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'required' => false,
+                        'class' => Tariff::class,
+                        'query_builder' => $this->em->getRepository(Tariff::class)->findAllSortedByYearAndPriceQB(),
+                    ],
                 ]
             )
             ->add(
