@@ -33,7 +33,7 @@ twig:
         admin_logo:                 '%admin_logo%'
         admin_color:                '%admin_color%'
         admin_is_stage:             '%admin_is_stage%'
-        admin_tag_version:          'v5.2.06'
+        admin_tag_version:          'v5.2.07'
 
 when@test:
     twig:
