@@ -17,6 +17,25 @@ final class TariffRepository extends ServiceEntityRepository
         parent::__construct($registry, Tariff::class);
     }
 
+    public function findGroupLessonsSortedByYearAndPriceQB(): QueryBuilder
+    {
+        return $this->findAllSortedByYearAndPriceQB()
+            ->where('t.type != :private')
+            ->andWhere('t.type != :shared')
+            ->setParameter('private', TariffTypeEnum::TARIFF_PRIVATE_LESSON_PER_HOUR)
+            ->setParameter('shared', TariffTypeEnum::TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR);
+    }
+
+    public function findGroupLessonsSortedByYearAndPriceQ(): Query
+    {
+        return $this->findGroupLessonsSortedByYearAndPriceQB()->getQuery();
+    }
+
+    public function findGroupLessonsSortedByYearAndPrice(): array
+    {
+        return $this->findGroupLessonsSortedByYearAndPriceQ()->getResult();
+    }
+
     public function findAllSortedByYearAndPriceQB(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
