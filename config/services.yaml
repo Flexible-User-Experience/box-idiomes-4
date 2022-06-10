@@ -33,7 +33,7 @@ parameters:
     admin_logo:                 '%env(string:ADMIN_LOGO)%'
     admin_color:                '%env(string:ADMIN_COLOR)%'
     admin_is_stage:             '%env(bool:ADMIN_IS_STAGE)%'
-    preregister_period_is_open: false
+    preregister_period_is_open: true
 
 services:
     _defaults:

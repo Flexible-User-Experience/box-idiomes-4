@@ -94,10 +94,10 @@ class FrontendMenuBuilder
                     'label' => 'frontend.menu.preregisters',
                     'route' => 'app_pre_register',
                     'attributes' => [
-                        'class' => 'violet-background',
+                        'class' => 'nav-item violet-background',
                     ],
                     'linkAttributes' => [
-                        'class' => 'c-white'.('app_pre_register' === $current ? ' active' : ''),
+                        'class' => 'nav-link text-white'.('app_pre_register' === $current ? ' active' : ''),
                     ],
                 ]
             );
