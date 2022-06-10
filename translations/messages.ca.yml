@@ -90,10 +90,10 @@ frontend:
         credits: crèdits
     preregister:
         main_title: "Preinscripcions"
-        title_summer: "Estiu 2021"
-        description_summer: "Reserva la teva plaça al curs estiu 2020"
-        title_winter: "Setembre 2021"
-        description_winter: "Formulari de preinscripció per al curs escolar 2021-2022"
+        title_summer: "Estiu 2022"
+        description_summer: "Reserva la teva plaça al curs estiu 2022"
+        title_winter: "Setembre 2022"
+        description_winter: "Formulari de preinscripció per al curs escolar 2022-2023"
     forms:
         name: Nom
         surname: Cognoms
