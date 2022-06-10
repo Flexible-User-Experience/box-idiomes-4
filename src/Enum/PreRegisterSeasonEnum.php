@@ -10,6 +10,8 @@ class PreRegisterSeasonEnum
     public const SEASON_SEPTEMBER_2021 = 3;
     public const SEASON_JULY_2022 = 4;
     public const SEASON_SEPTEMBER_2022 = 5;
+    public const SEASON_JULY_2023 = 6;
+    public const SEASON_SEPTEMBER_2023 = 7;
 
     public static function getEnumArray(): array
     {
@@ -25,6 +27,8 @@ class PreRegisterSeasonEnum
             self::SEASON_SEPTEMBER_2021 => 'seasons.september_2021',
             self::SEASON_JULY_2022 => 'seasons.july_2022',
             self::SEASON_SEPTEMBER_2022 => 'seasons.september_2022',
+            self::SEASON_JULY_2023 => 'seasons.july_2023',
+            self::SEASON_SEPTEMBER_2023 => 'seasons.september_2023',
         ];
     }
 }
