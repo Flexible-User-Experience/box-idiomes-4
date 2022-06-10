@@ -122,7 +122,7 @@ class AppExtension extends AbstractExtension
     public function drawRoleSpan(User $object): string
     {
         $span = '';
-        if ($object instanceof User && count($object->getRoles()) > 0) {
+        if (count($object->getRoles()) > 0) {
             $ea = UserRolesEnum::getReversedEnumArray();
             /** @var string $role */
             foreach ($object->getRoles() as $role) {
@@ -146,18 +146,14 @@ class AppExtension extends AbstractExtension
     public function drawTeacherColorSpan(Teacher $object): string
     {
         $span = '';
-        if ($object instanceof Teacher) {
-            if (TeacherColorEnum::MAGENTA === $object->getColor()) {
-                $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #EE388A"></span>';
-            } elseif (TeacherColorEnum::BLUE === $object->getColor()) {
-                $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #00ABE0"></span>';
-            } elseif (TeacherColorEnum::YELLOW === $object->getColor()) {
-                $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #FFCD38"></span>';
-            } elseif (TeacherColorEnum::GREEN === $object->getColor()) {
-                $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #CEC533"></span>';
-            }
-        } else {
-            $span = '<span class="label label-success" style="margin-right:10px">---</span>';
+        if (TeacherColorEnum::MAGENTA === $object->getColor()) {
+            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #EE388A"></span>';
+        } elseif (TeacherColorEnum::BLUE === $object->getColor()) {
+            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #00ABE0"></span>';
+        } elseif (TeacherColorEnum::YELLOW === $object->getColor()) {
+            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #FFCD38"></span>';
+        } elseif (TeacherColorEnum::GREEN === $object->getColor()) {
+            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #CEC533"></span>';
         }
 
         return $span;
@@ -196,8 +192,6 @@ class AppExtension extends AbstractExtension
                 $result = '<span class="text text-danger">'.number_format($object, 2, ',', '.').' €</span>';
             } elseif ($object > 0) {
                 $result = '<span class="text text-success">'.number_format($object, 2, ',', '.').' €</span>';
-            } else {
-                $result = '<span class="text text-info">0,00 €</span>';
             }
         }
 
@@ -207,22 +201,18 @@ class AppExtension extends AbstractExtension
     public function drawPreRegisterSeasonType(PreRegister $object): string
     {
         $span = '';
-        if ($object instanceof PreRegister) {
-            if (PreRegisterSeasonEnum::SEASON_JULY_2020 === $object->getSeason()) {
-                $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
-            } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020 === $object->getSeason()) {
-                $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
-            } elseif (PreRegisterSeasonEnum::SEASON_JULY_2021 === $object->getSeason()) {
-                $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
-            } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2021 === $object->getSeason()) {
-                $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
-            } elseif (PreRegisterSeasonEnum::SEASON_JULY_2022 === $object->getSeason()) {
-                $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
-            } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2022 === $object->getSeason()) {
-                $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
-            }
-        } else {
-            $span = '<span class="label label-success" style="margin-right:10px">---</span>';
+        if (PreRegisterSeasonEnum::SEASON_JULY_2020 === $object->getSeason()) {
+            $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+        } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2020 === $object->getSeason()) {
+            $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+        } elseif (PreRegisterSeasonEnum::SEASON_JULY_2021 === $object->getSeason()) {
+            $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+        } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2021 === $object->getSeason()) {
+            $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+        } elseif (PreRegisterSeasonEnum::SEASON_JULY_2022 === $object->getSeason()) {
+            $span = '<span class="label label-warning">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
+        } elseif (PreRegisterSeasonEnum::SEASON_SEPTEMBER_2022 === $object->getSeason()) {
+            $span = '<span class="label label-info">'.$this->ts->trans(PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()]).'</span>';
         }
 
         return $span;

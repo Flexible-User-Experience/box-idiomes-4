@@ -8,6 +8,7 @@ use App\Entity\NewsletterContact;
 use App\Entity\PreRegister;
 use App\Entity\Service;
 use App\Entity\Teacher;
+use App\Enum\PreRegisterSeasonEnum;
 use App\Form\Type\ContactHomepageType;
 use App\Form\Type\ContactMessageType;
 use App\Form\Type\PreRegisterType;
@@ -146,17 +147,12 @@ class DefaultController extends AbstractController
      */
     public function preRegistersAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
     {
-//        $this->addFlash(
-//            'notice',
-//            'Redirect flash.'
-//        );
-//
-//        return $this->redirectToRoute('app_homepage');
         $preRegister = new PreRegister();
         $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
         $preRegisterForm->handleRequest($request);
         if ($preRegisterForm->isSubmitted() && $preRegisterForm->isValid()) {
             // Persist new pre-register record into DB
+            $preRegister->setSeason(PreRegisterSeasonEnum::SEASON_JULY_2022);
             $preRegister->setEnabled(false);
             $em->persist($preRegister);
             $em->flush();
