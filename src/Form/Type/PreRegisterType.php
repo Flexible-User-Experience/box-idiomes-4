@@ -180,7 +180,7 @@ class PreRegisterType extends AbstractType
                 [
                     'label' => 'frontend.forms.preregister.submit',
                     'attr' => [
-                        'class' => 'btn-newsletter',
+                        'class' => 'btn btn-warning btn-lg text-white mb-5',
                         'tabindex' => 13,
                     ],
                 ]
