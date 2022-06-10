@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 5.2.08 (WIP)
+##### Version 5.2.09 (WIP)
  * fix minor bugs
+
+##### Version 5.2.08 (2022-06*10)
+ * composer & yarn vendors update
+ * enable frontend PreRegister july feature
 
 ##### Version 5.2.07 (2022-05-30)
  * add Student admin tariff helper
