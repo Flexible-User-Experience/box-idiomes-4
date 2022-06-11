@@ -144,17 +144,6 @@ class PreRegisterType extends AbstractType
                 ]
             )
             ->add(
-                'wantsToMakeOfficialExam',
-                CheckboxType::class,
-                [
-                    'required' => false,
-                    'label' => 'frontend.forms.preregister.wants_to_make_official_exam',
-                    'attr' => [
-                        'tabindex' => 11,
-                    ],
-                ]
-            )
-            ->add(
                 'season',
                 HiddenType::class,
                 [
