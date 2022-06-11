@@ -151,9 +151,12 @@ class DefaultController extends AbstractController
         $preRegisterForm = $this->createForm(PreRegisterType::class, $preRegister);
         $preRegisterForm->handleRequest($request);
         if ($preRegisterForm->isSubmitted() && $preRegisterForm->isValid()) {
-            // Persist new pre-register record into DB
-            $preRegister->setSeason(PreRegisterSeasonEnum::SEASON_JULY_2022);
-            $preRegister->setEnabled(false);
+            // Persist new pre-register record into DB with default values
+            $preRegister
+                ->setSeason(PreRegisterSeasonEnum::SEASON_SEPTEMBER_2022)
+                ->setWantsToMakeOfficialExam(false)
+                ->setEnabled(false)
+            ;
             $em->persist($preRegister);
             $em->flush();
             if (0 !== $messenger->sendPreRegisterAdminNotification($preRegister)) {

@@ -4,7 +4,7 @@ Changelog
 ##### Version 5.2.09 (WIP)
  * fix minor bugs
 
-##### Version 5.2.08 (2022-06*10)
+##### Version 5.2.08 (2022-06-10)
  * composer & yarn vendors update
  * enable frontend PreRegister july feature
 
