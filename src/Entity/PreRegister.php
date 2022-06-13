@@ -178,4 +178,14 @@ class PreRegister extends AbstractPerson
 
         return $this;
     }
+
+    public function getEnabledString(): string
+    {
+        return $this->getEnabled() ? 'sí' : 'no';
+    }
+
+    public function getStudendCreatedString(): string
+    {
+        return $this->getEnabledString();
+    }
 }
