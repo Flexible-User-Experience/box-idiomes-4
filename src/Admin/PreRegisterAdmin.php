@@ -28,23 +28,9 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
-            ->add('student', $this->getRouterIdParameter().'/create-student')
             ->remove('create')
             ->remove('edit')
         ;
-    }
-
-    public function configureBatchActions(array $actions): array
-    {
-        if ($this->hasRoute('show') && $this->hasAccess('show')) {
-            $actions['generatestudents'] = [
-                'label' => 'backend.admin.pre_register.batch_action',
-                'translation_domain' => 'messages',
-                'ask_confirmation' => false,
-            ];
-        }
-
-        return $actions;
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
@@ -337,9 +323,6 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
                     'actions' => [
                         'show' => [
                             'template' => 'Admin/Buttons/list__action_show_button.html.twig',
-                        ],
-                        'student' => [
-                            'template' => 'Admin/Buttons/list__action_create_student_from_pre_register_button.html.twig',
                         ],
                         'delete' => [
                             'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
