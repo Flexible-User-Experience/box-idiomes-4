@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.2.10 (WIP)
+##### Version 5.2.11 (WIP)
  * fix minor bugs
+
+##### Version 5.2.10 (2022-06-13)
+ * add reCaptcha in PreRegister form
+ * remove list__action_create_student_from_pre_register_button fron PreRegister admin
+ * add enabledString in PreRegister export
 
 ##### Version 5.2.09 (2022-06-13)
  * composer & yarn vendors update

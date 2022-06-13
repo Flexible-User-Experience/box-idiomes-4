@@ -349,7 +349,7 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
             'comments',
             'hasBeenPreviousCustomerString',
             'wantsToMakeOfficialExamString',
-            'enabled',
+            'studendCreatedString',
         ];
     }
 }
