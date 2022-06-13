@@ -110,7 +110,7 @@ frontend:
             email: "Email de contacte*"
             phone: "Telèfon de contacte*"
             age: "Edat"
-            course_level: "Nivell o curs escolar"
+            course_level: "Nivell o curs escolar 2022/23"
             preferred_timetable: "Horari preferit"
             comments: "Comentaris"
             previous_academy: "Acadèmia anterior"
