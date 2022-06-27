@@ -3,6 +3,8 @@ Changelog
 
 ##### Version 5.2.11 (WIP)
  * fix minor bugs
+ * Symfony 5.4.10 security update
+ * set PHP cookie_lifetime to zero, bind to user browser opened time
 
 ##### Version 5.2.10 (2022-06-13)
  * add reCaptcha in PreRegister form
