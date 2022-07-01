@@ -14,6 +14,7 @@ use App\Form\Type\ContactMessageType;
 use App\Form\Type\PreRegisterType;
 use App\Kernel;
 use App\Manager\MailchimpManager;
+use App\Pdf\InvoiceBuilderPdf;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -203,16 +204,18 @@ class DefaultController extends AbstractController
     /**
      * @Route("/test-email", name="app_test_email")
      */
-    public function testEmailAction(KernelInterface $kernel, EntityManagerInterface $em): Response
+    public function testEmailAction(KernelInterface $kernel, EntityManagerInterface $em, NotificationService $ns, InvoiceBuilderPdf $invoiceBuilderPdf): Response
     {
         if (Kernel::ENV_PROD === $kernel->getEnvironment()) {
             throw new AccessDeniedHttpException();
         }
+        $invoice = $em->getRepository(Invoice::class)->find(8);
+        $ns->sendInvoicePdfNotification($invoice, $invoiceBuilderPdf->build($invoice));
 
         return $this->render(
             'Mails/invoice_pdf_notification.html.twig',
             [
-                'invoice' => $em->getRepository(Invoice::class)->find(8),
+                'invoice' => $invoice,
             ]
         );
     }

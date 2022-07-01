@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.2.12 (WIP)
  * fix minor bugs
+ * fix sonata-project/admin-bundle v4.12.0 to avoid missing ProxyQueryInterface servive on batch actions
 
 ##### Version 5.2.11 (2022-06-27)
  * Symfony 5.4.10 security update
