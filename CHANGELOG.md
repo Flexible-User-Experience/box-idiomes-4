@@ -5,6 +5,7 @@ Changelog
  * fix minor bugs
  * fix sonata-project/admin-bundle v4.12.0 to avoid missing ProxyQueryInterface servive on batch actions
  * fix nullable getDiscount problem in GenerateReceiptItemModel
+ * cleanup yaml config files after flex recipes upgrade
 
 ##### Version 5.2.11 (2022-06-27)
  * Symfony 5.4.10 security update
