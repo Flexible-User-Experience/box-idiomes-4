@@ -8,7 +8,7 @@ class GenerateReceiptItemModel
     protected string $studentName;
     protected float $units;
     protected float $unitPrice;
-    protected float $discount;
+    protected ?float $discount;
     protected bool $isReadyToGenerate;
     protected bool $isPreviouslyGenerated;
     protected bool $isPrivateLessonType;
@@ -61,12 +61,12 @@ class GenerateReceiptItemModel
         return $this;
     }
 
-    public function getDiscount(): float
+    public function getDiscount(): ?float
     {
         return $this->discount;
     }
 
-    public function setDiscount(float $discount): self
+    public function setDiscount(?float $discount): self
     {
         $this->discount = $discount;
 
