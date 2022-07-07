@@ -1,5 +1,3 @@
-when@dev: &dev
+when@test:
     hautelook_alice:
         fixtures_path: fixtures
-
-when@test: *dev

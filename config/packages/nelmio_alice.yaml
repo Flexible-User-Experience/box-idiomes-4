@@ -1,4 +1,4 @@
-when@dev: &dev
+when@test:
     nelmio_alice:
         functions_blacklist:
             - 'current'
@@ -8,5 +8,3 @@ when@dev: &dev
             - 'file'
             - 'md5'
             - 'sha1'
-
-when@test: *dev
