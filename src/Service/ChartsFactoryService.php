@@ -89,6 +89,7 @@ class ChartsFactoryService
                         'animation' => true,
                     ],
                     [
+                        'label' => $this->ts->trans('backend.admin.block.charts.zeros'),
                         'data' => $zeros,
                         'borderColor' => self::BLACK,
                         'backgroundColor' => self::BLACK,
