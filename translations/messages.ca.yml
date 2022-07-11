@@ -517,6 +517,7 @@ backend:
                 sales: Vendes
                 expenses: Despeses
                 results: Resultats
+                zeros: Zero
 
 month:
     january: gener
