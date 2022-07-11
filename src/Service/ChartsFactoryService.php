@@ -17,6 +17,7 @@ class ChartsFactoryService
     private const RED = 'rgb(255, 99, 132)';
     private const GREEN = 'rgb(75, 192, 192)';
     private const BLUE = 'rgb(54, 162, 235)';
+    private const BLACK = 'rgb(35, 35, 35)';
 
     private TranslatorInterface $ts;
     private ReceiptRepository $rr;
@@ -39,6 +40,7 @@ class ChartsFactoryService
         $sales = [];
         $expenses = [];
         $results = [];
+        $zeros = [];
         $date = new DateTime();
         $date->sub(new DateInterval('P24M'));
         $interval = new DateInterval('P1M');
@@ -51,6 +53,7 @@ class ChartsFactoryService
             $sales[] = round($sale);
             $expenses[] = round($expense);
             $results[] = round($result);
+            $zeros[] = 0.0;
             $date->add($interval);
         }
         $chart = $this->cb->createChart(Chart::TYPE_LINE);
@@ -84,6 +87,18 @@ class ChartsFactoryService
                         'tension' => 0.25,
                         'fill' => false,
                         'animation' => true,
+                    ],
+                    [
+                        'data' => $zeros,
+                        'borderColor' => self::BLACK,
+                        'backgroundColor' => self::BLACK,
+                        'pointBorderWidth' => 0,
+                        'pointStyle' => 'dash',
+                        'borderWidth' => 2,
+                        'borderDash' => [5, 5],
+                        'tension' => 0,
+                        'fill' => false,
+                        'animation' => false,
                     ],
                 ],
             ])
