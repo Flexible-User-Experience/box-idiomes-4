@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 5.2.13 (WIP)
+##### Version 5.2.14 (WIP)
  * fix minor bugs
+
+##### Version 5.2.13 (2022-07-11)
+ * fix sonata-project/admin-bundle v4.13.0 upgrade problem
+ * fix Doctrine Migrations config problem
 
 ##### Version 5.2.12 (2022-07-11)
  * show zero line in Dashboard chart
