@@ -4,6 +4,7 @@ Changelog
 ##### Version 5.2.14 (WIP)
  * fix minor bugs
  * fix missing label zero in Charts
+ * imrpove Chart datasets layers order representation
 
 ##### Version 5.2.13 (2022-07-11)
  * fix sonata-project/admin-bundle v4.13.0 upgrade problem
