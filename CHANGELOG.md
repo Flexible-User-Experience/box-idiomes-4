@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.14 (WIP)
+##### Version 5.2.15 (WIP)
  * fix minor bugs
+
+##### Version 5.2.14 (2022-07-20)
+ * upgrade PHP up to 8.1 minimum version
  * fix missing label zero in Charts
  * imrpove Chart datasets layers order representation
 
