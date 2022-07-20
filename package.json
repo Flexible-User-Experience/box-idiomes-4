@@ -24,7 +24,7 @@
         "node-sass": "^7.0.0",
         "pdfjs-dist": "2.12.313",
         "regenerator-runtime": "^0.13.9",
-        "sass-loader": "^12.4.0",
+        "sass-loader": "^13.0.0",
         "webpack-notifier": "^1.15.0"
     },
     "license": "PROPRIETARY",
