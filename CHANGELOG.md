@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.2.15 (WIP)
  * fix minor bugs
+ * fix missing DQL functions
 
 ##### Version 5.2.14 (2022-07-20)
  * upgrade PHP up to 8.1 minimum version
