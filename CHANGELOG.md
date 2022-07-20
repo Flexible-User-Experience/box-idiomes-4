@@ -1,8 +1,17 @@
 Changelog
 =========
 
-##### Version 5.2.12 (WIP)
+##### Version 5.2.14 (WIP)
  * fix minor bugs
+ * fix missing label zero in Charts
+ * imrpove Chart datasets layers order representation
+
+##### Version 5.2.13 (2022-07-11)
+ * fix sonata-project/admin-bundle v4.13.0 upgrade problem
+ * fix Doctrine Migrations config problem
+
+##### Version 5.2.12 (2022-07-11)
+ * show zero line in Dashboard chart
  * fix sonata-project/admin-bundle v4.12.0 to avoid missing ProxyQueryInterface servive on batch actions
  * fix nullable getDiscount problem in GenerateReceiptItemModel
  * cleanup yaml config files after flex recipes upgrade

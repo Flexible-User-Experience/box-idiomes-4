@@ -187,10 +187,10 @@ final class InvoiceAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $query): Response
     {
         $this->admin->checkAccess('edit');
-        $selectedModels = $selectedModelQuery->execute();
+        $selectedModels = $query->execute();
         try {
             $paymentUniqueId = uniqid('', true);
             $xmls = $this->xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);

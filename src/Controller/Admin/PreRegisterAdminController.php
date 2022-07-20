@@ -51,11 +51,11 @@ final class PreRegisterAdminController extends CRUDController
         return $this->redirectToList();
     }
 
-    public function batchActionGeneratestudents(ProxyQueryInterface $selectedModelQuery, EntityManagerInterface $em): RedirectResponse
+    public function batchActionGeneratestudents(ProxyQueryInterface $query, EntityManagerInterface $em): RedirectResponse
     {
         $this->admin->checkAccess('show');
         $prrs = $em->getRepository(Student::class);
-        $selectedModels = $selectedModelQuery->execute();
+        $selectedModels = $query->execute();
         $totalItemsIterated = 0;
         $newStudentsCreated = 0;
         try {

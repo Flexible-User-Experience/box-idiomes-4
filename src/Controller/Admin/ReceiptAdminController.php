@@ -198,10 +198,10 @@ final class ReceiptAdminController extends AbstractAdminController
         return $response;
     }
 
-    public function batchActionGeneratereminderspdf(ProxyQueryInterface $selectedModelQuery, ParameterBagInterface $parameterBag): Response
+    public function batchActionGeneratereminderspdf(ProxyQueryInterface $query, ParameterBagInterface $parameterBag): Response
     {
         $this->admin->checkAccess('edit');
-        $selectedModels = $selectedModelQuery->execute();
+        $selectedModels = $query->execute();
         try {
             $pdf = $this->rrbp->buildBatchReminder();
             /** @var Receipt $selectedModel */
@@ -226,10 +226,10 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $selectedModelQuery): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $query): Response
     {
         $this->admin->checkAccess('edit');
-        $selectedModels = $selectedModelQuery->execute();
+        $selectedModels = $query->execute();
         try {
             $paymentUniqueId = uniqid('', true);
             $xmlsArray = [];
@@ -275,10 +275,10 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
-    public function batchActionMarkaspayed(ProxyQueryInterface $selectedModelQuery): RedirectResponse
+    public function batchActionMarkaspayed(ProxyQueryInterface $query): RedirectResponse
     {
         $this->admin->checkAccess('edit');
-        $selectedModels = $selectedModelQuery->execute();
+        $selectedModels = $query->execute();
         try {
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
