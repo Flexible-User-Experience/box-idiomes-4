@@ -3,6 +3,8 @@ Changelog
 
 ##### Version 5.2.15 (WIP)
  * fix minor bugs
+ * fix missing DQL functions
+ * fix pacth sonata-project/doctrine-orm-admin-bundle 4.3.2 version
 
 ##### Version 5.2.14 (2022-07-20)
  * upgrade PHP up to 8.1 minimum version
