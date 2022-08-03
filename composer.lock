@@ -4785,16 +4785,16 @@
         },
         {
             "name": "sonata-project/doctrine-extensions",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/sonata-doctrine-extensions.git",
-                "reference": "4ed1b6764d700ec03db546b2e56e0ea1de675654"
+                "reference": "07dcf9b05a87b4b87e86de9c3e6ba8f5adbbd32f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/sonata-doctrine-extensions/zipball/4ed1b6764d700ec03db546b2e56e0ea1de675654",
-                "reference": "4ed1b6764d700ec03db546b2e56e0ea1de675654",
+                "url": "https://api.github.com/repos/sonata-project/sonata-doctrine-extensions/zipball/07dcf9b05a87b4b87e86de9c3e6ba8f5adbbd32f",
+                "reference": "07dcf9b05a87b4b87e86de9c3e6ba8f5adbbd32f",
                 "shasum": ""
             },
             "require": {
@@ -4865,7 +4865,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sonata-project/sonata-doctrine-extensions/issues",
-                "source": "https://github.com/sonata-project/sonata-doctrine-extensions/tree/2.0.0"
+                "source": "https://github.com/sonata-project/sonata-doctrine-extensions/tree/2.0.1"
             },
             "funding": [
                 {
@@ -4885,20 +4885,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-07-28T07:59:42+00:00"
+            "time": "2022-08-02T15:26:39+00:00"
         },
         {
             "name": "sonata-project/doctrine-orm-admin-bundle",
-            "version": "4.3.3",
+            "version": "4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "f5093f0ea49643c472f0a5cfe034cc1d5e48344f"
+                "reference": "f6043ee4aa65fb8ddabf03ac2bfc4b6f61b93af2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/f5093f0ea49643c472f0a5cfe034cc1d5e48344f",
-                "reference": "f5093f0ea49643c472f0a5cfe034cc1d5e48344f",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/f6043ee4aa65fb8ddabf03ac2bfc4b6f61b93af2",
+                "reference": "f6043ee4aa65fb8ddabf03ac2bfc4b6f61b93af2",
                 "shasum": ""
             },
             "require": {
@@ -4907,8 +4907,8 @@
                 "doctrine/orm": "^2.8",
                 "doctrine/persistence": "^2.1 || ^3.0",
                 "php": "^7.3 || ^8.0",
-                "sonata-project/admin-bundle": "^4.14",
-                "sonata-project/exporter": "^2.0",
+                "sonata-project/admin-bundle": "^4.16",
+                "sonata-project/exporter": "^2.0 || ^3.0",
                 "sonata-project/form-extensions": "^1.4",
                 "symfony/config": "^4.4 || ^5.4 || ^6.0",
                 "symfony/console": "^4.4 || ^5.4 || ^6.0",
@@ -4995,7 +4995,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle/issues",
-                "source": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle/tree/4.3.3"
+                "source": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle/tree/4.4.0"
             },
             "funding": [
                 {
@@ -5015,7 +5015,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-07-22T07:19:29+00:00"
+            "time": "2022-08-02T19:09:46+00:00"
         },
         {
             "name": "sonata-project/exporter",

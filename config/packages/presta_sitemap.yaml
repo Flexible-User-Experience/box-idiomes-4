@@ -1,6 +1,6 @@
 presta_sitemap:
     route_annotation_listener: false
     defaults:
-        priority:   1
+        priority: 1
         changefreq: 'monthly'
-        lastmod:    'now'
+        lastmod: 'now'
