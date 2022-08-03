@@ -190,8 +190,8 @@ App\Entity\Event:
     classroom: <numberBetween(0, 3)>
     group: '@classgroup1'
     students:
-        - '@student1'
-        - '@student2'
+      - '@student1'
+      - '@student2'
     next: '@event2'
     dayFrequencyRepeat: <randomDigit()>
     until: <dateTimeThisMonth()>
@@ -202,8 +202,8 @@ App\Entity\Event:
     classroom: <numberBetween(0, 3)>
     group: '@classgroup1'
     students:
-        - '@student1'
-        - '@student2'
+      - '@student1'
+      - '@student2'
     previous: '@event1'
     dayFrequencyRepeat: <randomDigit()>
     until: <dateTimeThisMonth()>
@@ -214,7 +214,7 @@ App\Entity\Event:
     classroom: <numberBetween(0, 3)>
     group: '@classgroup2'
     students:
-        - '@student1'
+      - '@student1'
 
 # Receipt
 App\Entity\Receipt:
@@ -296,12 +296,12 @@ App\Entity\Provider:
 
 ## Users
 App\Entity\User:
-    admin:
-        username: admin
-        usernameCanonical: admin
-        plainPassword: passwd
-        email: admin@email.com
-        emailCanonical: admin@email.com
-        enabled: true
-        roles:
-            - ROLE_SUPER_ADMIN
+  admin:
+    username: admin
+    usernameCanonical: admin
+    plainPassword: passwd
+    email: admin@email.com
+    emailCanonical: admin@email.com
+    enabled: true
+    roles:
+      - ROLE_SUPER_ADMIN
