@@ -18,13 +18,12 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 !.gitkeep
-!var/log/keepit.txt
 !var/log/.gitkeep
-!var/log/.gitignore
 /var/log/test.log
 /var/log/dev.log
 /var/log/prod.log
 /var/cache/*
+!/var/cache/.gitkeep
 /var/testing-database.db
 /vendor/
 ###< symfony/framework-bundle ###
