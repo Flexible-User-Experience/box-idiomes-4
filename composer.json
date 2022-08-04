@@ -25,6 +25,7 @@
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
+        "knplabs/knp-paginator-bundle": "^5.8",
         "liip/imagine-bundle": "^2.5",
         "nelexa/zip": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.3",
