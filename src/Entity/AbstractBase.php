@@ -13,6 +13,8 @@ abstract class AbstractBase
     public const DEFAULT_NULL_DATETIME_STRING = '--/--/---- --:--';
     public const DATE_STRING_FORMAT = 'd/m/Y';
     public const DATETIME_STRING_FORMAT = 'd/m/Y H:i';
+    public const DATABASE_DATE_STRING_FORMAT = 'Y-m-d';
+    public const DATABASE_DATETIME_STRING_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @ORM\Id

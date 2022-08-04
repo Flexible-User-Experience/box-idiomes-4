@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\AbstractBase;
 use App\Entity\Spending;
 use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 final class SpendingRepository extends ServiceEntityRepository
@@ -15,6 +17,9 @@ final class SpendingRepository extends ServiceEntityRepository
         parent::__construct($registry, Spending::class);
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function getMonthlyExpensesAmountForDate(DateTimeInterface $date): int
     {
         $begin = clone $date;
@@ -25,8 +30,8 @@ final class SpendingRepository extends ServiceEntityRepository
             ->select('SUM(i.baseAmount) as amount')
             ->where('i.date >= :begin')
             ->andWhere('i.date <= :end')
-            ->setParameter('begin', $begin->format('Y-m-d'))
-            ->setParameter('end', $end->format('Y-m-d'))
+            ->setParameter('begin', $begin->format(AbstractBase::DATABASE_DATE_STRING_FORMAT))
+            ->setParameter('end', $end->format(AbstractBase::DATABASE_DATE_STRING_FORMAT))
             ->getQuery()
         ;
 

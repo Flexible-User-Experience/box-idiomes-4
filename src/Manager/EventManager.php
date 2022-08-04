@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Entity\AbstractBase;
 use App\Entity\Event;
 use App\Entity\Tariff;
 use App\Model\ExportCalendarToList;
@@ -187,7 +188,7 @@ class EventManager
             $calendarEventsList->addDay($calendarEventsListDayItem);
             // iterate $start date one day
             $start->add(new DateInterval('P1D'));
-        } while ($start->format('Y-m-d') < $end->format('Y-m-d'));
+        } while ($start->format(AbstractBase::DATABASE_DATE_STRING_FORMAT) < $end->format(AbstractBase::DATABASE_DATE_STRING_FORMAT));
 
         return $calendarEventsList;
     }

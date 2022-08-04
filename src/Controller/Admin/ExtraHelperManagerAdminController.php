@@ -15,10 +15,10 @@ final class ExtraHelperManagerAdminController extends CRUDController
 {
     public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, ParameterBagInterface $parameterBag, string $start, string $end): Response
     {
-        $startDate = DateTime::createFromFormat('Y-m-d', $start);
-        $endDate = DateTime::createFromFormat('Y-m-d', $end);
+        $startDate = DateTime::createFromFormat(AbstractBase::DATABASE_DATE_STRING_FORMAT, $start);
+        $endDate = DateTime::createFromFormat(AbstractBase::DATABASE_DATE_STRING_FORMAT, $end);
         if ($startDate && $endDate) {
-            if ($endDate->format('Y-m-d') >= $startDate->format('Y-m-d')) {
+            if ($endDate->format(AbstractBase::DATABASE_DATE_STRING_FORMAT) >= $startDate->format(AbstractBase::DATABASE_DATE_STRING_FORMAT)) {
                 $exportCalendarList = $ems->getCalendarEventsListFromDates($startDate, $endDate);
                 if ($exportCalendarList->hasDays()) {
                     $pdf = $eclb->build($exportCalendarList);
