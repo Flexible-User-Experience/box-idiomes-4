@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\AbstractBase;
 use App\Entity\ClassGroup;
 use App\Entity\Event;
 use App\Entity\PreRegister;
@@ -18,6 +19,7 @@ use App\Enum\TeacherColorEnum;
 use App\Enum\UserRolesEnum;
 use App\Manager\ReceiptManager;
 use App\Service\SmartAssetsHelperService;
+use Exception;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -49,19 +51,9 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * Return if a given object is instance of.
-     */
     public function isInstanceOf($var, $instance): bool
     {
-        try {
-            $reflexionClass = new ReflectionClass($instance);
-            $result = $reflexionClass->isInstance($var);
-        } catch (ReflectionException $e) {
-            $result = false;
-        }
-
-        return $result;
+        return (new ReflectionClass($instance))->isInstance($var);
     }
 
     /**
@@ -76,6 +68,9 @@ class AppExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     public function generateRandomErrorText($length = 1024): string
     {
         // Character List to Pick from
@@ -116,6 +111,9 @@ class AppExtension extends AbstractExtension
             new TwigFilter('draw_money', [$this, 'drawMoney']),
             new TwigFilter('draw_pre_register_season_type', [$this, 'drawPreRegisterSeasonType']),
             new TwigFilter('write_pre_register_season_string', [$this, 'writePreRegisterSeasonString']),
+            new TwigFilter('i', [$this, 'integerNumberFormattedString']),
+            new TwigFilter('f', [$this, 'floatNumberFormattedString']),
+            new TwigFilter('euro', [$this, 'euroFloatNumberFormattedString']),
         ];
     }
 
@@ -223,8 +221,18 @@ class AppExtension extends AbstractExtension
         return PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()];
     }
 
-    public function getName(): string
+    public function integerNumberFormattedString(int $value): string
     {
-        return 'app_extension';
+        return number_format($value, 0, '\'', '.');
+    }
+
+    public function floatNumberFormattedString(float $value): string
+    {
+        return number_format($value, 2, '\'', '.');
+    }
+
+    public function euroFloatNumberFormattedString(?float $value): string
+    {
+        return $value ? $this->floatNumberFormattedString($value).' €' : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

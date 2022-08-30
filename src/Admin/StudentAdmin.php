@@ -15,7 +15,6 @@ use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
 use DateTime;
-use Doctrine\ORM\Query\Expr\Join;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -519,13 +518,14 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridHasAtLeastOneEventClassGroupAssignedFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($data->hasValue()) {
-            $query->leftJoin($alias.'.events', 'ev', Join::WITH);
-            $query->groupBy($alias);
+        if ($field === 'hasAtLeastOneEventClassGroupAssigned' && $data->hasValue()) {
+            $query->addSelect('COUNT(ev.id) AS amount');
+            $query->leftJoin($alias.'.events', 'ev');
+            $query->groupBy($alias.'.id');
             if ($data->getValue() === BooleanType::TYPE_YES) {
-                $query->having('COUNT(ev) > 0');
+                $query->having('amount > 0');
             } else {
-                $query->having('COUNT(ev) = 0');
+                $query->having('amount = 0');
             }
 
             return true;
@@ -536,7 +536,8 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridSchoolYearFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($data->hasValue()) {
+        if ($field === 'schoolYear' && $data->hasValue()) {
+            $query->leftJoin($alias.'.events', 'e');
             $schoolYear = (int) $data->getValue();
             $begin = new DateTime();
             $begin->setDate($schoolYear, 8, 31);
@@ -544,7 +545,6 @@ final class StudentAdmin extends AbstractBaseAdmin
             $end = new DateTime();
             $end->setDate($schoolYear + 1, 9, 1);
             $end->setTime(0, 0);
-            $query->join($alias.'.events', 'e');
             $query->andWhere('e.begin > :begin');
             $query->andWhere('e.begin < :end');
             $query->setParameter('begin', $begin);
@@ -558,7 +558,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridAgesFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($data->hasValue()) {
+        if ($field === 'age' && $data->hasValue()) {
             $age = (int) $data->getValue();
             if ($age < StudentAgesEnum::AGE_20_plus) {
                 $query->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age');
