@@ -3,7 +3,6 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
-use App\Entity\AbstractBase;
 use App\Entity\BankCreditorSepa;
 use App\Entity\City;
 use App\Entity\ClassGroup;
@@ -16,7 +15,6 @@ use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
 use App\Model\BeginEndSchoolYearMoment;
-use DateTime;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -522,20 +520,18 @@ final class StudentAdmin extends AbstractBaseAdmin
     public function buildDatagridHasAtLeastOneEventClassGroupAssignedFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
         if ($field === 'hasAtLeastOneEventClassGroupAssigned' && $data->hasValue()) {
-            //            $relatedEntities = $query->getQueryBuilder()->getEntityManager()->getRepository(Student::class)->createQueryBuilder('student')
-            $query->leftJoin($alias.'.events', 'e');
-            $schoolYear = (int) $data->getValue();
-            $begin = new DateTime();
-            $begin->setDate($schoolYear, 8, 31);
-            $begin->setTime(0, 0);
-            $end = new DateTime();
-            $end->setDate($schoolYear + 1, 9, 1);
-            $end->setTime(0, 0);
-            $query->select($alias.'.id');
-            $query->andWhere($query->expr()->notIn($alias.'.id', $query->andWhere('e.begin > :begin AND e.begin < :end')->setParameters([
-                'begin' => $begin->format(AbstractBase::DATABASE_DATETIME_STRING_FORMAT),
-                'end' => $end->format(AbstractBase::DATABASE_DATETIME_STRING_FORMAT),
-            ])));
+            $beginEndSchoolYearMoment = new BeginEndSchoolYearMoment((int) $data->getValue());
+            $relatedEntitiesQuery = $query->getQueryBuilder()->getEntityManager()->getRepository(Student::class)
+                ->createQueryBuilder('student')
+                ->select(['student.id'])
+                ->leftJoin('student.events', 'e')
+                ->andWhere('e.begin > :begin')
+                ->andWhere('e.begin < :end')
+                ->setParameter('begin', $beginEndSchoolYearMoment->getBegin())
+                ->setParameter('end', $beginEndSchoolYearMoment->getEnd())
+            ;
+            $query->andWhere($query->expr()->notIn($alias.'.id', ':subquery'));
+            $query->setParameter('subquery', $relatedEntitiesQuery->getQuery()->getArrayResult());
 
             return true;
         }
