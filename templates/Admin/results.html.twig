@@ -1,0 +1,11 @@
+{% extends '@SonataAdmin/Pager/base_results.html.twig' %}
+
+{% block num_pages %}
+    {{ admin.datagrid.pager.page | i }} / {{ admin.datagrid.pager.lastpage | i }}
+    &nbsp;-&nbsp;
+{% endblock %}
+
+{% block num_results %}
+    {% trans with {'%count%': admin.datagrid.pager.countResults() | i} from 'SonataAdminBundle' %}list_results_count{% endtrans %}
+    &nbsp;-&nbsp;
+{% endblock %}
