@@ -1,10 +1,17 @@
 Changelog
 =========
 
-##### Version 5.2.15 (WIP)
+##### Version 5.2.16 (WIP)
  * fix minor bugs
+
+##### Version 5.2.15 (2022-08-30)
  * fix missing DQL functions
  * fix pacth sonata-project/doctrine-orm-admin-bundle 4.3.2 version
+ * Symfony v5.4.12 update
+ * Yarn dependencies update
+ * remove hardcoded data format strings
+ * add invalidFeedbackNode scroll to flash node
+ * add new enum classroom option
 
 ##### Version 5.2.14 (2022-07-20)
  * upgrade PHP up to 8.1 minimum version
