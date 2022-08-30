@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\SpendingCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -20,7 +21,7 @@ final class SpendingCategoryRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('sc')
             ->where('sc.enabled = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('sc.name', 'ASC')
+            ->orderBy('sc.name', SortOrderTypeEnum::ASC)
             ;
     }
 

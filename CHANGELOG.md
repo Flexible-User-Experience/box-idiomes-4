@@ -1,9 +1,13 @@
 Changelog
 =========
 
-##### Version 5.2.16 (WIP)
+##### Version 5.2.17 (WIP)
  * fix minor bugs
+
+##### Version 5.2.16 (2022-08-30)
  * improve role names
+ * fix datagrid school year filter error
+ * remove hardcoded Doctrine sort directions enum
 
 ##### Version 5.2.15 (2022-08-30)
  * fix missing DQL functions

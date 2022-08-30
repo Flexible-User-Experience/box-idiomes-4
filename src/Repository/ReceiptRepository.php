@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Receipt;
 use App\Entity\Student;
 use DateTimeInterface;
@@ -133,7 +134,7 @@ final class ReceiptRepository extends ServiceEntityRepository
 
     public function getAllSortedByNumberDescQB(): QueryBuilder
     {
-        return $this->createQueryBuilder('r')->orderBy('r.id', 'DESC');
+        return $this->createQueryBuilder('r')->orderBy('r.id', SortOrderTypeEnum::DESC);
     }
 
     public function getAllSortedByNumberDescQ(): Query

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\ClassGroup;
 use App\Entity\PreRegister;
 use App\Entity\Student;
@@ -37,8 +38,8 @@ final class StudentRepository extends ServiceEntityRepository
     public function getAllSortedByNameQB(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
-            ->orderBy('s.name', 'ASC')
-            ->addOrderBy('s.surname', 'ASC')
+            ->orderBy('s.name', SortOrderTypeEnum::ASC)
+            ->addOrderBy('s.surname', SortOrderTypeEnum::ASC)
         ;
     }
 
@@ -73,8 +74,8 @@ final class StudentRepository extends ServiceEntityRepository
     public function getAllSortedBySurnameQB(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
-            ->orderBy('s.surname', 'ASC')
-            ->addOrderBy('s.name', 'ASC');
+            ->orderBy('s.surname', SortOrderTypeEnum::ASC)
+            ->addOrderBy('s.name', SortOrderTypeEnum::ASC);
     }
 
     public function getAllSortedBySurnameQ(): Query
@@ -129,8 +130,8 @@ final class StudentRepository extends ServiceEntityRepository
     public function getStudentsInEventsByYearAndMonthSortedBySurnameQB(int $year, int $month): QueryBuilder
     {
         return $this->getStudentsInEventsByYearAndMonthQB($year, $month)
-            ->orderBy('s.surname', 'ASC')
-            ->addOrderBy('s.name', 'ASC');
+            ->orderBy('s.surname', SortOrderTypeEnum::ASC)
+            ->addOrderBy('s.name', SortOrderTypeEnum::ASC);
     }
 
     public function getStudentsInEventsByYearAndMonthSortedBySurnameQ(int $year, int $month): Query
