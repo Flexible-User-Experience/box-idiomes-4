@@ -18,10 +18,13 @@ use DateTime;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Exception\ModelManagerThrowable;
+use Sonata\AdminBundle\Filter\Model\FilterData;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
@@ -499,21 +502,21 @@ final class StudentAdmin extends AbstractBaseAdmin
         ;
     }
 
-    public function buildDatagridSchoolYearFilter($queryBuilder, $alias, $field, $value): bool
+    public function buildDatagridSchoolYearFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($value && array_key_exists('value', $value)) {
-            $schoolYear = (int) $value['value'];
+        if ($data->hasValue()) {
+            $schoolYear = (int) $data->getValue();
             $begin = new DateTime();
             $begin->setDate($schoolYear, 8, 31);
             $begin->setTime(0, 0);
             $end = new DateTime();
             $end->setDate($schoolYear + 1, 9, 1);
             $end->setTime(0, 0);
-            $queryBuilder->join($alias.'.events', 'e');
-            $queryBuilder->andWhere('e.begin > :begin');
-            $queryBuilder->andWhere('e.begin < :end');
-            $queryBuilder->setParameter('begin', $begin);
-            $queryBuilder->setParameter('end', $end);
+            $query->join($alias.'.events', 'e');
+            $query->andWhere('e.begin > :begin');
+            $query->andWhere('e.begin < :end');
+            $query->setParameter('begin', $begin);
+            $query->setParameter('end', $end);
 
             return true;
         }
@@ -521,16 +524,16 @@ final class StudentAdmin extends AbstractBaseAdmin
         return false;
     }
 
-    public function buildDatagridAgesFilter($queryBuilder, $alias, $field, $value): bool
+    public function buildDatagridAgesFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($value && array_key_exists('value', $value)) {
-            $age = (int) $value['value'];
+        if ($data->hasValue()) {
+            $age = (int) $data->getValue();
             if ($age < StudentAgesEnum::AGE_20_plus) {
-                $queryBuilder->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age');
+                $query->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age');
             } else {
-                $queryBuilder->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) >= :age');
+                $query->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) >= :age');
             }
-            $queryBuilder->setParameter('age', $age);
+            $query->setParameter('age', $age);
 
             return true;
         }
@@ -682,6 +685,9 @@ final class StudentAdmin extends AbstractBaseAdmin
         return $result;
     }
 
+    /**
+     * @throws ModelManagerThrowable
+     */
     public function preRemove($object): void
     {
         $relatedReceipts = $this->getModelManager()->findBy(Receipt::class, [
