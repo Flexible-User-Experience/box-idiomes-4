@@ -231,11 +231,12 @@ backend:
             notification_date: Data notificació per email
             has_been_notified: Notificació enviada per email
         class_group:
-            code: Codi
-            name: Nom
-            book: Llibre
+            code: "Codi"
+            name: "Nom"
+            book: "Llibre"
             school_year: "Curs escolar"
-            color: Color
+            has_at_least_one_event_class_group_assigned: "Grup assignat"
+            color: "Color"
             pdf:
                 button: "Generar PDF amb llistat d'alumnes"
                 title: "Llistat d'alumnes"

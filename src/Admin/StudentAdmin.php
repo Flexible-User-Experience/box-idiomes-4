@@ -15,6 +15,7 @@ use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
 use DateTime;
+use Doctrine\ORM\Query\Expr\Join;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -28,6 +29,7 @@ use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
+use Sonata\Form\Type\BooleanType;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -391,6 +393,19 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'hasAtLeastOneEventClassGroupAssigned',
+                CallbackFilter::class,
+                [
+                    'label' => 'backend.admin.class_group.has_at_least_one_event_class_group_assigned',
+                    'callback' => [$this, 'buildDatagridHasAtLeastOneEventClassGroupAssignedFilter'],
+                    'required' => true,
+                    'field_type' => BooleanType::class,
+                    'field_options' => [
+                        'required' => false,
+                    ],
+                ]
+            )
+            ->add(
                 'schoolYear',
                 CallbackFilter::class,
                 [
@@ -500,6 +515,23 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
         ;
+    }
+
+    public function buildDatagridHasAtLeastOneEventClassGroupAssignedFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
+    {
+        if ($data->hasValue()) {
+            $query->leftJoin($alias.'.events', 'ev', Join::WITH);
+            $query->groupBy($alias);
+            if ($data->getValue() === BooleanType::TYPE_YES) {
+                $query->having('COUNT(ev) > 0');
+            } else {
+                $query->having('COUNT(ev) = 0');
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     public function buildDatagridSchoolYearFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool

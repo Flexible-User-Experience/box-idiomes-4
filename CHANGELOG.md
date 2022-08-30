@@ -8,6 +8,7 @@ Changelog
  * improve role names
  * fix datagrid school year filter error
  * remove hardcoded Doctrine sort directions enum
+ * add HasAtLeastOneEventClassGroupAssignedFilter in Student admin
 
 ##### Version 5.2.15 (2022-08-30)
  * fix missing DQL functions
