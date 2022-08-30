@@ -235,7 +235,7 @@ backend:
             name: "Nom"
             book: "Llibre"
             school_year: "Curs escolar"
-            has_at_least_one_event_class_group_assigned: "Grup assignat"
+            has_at_least_one_event_class_group_assigned: "Sense grup assignat al curs escolar"
             color: "Color"
             pdf:
                 button: "Generar PDF amb llistat d'alumnes"

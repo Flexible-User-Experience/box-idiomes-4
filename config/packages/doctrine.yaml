@@ -19,6 +19,7 @@ doctrine:
                 month:         'DoctrineExtensions\Query\Mysql\Month'
                 date:          'DoctrineExtensions\Query\Mysql\Date'
                 now:           'DoctrineExtensions\Query\Mysql\Now'
+
 when@test:
     doctrine:
         dbal:
