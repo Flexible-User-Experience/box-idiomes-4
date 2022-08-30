@@ -537,6 +537,8 @@ final class StudentAdmin extends AbstractBaseAdmin
     public function buildDatagridSchoolYearFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
         if ($data->hasValue()) {
+            $query->leftJoin($alias.'.events', 'e', Join::WITH);
+            $query->groupBy($alias);
             $schoolYear = (int) $data->getValue();
             $begin = new DateTime();
             $begin->setDate($schoolYear, 8, 31);
@@ -544,11 +546,11 @@ final class StudentAdmin extends AbstractBaseAdmin
             $end = new DateTime();
             $end->setDate($schoolYear + 1, 9, 1);
             $end->setTime(0, 0);
-            $query->join($alias.'.events', 'e');
             $query->andWhere('e.begin > :begin');
             $query->andWhere('e.begin < :end');
             $query->setParameter('begin', $begin);
             $query->setParameter('end', $end);
+            $query->having('COUNT(e) > 0');
 
             return true;
         }
