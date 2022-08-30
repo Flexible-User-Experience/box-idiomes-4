@@ -279,13 +279,14 @@ backend:
             dayFrequencyRepeat: Repetir cada
             dayFrequencyRepeat_help: dies
             until: Fins a
-            classroom_1: Aula 1
-            classroom_2: Aula 2
-            classroom_3: Aula 3
-            classroom_4: Aula 4
-            classroom_5: Aula 5
-            classroom_7: Aula 6
-            classroom_6: Aula Online
+            classroom_1: "Aula 1"
+            classroom_2: "Aula 2"
+            classroom_3: "Aula 3"
+            classroom_4: "Aula 4"
+            classroom_5: "Aula 5"
+            classroom_7: "Aula 6"
+            classroom_8: "Aula Camarles 1"
+            classroom_6: "Aula Online"
             button:
                 previous: "Esdeveniment anterior"
                 next: "Següent esdeveniment"
