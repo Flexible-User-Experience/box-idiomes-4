@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.2.16 (WIP)
  * fix minor bugs
+ * improve role names
 
 ##### Version 5.2.15 (2022-08-30)
  * fix missing DQL functions

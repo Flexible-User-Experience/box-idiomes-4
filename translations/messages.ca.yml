@@ -177,17 +177,17 @@ backend:
                     end_date_period: "La data final és més gran o igual que la data final."
                     no_items_found: "No s'ha trobat cap horari de classe registrat entre el %start% i el %end%."
         user:
-            user: Usuari
-            editor: Editor
-            manager: Gestor
-            admin: Administrador
-            superadmin: Superadministrador
-            firstname: Nom
-            lastname: Cognoms
-            username: Nom usuari
-            email: Correu electrònic
-            plain_password: Contrasenya
-            roles: Rols
+            user: "Usuari"
+            editor: "Editor Web"
+            manager: "Professor"
+            admin: "Administrador"
+            superadmin: "Superadministrador"
+            firstname: "Nom"
+            lastname: "Cognoms"
+            username: "Nom usuari"
+            email: "Correu electrònic"
+            plain_password: "Contrasenya"
+            roles: "Rols"
         teacher:
             name: Nom
             color: Color
