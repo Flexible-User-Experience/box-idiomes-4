@@ -1,5 +1,5 @@
 ---
-- name: Deploy project to production server
+- name: Rollback deploy project to production server
   hosts: s8
   gather_facts: false
   roles:

@@ -3,7 +3,9 @@ sonata_admin:
     title_logo:         '%admin_logo%'
     persist_filters:    true
     show_mosaic_button: false
+    search:             false
     options:
+        logo_content:  'icon'
         html5_validate: true
         confirm_exit:   true
         use_select2:    true
