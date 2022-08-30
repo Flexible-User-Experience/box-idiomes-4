@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.2.17 (WIP)
  * fix minor bugs
+ * fix logic problem in buildDatagridHasAtLeastOneEventClassGroupAssignedFilter method
 
 ##### Version 5.2.16 (2022-08-30)
  * improve role names
