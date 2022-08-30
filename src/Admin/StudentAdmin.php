@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
+use App\Entity\AbstractBase;
 use App\Entity\BankCreditorSepa;
 use App\Entity\City;
 use App\Entity\ClassGroup;
@@ -14,6 +15,7 @@ use App\Entity\Tariff;
 use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
+use App\Model\BeginEndSchoolYearMoment;
 use DateTime;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -28,7 +30,6 @@ use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
-use Sonata\Form\Type\BooleanType;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -398,9 +399,11 @@ final class StudentAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.class_group.has_at_least_one_event_class_group_assigned',
                     'callback' => [$this, 'buildDatagridHasAtLeastOneEventClassGroupAssignedFilter'],
                     'required' => true,
-                    'field_type' => BooleanType::class,
+                    'field_type' => ChoiceType::class,
                     'field_options' => [
-                        'required' => false,
+                        'choices' => SchoolYearChoicesGeneratorEnum::getSchoolYearChoicesArray(),
+                        'expanded' => false,
+                        'multiple' => false,
                     ],
                 ]
             )
@@ -519,14 +522,20 @@ final class StudentAdmin extends AbstractBaseAdmin
     public function buildDatagridHasAtLeastOneEventClassGroupAssignedFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
         if ($field === 'hasAtLeastOneEventClassGroupAssigned' && $data->hasValue()) {
-            $query->addSelect('COUNT(ev.id) AS amount');
-            $query->leftJoin($alias.'.events', 'ev');
-            $query->groupBy($alias.'.id');
-            if ($data->getValue() === BooleanType::TYPE_YES) {
-                $query->having('amount > 0');
-            } else {
-                $query->having('amount = 0');
-            }
+            //            $relatedEntities = $query->getQueryBuilder()->getEntityManager()->getRepository(Student::class)->createQueryBuilder('student')
+            $query->leftJoin($alias.'.events', 'e');
+            $schoolYear = (int) $data->getValue();
+            $begin = new DateTime();
+            $begin->setDate($schoolYear, 8, 31);
+            $begin->setTime(0, 0);
+            $end = new DateTime();
+            $end->setDate($schoolYear + 1, 9, 1);
+            $end->setTime(0, 0);
+            $query->select($alias.'.id');
+            $query->andWhere($query->expr()->notIn($alias.'.id', $query->andWhere('e.begin > :begin AND e.begin < :end')->setParameters([
+                'begin' => $begin->format(AbstractBase::DATABASE_DATETIME_STRING_FORMAT),
+                'end' => $end->format(AbstractBase::DATABASE_DATETIME_STRING_FORMAT),
+            ])));
 
             return true;
         }
@@ -537,18 +546,12 @@ final class StudentAdmin extends AbstractBaseAdmin
     public function buildDatagridSchoolYearFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
         if ($field === 'schoolYear' && $data->hasValue()) {
-            $query->leftJoin($alias.'.events', 'e');
-            $schoolYear = (int) $data->getValue();
-            $begin = new DateTime();
-            $begin->setDate($schoolYear, 8, 31);
-            $begin->setTime(0, 0);
-            $end = new DateTime();
-            $end->setDate($schoolYear + 1, 9, 1);
-            $end->setTime(0, 0);
-            $query->andWhere('e.begin > :begin');
-            $query->andWhere('e.begin < :end');
-            $query->setParameter('begin', $begin);
-            $query->setParameter('end', $end);
+            $beginEndSchoolYearMoment = new BeginEndSchoolYearMoment((int) $data->getValue());
+            $query->leftJoin($alias.'.events', 'ev');
+            $query->andWhere('ev.begin > :begin');
+            $query->andWhere('ev.begin < :end');
+            $query->setParameter('begin', $beginEndSchoolYearMoment->getBegin());
+            $query->setParameter('end', $beginEndSchoolYearMoment->getEnd());
 
             return true;
         }
