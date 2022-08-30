@@ -12,7 +12,6 @@ use App\Repository\EventRepository;
 use App\Repository\TariffRepository;
 use DateInterval;
 use DateTimeInterface;
-use Doctrine\ORM\NonUniqueResultException;
 
 class EventManager
 {
@@ -106,7 +105,7 @@ class EventManager
             $iteratedEvent = $event;
             while (!is_null($iteratedEvent->getNext())) {
                 $iteratedEvent = $iteratedEvent->getNext();
-                $result[$iteratedEvent->getId()] = $iteratedEvent->getBegin()->format('d/m/Y H:i');
+                $result[$iteratedEvent->getId()] = $iteratedEvent->getBegin()->format(AbstractBase::DATETIME_STRING_FORMAT);
             }
         }
 
@@ -116,12 +115,12 @@ class EventManager
     public function getInclusiveRangeChoices(Event $event): array
     {
         $result = [];
-        $result[$event->getId()] = $event->getBegin()->format('d/m/Y H:i');
+        $result[$event->getId()] = $event->getBegin()->format(AbstractBase::DATETIME_STRING_FORMAT);
         if (!is_null($event->getNext())) {
             $iteratedEvent = $event;
             while (!is_null($iteratedEvent->getNext())) {
                 $iteratedEvent = $iteratedEvent->getNext();
-                $result[$iteratedEvent->getId()] = $iteratedEvent->getBegin()->format('d/m/Y H:i');
+                $result[$iteratedEvent->getId()] = $iteratedEvent->getBegin()->format(AbstractBase::DATETIME_STRING_FORMAT);
             }
         }
 
@@ -152,8 +151,6 @@ class EventManager
      * @param Event[]|array $events
      *
      * @return Tariff last current Tariff for private or shared private lessons
-     *
-     * @throws NonUniqueResultException
      */
     public function getCurrentPrivateLessonsTariffForEvents(array $events): Tariff
     {

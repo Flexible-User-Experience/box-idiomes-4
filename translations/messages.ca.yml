@@ -177,17 +177,17 @@ backend:
                     end_date_period: "La data final és més gran o igual que la data final."
                     no_items_found: "No s'ha trobat cap horari de classe registrat entre el %start% i el %end%."
         user:
-            user: Usuari
-            editor: Editor
-            manager: Gestor
-            admin: Administrador
-            superadmin: Superadministrador
-            firstname: Nom
-            lastname: Cognoms
-            username: Nom usuari
-            email: Correu electrònic
-            plain_password: Contrasenya
-            roles: Rols
+            user: "Usuari"
+            editor: "Editor Web"
+            manager: "Professor"
+            admin: "Administrador"
+            superadmin: "Superadministrador"
+            firstname: "Nom"
+            lastname: "Cognoms"
+            username: "Nom usuari"
+            email: "Correu electrònic"
+            plain_password: "Contrasenya"
+            roles: "Rols"
         teacher:
             name: Nom
             color: Color
@@ -231,11 +231,12 @@ backend:
             notification_date: Data notificació per email
             has_been_notified: Notificació enviada per email
         class_group:
-            code: Codi
-            name: Nom
-            book: Llibre
+            code: "Codi"
+            name: "Nom"
+            book: "Llibre"
             school_year: "Curs escolar"
-            color: Color
+            has_at_least_one_event_class_group_assigned: "Grup assignat"
+            color: "Color"
             pdf:
                 button: "Generar PDF amb llistat d'alumnes"
                 title: "Llistat d'alumnes"

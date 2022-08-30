@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Tariff;
 use App\Enum\TariffTypeEnum;
 use DateTimeImmutable;
@@ -39,8 +40,8 @@ final class TariffRepository extends ServiceEntityRepository
     public function findAllSortedByYearAndPriceQB(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.year', 'DESC')
-            ->addOrderBy('t.price', 'ASC');
+            ->orderBy('t.year', SortOrderTypeEnum::DESC)
+            ->addOrderBy('t.price', SortOrderTypeEnum::ASC);
     }
 
     public function findAllSortedByYearAndPriceQ(): Query
@@ -58,7 +59,7 @@ final class TariffRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.type = :type')
             ->setParameter('type', TariffTypeEnum::TARIFF_PRIVATE_LESSON_PER_HOUR)
-            ->orderBy('t.year', 'DESC')
+            ->orderBy('t.year', SortOrderTypeEnum::DESC)
             ->setMaxResults(1);
     }
 
@@ -90,7 +91,7 @@ final class TariffRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.type = :type')
             ->setParameter('type', TariffTypeEnum::TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR)
-            ->orderBy('t.year', 'DESC')
+            ->orderBy('t.year', SortOrderTypeEnum::DESC)
             ->setMaxResults(1);
     }
 

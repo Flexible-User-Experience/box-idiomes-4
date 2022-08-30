@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Teacher;
 use App\Entity\TeacherAbsence;
 use DateTimeInterface;
@@ -22,8 +23,8 @@ final class TeacherAbsenceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('ta')
             ->where('ta.teacher = :teacher')
             ->setParameter('teacher', $teacher)
-            ->orderBy('ta.day', 'DESC')
-            ->addOrderBy('ta.type', 'ASC');
+            ->orderBy('ta.day', SortOrderTypeEnum::DESC)
+            ->addOrderBy('ta.type', SortOrderTypeEnum::ASC);
     }
 
     public function getTeacherAbsencesSortedByDateQ(Teacher $teacher): Query

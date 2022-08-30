@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\BankCreditorSepa;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -35,7 +36,7 @@ final class BankCreditorSepaRepository extends ServiceEntityRepository
     public function getAllSortedByNameQB(): QueryBuilder
     {
         return $this->createQueryBuilder('c')
-            ->orderBy('c.name', 'ASC');
+            ->orderBy('c.name', SortOrderTypeEnum::ASC);
     }
 
     public function getAllSortedByNameQ(): Query

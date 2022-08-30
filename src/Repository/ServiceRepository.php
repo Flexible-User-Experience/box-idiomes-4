@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -20,7 +21,7 @@ final class ServiceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->where('s.enabled = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('s.position', 'ASC');
+            ->orderBy('s.position', SortOrderTypeEnum::ASC);
     }
 
     public function findAllEnabledSortedByPositionQ(): Query

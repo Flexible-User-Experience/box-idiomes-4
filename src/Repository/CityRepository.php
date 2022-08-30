@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\City;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -20,7 +21,7 @@ final class CityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.enabled = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('c.name', 'ASC');
+            ->orderBy('c.name', SortOrderTypeEnum::ASC);
     }
 
     public function getEnabledSortedByNameQ(): Query

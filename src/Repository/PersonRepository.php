@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
@@ -20,8 +21,8 @@ final class PersonRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.enabled = :enabled')
             ->setParameter('enabled', true)
-            ->orderBy('p.surname', 'ASC')
-            ->addOrderBy('p.name', 'ASC');
+            ->orderBy('p.surname', SortOrderTypeEnum::ASC)
+            ->addOrderBy('p.name', SortOrderTypeEnum::ASC);
     }
 
     public function getEnabledSortedBySurnameQ(): Query
