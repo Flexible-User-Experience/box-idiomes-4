@@ -1,82 +1,82 @@
-"Teacher List": Professors
-"Teacher Create": Crear
-"Teacher Absence List": Absències professor
-"Teacher Absence Create": Crear
-"Teacher Teacher Delete": Esborrar
-"Student List": Alumnes
-"Student Create": Crear
-"Student Delete": Esborrar
-"Student Absence List": Absències alumne
-"Student Absence Create": Crear
-"Student Absence Delete": Esborrar
-"Class Group List": Grups
-"Class Group Create": Crear
-"Class Group Delete": Esborrar
-"Receipt List": Rebuts
-"Receipt Create": Crear
-"Receipt Generate": Generar rebuts mensual
-"Receipt Delete": Esborrar
-"Invoice List": Factures
-"Invoice Create": Crear
-"Invoice Generate": Generar facturació mensual
-"Invoice Delete": Esborrar
-"Tarriff List": Tarifes
-"Tarriff Create": Crear
-"Tarriff Delete": Esborrar
-"Event List": Horaris
-"Event Create": Crear
-"Event Delete": Esborrar
-"Person List": Pares, mares o tutors
-"Person Create": Crear
-"Person Delete": Esborrar
-"Service List": Serveis
-"Service Create": Crear
-"Service Delete": Esborrar
-"Contact Message List": Missatges de contacte
-"Contact Message Delete": Esborrar
-"Newsletter Contact List": Butlletins de contacte
-"Province List": Províncies
-"Province Create": Crear
-"Province Delete": Esborrar
-"City List": Ciutats
-"City Create": Crear
-"City Delete": Esborrar
-"User List": Usuaris
-"User Create": Crear
-"User Delete": Esborrar
-"Provider List": Proveïdors
-"Provider Create": Crear
-"Provider Delete": Esborrar
-"Spending Category List": Tipus de despeses
-"Spending Category Create": Crear
-"Spending Category Delete": Esborrar
-"Spending List": Despeses
-"Spending Create": Crear
-"Spending Delete": Esborrar
-"Pre Register List": Preinscripcions
-"Pre Register Create": Crear
-"Pre Register Delete": Esborrar
-"Bank Creditor Sepa List": Bancs
-"Bank Creditor Sepa Create": Crear
-"Bank Creditor Sepa Delete": Esborrar
-"File Dummy List": Fitxers
-"File Dummy Show": Gestor de Documents
+"Teacher List": "Professors"
+"Teacher Create": "Crear"
+"Teacher Absence List": "Absències professor"
+"Teacher Absence Create": "Crear"
+"Teacher Teacher Delete": "Esborrar"
+"Student List": "Alumnes"
+"Student Create": "Crear"
+"Student Delete": "Esborrar"
+"Student Absence List": "Absències alumne"
+"Student Absence Create": "Crear"
+"Student Absence Delete": "Esborrar"
+"Class Group List": "Grups"
+"Class Group Create": "Crear"
+"Class Group Delete": "Esborrar"
+"Receipt List": "Rebuts"
+"Receipt Create": "Crear"
+"Receipt Generate": "Generar rebuts mensual"
+"Receipt Delete": "Esborrar"
+"Invoice List": "Factures"
+"Invoice Create": "Crear"
+"Invoice Generate": "Generar facturació mensual"
+"Invoice Delete": "Esborrar"
+"Tarriff List": "Tarifes"
+"Tarriff Create": "Crear"
+"Tarriff Delete": "Esborrar"
+"Event List": "Horaris"
+"Event Create": "Crear"
+"Event Delete": "Esborrar"
+"Person List": "Pares, mares o tutors"
+"Person Create": "Crear"
+"Person Delete": "Esborrar"
+"Service List": "Serveis"
+"Service Create": "Crear"
+"Service Delete": "Esborrar"
+"Contact Message List": "Missatges de contacte"
+"Contact Message Delete": "Esborrar"
+"Newsletter Contact List": "Butlletins de contacte"
+"Province List": "Províncies"
+"Province Create": "Crear"
+"Province Delete": "Esborrar"
+"City List": "Ciutats"
+"City Create": "Crear"
+"City Delete": "Esborrar"
+"User List": "Usuaris"
+"User Create": "Crear"
+"User Delete": "Esborrar"
+"Provider List": "Proveïdors"
+"Provider Create": "Crear"
+"Provider Delete": "Esborrar"
+"Spending Category List": "Tipus de despeses"
+"Spending Category Create": "Crear"
+"Spending Category Delete": "Esborrar"
+"Spending List": "Despeses"
+"Spending Create": "Crear"
+"Spending Delete": "Esborrar"
+"Pre Register List": "Preinscripcions"
+"Pre Register Create": "Crear"
+"Pre Register Delete": "Esborrar"
+"Bank Creditor Sepa List": "Bancs"
+"Bank Creditor Sepa Create": "Crear"
+"Bank Creditor Sepa Delete": "Esborrar"
+"File Dummy List": "Fitxers"
+"File Dummy Show": "Gestor de Documents"
 
-IBAN: IBAN
-BIC: BIC
-Client: Client
-Usuari: Usuari
-Alumne: Alumne
-Professor: Professor
-Grup: Grup
-Horari: Horari
-Servei: Servei
-Ciutat: Ciutat
-"Pare, mare o tutor": Pare, mare o tutor
-Absència: Absència
-"Missatge de contacte": Missatge de contacte
-"Butlletí de contacte": Butlletí de contacte
-Província: Província
+IBAN: "IBAN"
+BIC: "BIC"
+Client: "Client"
+Usuari: "Usuari"
+Alumne: "Alumne"
+Professor: "Professor"
+Grup: "Grup"
+Horari: "Horari"
+Servei: "Servei"
+Ciutat: "Ciutat"
+"Pare, mare o tutor": "Pare, mare o tutor"
+Absència: "Absència"
+"Missatge de contacte": "Missatge de contacte"
+"Butlletí de contacte": "Butlletí de contacte"
+Província: "Província"
 
 frontend:
     meta: "academia anglès %main_brand_title% amposta"
@@ -95,14 +95,14 @@ frontend:
         title_winter: "Setembre 2022"
         description_winter: "Formulari de preinscripció per al curs escolar 2022-2023"
     forms:
-        name: Nom
-        surname: Cognoms
-        phone: Telèfon
-        email: Email
-        message: Missatge
-        privacy: Accepto la política de privacitat
+        name: "Nom"
+        surname: "Cognoms"
+        phone: "Telèfon"
+        email: "Email"
+        message: "Missatge"
+        privacy: "Accepto la política de privacitat"
         subscribe: "SUBSCRIU-T'HI"
-        send: Envia
+        send: "Envia"
         preregister:
             date: "Data de registre"
             name: "Nom de l'alumne/a*"
@@ -140,28 +140,28 @@ backend:
             pdf_preview_page_of: "de"
             close_window: "Tancar"
         pdf_preview: "Previsualitzar PDF"
-        yes: Sí
-        no: No
-        actions: Accions
-        controls: Controls
-        general: General
+        yes: "Sí"
+        no: "No"
+        actions: "Accions"
+        controls: "Controls"
+        general: "General"
         assistance: "Control assistència"
-        date: Data creació
-        dates: Dates
-        enabled: Actiu
-        is_for_private_lessons: Classe particular
-        is_not_for_private_lessons: Classe en grup
-        submit: Enviar
-        published_date: Data de publicació
-        image: Imatge
-        position: Posició
-        description: Descripció
+        date: "Data creació"
+        dates: "Dates"
+        enabled: "Actiu"
+        is_for_private_lessons: "Classe particular"
+        is_not_for_private_lessons: "Classe en grup"
+        submit: "Enviar"
+        published_date: "Data de publicació"
+        image: "Imatge"
+        position: "Posició"
+        description: "Descripció"
         image_rigths_agreement: "Dret d'imatge amb PDF"
-        sepa_agreement: Autorització domiciliació bancària amb PDF
-        pictures: Imatges
-        payments: Pagaments
-        documents: Documents
-        files: Gestor de documents
+        sepa_agreement: "Autorització domiciliació bancària amb PDF"
+        pictures: "Imatges"
+        payments: "Pagaments"
+        documents: "Documents"
+        files: "Gestor de documents"
         calendar:
             export:
                 pdf:
@@ -189,47 +189,47 @@ backend:
             plain_password: "Contrasenya"
             roles: "Rols"
         teacher:
-            name: Nom
-            color: Color
-            showInHomepage: Mostrar al web
-            detail: Detall
-            show_title: Professor
+            name: "Nom"
+            color: "Color"
+            showInHomepage: "Mostrar al web"
+            detail: "Detall"
+            show_title: "Professor"
         teacher_absence:
-            teacher: Professor
-            type: Tipus
-            day: Dia
-            show_title: Absències
+            teacher: "Professor"
+            type: "Tipus"
+            day: "Dia"
+            show_title: "Absències"
         student:
-            student: Alumne
+            student: "Alumne"
             parent: "Pare, mare o tutor"
-            payment_information: Dades de pagament
-            name: Nom
-            surname: Cognoms
-            age: Edat
-            birthDate: Data naixement
-            dischargeDate: Data alta
-            bank: Rebut bancari
-            cash: Efectiu
-            transfer: Transferència bancaria
+            payment_information: "Dades de pagament"
+            name: "Nom"
+            surname: "Cognoms"
+            age: "Edat"
+            birthDate: "Data naixement"
+            dischargeDate: "Data alta"
+            bank: "Rebut bancari"
+            cash: "Efectiu"
+            transfer: "Transferència bancaria"
             credit_card: "Targeta de crèdit"
-            phone: Telèfon
+            phone: "Telèfon"
             dni: "DNI/NIE"
-            email: Email
-            address: Adreça
-            city: Ciutat
+            email: "Email"
+            address: "Adreça"
+            city: "Ciutat"
             payment: "Forma pagament"
             parent_payment: "Forma pagament progenitor"
             payment_no_parent_help: "Vàlid sempre que l'alumne no tingui un pare assignat"
-            is_payment_excempt: Exempt de pagament
-            schedule: Horari
-            comments: Comentaris
+            is_payment_excempt: "Exempt de pagament"
+            schedule: "Horari"
+            comments: "Comentaris"
             tariff: "Tarifa"
             tariff_helper: "Només cal escollir una tarifa de grup, les tarifes particulars es calculen automàticament."
-            discountApplied: Descompte
-            total: Total
-            agenda: Horaris
-            notification_date: Data notificació per email
-            has_been_notified: Notificació enviada per email
+            discountApplied: "Descompte"
+            total: "Total"
+            agenda: "Horaris"
+            notification_date: "Data notificació per email"
+            has_been_notified: "Notificació enviada per email"
         class_group:
             code: "Codi"
             name: "Nom"
@@ -246,10 +246,10 @@ backend:
                 flash_success: "S'han afegit %amount% alumnes al llistat del grup."
                 flash_warning: "No s'ha trobat cap alumne en aquest grup."
         tariff:
-            year: Any
-            price: Preu
-            type: Tipus
-            name: Nom
+            year: "Any"
+            price: "Preu"
+            type: "Tipus"
+            name: "Nom"
             tariff_1: "1h / setmana"
             tariff_2: "2h / setmana"
             tariff_3: "3h / setmana"
@@ -268,18 +268,18 @@ backend:
             tariff_16: "intensiu 4/5 setmanes"
         event:
             range: "Limitar l'abast dels canvis a la data"
-            begin: Inici
-            end: Fi
-            teacher: Professor
-            classroom: Aula
-            group: Grup classe
+            begin: "Inici"
+            end: "Fi"
+            teacher: "Professor"
+            classroom: "Aula"
+            group: "Grup classe"
             group_with_book: "Grup classe (Llibre)"
-            students: Estudiants
-            previous: Abans
-            next: Pròxima
-            dayFrequencyRepeat: Repetir cada
-            dayFrequencyRepeat_help: dies
-            until: Fins a
+            students: "Estudiants"
+            previous: "Abans"
+            next: "Pròxima"
+            dayFrequencyRepeat: "Repetir cada"
+            dayFrequencyRepeat_help: "dies"
+            until: "Fins a"
             classroom_1: "Aula 1"
             classroom_2: "Aula 2"
             classroom_3: "Aula 3"
@@ -306,35 +306,35 @@ backend:
                 helper: "(marcat amb color verd)"
                 range: "Limitar l'abast dels esborraments consecutius fins a la data"
         service:
-            title: Nom
+            title: "Nom"
         contact:
-            contact: Contacte
-            name: Nom
-            email: Correu electrònic
-            checked: Llegit
-            date: Data
-            subject: Tema
-            answered: Contestat
-            answer: Resposta
-            message: Missatge
-            description: Descripció
-            user_question: Pregunta del usuari
-            your_answer: La teva resposta
+            contact: "Contacte"
+            name: "Nom"
+            email: "Correu electrònic"
+            checked: "Llegit"
+            date: "Data"
+            subject: "Tema"
+            answered: "Contestat"
+            answer: "Resposta"
+            message: "Missatge"
+            description: "Descripció"
+            user_question: "Pregunta del usuari"
+            your_answer: "La teva resposta"
         province:
-            code: Codi
-            name: Nom
-            country: Pais
+            code: "Codi"
+            name: "Nom"
+            country: "Pais"
         city:
-            name: Nom
-            postalCode: Codi postal
-            province: Província
+            name: "Nom"
+            postalCode: "Codi postal"
+            province: "Província"
         internalregulations:
-            checkbox_label: Normativa Interna Acceptada
+            checkbox_label: "Normativa Interna Acceptada"
         imagerigths:
-            checkbox_label: Drets Imatge Acceptats
-            pdf_metadata_title: Drets Imatge
-            pdf_metadata_subject: Document autorització Drets Imatge
-            description1: "El centre Box, viu els idiomes gestiona diversos espais a la xarxa: web, Facebook Instagram i diverses pàgines associades on, de tant en tant, poden aparèixer, ja sigui individualment o en grup imatges dels nostres alumnes fent algunes de les activitats que es duguin a terme a les aules o fora d'elles."
+            checkbox_label: "Drets Imatge Acceptats"
+            pdf_metadata_title: "Drets Imatge"
+            pdf_metadata_subject: "Document autorització Drets Imatge"
+            description1: "El centre %main_brand_title% gestiona diversos espais a la xarxa: web, Facebook Instagram i diverses pàgines associades on, de tant en tant, poden aparèixer, ja sigui individualment o en grup imatges dels nostres alumnes fent algunes de les activitats que es duguin a terme a les aules o fora d'elles."
             description2: "Donat que el dret a la pròpia imatge és reconegut en l'article 18.1 de la Constitució i regulat per Llei 5/1985, de 5 de maig, sobre el dret a l'honor, a la intimitat personal i familiar i a la pròpia imatge; la direcció d'aquest centre demana el consentiment per escrit als pares, mares o tutors legals dels menors d'edat per poder publicar fotografies, vídeos o imatges on apareguin els seus fills i filles i on siguin clarament identificables."
             contact_name_with_parent: "Nom i cognom mare, pare o tutor legal: %name%"
             contact_name_without_parent: "Nom i cognom: %name%"
@@ -342,7 +342,7 @@ backend:
             autortization1: "Si, autoritzo que la imatge del meu fill/la meva filla %student_name% de %years_old% anys pugui aparèixer en fotografies o vídeos del centre publicades a qualsevol dels seus espais web o xarxes socials."
             autortization2: "No, no autoritzo el centre  a publicar cap tipus d'imatge del meu fill o a la meva filla."
             registration_date: "Amposta, %day% %month% de %year%"
-            sign: Signatura
+            sign: "Signatura"
         sepaagreement:
             checkbox_label: "SEPA Acceptat"
             first_text: "Autorització de domiciliació bancària per al pagament de rebuts"
@@ -357,26 +357,26 @@ backend:
             bank_account: "Compte bancari:"
             end_text: "D'acord amb el que estableix la llei orgànica 15/1999, li fem saber que les seves dades seran incorporades a un fitxer autoritzat sota la responsabilitat de %boss_name% amb la finalitat de poder atendre els compromisos derivats de la relació que mantenim amb vostès."
         bank:
-            organization_id: Identificador
-            creditor_name: Nom del creditor
-            name: Entitat bancària
-            accountNumber: Núm. de compte
+            organization_id: "Identificador"
+            creditor_name: "Nom del creditor"
+            name: "Entitat bancària"
+            accountNumber: "Núm. de compte"
             accountNumber_help: "Exemple: ES11 2222 3333 4444 5555 6666"
-            swiftCode: BIC/Swift
-            parent: Pare, mare o tutor
-            creditor_bank_name: Banc creditor
-            creditor_bank_name_help: Banc on s'ingressarà el rebut SEPA
+            swiftCode: "BIC/Swift"
+            parent: "Pare, mare o tutor"
+            creditor_bank_name: "Banc creditor"
+            creditor_bank_name_help: "Banc on s'ingressarà el rebut SEPA"
         parent:
-            students: Fills
-            dni: DNI/CIF o NIF
-            name: Nom
-            surname: Cognoms
-            email: Email
-            phone: Telèfon
-            address: Adreça
-            city: Ciutat
-            payment: Pagament
-            bank: Banc
+            students: "Fills"
+            dni: "DNI/CIF o NIF"
+            name: "Nom"
+            surname: "Cognoms"
+            email: "Email"
+            phone: "Telèfon"
+            address: "Adreça"
+            city: "Ciutat"
+            payment: "Pagament"
+            bank: "Banc"
         pre_register:
             create_action: "Crear nou alumne"
             batch_action: "Crear nous alumnes de les preinscripcions seleccionades"
@@ -393,27 +393,29 @@ backend:
             third_paragraph: "Atentament,"
         receipt:
             mark_as_payed_batch_action: "Marcar com a rebuts pagats"
-            receipt: Rebut
-            date: Data
-            generate_only: Generar rebuts
-            generate: Generar rebuts marcats
-            fast_generate: Generar tots els rebuts
-            generate_and_send: Generar rebuts marcats i enviar per email
-            fast_generate_and_send: Generar tots i enviar per email
-            generate_batch: Generar rebuts mensuals
-            preview_invoice: Mostrar rebuts a generar
-            list: Llistat de rebuts disponibles a generar
-            group_lessons_list: Classes en grup
+            receipt: "Rebut"
+            date: "Data"
+            generate_only: "Generar rebuts"
+            generate: "Generar rebuts marcats"
+            fast_generate: "Generar tots els rebuts"
+            generate_first_sepa_xmls_batch_action: "Generar primera remesa (FRST) de rebuts marcats"
+            generate_recurrent_sepa_xmls_batch_action: "Generar remesa recurrent (RCUR) de rebuts marcats"
+            generate_and_send: "Generar rebuts marcats i enviar per email"
+            fast_generate_and_send: "Generar tots i enviar per email"
+            generate_batch: "Generar rebuts mensuals"
+            preview_invoice: "Mostrar rebuts a generar"
+            list: "Llistat de rebuts disponibles a generar"
+            group_lessons_list: "Classes en grup"
             group_lessons_list_help: "(impartides durant el mes escollit)"
-            private_lessons_list: Classes particulars
+            private_lessons_list: "Classes particulars"
             private_lessons_list_help: "(impartides durant el mes anterior)"
-            lines: Línies de rebut
-            id: Núm. Rebut
-            isPayed: Pagat
-            isSended: Enviat
-            isSepaXmlGenerated: SEPA generat
-            sepaXmlGeneratedDate: Data creació SEPA
-            createInvoice: Crear factura
+            lines: "Línies de rebut"
+            id: "Núm. Rebut"
+            isPayed: "Pagat"
+            isSended: "Enviat"
+            isSepaXmlGenerated: "SEPA generat"
+            sepaXmlGeneratedDate: "Data creació SEPA"
+            createInvoice: "Crear factura"
             generator:
                 flash_success: "S'han generat %amount% rebuts correctament."
                 ready: "{0}rebuts|{1}rebut|]1,Inf]rebuts"
@@ -424,39 +426,39 @@ backend:
                 receipt_date: "Data:"
                 receipt_data: "Dades client"
         receiptLine:
-            isPreviouslyGenerated: Nou
+            isPreviouslyGenerated: "Nou"
         invoice:
-            duplicate: Duplicar
-            receipt: Rebut
-            download: Descarregar PDF
-            generate_direct_debit_xml: Gir bancari XML
-            generate: Generar factures
-            batch_action: Generar gir bancari SEPA del elements seleccionats
-            items: Ítems
-            preview_invoice: Mostrar factures a generar
-            list: Llistat de factures disponibles a generar
-            generate_batch: Generar facturació mensual
-            invoice: Factura
-            line: Línia
-            lines: Línies de factura
-            detail: Detall
-            student: Estudiant
-            person: Pare mare o tutor
-            date: Data factura
-            isPayed: Pagada
-            paymentDate: Data pagament
-            isSended: Enviada
-            sendDate: Data enviament
+            duplicate: "Duplicar"
+            receipt: "Rebut"
+            download: "Descarregar PDF"
+            generate_direct_debit_xml: "Gir bancari XML"
+            generate: "Generar factures"
+            batch_action: "Generar gir bancari SEPA del elements seleccionats"
+            items: "Ítems"
+            preview_invoice: "Mostrar factures a generar"
+            list: "Llistat de factures disponibles a generar"
+            generate_batch: "Generar facturació mensual"
+            invoice: "Factura"
+            line: "Línia"
+            lines: "Línies de factura"
+            detail: "Detall"
+            student: "Estudiant"
+            person: "Pare mare o tutor"
+            date: "Data factura"
+            isPayed: "Pagada"
+            paymentDate: "Data pagament"
+            isSended: "Enviada"
+            sendDate: "Data enviament"
             baseAmount: "Import"
-            id: Núm. Factura
-            taxPercentage: IVA
-            irpfPercentage: IRPF
-            discountApplied: Descompte aplicat
-            totalAmount: Total
-            month: Mes
-            year: Any
-            send: Enviar PDF per email
-            resend: Tornar a enviar PDF per email
+            id: "Núm. Factura"
+            taxPercentage: "IVA"
+            irpfPercentage: "IRPF"
+            discountApplied: "Descompte aplicat"
+            totalAmount: "Total"
+            month: "Mes"
+            year: "Any"
+            send: "Enviar PDF per email"
+            resend: "Tornar a enviar PDF per email"
             generator:
                 flash_success: "S'han generat %amount% factures correctament."
                 no_records_found: "No s'ha trobat cap alumne a les classes realitzades durant el període seleccionat."
@@ -475,60 +477,60 @@ backend:
                     cash: "Durant els pròxims dies hauràs de venir a l'acadèmia a pagar el rebut."
                     bank_transfer: "Durant els pròxims dies hauràs d'efectuar una transferència al número de compte:"
         invoiceLine:
-            invoice: Factura
-            description: Descripció
-            units: Unitats
-            priceUnit: Preu unitat
-            isReadyToGenerate: Facturar
-            isPreviouslyGenerated: Nova
-            isPrivateLessonType: Particular
-            discount: Descompte
-            total: Total
+            invoice: "Factura"
+            description: "Descripció"
+            units: "Unitats"
+            priceUnit: "Preu unitat"
+            isReadyToGenerate: "Facturar"
+            isPreviouslyGenerated: "Nova"
+            isPrivateLessonType: "Particular"
+            discount: "Descompte"
+            total: "Total"
             generator:
                 group_lessons_line: "Classes en grup realitzades durant el mes de %month% de %year%"
                 private_lessons_line: "Classes particulars realitzades durant el mes de %month% de %year%"
         customer:
-            tic: CIF/NIF
-            name: Nom fiscal
-            alias: Alias
-            address: Adreça
-            city: Població
-            phone: Telèfon
-            email: Email
-            is_enterprise: És empresa
-            coworkers: Coworkers
-            invoices_language: Idioma factura
-            payment_method: Forma de pagament
-            iban_for_bank_draft_payment: Número de compte gir bancari
+            tic: "CIF/NIF"
+            name: "Nom fiscal"
+            alias: "Alias"
+            address: "Adreça"
+            city: "Població"
+            phone: "Telèfon"
+            email: "Email"
+            is_enterprise: "És empresa"
+            coworkers: "Coworkers"
+            invoices_language: "Idioma factura"
+            payment_method: "Forma de pagament"
+            iban_for_bank_draft_payment: "Número de compte gir bancari"
             iban_for_bank_draft_payment_help: "Exemple: ES11 2222 3333 4444 5555 6666"
         spending_category:
-            name: Nom
+            name: "Nom"
         spending:
-            date: Data
-            category: Categoria
-            provider: Proveïdor
-            description: Descripció
-            document: Document
+            date: "Data"
+            category: "Categoria"
+            provider: "Proveïdor"
+            description: "Descripció"
+            document: "Document"
         block:
             charts:
-                sales: Vendes
-                expenses: Despeses
-                results: Resultats
-                zeros: Zero
+                sales: "Vendes"
+                expenses: "Despeses"
+                results: "Resultats"
+                zeros: "Zero"
 
 month:
-    january: gener
-    febraury: febrer
-    march: març
-    april: abril
-    may: maig
-    june: juny
-    july: juliol
-    august: agost
-    september: setembre
-    october: octubre
-    november: novembre
-    december: desembre
+    january: "gener"
+    febraury: "febrer"
+    march: "març"
+    april: "abril"
+    may: "maig"
+    june: "juny"
+    july: "juliol"
+    august: "agost"
+    september: "setembre"
+    october: "octubre"
+    november: "novembre"
+    december: "desembre"
 
 seasons:
     july_2020: "estiu 2020"
@@ -541,7 +543,7 @@ seasons:
     september_2023: "setembre 2023"
 
 color:
-    magenta: magenta
-    blue: blau
-    yellow: groc
-    green: verd
+    magenta: "magenta"
+    blue: "blau"
+    yellow: "groc"
+    green: "verd"
