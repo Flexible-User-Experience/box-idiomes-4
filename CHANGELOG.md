@@ -4,6 +4,7 @@ Changelog
 ##### Version 5.2.18 (WIP)
  * fix minor bugs
  * remove unnecessary use class in AppExtension
+ * fix bad green color definition in drawTeacherColorSpan Twig extension
 
 ##### Version 5.2.17 (2022-08-31)
  * dependencies update
