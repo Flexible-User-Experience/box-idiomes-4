@@ -21,7 +21,6 @@ use App\Manager\ReceiptManager;
 use App\Service\SmartAssetsHelperService;
 use Exception;
 use ReflectionClass;
-use ReflectionException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
