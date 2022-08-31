@@ -1,7 +1,7 @@
 Changelog
 =========
 
-##### Version 5.2.19 (2022-08-31)
+##### Version 5.2.19 (WIP)
  * fix minor bugs
 
 ##### Version 5.2.18 (2022-08-31)
