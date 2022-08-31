@@ -1,5 +1,5 @@
 {% extends "@SonataAdmin/CRUD/base_list_field.html.twig" %}
 
 {% block field %}
-    {{ object.totalAmount | draw_money | raw }}
+    {{ object.price | draw_money | raw }}
 {% endblock %}

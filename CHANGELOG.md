@@ -8,6 +8,7 @@ Changelog
  * improve ClassGroupBuilderPdf render
  * improve students amount column render in EventsAdmin list
  * improve ContactMessageAnswerType
+ * improve price column render in Tariff list
 
 ##### Version 5.2.17 (2022-08-31)
  * dependencies update
