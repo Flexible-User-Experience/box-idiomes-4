@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.17 (WIP)
+##### Version 5.2.18 (WIP)
  * fix minor bugs
+
+##### Version 5.2.17 (2022-08-31)
+ * dependencies update
  * fix logic problem in buildDatagridHasAtLeastOneEventClassGroupAssignedFilter method
 
 ##### Version 5.2.16 (2022-08-30)
