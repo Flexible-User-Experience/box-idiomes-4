@@ -4,6 +4,7 @@ Changelog
 ##### Version 5.2.19 (WIP)
  * fix minor bugs
  * add ContactMessageAnswerType flash message translation
+ * add weekday name translations in ExportCalendarToListBuilderPdf
 
 ##### Version 5.2.18 (2022-08-31)
  * remove unnecessary use class in AppExtension

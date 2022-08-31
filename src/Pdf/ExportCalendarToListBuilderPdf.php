@@ -11,6 +11,7 @@ use App\Model\ExportCalendarToListDayItem;
 use App\Service\SmartAssetsHelperService;
 use DateTimeInterface;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
+use ReflectionException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use TCPDF;
@@ -39,6 +40,9 @@ class ExportCalendarToListBuilderPdf
         $this->defaultCellColor = new Color('#E0EBFF');
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function build(ExportCalendarToList $calendarEventsList): TCPDF
     {
         /** @var BaseTcpdf $pdf */
@@ -56,7 +60,7 @@ class ExportCalendarToListBuilderPdf
         $pdf->SetTitle($this->ts->trans('backend.admin.calendar.export.pdf.title'));
         $pdf->SetSubject($this->ts->trans('backend.admin.calendar.export.pdf.title'));
         // set default font subsetting mode
-        $pdf->setFontSubsetting(true);
+        $pdf->setFontSubsetting();
         // remove default header/footer
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
@@ -80,7 +84,7 @@ class ExportCalendarToListBuilderPdf
                 // day table header
                 $pdf->setCellPaddings(0, 2, 2, 2);
                 $pdf->setFontStyle(null, 'B', 11);
-                $pdf->Cell($maxCellWidth, 0, $day->getWeekdayName().' '.$this->asString($day->getDay()), false, 1, 'L');
+                $pdf->Cell($maxCellWidth, 0, $this->ts->trans($day->getWeekdayName()).' '.$this->asString($day->getDay()), false, 1, 'L');
                 /** @var ExportCalendarToListDayHourItem $hour */
                 foreach ($day->getHours() as $hour) {
                     $pdf->setCellPaddings(1, 1, 1, 1);
@@ -176,10 +180,10 @@ class ExportCalendarToListBuilderPdf
         return $date->format(AbstractBase::DATE_STRING_FORMAT);
     }
 
-    private function drawEmptyCells(TCPDF $pdf, int $columns, bool $fill): void
+    private function drawEmptyCells(TCPDF $pdf, int $columns): void
     {
         for ($index = 0; $index < $columns; ++$index) {
-            $pdf->Cell(self::CELL_WIDTH, 0, '', true, ($index === $columns - 1 ? 1 : 0), 'L', $fill);
+            $pdf->Cell(self::CELL_WIDTH, 0, '', true, ($index === $columns - 1 ? 1 : 0), 'L', true);
         }
     }
 
@@ -203,7 +207,7 @@ class ExportCalendarToListBuilderPdf
     private function drawCellByEventsAmount(TCPDF $pdf, int $eventsAmount, int $leftMargin, int $cellHeigth): void
     {
         if ($eventsAmount < self::MAX_CLASSROOM_COLUMNS) {
-            $this->drawEmptyCells($pdf, self::MAX_CLASSROOM_COLUMNS - $eventsAmount, true);
+            $this->drawEmptyCells($pdf, self::MAX_CLASSROOM_COLUMNS - $eventsAmount);
         } else {
             $pdf->SetXY($leftMargin, $pdf->GetY() + $cellHeigth);
         }

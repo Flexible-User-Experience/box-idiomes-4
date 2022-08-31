@@ -61,6 +61,13 @@
 "Bank Creditor Sepa Delete": "Esborrar"
 "File Dummy List": "Fitxers"
 "File Dummy Show": "Gestor de Documents"
+Monday: "Dilluns"
+Tuesday: "Dimarts"
+Wednesday: "Dimecres"
+Thursday: "Dijous"
+Friday: "Divendres"
+Saturday: "Dissabte"
+Sunday: "Diumenge"
 
 IBAN: "IBAN"
 BIC: "BIC"
