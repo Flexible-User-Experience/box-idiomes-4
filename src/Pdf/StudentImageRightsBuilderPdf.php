@@ -57,7 +57,7 @@ class StudentImageRightsBuilderPdf
         $pdf->SetXY(BaseTcpdf::PDF_MARGIN_LEFT, BaseTcpdf::PDF_MARGIN_TOP);
         $pdf->setFontStyle(null, '', 11);
         // Description
-        $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.description1'), '', false, 'L', true);
+        $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.description1', ['%main_brand_title%' => $this->pwt]), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
         $pdf->Write(0, $this->ts->trans('backend.admin.imagerigths.description2'), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);

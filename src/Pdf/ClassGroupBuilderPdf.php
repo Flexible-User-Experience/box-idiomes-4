@@ -6,10 +6,14 @@ use App\Entity\AbstractBase;
 use App\Entity\ClassGroup;
 use App\Entity\Student;
 use DateTimeImmutable;
+use ReflectionException;
 use TCPDF;
 
 class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
+    /**
+     * @throws ReflectionException
+     */
     public function build(ClassGroup $classGroup, $students): TCPDF
     {
         if ($this->sahs->isCliContext()) {
@@ -25,10 +29,10 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $pdf->SetTitle($this->ts->trans('backend.admin.invoice.invoice').' '.$classGroup->getId());
         $pdf->SetSubject($this->ts->trans('backend.admin.invoice.detail').' '.$this->ts->trans('backend.admin.invoice.invoice').' '.$classGroup->getId());
         // set default font subsetting mode
-        $pdf->setFontSubsetting(true);
+        $pdf->setFontSubsetting();
         // remove default header/footer
-        $pdf->setPrintHeader(true);
-        $pdf->setPrintFooter(true);
+        $pdf->setPrintHeader();
+        $pdf->setPrintFooter();
         // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
         // set margins
@@ -42,7 +46,6 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 
         // gaps
         $column2Gap = 114;
-        $verticalTableGapSmall = 7;
         $verticalTableGap = 10;
 
         // today
@@ -52,7 +55,7 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $retainedYForGlobes = $pdf->GetY() - 4;
         $pdf->setFontStyle(null, 'B', 9);
         $pdf->SetX(BaseTcpdf::PDF_MARGIN_LEFT + 4);
-        $pdf->Write(0, strtoupper($this->ts->trans('backend.admin.class_group.pdf.title')), '', false, 'L', false);
+        $pdf->Write(0, strtoupper($this->ts->trans('backend.admin.class_group.pdf.title')), '', false, 'L');
         $pdf->SetX($column2Gap);
         $pdf->Write(0, $today->format(AbstractBase::DATE_STRING_FORMAT).'    ', '', false, 'R', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
@@ -97,16 +100,16 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
                 'color' => [0, 0, 0],
             ]);
             // students table header
+            $pdf->setCellPaddings(0.5, 1.5, 0.5, 1.5);
             $pdf->setFontStyle(null, 'B', 9);
-            $pdf->Cell(78, $verticalTableGap, $this->ts->trans('backend.admin.student.name'), 0, 0, 'L');
-            $pdf->Cell(72, $verticalTableGap, $this->ts->trans('backend.admin.student.email'), 0, 1, 'R');
+            $pdf->Cell(78, 0, $this->ts->trans('backend.admin.student.name'), 'T', 0, 'L');
+            $pdf->Cell(72, 0, $this->ts->trans('backend.admin.student.email'), 'T', 1, 'R');
             $pdf->setFontStyle(null, '', 9);
             // students lines table rows
             /** @var Student $student */
             foreach ($students as $student) {
-                // MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0, $ishtml=false, $autopadding=true, $maxh=0)
-                $pdf->MultiCell(78, $verticalTableGapSmall, $student->getFullCanonicalName(), 'T', 'L', 0, 0, '', '', true, 0, false, false, 0, 'M');
-                $pdf->MultiCell(72, $verticalTableGapSmall, $student->getEmail(), 'T', 'R', 0, 1, '', '', true, 0, false, false, 0, 'M');
+                $pdf->Cell(78, 0, $student->getFullCanonicalName(), 'T', 0, 'L');
+                $pdf->Cell(72, 0, $student->getEmail(), 'T', 1, 'R');
             }
         } else {
             $pdf->Cell(150, $verticalTableGap, $this->ts->trans('backend.admin.class_group.emails_generator.flash_warning'), false, 1, 'L');

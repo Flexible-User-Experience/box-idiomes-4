@@ -145,10 +145,11 @@ final class TariffAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'price',
-                'decimal',
+                null,
                 [
                     'label' => 'backend.admin.tariff.price',
-                    'editable' => true,
+                    'template' => 'Admin/Cells/list__cell_tariff_price.html.twig',
+                    'editable' => false,
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                 ]

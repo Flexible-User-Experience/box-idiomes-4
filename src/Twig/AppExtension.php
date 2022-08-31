@@ -21,7 +21,6 @@ use App\Manager\ReceiptManager;
 use App\Service\SmartAssetsHelperService;
 use Exception;
 use ReflectionClass;
-use ReflectionException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -151,7 +150,7 @@ class AppExtension extends AbstractExtension
         } elseif (TeacherColorEnum::YELLOW === $object->getColor()) {
             $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #FFCD38"></span>';
         } elseif (TeacherColorEnum::GREEN === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #CEC533"></span>';
+            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #80C66A"></span>';
         }
 
         return $span;

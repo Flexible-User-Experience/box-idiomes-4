@@ -2,48 +2,18 @@
 
 namespace App\Form\Type;
 
+use App\Entity\ContactMessage;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContactMessageAnswerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'name',
-                TextType::class,
-                [
-                    'label' => false,
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'frontend.forms.name',
-                    ],
-                    'constraints' => [
-                        new Assert\NotBlank(),
-                    ],
-                ]
-            )
-            ->add(
-                'email',
-                EmailType::class,
-                [
-                    'label' => false,
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'frontend.forms.email',
-                    ],
-                    'constraints' => [
-                        new Assert\NotBlank(),
-                        new Assert\Email(),
-                    ],
-                ]
-            )
             ->add(
                 'description',
                 TextareaType::class,
@@ -52,6 +22,7 @@ class ContactMessageAnswerType extends AbstractType
                     'required' => true,
                     'attr' => [
                         'rows' => 6,
+                        'style' => 'margin-bottom: 20px',
                     ],
                 ]
             )
@@ -66,5 +37,14 @@ class ContactMessageAnswerType extends AbstractType
                 ]
             )
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(
+            [
+                'data_class' => ContactMessage::class,
+            ]
+        );
     }
 }
