@@ -1,7 +1,13 @@
 {% extends "@SonataAdmin/CRUD/base_list_field.html.twig" %}
 
 {% block field %}
-    <span class="label {% if object.students | length > 0 %}label-success{% else %}label-danger{% endif %}">
-        {{ object.students | length | i }}
-    </span>
+    {% if object.students | length > 0 %}
+        <span class="label label-success">
+            {{ object.students | length | i }}
+        </span>
+    {% else %}
+        <span class="label label-warning">
+            <i class="fa fa-exclamation-triangle"></i> {{ 'backend.admin.no_students_assigned' | trans }}
+        </span>
+    {% endif %}
 {% endblock %}

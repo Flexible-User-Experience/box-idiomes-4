@@ -149,6 +149,7 @@ backend:
         date: "Data creació"
         dates: "Dates"
         enabled: "Actiu"
+        no_students_assigned: "Cap alumne assignat"
         is_for_private_lessons: "Classe particular"
         is_not_for_private_lessons: "Classe en grup"
         submit: "Enviar"
