@@ -167,11 +167,11 @@ backend:
                 pdf:
                     title: "Llistat de calendari"
                     header: "Llistat de classes des del %start% fin al %end%"
-                    group: "Group"
-                    room: "Room"
-                    teacher: "Teacher"
-                    book: "Book"
-                    empty_class: "--- empty class ---"
+                    group: "Grup"
+                    room: "Aula"
+                    teacher: "Professor"
+                    book: "Llibre"
+                    empty_class: "--- sense alumnes ---"
                 error:
                     no_dates_found: "No s'ha trobat cap data d'inici o fi."
                     end_date_period: "La data final és més gran o igual que la data final."
@@ -509,11 +509,6 @@ backend:
             provider: Proveïdor
             description: Descripció
             document: Document
-        layout:
-            top_nav_menu:
-                homepage: homepage
-                username: username
-                logout: logout
         block:
             charts:
                 sales: Vendes
@@ -550,7 +545,3 @@ color:
     blue: blau
     yellow: groc
     green: verd
-
-breadcrumb:
-    link_user_list: "Usuaris"
-    link_user_create: "Crear"
