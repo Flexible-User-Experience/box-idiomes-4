@@ -7,6 +7,7 @@ use App\Entity\BankCreditorSepa;
 use App\Entity\Invoice;
 use App\Entity\Receipt;
 use DateTimeInterface;
+use Digitick\Sepa\Exception\InvalidArgumentException;
 use Digitick\Sepa\GroupHeader;
 use Digitick\Sepa\PaymentInformation;
 use Digitick\Sepa\TransferFile\Facade\CustomerDirectDebitFacade;
@@ -35,6 +36,9 @@ class XmlSepaBuilderService
         $this->bic = $this->removeSpacesFrom($pb->get('bic_number'));
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function buildDirectDebitSingleReceiptXml(string $paymentId, DateTimeInterface $dueDate, Receipt $receipt): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
@@ -50,6 +54,9 @@ class XmlSepaBuilderService
         return $directDebit->asXML();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function buildDirectDebitReceiptsXml(string $paymentId, DateTimeInterface $dueDate, $receipts): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
@@ -64,6 +71,9 @@ class XmlSepaBuilderService
         return $directDebit->asXML();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function buildDirectDebitReceiptsXmlForBankCreditorSepa(string $paymentId, DateTimeInterface $dueDate, $receipts, BankCreditorSepa $bankCreditorSepa): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
@@ -78,6 +88,9 @@ class XmlSepaBuilderService
         return $directDebit->asXML();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function buildDirectDebitSingleInvoiceXml(string $paymentId, DateTimeInterface $dueDate, Invoice $invoice): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
@@ -93,6 +106,9 @@ class XmlSepaBuilderService
         return $directDebit->asXML();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function buildDirectDebitInvoicesXml(string $paymentId, DateTimeInterface $dueDate, $invoices): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
@@ -117,6 +133,9 @@ class XmlSepaBuilderService
         return TransferFileFacadeFactory::createDirectDebitWithGroupHeader($header, self::DIRECT_DEBIT_PAIN_CODE);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function addPaymentInfo(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate): void
     {
         $directDebit->addPaymentInfo($paymentId, [
@@ -131,6 +150,9 @@ class XmlSepaBuilderService
         ]);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function addPaymentInfoForBankCreditorSepa(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate, BankCreditorSepa $bankCreditorSepa): void
     {
         $directDebit->addPaymentInfo($paymentId, [
@@ -145,6 +167,9 @@ class XmlSepaBuilderService
         ]);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     private function addTransfer(CustomerDirectDebitFacade $directDebit, string $paymentId, $ari): void
     {
         $remitanceInformation = self::DEFAULT_REMITANCE_INFORMATION;
@@ -174,7 +199,7 @@ class XmlSepaBuilderService
             'endToEndId' => StringHelper::sanitizeString($endToEndId),
         ];
 
-        if ($ari->getMainBank()->getSwiftCode()) {
+        if ($ari->getMainBank() && $ari->getMainBank()->getSwiftCode()) {
             $transferInformation['debtorBic'] = $this->removeSpacesFrom($ari->getMainBank()->getSwiftCode());
         }
 
