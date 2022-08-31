@@ -1,9 +1,7 @@
 {% extends "@SonataAdmin/CRUD/base_list_field.html.twig" %}
 
 {% block field %}
-    <div class="text-left">
-        <span class="label {% if object.students | length > 0 %}label-success{% else %}label-danger{% endif %}">
-            {{ object.students | length }}
-        </span>
-    </div>
+    <span class="label {% if object.students | length > 0 %}label-success{% else %}label-danger{% endif %}">
+        {{ object.students | length | i }}
+    </span>
 {% endblock %}
