@@ -7,6 +7,7 @@ Changelog
  * fix bad green color definition in drawTeacherColorSpan Twig extension
  * improve ClassGroupBuilderPdf render
  * improve students amount column render in EventsAdmin list
+ * improve ContactMessageAnswerType
 
 ##### Version 5.2.17 (2022-08-31)
  * dependencies update
