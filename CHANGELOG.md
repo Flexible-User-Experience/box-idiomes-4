@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.2.18 (WIP)
  * fix minor bugs
+ * remove unnecessary use class in AppExtension
 
 ##### Version 5.2.17 (2022-08-31)
  * dependencies update
