@@ -61,7 +61,7 @@ final class ContactMessageAdminController extends AbstractAdminController
             // send notifications
             $this->ns->sendUserBackendNotification($object);
             // build flash message
-            $this->addFlash('success', 'Your answer has been sent.');
+            $this->addFlash('success', $this->ts->trans('frontend.index.main.sent'));
 
             return $this->redirectToRoute('admin_app_contactmessage_list');
         }
