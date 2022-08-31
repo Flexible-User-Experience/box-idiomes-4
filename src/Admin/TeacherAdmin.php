@@ -142,10 +142,12 @@ final class TeacherAdmin extends AbstractBaseAdmin
         $list
             ->add(
                 'position',
-                'decimal',
+                null,
                 [
                     'label' => 'backend.admin.position',
                     'editable' => true,
+                    'header_class' => 'text-right',
+                    'row_align' => 'right',
                 ]
             )
             ->add(
