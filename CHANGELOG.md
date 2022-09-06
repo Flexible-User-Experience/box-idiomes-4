@@ -6,6 +6,7 @@ Changelog
 
 ##### Version 5.2.20 (2022-09-06)
  * fix problem during User persist process due to missing required canonical fields (username & email)
+ * dependencies update
 
 ##### Version 5.2.19 (2022-09-05)
  * close pre-inscriptions period
