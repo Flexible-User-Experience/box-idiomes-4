@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
+use App\Entity\User;
 use App\Enum\UserRolesEnum;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -191,5 +192,16 @@ final class UserAdmin extends AbstractBaseAdmin
             'email',
             'enabled',
         ];
+    }
+
+    /**
+     * @param User $object
+     */
+    public function prePersist($object): void
+    {
+        $object
+            ->setUsernameCanonical($object->getUsername())
+            ->setEmailCanonical($object->getEmail())
+        ;
     }
 }
