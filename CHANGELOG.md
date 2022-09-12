@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.21 (WIP)
+##### Version 5.2.22 (WIP)
  * fix minor bugs
+
+##### Version 5.2.21 (2022-09-12)
+ * change Fullcalendar.js defult timeGridDay view in main dashboard
 
 ##### Version 5.2.20 (2022-09-06)
  * fix problem during User persist process due to missing required canonical fields (username & email)
