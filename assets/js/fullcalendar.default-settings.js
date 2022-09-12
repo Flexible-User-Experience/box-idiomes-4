@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let googleCalendarApiKey = calendarEl.getAttribute('data-gcal-api-key');
     let calendar = new Calendar(calendarEl, {
         plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
-        initialView: 'timeGridWeek',
+        initialView: 'timeGridDay',
         timeZone: 'Europe/Madrid',
         headerToolbar: {
             start: 'prev,today,next',
