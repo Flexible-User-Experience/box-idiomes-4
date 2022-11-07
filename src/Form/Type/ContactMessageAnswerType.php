@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\ContactMessage;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +21,19 @@ class ContactMessageAnswerType extends AbstractType
                 [
                     'label' => 'backend.admin.contact.answer',
                     'required' => true,
+                    'attr' => [
+                        'rows' => 6,
+                        'style' => 'margin-bottom: 20px',
+                    ],
+                ]
+            )
+            ->add(
+                'attatchment',
+                FileType::class,
+                [
+                    'label' => 'backend.admin.contact.attatchment',
+                    'required' => false,
+                    'mapped' => false,
                     'attr' => [
                         'rows' => 6,
                         'style' => 'margin-bottom: 20px',

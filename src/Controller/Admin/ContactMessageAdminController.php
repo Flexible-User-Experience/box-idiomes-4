@@ -58,6 +58,7 @@ final class ContactMessageAdminController extends AbstractAdminController
             $object->setAnswered(true);
             $this->mr->getManager()->persist($object);
             $this->mr->getManager()->flush();
+            // TODO manage attachment file
             // send notifications
             $this->ns->sendUserBackendNotification($object);
             // build flash message
