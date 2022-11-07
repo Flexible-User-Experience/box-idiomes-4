@@ -5,6 +5,7 @@ namespace App\Listener;
 use App\Entity\Event as AppEvent;
 use App\Entity\Student;
 use App\Entity\TeacherAbsence;
+use App\Enum\UserRolesEnum;
 use App\Repository\EventRepository;
 use App\Repository\StudentRepository;
 use App\Repository\TeacherAbsenceRepository;
@@ -14,6 +15,7 @@ use CalendarBundle\Event\CalendarEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Security;
 
 class FullCalendarListener implements EventSubscriberInterface
 {
@@ -23,8 +25,9 @@ class FullCalendarListener implements EventSubscriberInterface
     private EventTransformerFactoryService $etfs;
     private RequestStack $rss;
     private RouterInterface $router;
+    private Security $security;
 
-    public function __construct(EventRepository $ers, TeacherAbsenceRepository $tars, StudentRepository $srs, EventTransformerFactoryService $etfs, RequestStack $rss, RouterInterface $router)
+    public function __construct(EventRepository $ers, TeacherAbsenceRepository $tars, StudentRepository $srs, EventTransformerFactoryService $etfs, RequestStack $rss, RouterInterface $router, Security $security)
     {
         $this->ers = $ers;
         $this->tars = $tars;
@@ -32,6 +35,7 @@ class FullCalendarListener implements EventSubscriberInterface
         $this->etfs = $etfs;
         $this->rss = $rss;
         $this->router = $router;
+        $this->security = $security;
     }
 
     public static function getSubscribedEvents(): array
@@ -60,9 +64,18 @@ class FullCalendarListener implements EventSubscriberInterface
         $route = $parameters['_route'];
 
         if ('sonata_admin_dashboard' === $route) {
-            //// admin dashboard action
+            // // admin dashboard action
+            $events = [];
             // classroom events
-            $events = $this->ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+            if ($this->security->isGranted(UserRolesEnum::ROLE_ADMIN)) {
+                // all teachers events
+                $events = $this->ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+            } elseif ($this->security->isGranted(UserRolesEnum::ROLE_MANAGER)) {
+                // only logged teacher events
+                // TODO get Teacher from User relationship (pending)
+                // $events = $this->ers->getEnabledFilteredByTeacherBeginAndEnd($this->security->getUser(), $startDate, $endDate);
+                $events = $this->ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+            }
             /** @var AppEvent $event */
             foreach ($events as $event) {
                 $calendarEvent->addEvent($this->etfs->build($event));
@@ -74,7 +87,7 @@ class FullCalendarListener implements EventSubscriberInterface
                 $calendarEvent->addEvent($this->etfs->buildTeacherAbsence($event));
             }
         } elseif ('admin_app_student_show' === $route) {
-            //// admin student show action
+            // // admin student show action
             // student events
             /** @var Student $student */
             $student = $this->srs->find((int) $parameters['id']);
