@@ -5,6 +5,7 @@ twig:
         '%kernel.project_dir%/assets/img': 'images'
     form_themes:
         - 'bootstrap_5_layout.html.twig'
+        - 'bootstrap_5_horizontal_layout.html.twig'
         - 'form/templates/vich_uploader_form_fields.html.twig'
         - '@SonataForm/Form/datepicker.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
