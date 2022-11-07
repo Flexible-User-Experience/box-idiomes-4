@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.22 (WIP)
+##### Version 5.2.23 (WIP)
  * fix minor bugs
+
+##### Version 5.2.22 (2022-11-07)
+ * dependencies update
 
 ##### Version 5.2.21 (2022-09-12)
  * change Fullcalendar.js defult timeGridDay view in main dashboard
