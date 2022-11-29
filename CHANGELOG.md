@@ -6,7 +6,7 @@ Changelog
 
 ##### Version 5.2.23 (2022-11-29)
  * Symfony 5.4.16 update
- * show students full surnames into Select2 tags
+ * show students inactive alert into Select2 tags
 
 ##### Version 5.2.22 (2022-11-07)
  * dependencies update
