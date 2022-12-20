@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.2.24 (WIP)
+##### Version 5.2.25 (WIP)
  * fix minor bugs
+
+##### Version 5.2.24 (2022-12-20)
+ * dependencies update
 
 ##### Version 5.2.23 (2022-11-29)
  * Symfony 5.4.16 update
