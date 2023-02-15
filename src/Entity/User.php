@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Enum\UserRolesEnum;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -13,12 +11,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
  * @ORM\Table(name="admin_user")
+ *
  * @UniqueEntity("username")
  */
 class User extends AbstractBase implements PasswordAuthenticatedUserInterface, UserInterface
 {
     public const DEFAULT_ROLE_USER = UserRolesEnum::ROLE_USER;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
+     *
+     * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", nullable=true)
+     */
+    private ?Teacher $teacher = null;
 
     /**
      * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
@@ -32,6 +39,7 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
 
     /**
      * @ORM\Column(name="email", type="string", length=180, nullable=false)
+     *
      * @Assert\Email()
      */
     private string $email;
@@ -96,12 +104,24 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     /**
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $lastLogin = null;
+    private ?\DateTimeInterface $lastLogin = null;
 
     /**
      * @ORM\Column(name="roles", type="json")
      */
     private ?array $roles = [];
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
 
     public function getUserIdentifier(): string
     {
@@ -175,7 +195,7 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
 
     public function setPlainPassword(?string $plainPassword): self
     {
-        $this->setUpdatedAt(new DateTimeImmutable());
+        $this->setUpdatedAt(new \DateTimeImmutable());
         $this->plainPassword = $plainPassword;
 
         return $this;
@@ -193,12 +213,12 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return $this;
     }
 
-    public function getLastLogin(): ?DateTimeInterface
+    public function getLastLogin(): ?\DateTimeInterface
     {
         return $this->lastLogin;
     }
 
-    public function setLastLogin(?DateTimeInterface $lastLogin): self
+    public function setLastLogin(?\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
 

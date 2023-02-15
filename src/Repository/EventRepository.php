@@ -53,19 +53,19 @@ final class EventRepository extends ServiceEntityRepository
         return $this->getEnabledFilteredByBeginAndEndQ($startDate, $endDate)->getResult();
     }
 
-    public function getEnabledFilteredByTeacherBeginAndEndQB(Teacher $teacher, \DateTimeInterface $startDate, \DateTimeInterface $endDate): QueryBuilder
+    public function getEnabledFilteredByTeacherBeginAndEndQB(?Teacher $teacher, \DateTimeInterface $startDate, \DateTimeInterface $endDate): QueryBuilder
     {
         return $this->getEnabledFilteredByBeginAndEndQB($startDate, $endDate)
             ->andWhere('e.teacher = :teacher')
             ->setParameter('teacher', $teacher);
     }
 
-    public function getEnabledFilteredByTeacherBeginAndEndQ(Teacher $teacher, \DateTimeInterface $startDate, \DateTimeInterface $endDate): Query
+    public function getEnabledFilteredByTeacherBeginAndEndQ(?Teacher $teacher, \DateTimeInterface $startDate, \DateTimeInterface $endDate): Query
     {
         return $this->getEnabledFilteredByTeacherBeginAndEndQB($teacher, $startDate, $endDate)->getQuery();
     }
 
-    public function getEnabledFilteredByTeacherBeginAndEnd(Teacher $teacher, \DateTimeInterface $startDate, \DateTimeInterface $endDate): array
+    public function getEnabledFilteredByTeacherBeginAndEnd(?Teacher $teacher, \DateTimeInterface $startDate, \DateTimeInterface $endDate): array
     {
         return $this->getEnabledFilteredByTeacherBeginAndEndQ($teacher, $startDate, $endDate)->getResult();
     }
