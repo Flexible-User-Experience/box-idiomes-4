@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 5.2.25 (WIP)
+##### Version 5.3.01 (WIP)
  * fix minor bugs
+
+##### Version 5.3.00 (WIP)
+ * dependencies update
+ * enable 8 hours long PHP user logged sessions
 
 ##### Version 5.2.24 (2022-12-20)
  * dependencies update
