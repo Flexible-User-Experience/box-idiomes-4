@@ -3,9 +3,9 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         charset: 'utf8mb4'
     orm:
+        auto_mapping: true
         auto_generate_proxy_classes: true
         naming_strategy: 'doctrine.orm.naming_strategy.underscore_number_aware'
-        auto_mapping: true
         mappings:
             App:
                 is_bundle: false
@@ -15,10 +15,10 @@ doctrine:
         dql:
             datetime_functions:
                 timestampdiff: 'DoctrineExtensions\Query\Mysql\TimestampDiff'
-                year:          'DoctrineExtensions\Query\Mysql\Year'
-                month:         'DoctrineExtensions\Query\Mysql\Month'
-                date:          'DoctrineExtensions\Query\Mysql\Date'
-                now:           'DoctrineExtensions\Query\Mysql\Now'
+                year: 'DoctrineExtensions\Query\Mysql\Year'
+                month: 'DoctrineExtensions\Query\Mysql\Month'
+                date: 'DoctrineExtensions\Query\Mysql\Date'
+                now: 'DoctrineExtensions\Query\Mysql\Now'
 
 when@test:
     doctrine:
@@ -29,22 +29,22 @@ when@test:
             dql:
                 datetime_functions:
                     month: 'DoctrineExtensions\Query\Sqlite\Month'
-                    year:  'DoctrineExtensions\Query\Sqlite\Year'
+                    year: 'DoctrineExtensions\Query\Sqlite\Year'
 when@prod:
     doctrine:
         orm:
             auto_generate_proxy_classes: false
             proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
             query_cache_driver:
-                type: pool
-                pool: doctrine.system_cache_pool
+                type: 'pool'
+                pool: 'doctrine.system_cache_pool'
             result_cache_driver:
-                type: pool
-                pool: doctrine.result_cache_pool
+                type: 'pool'
+                pool: 'doctrine.result_cache_pool'
     framework:
         cache:
             pools:
                 doctrine.result_cache_pool:
-                    adapter: cache.app
+                    adapter: 'cache.app'
                 doctrine.system_cache_pool:
-                    adapter: cache.system
+                    adapter: 'cache.system'
