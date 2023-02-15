@@ -188,6 +188,7 @@ backend:
                     end_date_period: "La data final és més gran o igual que la data final."
                     no_items_found: "No s'ha trobat cap horari de classe registrat entre el %start% i el %end%."
         user:
+            teacher: "Professor"
             user: "Usuari"
             editor: "Editor Web"
             manager: "Professor"

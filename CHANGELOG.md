@@ -1,8 +1,23 @@
 Changelog
 =========
 
-##### Version 5.2.22 (WIP)
+##### Version 5.3.01 (WIP)
  * fix minor bugs
+
+##### Version 5.3.00 (WIP)
+ * dependencies update
+ * enable 8 hours long PHP user logged sessions
+ * feature/0003-own-teacher-calendars included 
+
+##### Version 5.2.24 (2022-12-20)
+ * dependencies update
+
+##### Version 5.2.23 (2022-11-29)
+ * Symfony 5.4.16 update
+ * show students inactive alert into Select2 tags
+
+##### Version 5.2.22 (2022-11-07)
+ * dependencies update
 
 ##### Version 5.2.21 (2022-09-12)
  * change Fullcalendar.js defult timeGridDay view in main dashboard

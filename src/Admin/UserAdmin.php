@@ -38,6 +38,14 @@ final class UserAdmin extends AbstractBaseAdmin
         $form
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
             ->add(
+                'teacher',
+                null,
+                [
+                    'label' => 'backend.admin.user.teacher',
+                    'required' => false,
+                ]
+            )
+            ->add(
                 'firstname',
                 null,
                 [
@@ -103,6 +111,13 @@ final class UserAdmin extends AbstractBaseAdmin
     {
         $filter
             ->add(
+                'teacher',
+                null,
+                [
+                    'label' => 'backend.admin.user.teacher',
+                ]
+            )
+            ->add(
                 'username',
                 null,
                 [
@@ -129,6 +144,14 @@ final class UserAdmin extends AbstractBaseAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
+            ->add(
+                'teacher',
+                null,
+                [
+                    'label' => 'backend.admin.user.teacher',
+                    'editable' => false,
+                ]
+            )
             ->add(
                 'username',
                 null,
