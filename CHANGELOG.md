@@ -8,6 +8,7 @@ Changelog
  * dependencies update
  * enable 8 hours long PHP user logged sessions
  * feature/0003-own-teacher-calendars included 
+ * feature/0006-filter-calendars-only-for-role-admin included 
 
 ##### Version 5.2.24 (2022-12-20)
  * dependencies update

@@ -6,6 +6,7 @@ use App\Entity\Event as AppEvent;
 use App\Entity\Student;
 use App\Entity\TeacherAbsence;
 use App\Enum\UserRolesEnum;
+use App\Form\Type\FilterCalendarEventsType;
 use App\Repository\EventRepository;
 use App\Repository\StudentRepository;
 use App\Repository\TeacherAbsenceRepository;
@@ -71,7 +72,11 @@ class FullCalendarListener implements EventSubscriberInterface
             // classroom events
             if ($this->security->isGranted(UserRolesEnum::ROLE_ADMIN)) {
                 // all teachers events
-                $events = $this->ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+                if ($this->rss->getSession()->has(FilterCalendarEventsType::SESSION_KEY)) {
+                    $events = $this->ers->getEnabledFilteredByBeginEndAndFilterCalendarEventForm($startDate, $endDate, $this->rss->getSession()->get(FilterCalendarEventsType::SESSION_KEY));
+                } else {
+                    $events = $this->ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+                }
             } elseif ($this->security->isGranted(UserRolesEnum::ROLE_MANAGER)) {
                 // only logged teacher events
                 $events = $this->ers->getEnabledFilteredByTeacherBeginAndEnd($this->security->getUser()->getTeacher(), $startDate, $endDate);

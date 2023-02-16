@@ -5,28 +5,12 @@ namespace App\Service;
 use App\Entity\Event as AppEvent;
 use App\Entity\EventFullCalendar;
 use App\Entity\TeacherAbsence;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class EventTransformerFactoryService.
- *
- * @category Service
- */
 class EventTransformerFactoryService
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private RouterInterface $router;
 
-    /**
-     * Methods.
-     */
-
-    /**
-     * EventTransformerFactoryService constructor.
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -34,10 +18,8 @@ class EventTransformerFactoryService
 
     /**
      * Classroom event builder.
-     *
-     * @return EventFullCalendar
      */
-    public function build(AppEvent $appEvent)
+    public function build(AppEvent $appEvent): EventFullCalendar
     {
         $eventFullCalendar = new EventFullCalendar($appEvent->getCalendarTitle(), $appEvent->getBegin());
         $eventFullCalendar->setEnd($appEvent->getEnd());
@@ -46,7 +28,7 @@ class EventTransformerFactoryService
             'background' => $appEvent->getGroup()->getColor(),
             'text' => '#FFFFFF',
             'color' => $appEvent->getGroup()->getColor(),
-            'url' => $this->router->generate('admin_app_event_edit', ['id' => $appEvent->getId()], UrlGeneratorInterface::ABSOLUTE_PATH),
+            'url' => $this->router->generate('admin_app_event_edit', ['id' => $appEvent->getId()]),
         ]);
 
         return $eventFullCalendar;
@@ -54,10 +36,8 @@ class EventTransformerFactoryService
 
     /**
      * Teacher absence builder.
-     *
-     * @return EventFullCalendar
      */
-    public function buildTeacherAbsence(TeacherAbsence $teacherAbsence)
+    public function buildTeacherAbsence(TeacherAbsence $teacherAbsence): EventFullCalendar
     {
         $eventFullCalendar = new EventFullCalendar($teacherAbsence->getCalendarTitle(), $teacherAbsence->getDay());
         $eventFullCalendar->setEnd($teacherAbsence->getDay());
@@ -66,7 +46,7 @@ class EventTransformerFactoryService
             'background' => '#FA141B',
             'text' => '#FFFFFF',
             'color' => '#FA141B',
-            'url' => $this->router->generate('admin_app_teacherabsence_edit', ['id' => $teacherAbsence->getId()], UrlGeneratorInterface::ABSOLUTE_PATH),
+            'url' => $this->router->generate('admin_app_teacherabsence_edit', ['id' => $teacherAbsence->getId()]),
         ]);
 
         return $eventFullCalendar;
