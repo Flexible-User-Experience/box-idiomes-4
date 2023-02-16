@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Form\Model\FilterCalendarEventModel;
 use App\Form\Type\AdminLoginForm;
+use App\Form\Type\FilterCalendarEventsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
@@ -41,5 +44,43 @@ final class AdminLoginController extends AbstractController
     public function logoutAction(): void
     {
         // Left empty intentionally because this will be handled by Symfony.
+    }
+
+    /**
+     * @Route("/admin/filter-calendar", name="admin_app_filter_calendar")
+     */
+    public function filterCalendarAction(Request $request): Response
+    {
+        $isFilterEnabled = false;
+        $calendarEventsFilter = new FilterCalendarEventModel();
+        if ($request->query->get('reset')) {
+            $request->getSession()->remove(FilterCalendarEventsType::SESSION_KEY);
+
+            return $this->redirectToRoute('sonata_admin_dashboard');
+        }
+        if ($request->getSession()->has(FilterCalendarEventsType::SESSION_KEY)) {
+            $isFilterEnabled = true;
+            $calendarEventsFilter = $request->getSession()->get(FilterCalendarEventsType::SESSION_KEY);
+        }
+        $calendarEventsFilterForm = $this->createForm(FilterCalendarEventsType::class, $calendarEventsFilter);
+        $calendarEventsFilterForm->handleRequest($request);
+        if ($calendarEventsFilterForm->isSubmitted()) {
+            $isFilterEnabled = true;
+            $request->getSession()->set(FilterCalendarEventsType::SESSION_KEY, $calendarEventsFilter);
+            $this->addFlash(
+                'notice',
+                'Calendar Events Filter submitted'
+            );
+
+            return $this->redirectToRoute('sonata_admin_dashboard');
+        }
+
+        return $this->render(
+            'Admin/Helpers/filter_calendar.html.twig',
+            [
+                'filter' => $calendarEventsFilterForm->createView(),
+                'is_filter_enabled' => $isFilterEnabled,
+            ]
+        );
     }
 }
