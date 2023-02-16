@@ -1,0 +1,18 @@
+{{ form_start(filter) }}
+    <div class="col-xs-3">
+        {{ form_row(filter.submit) }}
+    </div>
+    <div class="col-xs-3">
+        {{ form_widget(filter.classroom) }}
+        {{ form_errors(filter.classroom) }}
+    </div>
+    <div class="col-xs-3">
+        {{ form_widget(filter.teacher) }}
+        {{ form_errors(filter.teacher) }}
+    </div>
+    <div class="col-xs-3">
+        {{ form_widget(filter.group) }}
+        {{ form_errors(filter.group) }}
+    </div>
+{{ form_rest(filter) }}
+{{ form_end(filter) }}
