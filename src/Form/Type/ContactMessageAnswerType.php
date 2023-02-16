@@ -28,12 +28,11 @@ class ContactMessageAnswerType extends AbstractType
                 ]
             )
             ->add(
-                'attatchment',
+                'documentFile',
                 DropzoneType::class,
                 [
                     'label' => 'backend.admin.contact.attatchment',
                     'required' => false,
-                    'mapped' => false,
                     'attr' => [
                         'placeholder' => 'backend.admin.contact.attatchment_help',
                     ],
