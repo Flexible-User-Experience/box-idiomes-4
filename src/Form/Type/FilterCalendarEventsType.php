@@ -13,15 +13,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 class FilterCalendarEventsType extends AbstractType
 {
+    public const SESSION_KEY = 'filter_calendar_events_form_data';
+
+    private RouterInterface $rs;
     private TeacherRepository $tr;
     private ClassGroupRepository $cgr;
 
-    public function __construct(TeacherRepository $tr, ClassGroupRepository $cgr)
+    public function __construct(RouterInterface $rs, TeacherRepository $tr, ClassGroupRepository $cgr)
     {
+        $this->rs = $rs;
         $this->tr = $tr;
         $this->cgr = $cgr;
     }
@@ -85,6 +91,8 @@ class FilterCalendarEventsType extends AbstractType
     {
         $resolver->setDefaults(
             [
+                'method' => Request::METHOD_POST,
+                'action' => $this->rs->generate('admin_app_filedummy_filterCalendar'),
                 'data_class' => FilterCalendarEventModel::class,
             ]
         );

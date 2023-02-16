@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\AbstractBase;
 use App\Manager\EventManager;
 use App\Pdf\ExportCalendarToListBuilderPdf;
-use DateTime;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +14,8 @@ final class ExtraHelperManagerAdminController extends CRUDController
 {
     public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, ParameterBagInterface $parameterBag, string $start, string $end): Response
     {
-        $startDate = DateTime::createFromFormat(AbstractBase::DATABASE_DATE_STRING_FORMAT, $start);
-        $endDate = DateTime::createFromFormat(AbstractBase::DATABASE_DATE_STRING_FORMAT, $end);
+        $startDate = \DateTime::createFromFormat(AbstractBase::DATABASE_DATE_STRING_FORMAT, $start);
+        $endDate = \DateTime::createFromFormat(AbstractBase::DATABASE_DATE_STRING_FORMAT, $end);
         if ($startDate && $endDate) {
             if ($endDate->format(AbstractBase::DATABASE_DATE_STRING_FORMAT) >= $startDate->format(AbstractBase::DATABASE_DATE_STRING_FORMAT)) {
                 $exportCalendarList = $ems->getCalendarEventsListFromDates($startDate, $endDate);

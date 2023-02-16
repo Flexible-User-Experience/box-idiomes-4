@@ -18,7 +18,7 @@
                 {% if is_granted(constant('App\\Enum\\UserRolesEnum::ROLE_ADMIN')) %}
                     <div class="col-sm-9">
                         <div class="row">
-{#                            {{ render(controller('App\\Controller\\Admin\\ExtraHelperManagerAdminController::filterCalendarAction')) }}#}
+                            {{ render(controller('App\\Controller\\AdminLoginController::filterCalendarAction')) }}
                         </div>
                     </div>
                 {% endif %}
