@@ -55,6 +55,8 @@ final class AdminLoginController extends AbstractController
         $calendarEventsFilter = new FilterCalendarEventModel();
         if ($request->query->get('reset')) {
             $request->getSession()->remove(FilterCalendarEventsType::SESSION_KEY);
+
+            return $this->redirectToRoute('sonata_admin_dashboard');
         }
         if ($request->getSession()->has(FilterCalendarEventsType::SESSION_KEY)) {
             $isFilterEnabled = true;

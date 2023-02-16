@@ -8,7 +8,6 @@ use App\Enum\EventClassroomTypeEnum;
 use App\Form\Model\FilterCalendarEventModel;
 use App\Repository\ClassGroupRepository;
 use App\Repository\TeacherRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -49,13 +48,15 @@ class FilterCalendarEventsType extends AbstractType
             )
             ->add(
                 'teacher',
-                EntityType::class,
+                ChoiceType::class,
                 [
                     'label' => 'backend.admin.event.teacher',
                     'placeholder' => 'backend.admin.event.teacher',
-                    'class' => Teacher::class,
-                    'choice_label' => 'name',
-                    'query_builder' => $this->tr->getEnabledSortedByNameQB(),
+                    'choices' => $this->tr->getEnabledSortedByName(),
+                    'choice_value' => 'id',
+                    'choice_label' => function (?Teacher $teacher) {
+                        return $teacher ? $teacher->getName() : '';
+                    },
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
@@ -63,12 +64,15 @@ class FilterCalendarEventsType extends AbstractType
             )
             ->add(
                 'group',
-                EntityType::class,
+                ChoiceType::class,
                 [
                     'label' => 'backend.admin.event.group',
                     'placeholder' => 'backend.admin.event.group',
-                    'class' => ClassGroup::class,
-                    'query_builder' => $this->cgr->getEnabledSortedByCodeQB(),
+                    'choices' => $this->cgr->getEnabledSortedByCode(),
+                    'choice_value' => 'id',
+                    'choice_label' => function (?ClassGroup $classGroup) {
+                        return $classGroup ? $classGroup->__toString() : '';
+                    },
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
@@ -92,7 +96,7 @@ class FilterCalendarEventsType extends AbstractType
         $resolver->setDefaults(
             [
                 'method' => Request::METHOD_POST,
-                'action' => $this->rs->generate('admin_app_filedummy_filterCalendar'),
+                'action' => $this->rs->generate('admin_app_filter_calendar'),
                 'data_class' => FilterCalendarEventModel::class,
             ]
         );

@@ -1,6 +1,13 @@
 {{ form_start(filter) }}
     <div class="col-xs-3">
-        {{ form_row(filter.submit) }}
+        <div class="btn-toolbar pull-right" role="toolbar">
+            <div class="btn-group" role="group">
+                <a href="{{ path('admin_app_filter_calendar', {'reset': true}) }}" class="btn btn-default d-inline-flex">{{ 'backend.admin.reset_filter_calendar_by' | trans | capitalize }}</a>
+            </div>
+            <div class="btn-group" role="group">
+                {{ form_row(filter.submit) }}
+            </div>
+        </div>
     </div>
     <div class="col-xs-3">
         {{ form_widget(filter.classroom) }}
