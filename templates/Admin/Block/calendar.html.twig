@@ -10,10 +10,12 @@
             </div>
             {% if is_granted(constant('App\\Enum\\UserRolesEnum::ROLE_ADMIN')) %}
                 <div class="row">
-                    <div class="col-xs-12 margin-bottom">
-                        {# TODO set a new action to POST filter & persist in session #}
-                        {# TODO later load data in FullCalendarListener according to the selected teacher or classroom #}
-                        {{ form(filter) }}
+                    <div class="jumbotron">
+                        <div class="col-xs-12 margin-bottom">
+                            {# TODO set a new action to POST filter & persist in session #}
+                            {# TODO later load data in FullCalendarListener according to the selected teacher or classroom #}
+                            {{ form(filter) }}
+                        </div>
                     </div>
                 </div>
             {% endif %}
