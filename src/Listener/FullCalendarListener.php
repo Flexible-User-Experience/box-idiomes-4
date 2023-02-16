@@ -50,7 +50,7 @@ class FullCalendarListener implements EventSubscriberInterface
         $startDate = $calendarEvent->getStart();
         $endDate = $calendarEvent->getEnd();
         $referer = $this->rss->getCurrentRequest()->headers->get('referer');
-        if ($this->rss->getCurrentRequest()->getBaseUrl()) {
+        if ($this->rss->getCurrentRequest() && $this->rss->getCurrentRequest()->getBaseUrl()) {
             // probably dev environment
             $path = substr($referer, strpos($referer, $this->rss->getCurrentRequest()->getBaseUrl()));
             $path = str_replace($this->rss->getCurrentRequest()->getBaseUrl(), '', $path);
@@ -58,11 +58,13 @@ class FullCalendarListener implements EventSubscriberInterface
             // prod environment
             $path = str_replace($this->rss->getCurrentRequest()->getSchemeAndHttpHost(), '', $referer);
         }
-
+        $route = '';
+        $parameters = [];
         $matcher = $this->router->getMatcher();
-        $parameters = $matcher->match($path);
-        $route = $parameters['_route'];
-
+        if ($matcher) {
+            $parameters = $matcher->match($path);
+            $route = $parameters['_route'];
+        }
         // // admin dashboard action
         if ('sonata_admin_dashboard' === $route) {
             $events = [];
@@ -86,7 +88,7 @@ class FullCalendarListener implements EventSubscriberInterface
             }
 
         // // admin student show action
-        } elseif ('admin_app_student_show' === $route) {
+        } elseif ('admin_app_student_show' === $route && array_key_exists('id', $parameters)) {
             // student events
             /** @var Student $student */
             $student = $this->srs->find((int) $parameters['id']);
