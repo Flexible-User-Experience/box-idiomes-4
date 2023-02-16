@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Entity\AbstractBase;
 use App\Entity\ClassGroup;
+use App\Entity\ContactMessage;
 use App\Entity\Event;
 use App\Entity\PreRegister;
 use App\Entity\Receipt;
@@ -19,8 +20,7 @@ use App\Enum\TeacherColorEnum;
 use App\Enum\UserRolesEnum;
 use App\Manager\ReceiptManager;
 use App\Service\SmartAssetsHelperService;
-use Exception;
-use ReflectionClass;
+use Symfony\Component\Mime\MimeTypes;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -52,7 +52,7 @@ class AppExtension extends AbstractExtension
 
     public function isInstanceOf($var, $instance): bool
     {
-        return (new ReflectionClass($instance))->isInstance($var);
+        return (new \ReflectionClass($instance))->isInstance($var);
     }
 
     /**
@@ -62,13 +62,15 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('generate_random_error_text', [$this, 'generateRandomErrorText']),
+            new TwigFunction('is_contact_message_document_pdf_file', [$this, 'isContactMessageDocumentPdfFile']),
+            new TwigFunction('is_contact_message_document_image_file', [$this, 'isContactMessageDocumentImageFile']),
             new TwigFunction('is_receipt_invoiced', [$this, 'isReceiptInvoicedFunction']),
             new TwigFunction('get_absolute_asset_path_context_independent', [$this, 'getAbsoluteAssetPathContextIndependent']),
         ];
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function generateRandomErrorText($length = 1024): string
     {
@@ -79,6 +81,22 @@ class AppExtension extends AbstractExtension
         $chrRepeatMax = 30; // Maximum times to repeat the seed string
 
         return substr(str_shuffle(str_repeat($chrList, random_int($chrRepeatMin, $chrRepeatMax))), 1, $length);
+    }
+
+    public function isContactMessageDocumentPdfFile(ContactMessage $contactMessage): bool
+    {
+        $filePath = $this->sahs->getAbsoluteAssetFilePath($this->sahs->getContactMessageAttatchmentPath($contactMessage));
+        $mimeTypes = new MimeTypes();
+
+        return 'application/pdf' === $mimeTypes->guessMimeType($filePath);
+    }
+
+    public function isContactMessageDocumentImageFile(ContactMessage $contactMessage): bool
+    {
+        $filePath = $this->sahs->getAbsoluteAssetFilePath($this->sahs->getContactMessageAttatchmentPath($contactMessage));
+        $mimeTypes = new MimeTypes();
+
+        return 'image/png' === $mimeTypes->guessMimeType($filePath) || 'image/jpg' === $mimeTypes->guessMimeType($filePath) || 'image/jpeg' === $mimeTypes->guessMimeType($filePath);
     }
 
     public function isReceiptInvoicedFunction(Receipt $receipt): bool

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\ContactMessage;
 use App\Entity\Teacher;
 use App\Kernel;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
@@ -60,6 +61,11 @@ final class SmartAssetsHelperService
     public function getTeacherImageAssetPath(Teacher $teacher, string $filter): string
     {
         return $this->icm->getBrowserPath($this->uh->asset($teacher, 'imageFile'), $filter);
+    }
+
+    public function getContactMessageAttatchmentPath(ContactMessage $contactMessage): string
+    {
+        return $this->uh->asset($contactMessage, 'documentFile');
     }
 
     /**
