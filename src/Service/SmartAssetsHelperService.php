@@ -2,24 +2,31 @@
 
 namespace App\Service;
 
+use App\Entity\Teacher;
 use App\Kernel;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 final class SmartAssetsHelperService
 {
     public const HTTP_PROTOCOL = 'https://';
 
+    private UploaderHelper $uh;
+    private CacheManager $icm;
     private KernelInterface $kernel;
     private string $pub;
     private string $amd;
     private string $bba;
     private string $bpn;
 
-    public function __construct(KernelInterface $kernel, ParameterBagInterface $pb)
+    public function __construct(UploaderHelper $uh, CacheManager $icm, KernelInterface $kernel, ParameterBagInterface $pb)
     {
+        $this->uh = $uh;
+        $this->icm = $icm;
         $this->kernel = $kernel;
         $this->pub = $pb->get('project_url_base');
         $this->amd = $pb->get('mailer_destination');
@@ -48,6 +55,11 @@ final class SmartAssetsHelperService
     public function isCliContext(): string
     {
         return Kernel::CLI_API === PHP_SAPI;
+    }
+
+    public function getTeacherImageAssetPath(Teacher $teacher, string $filter): string
+    {
+        return $this->icm->getBrowserPath($this->uh->asset($teacher, 'imageFile'), $filter);
     }
 
     /**

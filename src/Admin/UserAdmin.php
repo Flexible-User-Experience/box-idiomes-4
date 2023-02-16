@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
+use App\Entity\Teacher;
 use App\Entity\User;
 use App\Enum\UserRolesEnum;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
@@ -10,6 +11,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,14 +39,6 @@ final class UserAdmin extends AbstractBaseAdmin
     {
         $form
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
-            ->add(
-                'teacher',
-                null,
-                [
-                    'label' => 'backend.admin.user.teacher',
-                    'required' => false,
-                ]
-            )
             ->add(
                 'firstname',
                 null,
@@ -86,6 +80,16 @@ final class UserAdmin extends AbstractBaseAdmin
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
+                'teacher',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.user.teacher',
+                    'required' => false,
+                    'class' => Teacher::class,
+                    'query_builder' => $this->em->getRepository(Teacher::class)->getEnabledSortedByNameQB(),
+                ]
+            )
+            ->add(
                 'enabled',
                 CheckboxType::class,
                 [
@@ -115,6 +119,13 @@ final class UserAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.user.teacher',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'expanded' => false,
+                        'multiple' => false,
+                        'class' => Teacher::class,
+                        'query_builder' => $this->em->getRepository(Teacher::class)->getEnabledSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(

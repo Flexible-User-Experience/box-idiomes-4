@@ -8,16 +8,18 @@
                     <div id="calendar-holder" data-events-url="{{ path('fc_load_events') }}" data-gcal-api-key="{{ google_calendar_api_key }}"></div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12 margin-bottom">
-                    {# TODO set a new action to POST filter & persist in session #}
-                    {# TODO later load data in FullCalendarListener according to the selected teacher or classroom #}
-                    {{ form(filter) }}
+            {% if is_granted(constant('App\\Enum\\UserRolesEnum::ROLE_ADMIN')) %}
+                <div class="row">
+                    <div class="col-xs-12 margin-bottom">
+                        {# TODO set a new action to POST filter & persist in session #}
+                        {# TODO later load data in FullCalendarListener according to the selected teacher or classroom #}
+                        {{ form(filter) }}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             <div class="row">
                 <div class="col-xs-12">
-                    <hr>
+{#                    <hr>#}
                     <a href="{{ path('admin_app_event_create') }}" class="btn btn-primary margin-r-5"><i class="fa fa-plus-circle"></i> {{ 'backend.admin.event.button.add' | trans }}</a>
                     <a id="export_calendar_pdf_list_anchor" href="{{ path('admin_app_filedummy_exportCalendarPdfList', {start: 'start', end: 'end'}) }}" class="btn btn-info"><i class="fa fa-file-pdf-o"></i> {{ 'backend.admin.event.button.export_pdf_list' | trans }}</a>
                 </div>
