@@ -37,7 +37,7 @@ parameters:
 
 services:
     _defaults:
-        autowire:      true
+        autowire: true
         autoconfigure: true
     # Commons
     App\:
@@ -87,63 +87,6 @@ services:
             - '@request_stack'
         tags:
             - { name: 'knp_menu.menu', alias: 'top' }
-    # PDF Builders
-    app.student_image_rights_pdf_builder:
-        class: App\Pdf\StudentImageRightsBuilderPdf
-        public: true
-        arguments:
-            - '@qipsius.tcpdf'
-            - '@App\Service\SmartAssetsHelperService'
-            - '@translator.default'
-            - '@parameter_bag'
-    app.sepa_agreement_pdf_builder:
-        class: App\Pdf\SepaAgreementBuilderPdf
-        public: true
-        arguments:
-            - '@qipsius.tcpdf'
-            - '@App\Service\SmartAssetsHelperService'
-            - '@translator.default'
-            - '@parameter_bag'
-    app.receipt_reminder_pdf_builder:
-        class: App\Pdf\ReceiptReminderBuilderPdf
-        public: true
-        arguments:
-            - '@qipsius.tcpdf'
-            - '@App\Service\SmartAssetsHelperService'
-            - '@translator.default'
-            - '@parameter_bag'
-    app.receipt_pdf_builder:
-        class: App\Pdf\ReceiptBuilderPdf
-        public: true
-        arguments:
-            - '@qipsius.tcpdf'
-            - '@App\Service\SmartAssetsHelperService'
-            - '@translator.default'
-            - '@parameter_bag'
-    app.invoice_pdf_builder:
-        class: App\Pdf\InvoiceBuilderPdf
-        public: true
-        arguments:
-            - '@qipsius.tcpdf'
-            - '@App\Service\SmartAssetsHelperService'
-            - '@translator.default'
-            - '@parameter_bag'
-    app.class_group_pdf_builder:
-        class: App\Pdf\ClassGroupBuilderPdf
-        public: true
-        arguments:
-            - '@qipsius.tcpdf'
-            - '@App\Service\SmartAssetsHelperService'
-            - '@translator.default'
-            - '@parameter_bag'
-    app.export_calendar_to_list_pdf_builder:
-        class: App\Pdf\ExportCalendarToListBuilderPdf
-        public: true
-        arguments:
-            - '@qipsius.tcpdf'
-            - '@App\Service\SmartAssetsHelperService'
-            - '@translator.default'
-            - '@parameter_bag'
     # Listeners
     App\Listener\SitemapListener:
         arguments:
