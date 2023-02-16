@@ -6,6 +6,7 @@ use App\Entity\AbstractBase;
 use App\Entity\Event;
 use App\Entity\Student;
 use App\Entity\Teacher;
+use App\Form\Model\FilterCalendarEventModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -51,6 +52,41 @@ final class EventRepository extends ServiceEntityRepository
     public function getEnabledFilteredByBeginAndEnd(\DateTimeInterface $startDate, \DateTimeInterface $endDate): array
     {
         return $this->getEnabledFilteredByBeginAndEndQ($startDate, $endDate)->getResult();
+    }
+
+    public function getEnabledFilteredByBeginEndAndFilterCalendarEventFormQB(\DateTimeInterface $startDate, \DateTimeInterface $endDate, FilterCalendarEventModel $filter): QueryBuilder
+    {
+        $qb = $this->getEnabledFilteredByBeginAndEndQB($startDate, $endDate);
+        if ($filter->getClassroom()) {
+            $qb
+                ->andWhere('e.classroom = :classroom')
+                ->setParameter('classroom', $filter->getClassroom())
+            ;
+        }
+        if ($filter->getTeacher()) {
+            $qb
+                ->andWhere('e.teacher = :teacher')
+                ->setParameter('teacher', $filter->getTeacher())
+            ;
+        }
+        if ($filter->getGroup()) {
+            $qb
+                ->andWhere('e.group = :group')
+                ->setParameter('group', $filter->getGroup())
+            ;
+        }
+
+        return $qb;
+    }
+
+    public function getEnabledFilteredByBeginEndAndFilterCalendarEventFormQ(\DateTimeInterface $startDate, \DateTimeInterface $endDate, FilterCalendarEventModel $filter): Query
+    {
+        return $this->getEnabledFilteredByBeginEndAndFilterCalendarEventFormQB($startDate, $endDate, $filter)->getQuery();
+    }
+
+    public function getEnabledFilteredByBeginEndAndFilterCalendarEventForm(\DateTimeInterface $startDate, \DateTimeInterface $endDate, FilterCalendarEventModel $filter): array
+    {
+        return $this->getEnabledFilteredByBeginEndAndFilterCalendarEventFormQ($startDate, $endDate, $filter)->getResult();
     }
 
     public function getEnabledFilteredByTeacherBeginAndEndQB(?Teacher $teacher, \DateTimeInterface $startDate, \DateTimeInterface $endDate): QueryBuilder
