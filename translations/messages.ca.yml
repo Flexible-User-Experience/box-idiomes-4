@@ -330,6 +330,8 @@ backend:
             subject: "Tema"
             answered: "Contestat"
             answer: "Resposta"
+            attatchment: "Arxiu adjunt"
+            attatchment_help: "Aquí pots arrossegar i soltar un arxiu tipus PDF, Word o similar amb un pes inferior a 10 MB. El teu missatge de resposta inclourà aquest arxiu automàticament."
             message: "Missatge"
             description: "Descripció"
             user_question: "Pregunta del usuari"

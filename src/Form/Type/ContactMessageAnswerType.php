@@ -4,11 +4,11 @@ namespace App\Form\Type;
 
 use App\Entity\ContactMessage;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class ContactMessageAnswerType extends AbstractType
 {
@@ -29,14 +29,13 @@ class ContactMessageAnswerType extends AbstractType
             )
             ->add(
                 'attatchment',
-                FileType::class,
+                DropzoneType::class,
                 [
                     'label' => 'backend.admin.contact.attatchment',
                     'required' => false,
                     'mapped' => false,
                     'attr' => [
-                        'rows' => 6,
-                        'style' => 'margin-bottom: 20px',
+                        'placeholder' => 'backend.admin.contact.attatchment_help',
                     ],
                 ]
             )
@@ -46,6 +45,7 @@ class ContactMessageAnswerType extends AbstractType
                 [
                     'label' => 'backend.admin.submit',
                     'attr' => [
+                        'style' => 'margin-top: 20px',
                         'class' => 'btn-primary',
                     ],
                 ]
