@@ -51,7 +51,6 @@ final class AdminLoginController extends AbstractController
      */
     public function filterCalendarAction(Request $request): Response
     {
-        $isFilterEnabled = false;
         $calendarEventsFilter = new FilterCalendarEventModel();
         if ($request->query->get('reset')) {
             $request->getSession()->remove(FilterCalendarEventsType::SESSION_KEY);
@@ -59,18 +58,12 @@ final class AdminLoginController extends AbstractController
             return $this->redirectToRoute('sonata_admin_dashboard');
         }
         if ($request->getSession()->has(FilterCalendarEventsType::SESSION_KEY)) {
-            $isFilterEnabled = true;
             $calendarEventsFilter = $request->getSession()->get(FilterCalendarEventsType::SESSION_KEY);
         }
         $calendarEventsFilterForm = $this->createForm(FilterCalendarEventsType::class, $calendarEventsFilter);
         $calendarEventsFilterForm->handleRequest($request);
         if ($calendarEventsFilterForm->isSubmitted()) {
-            $isFilterEnabled = true;
             $request->getSession()->set(FilterCalendarEventsType::SESSION_KEY, $calendarEventsFilter);
-            $this->addFlash(
-                'notice',
-                'Calendar Events Filter submitted'
-            );
 
             return $this->redirectToRoute('sonata_admin_dashboard');
         }
@@ -79,7 +72,6 @@ final class AdminLoginController extends AbstractController
             'Admin/Helpers/filter_calendar.html.twig',
             [
                 'filter' => $calendarEventsFilterForm->createView(),
-                'is_filter_enabled' => $isFilterEnabled,
             ]
         );
     }
