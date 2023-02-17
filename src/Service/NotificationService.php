@@ -9,23 +9,23 @@ use App\Entity\PreRegister;
 use App\Entity\Receipt;
 use App\Entity\StudentAbsence;
 use App\Entity\User;
-use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
-use TCPDF;
 use Twig\Environment;
 
 class NotificationService
 {
+    private SmartAssetsHelperService $sahs;
     private CourierService $messenger;
     private Environment $twig;
     private string $amd; // system's App Mail Destionation
     private string $pwt; // project web title
     private string $pub; // project URL base
 
-    public function __construct(CourierService $messenger, Environment $twig, ParameterBagInterface $pb)
+    public function __construct(SmartAssetsHelperService $sahs, CourierService $messenger, Environment $twig, ParameterBagInterface $pb)
     {
+        $this->sahs = $sahs;
         $this->messenger = $messenger;
         $this->twig = $twig;
         $this->amd = $pb->get('mailer_destination');
@@ -45,34 +45,12 @@ class NotificationService
             $this->messenger->sendEmail(
                 $this->amd,
                 $contactMessage->getEmail(),
-                'Notificació pàgina web '.$this->pub,
+                $this->pub.' · Missatge de contacte pàgina web enviat',
                 $this->twig->render('Mails/common_user_notification.html.twig', [
                     'contact' => $contactMessage,
                 ])
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
-            $result = 0;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Send a contact form notification to administrator.
-     */
-    public function sendAdminNotification(ContactMessage $contactMessage): int
-    {
-        $result = 1;
-        try {
-            $this->messenger->sendEmail(
-                $contactMessage->getEmail(),
-                $this->amd,
-                $this->pub.' contact form received',
-                $this->twig->render('Mails/contact_form_admin_notification.html.twig', [
-                    'contact' => $contactMessage,
-                ])
-            );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -94,7 +72,7 @@ class NotificationService
                     'contact' => $contactMessage,
                 ])
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -108,15 +86,29 @@ class NotificationService
     {
         $result = 1;
         try {
-            $this->messenger->sendEmail(
-                $this->amd,
-                $contactMessage->getEmail(),
-                $this->pub.' contact form answer',
-                $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', [
-                    'contact' => $contactMessage,
-                ])
-            );
-        } catch (TransportExceptionInterface | Exception $exception) {
+            if ($contactMessage->getDocument()) {
+                $this->messenger->sendEmailWithAttachedFile(
+                    $this->amd,
+                    $contactMessage->getEmail(),
+                    $contactMessage->getName(),
+                    $this->pub.' · Resposta missatge de contacte pàgina web',
+                    $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', [
+                        'contact' => $contactMessage,
+                    ]),
+                    $this->sahs->getAbsoluteAssetFilePath($this->sahs->getContactMessageAttatchmentPath($contactMessage)),
+                    $contactMessage->getDocument()
+                );
+            } else {
+                $this->messenger->sendEmail(
+                    $this->amd,
+                    $contactMessage->getEmail(),
+                    $this->pub.' · Resposta missatge de contacte pàgina web',
+                    $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', [
+                        'contact' => $contactMessage,
+                    ])
+                );
+            }
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -139,7 +131,7 @@ class NotificationService
                 ]),
                 $newsletterContact->getEmail()
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -162,7 +154,7 @@ class NotificationService
                 ]),
                 $newsletterContact->getEmail()
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -186,7 +178,7 @@ class NotificationService
                     'contact' => $newsletterContact,
                 ])
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -198,7 +190,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendReceiptReminderPdfNotification(Receipt $receipt, TCPDF $pdf): int
+    public function sendReceiptReminderPdfNotification(Receipt $receipt, \TCPDF $pdf): int
     {
         $result = 1;
         try {
@@ -213,7 +205,7 @@ class NotificationService
                 'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
                 $pdf
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -225,7 +217,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendReceiptPdfNotification(Receipt $receipt, TCPDF $pdf): int
+    public function sendReceiptPdfNotification(Receipt $receipt, \TCPDF $pdf): int
     {
         $result = 1;
         try {
@@ -240,7 +232,7 @@ class NotificationService
                 'receipt_'.$receipt->getSluggedReceiptNumber().'.pdf',
                 $pdf
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -252,7 +244,7 @@ class NotificationService
      *
      * @return int If is 0 failure otherwise amount of recipients
      */
-    public function sendInvoicePdfNotification(Invoice $invoice, TCPDF $pdf): int
+    public function sendInvoicePdfNotification(Invoice $invoice, \TCPDF $pdf): int
     {
         $result = 1;
         try {
@@ -267,7 +259,7 @@ class NotificationService
                 'invoice_'.$invoice->getSluggedInvoiceNumber().'.pdf',
                 $pdf
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -291,7 +283,7 @@ class NotificationService
                     'studentAbsence' => $studentAbsence,
                 ])
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -314,7 +306,7 @@ class NotificationService
                 ]),
                 $preRegister->getEmail()
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 
@@ -335,7 +327,7 @@ class NotificationService
                 null,
                 $user->getFullName()
             );
-        } catch (TransportExceptionInterface | Exception $exception) {
+        } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }
 

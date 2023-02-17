@@ -1,5 +1,7 @@
 ###> app/bundle ###
 !/public/uploads/.gitkeep
+/public/uploads/contact_message_answer_attatchments/*
+!/public/uploads/contact_message_answer_attatchments/.gitkeep
 /public/uploads/disc/*
 !/public/uploads/disc/.gitkeep
 /public/uploads/documents/*

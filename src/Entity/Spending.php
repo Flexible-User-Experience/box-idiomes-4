@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\DocumentFileTrait;
 use App\Enum\StudentPaymentEnum;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,23 +11,28 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SpendingRepository")
+ *
  * @Vich\Uploadable
  */
 class Spending extends AbstractBase
 {
+    use DocumentFileTrait;
+
     /**
      * @ORM\Column(type="date", nullable=false)
      */
-    private DateTimeInterface $date;
+    private \DateTimeInterface $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SpendingCategory")
+     *
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private ?SpendingCategory $category = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Provider")
+     *
      * @ORM\JoinColumn(name="provider_id", referencedColumnName="id")
      */
     private ?Provider $provider = null;
@@ -51,7 +55,7 @@ class Spending extends AbstractBase
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private ?DateTimeInterface $paymentDate = null;
+    private ?\DateTimeInterface $paymentDate = null;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
@@ -60,6 +64,7 @@ class Spending extends AbstractBase
 
     /**
      * @Vich\UploadableField(mapping="spending", fileNameProperty="document")
+     *
      * @Assert\File(
      *     maxSize="10M",
      *     mimeTypes={"application/pdf", "application/x-pdf"}
@@ -67,12 +72,7 @@ class Spending extends AbstractBase
      */
     private ?File $documentFile = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $document = null;
-
-    public function getDate(): DateTimeInterface
+    public function getDate(): \DateTimeInterface
     {
         return $this->date;
     }
@@ -82,7 +82,7 @@ class Spending extends AbstractBase
         return self::convertDateAsString($this->getDate());
     }
 
-    public function setDate(DateTimeInterface $date): self
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -169,7 +169,7 @@ class Spending extends AbstractBase
         return $this;
     }
 
-    public function getPaymentDate(): ?DateTimeInterface
+    public function getPaymentDate(): ?\DateTimeInterface
     {
         return $this->paymentDate;
     }
@@ -179,7 +179,7 @@ class Spending extends AbstractBase
         return self::convertDateAsString($this->getPaymentDate());
     }
 
-    public function setPaymentDate(?DateTimeInterface $paymentDate): self
+    public function setPaymentDate(?\DateTimeInterface $paymentDate): self
     {
         $this->paymentDate = $paymentDate;
 
@@ -199,35 +199,6 @@ class Spending extends AbstractBase
     public function setPaymentMethod(int $paymentMethod): self
     {
         $this->paymentMethod = $paymentMethod;
-
-        return $this;
-    }
-
-    public function getDocumentFile(): ?File
-    {
-        return $this->documentFile;
-    }
-
-    public function setDocumentFile(?File $documentFile = null): self
-    {
-        $this->documentFile = $documentFile;
-        if ($documentFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new DateTimeImmutable('now');
-        }
-
-        return $this;
-    }
-
-    public function getDocument(): ?string
-    {
-        return $this->document;
-    }
-
-    public function setDocument(?string $document): self
-    {
-        $this->document = $document;
 
         return $this;
     }
