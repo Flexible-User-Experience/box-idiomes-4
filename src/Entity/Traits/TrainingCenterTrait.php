@@ -10,7 +10,7 @@ trait TrainingCenterTrait
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TrainingCenter")
      *
-     * @ORM\JoinColumn(name="training_center_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="training_center_id", referencedColumnName="id", nullable=true)
      */
     protected ?TrainingCenter $trainingCenter = null;
 
