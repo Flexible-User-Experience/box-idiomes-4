@@ -15,17 +15,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FilterCalendarEventsType extends AbstractType
 {
     public const SESSION_KEY = 'filter_calendar_events_form_data';
 
+    private TranslatorInterface $ts;
     private RouterInterface $rs;
     private TeacherRepository $tr;
     private ClassGroupRepository $cgr;
 
-    public function __construct(RouterInterface $rs, TeacherRepository $tr, ClassGroupRepository $cgr)
+    public function __construct(TranslatorInterface $ts, RouterInterface $rs, TeacherRepository $tr, ClassGroupRepository $cgr)
     {
+        $this->ts = $ts;
         $this->rs = $rs;
         $this->tr = $tr;
         $this->cgr = $cgr;
@@ -38,12 +41,15 @@ class FilterCalendarEventsType extends AbstractType
                 'classroom',
                 ChoiceType::class,
                 [
-                    'label' => 'backend.admin.event.classroom',
+                    'label' => false,
                     'placeholder' => 'backend.admin.event.classroom',
                     'choices' => EventClassroomTypeEnum::getEnumArray(),
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
+                    'attr' => [
+                        'data-placeholder' => $this->ts->trans('backend.admin.event.classroom'),
+                    ],
                 ]
             )
             ->add(
@@ -60,6 +66,9 @@ class FilterCalendarEventsType extends AbstractType
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
+                    'attr' => [
+                        'data-placeholder' => $this->ts->trans('backend.admin.event.teacher'),
+                    ],
                 ]
             )
             ->add(
@@ -76,6 +85,9 @@ class FilterCalendarEventsType extends AbstractType
                     'multiple' => false,
                     'expanded' => false,
                     'required' => false,
+                    'attr' => [
+                        'data-placeholder' => $this->ts->trans('backend.admin.event.group'),
+                    ],
                 ]
             )
             ->add(
@@ -98,6 +110,9 @@ class FilterCalendarEventsType extends AbstractType
                 'method' => Request::METHOD_POST,
                 'action' => $this->rs->generate('admin_app_filter_calendar'),
                 'data_class' => FilterCalendarEventModel::class,
+                'attr' => [
+                    'class' => 'form-inline',
+                ],
             ]
         );
     }
