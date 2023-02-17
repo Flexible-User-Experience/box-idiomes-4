@@ -20,6 +20,13 @@ abstract class AbstractPerson extends AbstractBase
     use NameTrait;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\City")
+     *
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?City $city = null;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected ?\DateTimeInterface $dischargeDate = null;
