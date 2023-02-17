@@ -1,5 +1,7 @@
 ###> app/bundle ###
 !/public/uploads/.gitkeep
+/public/uploads/contact_message_answer_attatchments/*
+!/public/uploads/contact_message_answer_attatchments/.gitkeep
 /public/uploads/disc/*
 !/public/uploads/disc/.gitkeep
 /public/uploads/documents/*
@@ -19,12 +21,12 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 !.gitkeep
-!var/log/.gitkeep
-/var/log/test.log
-/var/log/dev.log
-/var/log/prod.log
 /var/cache/*
 !/var/cache/.gitkeep
+/var/log/*
+!var/log/.gitkeep
+/var/sessions/*
+!var/sessions/.gitkeep
 /var/testing-database.db
 /vendor/
 ###< symfony/framework-bundle ###

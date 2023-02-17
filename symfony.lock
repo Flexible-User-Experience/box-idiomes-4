@@ -646,9 +646,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.16.0"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.24.0"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.17.0"
     },
@@ -759,6 +756,9 @@
     },
     "symfony/ux-chartjs": {
         "version": "v2.0.1"
+    },
+    "symfony/ux-dropzone": {
+        "version": "v2.7.1"
     },
     "symfony/validator": {
         "version": "5.4",

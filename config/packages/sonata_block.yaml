@@ -3,5 +3,5 @@ sonata_block:
     blocks:
         sonata.admin.block.admin_list: ~
         sonata.block.service.text:     ~
-        app.block.event_calendar:      ~
-        app.block.charts:              ~
+        App\Block\EventCalendarBlock:  ~
+        App\Block\ChartsBlock:         ~

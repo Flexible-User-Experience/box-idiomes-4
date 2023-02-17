@@ -1,14 +1,19 @@
 Changelog
 =========
 
-##### Version 5.2.25 (WIP)
+##### Version 5.3.01 (WIP)
  * fix minor bugs
 
-##### Version 5.2.24 (2022-12-20)
+##### Version 5.3.00 (2023-02-17)
  * dependencies update
+ * enable 8 hours long PHP user logged sessions
+ * feature/0003-own-teacher-calendars included 
+ * feature/0005-attatch-document-in-contact-message-responses 
+ * feature/0006-filter-calendars-only-for-role-admin included 
 
 ##### Version 5.2.23 (2022-11-29)
  * Symfony 5.4.16 update
+ * dependencies update
  * show students inactive alert into Select2 tags
 
 ##### Version 5.2.22 (2022-11-07)
