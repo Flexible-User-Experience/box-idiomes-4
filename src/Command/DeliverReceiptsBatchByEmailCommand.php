@@ -7,7 +7,6 @@ use App\Enum\StudentPaymentEnum;
 use App\Pdf\ReceiptBuilderPdf;
 use App\Pdf\ReceiptReminderBuilderPdf;
 use App\Service\NotificationService;
-use Exception;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class DeliverReceiptsBatchByEmailCommand.
  *
- * @category Command
+ * TODO use an async Message queue instead
  */
 class DeliverReceiptsBatchByEmailCommand extends Command
 {
@@ -49,7 +48,7 @@ class DeliverReceiptsBatchByEmailCommand extends Command
      *
      * @return int|void|null
      *
-     * @throws Exception
+     * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
