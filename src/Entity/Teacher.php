@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\DescriptionTrait;
 use App\Entity\Traits\ImageTrait;
+use App\Entity\Traits\NameTrait;
 use App\Entity\Traits\PositionTrait;
 use App\Entity\Traits\SlugTrait;
 use App\Enum\TeacherColorEnum;
@@ -14,13 +15,16 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table()
+ *
  * @Vich\Uploadable
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TeacherRepository")
  */
 class Teacher extends AbstractBase
 {
     use DescriptionTrait;
     use ImageTrait;
+    use NameTrait;
     use PositionTrait;
     use SlugTrait;
 
@@ -36,10 +40,12 @@ class Teacher extends AbstractBase
 
     /**
      * @Vich\UploadableField(mapping="teacher", fileNameProperty="imageName")
+     *
      * @Assert\File(
      *     maxSize="10M",
      *     mimeTypes={"image/jpg", "image/jpeg", "image/png", "image/gif"}
      * )
+     *
      * @Assert\Image(allowLandscape=false, allowPortrait=true, minWidth=600)
      */
     private ?File $imageFile = null;
@@ -53,18 +59,6 @@ class Teacher extends AbstractBase
      * @ORM\Column(type="boolean")
      */
     private bool $showInHomepage = true;
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
     public function getColor(): int
     {

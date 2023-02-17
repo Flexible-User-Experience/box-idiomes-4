@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CityTrait;
+use App\Entity\Traits\NameTrait;
 use App\Enum\StudentPaymentEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,6 +17,7 @@ abstract class AbstractPerson extends AbstractBase
 {
     use AddressTrait;
     use CityTrait;
+    use NameTrait;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -85,11 +87,6 @@ abstract class AbstractPerson extends AbstractBase
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
     public function getFullName(): string
     {
         return $this->name.' '.$this->surname;
@@ -98,13 +95,6 @@ abstract class AbstractPerson extends AbstractBase
     public function getFullCanonicalName(): string
     {
         return $this->surname.', '.$this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getSurname(): ?string

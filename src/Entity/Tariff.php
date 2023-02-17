@@ -2,17 +2,22 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\NameTrait;
 use App\Enum\TariffTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TariffRepository")
+ *
  * @ORM\Table(name="tariff")
+ *
  * @UniqueEntity({"type", "year"})
  */
 class Tariff extends AbstractBase
 {
+    use NameTrait;
+
     /**
      * @ORM\Column(type="integer")
      */
@@ -75,18 +80,6 @@ class Tariff extends AbstractBase
     public function setType(int $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }
