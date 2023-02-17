@@ -13,7 +13,7 @@ App\Entity\ContactMessage:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# NewsletterContact
+# Newsletter contacts
 App\Entity\NewsletterContact:
   newslettercontact{1..5}:
     email: <safeEmail()>
@@ -30,7 +30,7 @@ App\Entity\Teacher:
     color: <numberBetween(0, 3)>
     showInHomepage: true
 
-# TeacherAbsence
+# Teacher absences
 App\Entity\TeacherAbsence:
   teacherabsence{1..2}:
     teacher: '@teacher<numberBetween(1,2)>'
@@ -40,7 +40,7 @@ App\Entity\TeacherAbsence:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# Student
+# Students
 App\Entity\Student:
   student{1..2}:
     dni: <bothify('########?')>
@@ -78,7 +78,7 @@ App\Entity\Student:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# StudentAbsence
+# Student absences
 App\Entity\StudentAbsence:
   studentabsence{1..2}:
     student: '@student<numberBetween(1,2)>'
@@ -94,7 +94,16 @@ App\Entity\Service:
     description: <paragraph()>
     position: <numberBetween(1, 2)>
 
-# Province
+# Training centers
+App\Entity\TrainingCenter:
+  trainingcenter{1..2}:
+    name: <city()>
+    city: '@city1'
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
+# Provinces
 App\Entity\Province:
   province{1..2}:
     code: <postcode()>
@@ -104,7 +113,7 @@ App\Entity\Province:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# City
+# Cities
 App\Entity\City:
   city{1..2}:
     name: <city()>
@@ -126,7 +135,7 @@ App\Entity\BankCreditorSepa:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# Bank
+# Banks
 App\Entity\Bank:
   bank{1..2}:
     name: <company()>
@@ -136,7 +145,7 @@ App\Entity\Bank:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# Person
+# Persons
 App\Entity\Person:
   person1:
     dni: <bothify('########?')>
@@ -152,7 +161,7 @@ App\Entity\Person:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# PreRegister
+# PreRegisters
 App\Entity\PreRegister:
   preregister1:
     dni: <bothify('########?')>
@@ -162,9 +171,10 @@ App\Entity\PreRegister:
     createdAt: <dateTimeBetween('-2 months', '-1 months')>
     updatedAt: <dateTimeThisMonth()>
 
-# ClassGroup
+# ClassGroups
 App\Entity\ClassGroup:
   classgroup{1..2}:
+    trainingCenter: '@trainingcenter1'
     code: <ean8()>
     name: <name()>
     book: <name()>
@@ -173,7 +183,7 @@ App\Entity\ClassGroup:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
-# Tariff
+# Tariffs
 App\Entity\Tariff:
   tariff{1..2}:
     year: <year('now')>
@@ -181,7 +191,7 @@ App\Entity\Tariff:
     type: <numberBetween(0, 4)>
     name: <name()>
 
-# Event
+# Events
 App\Entity\Event:
   event1:
     begin: <dateTimeThisMonth()>
@@ -216,9 +226,10 @@ App\Entity\Event:
     students:
       - '@student1'
 
-# Receipt
+# Receipts
 App\Entity\Receipt:
   receipt{1..2}:
+    trainingCenter: '@trainingcenter1'
     student: '@student<current()>'
     person: '@person1'
     date: '<dateTime()>'
@@ -228,7 +239,7 @@ App\Entity\Receipt:
     month: <month()>
     year: <year()>
 
-# ReceiptLine
+# Receipt lines
 App\Entity\ReceiptLine:
   lineReceipt{1..2}:
     description: <sentence()>
@@ -238,9 +249,10 @@ App\Entity\ReceiptLine:
     total: <randomFloat(1, 5)>
     receipt: '@receipt<current()>'
 
-# Invoice
+# Invoices
 App\Entity\Invoice:
   invoice{1..2}:
+    trainingCenter: '@trainingcenter1'
     receipt: '@receipt<current()>'
     student: '@student<current()>'
     person: '@person1'
@@ -254,7 +266,7 @@ App\Entity\Invoice:
     month: <month()>
     year: <year()>
 
-# InvoiceLine
+# Invoice lines
 App\Entity\InvoiceLine:
   lineInvoice{1..2}:
     description: <sentence()>
@@ -264,12 +276,12 @@ App\Entity\InvoiceLine:
     total: <randomFloat(1, 5)>
     invoice: '@invoice<current()>'
 
-# Spending Category
+# Spending categories
 App\Entity\SpendingCategory:
   spendingcategory{1..2}:
     name: <sentence()>
 
-# Spending
+# Spendings
 App\Entity\Spending:
   spending{1..2}:
     date: '<dateTime()>'
@@ -280,7 +292,7 @@ App\Entity\Spending:
     isPayed: <boolean()>
     paymentMethod: <numberBetween(0, 2)>
 
-# Provider
+# Providers
 App\Entity\Provider:
   provider{1..2}:
     tic: <word()>
