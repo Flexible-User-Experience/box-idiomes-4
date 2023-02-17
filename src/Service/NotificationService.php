@@ -16,14 +16,16 @@ use Twig\Environment;
 
 class NotificationService
 {
+    private SmartAssetsHelperService $sahs;
     private CourierService $messenger;
     private Environment $twig;
     private string $amd; // system's App Mail Destionation
     private string $pwt; // project web title
     private string $pub; // project URL base
 
-    public function __construct(CourierService $messenger, Environment $twig, ParameterBagInterface $pb)
+    public function __construct(SmartAssetsHelperService $sahs, CourierService $messenger, Environment $twig, ParameterBagInterface $pb)
     {
+        $this->sahs = $sahs;
         $this->messenger = $messenger;
         $this->twig = $twig;
         $this->amd = $pb->get('mailer_destination');
@@ -84,16 +86,28 @@ class NotificationService
     {
         $result = 1;
         try {
-            $this->messenger->sendEmailWithAttachedFile(
-                $this->amd,
-                $contactMessage->getEmail(),
-                $contactMessage->getName(),
-                $this->pub.' · Resposta missatge de contacte pàgina web',
-                $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', [
-                    'contact' => $contactMessage,
-                ]),
-                $contactMessage->getDocumentFile()
-            );
+            if ($contactMessage->getDocument()) {
+                $this->messenger->sendEmailWithAttachedFile(
+                    $this->amd,
+                    $contactMessage->getEmail(),
+                    $contactMessage->getName(),
+                    $this->pub.' · Resposta missatge de contacte pàgina web',
+                    $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', [
+                        'contact' => $contactMessage,
+                    ]),
+                    $this->sahs->getAbsoluteAssetFilePath($this->sahs->getContactMessageAttatchmentPath($contactMessage)),
+                    $contactMessage->getDocument()
+                );
+            } else {
+                $this->messenger->sendEmail(
+                    $this->amd,
+                    $contactMessage->getEmail(),
+                    $this->pub.' · Resposta missatge de contacte pàgina web',
+                    $this->twig->render('Mails/contact_form_user_backend_notification.html.twig', [
+                        'contact' => $contactMessage,
+                    ])
+                );
+            }
         } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
         }

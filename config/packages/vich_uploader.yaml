@@ -15,6 +15,6 @@ vich_uploader:
             upload_destination: '%kernel.project_dir%/public/uploads/documents/spending'
             namer: 'Vich\UploaderBundle\Naming\UniqidNamer'
         contact_message:
-            uri_prefix: '/uploads/documents/contact_message_answer_attatchments'
-            upload_destination: '%kernel.project_dir%/public/uploads/documents/contact_message_answer_attatchments'
+            uri_prefix: '/uploads/contact_message_answer_attatchments'
+            upload_destination: '%kernel.project_dir%/public/uploads/contact_message_answer_attatchments'
             namer: 'Vich\UploaderBundle\Naming\SmartUniqueNamer'

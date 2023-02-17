@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -42,12 +41,10 @@ class CourierService
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendEmailWithAttachedFile(string $from, string $toEmail, string $toName, string $subject, string $body, ?File $file): void
+    public function sendEmailWithAttachedFile(string $from, string $toEmail, string $toName, string $subject, string $body, string $filepath, string $filename): void
     {
         $message = $this->buildEmail($from, $toEmail, $subject, $body, null, $toName);
-        if ($file) {
-            $message->attachFromPath($file->getPath(), $file->getFilename());
-        }
+        $message->attachFromPath($filepath, $filename);
 
         $this->mailer->send($message);
     }

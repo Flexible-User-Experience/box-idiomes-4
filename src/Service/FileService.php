@@ -16,11 +16,6 @@ class FileService
         $this->pb = $pb;
     }
 
-    public function getUhs(): UploaderHelper
-    {
-        return $this->uhs;
-    }
-
     public function getMimeType($entity, $attribute): string
     {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -33,11 +28,7 @@ class FileService
 
     public function isImage($entity, $attribute): string
     {
-        if ('image/jpg' === $this->getMimeType($entity, $attribute) || 'image/jpeg' === $this->getMimeType($entity, $attribute) || 'image/png' === $this->getMimeType($entity, $attribute) || 'image/gif' === $this->getMimeType($entity, $attribute)) {
-            return true;
-        }
-
-        return false;
+        return 'image/jpg' === $this->getMimeType($entity, $attribute) || 'image/jpeg' === $this->getMimeType($entity, $attribute) || 'image/png' === $this->getMimeType($entity, $attribute) || 'image/gif' === $this->getMimeType($entity, $attribute);
     }
 
     public function isPdf($entity, $attribute): bool

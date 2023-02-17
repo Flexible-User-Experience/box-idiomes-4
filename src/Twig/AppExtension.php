@@ -19,8 +19,8 @@ use App\Enum\TeacherAbsenceTypeEnum;
 use App\Enum\TeacherColorEnum;
 use App\Enum\UserRolesEnum;
 use App\Manager\ReceiptManager;
+use App\Service\FileService;
 use App\Service\SmartAssetsHelperService;
-use Symfony\Component\Mime\MimeTypes;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -29,12 +29,14 @@ use Twig\TwigTest;
 
 class AppExtension extends AbstractExtension
 {
+    private FileService $fs;
     private SmartAssetsHelperService $sahs;
     private ReceiptManager $rm;
     private TranslatorInterface $ts;
 
-    public function __construct(SmartAssetsHelperService $sahs, ReceiptManager $rm, TranslatorInterface $ts)
+    public function __construct(FileService $fs, SmartAssetsHelperService $sahs, ReceiptManager $rm, TranslatorInterface $ts)
     {
+        $this->fs = $fs;
         $this->sahs = $sahs;
         $this->rm = $rm;
         $this->ts = $ts;
@@ -85,18 +87,12 @@ class AppExtension extends AbstractExtension
 
     public function isContactMessageDocumentPdfFile(ContactMessage $contactMessage): bool
     {
-        $filePath = $this->sahs->getAbsoluteAssetFilePath($this->sahs->getContactMessageAttatchmentPath($contactMessage));
-        $mimeTypes = new MimeTypes();
-
-        return 'application/pdf' === $mimeTypes->guessMimeType($filePath);
+        return $this->fs->isPdf($contactMessage, 'documentFile');
     }
 
     public function isContactMessageDocumentImageFile(ContactMessage $contactMessage): bool
     {
-        $filePath = $this->sahs->getAbsoluteAssetFilePath($this->sahs->getContactMessageAttatchmentPath($contactMessage));
-        $mimeTypes = new MimeTypes();
-
-        return 'image/png' === $mimeTypes->guessMimeType($filePath) || 'image/jpg' === $mimeTypes->guessMimeType($filePath) || 'image/jpeg' === $mimeTypes->guessMimeType($filePath);
+        return $this->fs->isImage($contactMessage, 'documentFile');
     }
 
     public function isReceiptInvoicedFunction(Receipt $receipt): bool
