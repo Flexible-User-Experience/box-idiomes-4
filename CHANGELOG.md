@@ -4,7 +4,10 @@ Changelog
 ##### Version 5.3.01 (WIP)
  * fix minor bugs
 
-##### Version 5.3.00 (2023-02-17)
+##### Version 5.3.00 (WIP)
+ * keep working
+
+##### Version 5.4.24 (2023-02-17)
  * dependencies update
  * enable 8 hours long PHP user logged sessions
  * feature/0003-own-teacher-calendars included 
