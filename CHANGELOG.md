@@ -5,12 +5,15 @@ Changelog
  * fix minor bugs
 
 ##### Version 5.3.00 (WIP)
- * keep working
+ * remove unnecessary console commands
+ * improve filter calendar form responsive breakpoints
+ * fix actions column width to reduce size
+ * add TrainingCenter management
 
-##### Version 5.4.25 (2023-02-17)
+##### Version 5.2.25 (2023-02-17)
  * add missing placeholders in calendar filters
 
-##### Version 5.4.24 (2023-02-17)
+##### Version 5.2.24 (2023-02-17)
  * dependencies update
  * enable 8 hours long PHP user logged sessions
  * feature/0003-own-teacher-calendars included 

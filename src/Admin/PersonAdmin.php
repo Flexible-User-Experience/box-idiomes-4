@@ -361,6 +361,7 @@ final class PersonAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:63px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [

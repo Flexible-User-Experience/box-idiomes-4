@@ -519,7 +519,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridHasAtLeastOneEventClassGroupAssignedFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($field === 'hasAtLeastOneEventClassGroupAssigned' && $data->hasValue()) {
+        if ('hasAtLeastOneEventClassGroupAssigned' === $field && $data->hasValue()) {
             $beginEndSchoolYearMoment = new BeginEndSchoolYearMoment((int) $data->getValue());
             $relatedEntitiesQuery = $query->getQueryBuilder()->getEntityManager()->getRepository(Student::class)
                 ->createQueryBuilder('student')
@@ -541,7 +541,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridSchoolYearFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($field === 'schoolYear' && $data->hasValue()) {
+        if ('schoolYear' === $field && $data->hasValue()) {
             $beginEndSchoolYearMoment = new BeginEndSchoolYearMoment((int) $data->getValue());
             $query->leftJoin($alias.'.events', 'ev');
             $query->andWhere('ev.begin > :begin');
@@ -557,7 +557,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridAgesFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($field === 'age' && $data->hasValue()) {
+        if ('age' === $field && $data->hasValue()) {
             $age = (int) $data->getValue();
             if ($age < StudentAgesEnum::AGE_20_plus) {
                 $query->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age');
@@ -658,6 +658,7 @@ final class StudentAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:152px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [

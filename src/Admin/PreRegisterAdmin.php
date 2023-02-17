@@ -318,6 +318,7 @@ final class PreRegisterAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:84px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
