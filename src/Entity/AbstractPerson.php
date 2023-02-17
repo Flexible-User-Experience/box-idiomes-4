@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\CityTrait;
 use App\Enum\StudentPaymentEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -14,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class AbstractPerson extends AbstractBase
 {
     use AddressTrait;
+    use CityTrait;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -46,11 +48,6 @@ abstract class AbstractPerson extends AbstractBase
      * @Assert\Email()
      */
     protected ?string $email = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City")
-     */
-    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
@@ -142,18 +139,6 @@ abstract class AbstractPerson extends AbstractBase
     public function setEmail(?string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getCity(): ?City
-    {
-        return $this->city;
-    }
-
-    public function setCity(?City $city): self
-    {
-        $this->city = $city;
 
         return $this;
     }
