@@ -7,6 +7,9 @@ Changelog
 ##### Version 5.3.00 (WIP)
  * keep working
 
+##### Version 5.4.25 (2023-02-17)
+ * add missing placeholders in calendar filters
+
 ##### Version 5.4.24 (2023-02-17)
  * dependencies update
  * enable 8 hours long PHP user logged sessions
