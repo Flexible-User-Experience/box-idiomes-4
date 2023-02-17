@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\AddressTrait;
 use App\Enum\StudentPaymentEnum;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,10 +13,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class AbstractPerson extends AbstractBase
 {
+    use AddressTrait;
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?DateTimeInterface $dischargeDate = null;
+    protected ?\DateTimeInterface $dischargeDate = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -40,14 +42,10 @@ abstract class AbstractPerson extends AbstractBase
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @Assert\Email()
      */
     protected ?string $email = null;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected ?string $address = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\City")
@@ -61,7 +59,7 @@ abstract class AbstractPerson extends AbstractBase
 
     protected ?Bank $bank = null;
 
-    public function getDischargeDate(): ?DateTimeInterface
+    public function getDischargeDate(): ?\DateTimeInterface
     {
         return $this->dischargeDate;
     }
@@ -71,7 +69,7 @@ abstract class AbstractPerson extends AbstractBase
         return self::convertDateAsString($this->getDischargeDate());
     }
 
-    public function setDischargeDate(?DateTimeInterface $dischargeDate): self
+    public function setDischargeDate(?\DateTimeInterface $dischargeDate): self
     {
         $this->dischargeDate = $dischargeDate;
 
@@ -144,18 +142,6 @@ abstract class AbstractPerson extends AbstractBase
     public function setEmail(?string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): self
-    {
-        $this->address = $address;
 
         return $this;
     }
