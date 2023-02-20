@@ -338,6 +338,11 @@ final class StudentAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.student.city',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => City::class,
+                        'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(

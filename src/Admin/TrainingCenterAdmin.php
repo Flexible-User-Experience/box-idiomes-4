@@ -96,6 +96,11 @@ final class TrainingCenterAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.training_center.city',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => City::class,
+                        'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(

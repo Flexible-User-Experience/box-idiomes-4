@@ -12,10 +12,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
-use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
-use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -226,13 +224,13 @@ final class PersonAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'city',
-                ModelFilter::class,
+                null,
                 [
                     'label' => 'backend.admin.parent.city',
-                    'field_type' => ModelAutocompleteType::class,
+                    'field_type' => EntityType::class,
                     'field_options' => [
                         'class' => City::class,
-                        'property' => ['name', 'postalCode'],
+                        'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
                     ],
                 ]
             )
