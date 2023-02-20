@@ -3,11 +3,14 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
+use App\Entity\City;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 final class TrainingCenterAdmin extends AbstractBaseAdmin
 {
@@ -30,12 +33,41 @@ final class TrainingCenterAdmin extends AbstractBaseAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general'))
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 4))
             ->add(
                 'name',
                 null,
                 [
                     'label' => 'backend.admin.training_center.name',
+                ]
+            )
+            ->add(
+                'address',
+                null,
+                [
+                    'label' => 'backend.admin.training_center.address',
+                    'required' => false,
+                ]
+            )
+            ->end()
+            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
+            ->add(
+                'city',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.training_center.city',
+                    'required' => true,
+                    'class' => City::class,
+                    'choice_label' => 'name',
+                    'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
+                ]
+            )
+            ->add(
+                'enabled',
+                CheckboxType::class,
+                [
+                    'label' => 'backend.admin.enabled',
+                    'required' => false,
                 ]
             )
             ->end()
@@ -50,6 +82,20 @@ final class TrainingCenterAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.training_center.name',
+                ]
+            )
+            ->add(
+                'address',
+                null,
+                [
+                    'label' => 'backend.admin.training_center.address',
+                ]
+            )
+            ->add(
+                'city',
+                null,
+                [
+                    'label' => 'backend.admin.training_center.city',
                 ]
             )
             ->add(
@@ -71,6 +117,22 @@ final class TrainingCenterAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.training_center.name',
                     'editable' => true,
+                ]
+            )
+            ->add(
+                'address',
+                null,
+                [
+                    'label' => 'backend.admin.training_center.address',
+                    'editable' => true,
+                ]
+            )
+            ->add(
+                'city',
+                null,
+                [
+                    'label' => 'backend.admin.training_center.city',
+                    'editable' => false,
                 ]
             )
             ->add(

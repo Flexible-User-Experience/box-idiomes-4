@@ -533,6 +533,10 @@ backend:
                 expenses: "Despeses"
                 results: "Resultats"
                 zeros: "Zero"
+        training_center:
+            name: "Nom"
+            address: "Adreça"
+            city: "Ciutat"
 
 month:
     january: "gener"
