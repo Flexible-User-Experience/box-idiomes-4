@@ -3,11 +3,13 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
+use App\Entity\TrainingCenter;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 
@@ -71,6 +73,16 @@ final class ClassGroupAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'trainingCenter',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'required' => true,
+                    'class' => TrainingCenter::class,
+                    'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                ]
+            )
+            ->add(
                 'isForPrivateLessons',
                 CheckboxType::class,
                 [
@@ -111,6 +123,18 @@ final class ClassGroupAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.class_group.book',
+                ]
+            )
+            ->add(
+                'trainingCenter',
+                null,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => TrainingCenter::class,
+                        'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(
@@ -163,6 +187,13 @@ final class ClassGroupAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.class_group.color',
                     'template' => 'Admin/Cells/list__cell_class_group_color.html.twig',
+                ]
+            )
+            ->add(
+                'trainingCenter',
+                null,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
                 ]
             )
             ->add(

@@ -248,6 +248,7 @@ backend:
             code: "Codi"
             name: "Nom"
             book: "Llibre"
+            training_center: "Centre formació"
             school_year: "Curs escolar"
             has_at_least_one_event_class_group_assigned: "Sense grup assignat al curs escolar"
             color: "Color"

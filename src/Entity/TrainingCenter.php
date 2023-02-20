@@ -32,4 +32,9 @@ class TrainingCenter extends AbstractBase
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=false)
      */
     private ?City $city = null;
+
+    public function __toString(): string
+    {
+        return $this->name ? $this->getName() : AbstractBase::DEFAULT_NULL_STRING;
+    }
 }
