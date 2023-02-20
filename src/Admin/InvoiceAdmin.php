@@ -8,7 +8,6 @@ use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Enum\InvoiceYearMonthEnum;
 use App\Enum\StudentPaymentEnum;
-use DateTimeImmutable;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -74,7 +73,7 @@ final class InvoiceAdmin extends AbstractBaseAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $currentYear = $now->format('Y');
         $form
             ->with('backend.admin.invoice.invoice', $this->getFormMdSuccessBoxArray('backend.admin.invoice.invoice', 3))
@@ -604,6 +603,7 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:213px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
