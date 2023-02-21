@@ -6,6 +6,7 @@ use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Student;
+use App\Entity\TrainingCenter;
 use App\Enum\InvoiceYearMonthEnum;
 use App\Enum\StudentPaymentEnum;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
@@ -170,6 +171,16 @@ final class InvoiceAdmin extends AbstractBaseAdmin
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
+                'trainingCenter',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'required' => true,
+                    'class' => TrainingCenter::class,
+                    'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                ]
+            )
+            ->add(
                 'receipt',
                 EntityType::class,
                 [
@@ -314,6 +325,18 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                         'choices' => InvoiceYearMonthEnum::getMonthEnumArray(),
                         'expanded' => false,
                         'multiple' => false,
+                    ],
+                ]
+            )
+            ->add(
+                'trainingCenter',
+                null,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => TrainingCenter::class,
+                        'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
                     ],
                 ]
             )
@@ -637,6 +660,7 @@ final class InvoiceAdmin extends AbstractBaseAdmin
             'dateString',
             'year',
             'month',
+            'trainingCenter',
             'receipt.receiptNumber',
             'student.dni',
             'student.fullCanonicalName',

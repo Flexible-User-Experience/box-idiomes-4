@@ -240,6 +240,7 @@ final class ClassGroupAdmin extends AbstractBaseAdmin
             'name',
             'book',
             'color',
+            'trainingCenter',
             'isForPrivateLessons',
             'enabled',
         ];
