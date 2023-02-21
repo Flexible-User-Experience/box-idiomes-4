@@ -33,6 +33,12 @@ final class ReceiptAdminController extends AbstractAdminController
         $form = $this->createForm(GenerateReceiptType::class, $generateReceipt);
         $form->handleRequest($request);
         if ($yearMonthForm->isSubmitted() && $yearMonthForm->isValid()) {
+            // copy values from first form filters selection
+            $generateReceipt
+                ->setYear($generateReceiptYearMonthChooser->getYear())
+                ->setMonth($generateReceiptYearMonthChooser->getMonth())
+                ->setTrainingCenter($generateReceiptYearMonthChooser->getTrainingCenter())
+            ;
             // build preview view
             $generateReceipt = $this->grfm->buildFullModelForm($generateReceipt);
             $form = $this->createForm(GenerateReceiptType::class, $generateReceipt);

@@ -5,12 +5,14 @@ namespace App\Manager;
 use App\Entity\Receipt;
 use App\Entity\ReceiptLine;
 use App\Entity\Student;
+use App\Entity\TrainingCenter;
 use App\Enum\ReceiptYearMonthEnum;
 use App\Form\Model\GenerateReceiptItemModel;
 use App\Form\Model\GenerateReceiptModel;
 use App\Repository\EventRepository;
 use App\Repository\ReceiptRepository;
 use App\Repository\StudentRepository;
+use App\Repository\TrainingCenterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -25,153 +27,12 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
     private EventManager $eem;
     private ParameterBagInterface $parameterBag;
 
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem, ParameterBagInterface $parameterBag)
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, TrainingCenterRepository $tcr, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem, ParameterBagInterface $parameterBag)
     {
-        parent::__construct($logger, $kernel, $em, $ts, $sr, $er);
+        parent::__construct($logger, $kernel, $em, $ts, $tcr, $sr, $er);
         $this->rr = $rr;
         $this->eem = $eem;
         $this->parameterBag = $parameterBag;
-    }
-
-    private function commonFastGenerateReciptsForYearAndMonth(int $year, int $month, $enableEmailDelivery = false): int
-    {
-        $generatedReceiptsAmount = 0;
-
-        // group lessons
-        $studentsInGroupLessons = $this->sr->getGroupLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariff($year, $month);
-        /** @var Student $student */
-        foreach ($studentsInGroupLessons as $student) {
-            /** @var Receipt $previousReceipt */
-            $previousReceipt = $this->rr->findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNull($student, $year, $month);
-            if (is_null($previousReceipt)) {
-                // create and persist new receipt
-                ++$generatedReceiptsAmount;
-                $description = $this->ts->trans('backend.admin.invoiceLine.generator.group_lessons_line', ['%month%' => ReceiptYearMonthEnum::getTranslatedMonthEnumArray()[$month], '%year%' => $year], 'messages');
-                $receiptLine = new ReceiptLine();
-                $receiptLine
-                    ->setStudent($student)
-                    ->setDescription($description)
-                    ->setUnits(1)
-                    ->setPriceUnit($student->getTariff()->getPrice())
-                    ->setDiscount($student->calculateMonthlyDiscountWithExtraSonDiscount($this->parameterBag->get('project_discount_extra_son')))
-                    ->setTotal($receiptLine->getPriceUnit() - $receiptLine->getDiscount())
-                ;
-                $receipt = new Receipt();
-                $receipt
-                    ->setDate(new \DateTimeImmutable())
-                    ->setStudent($student)
-                    ->setPerson($student->getParent() ?: null)
-                    ->setIsPayed(false)
-                    ->setIsSepaXmlGenerated(false)
-                    ->setIsForPrivateLessons(false)
-                    ->setIsSended(false)
-                    ->setYear($year)
-                    ->setMonth($month)
-                    ->addLine($receiptLine)
-                ;
-                if ($enableEmailDelivery) {
-                    $receipt
-                        ->setIsSended(true)
-                        ->setSendDate(new \DateTimeImmutable())
-                    ;
-                }
-                $this->em->persist($receipt);
-            }
-        }
-
-        // private lessons (in previous month period)
-        $oldYear = $year;
-        $oldMonth = $month;
-        --$month;
-        if (0 === $month) {
-            $month = 12;
-            --$year;
-        }
-        $studentsInPrivateLessons = $this->sr->getPrivateLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariff($year, $month);
-        /** @var Student $student */
-        foreach ($studentsInPrivateLessons as $student) {
-            /** @var Receipt $previousReceipt */
-            $previousReceipt = $this->rr->findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNull($student, $oldYear, $oldMonth);
-            if (is_null($previousReceipt)) {
-                // create and persist new receipt
-                ++$generatedReceiptsAmount;
-                $description = $this->ts->trans('backend.admin.invoiceLine.generator.private_lessons_line', ['%month%' => ReceiptYearMonthEnum::getTranslatedMonthEnumArray()[$month], '%year%' => $year], 'messages');
-                $receiptLine = new ReceiptLine();
-                $receiptLine
-                    ->setStudent($student)
-                    ->setDescription($description)
-                    ->setUnits($this->er->getPrivateLessonsAmountByStudentYearAndMonth($student, $year, $month))
-                    ->setPriceUnit($this->eem->getCurrentPrivateLessonsTariffForEvents($studentsInPrivateLessons)->getPrice())
-                    ->setDiscount(0)
-                    ->setTotal($receiptLine->getPriceUnit() - $receiptLine->getDiscount())
-                ;
-                $receipt = new Receipt();
-                $receipt
-                    ->setDate(new \DateTimeImmutable())
-                    ->setStudent($student)
-                    ->setPerson($student->getParent() ?: null)
-                    ->setIsPayed(false)
-                    ->setIsSepaXmlGenerated(false)
-                    ->setIsForPrivateLessons(true)
-                    ->setIsSended(false)
-                    ->setYear($oldYear)
-                    ->setMonth($oldMonth)
-                    ->addLine($receiptLine)
-                ;
-                if ($enableEmailDelivery) {
-                    $receipt
-                        ->setIsSended(true)
-                        ->setSendDate(new \DateTimeImmutable())
-                    ;
-                }
-                $this->em->persist($receipt);
-            }
-        }
-        $this->em->flush();
-
-        if ($enableEmailDelivery) {
-            $ids = [];
-            $this->logger->info('[GRFM] commonFastGenerateReciptsForYearAndMonth call');
-            $this->logger->info('[GRFM] '.$generatedReceiptsAmount.' records managed');
-            $receipts = $this->rr->findBy([
-                'year' => $oldYear,
-                'month' => $oldMonth,
-                'isSended' => false,
-            ]);
-            if (count($receipts) > 0) {
-                /** @var Receipt $receipt */
-                foreach ($receipts as $receipt) {
-                    $ids[] = $receipt->getId();
-                    $receipt
-                        ->setIsSended(true)
-                        ->setSendDate(new \DateTimeImmutable())
-                    ;
-                }
-                $this->em->flush();
-                $phpBinaryFinder = new PhpExecutableFinder();
-                $phpBinaryPath = $phpBinaryFinder->find();
-                $command = 'nohup '.$phpBinaryPath.' '.$this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'console app:deliver:receipts:batch '.implode(' ', $ids).' --force --env='.$this->kernel->getEnvironment().' 2>&1 > /dev/null &';
-                $this->logger->info('[GRFM] '.$command);
-                $process = new Process([$command]);
-                $process->setTimeout(null);
-                $process->run();
-            } else {
-                $this->logger->info('[GRFM] commonFastGenerateReciptsForYearAndMonth nothing send, all receipts are preivously sended.');
-            }
-        }
-        $this->logger->info('[GRFM] commonFastGenerateReciptsForYearAndMonth EOF');
-
-        return $generatedReceiptsAmount;
-    }
-
-    public function fastGenerateReciptsForYearAndMonth(int $year, int $month): int
-    {
-        return $this->commonFastGenerateReciptsForYearAndMonth($year, $month);
-    }
-
-    public function fastGenerateReciptsForYearAndMonthAndDeliverEmail(int $year, int $month): int
-    {
-        return $this->commonFastGenerateReciptsForYearAndMonth($year, $month, true);
     }
 
     public function buildFullModelForm(GenerateReceiptModel $generateReceipt): GenerateReceiptModel
@@ -189,6 +50,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $previousItem = $previousReceipt->getLines()[0];
                     $generateReceiptItem = new GenerateReceiptItemModel();
                     $generateReceiptItem
+                        ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
                         ->setStudentId($student->getId())
                         ->setStudentName($student->getFullCanonicalName())
                         ->setUnits($previousItem->getUnits())
@@ -204,6 +66,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 // new
                 $generateReceiptItem = new GenerateReceiptItemModel();
                 $generateReceiptItem
+                    ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
                     ->setStudentId($student->getId())
                     ->setStudentName($student->getFullCanonicalName())
                     ->setUnits(1)
@@ -218,7 +81,6 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 }
             }
         }
-
         // private lessons (in previous month period)
         $oldYear = $generateReceipt->getYear();
         $oldMonth = $generateReceipt->getMonth();
@@ -229,7 +91,11 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
             $month = 12;
             --$year;
         }
-        $studentsInPrivateLessons = $this->sr->getPrivateLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariff($year, $month);
+        $generateReceipt
+            ->setYear($year)
+            ->setMonth($month)
+        ;
+        $studentsInPrivateLessons = $this->sr->getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariff($generateReceipt);
         /** @var Student $student */
         foreach ($studentsInPrivateLessons as $student) {
             /** @var Receipt $previousReceipt */
@@ -241,6 +107,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $previousItem = $previousReceipt->getLines()[0];
                     $generateReceiptItem = new GenerateReceiptItemModel();
                     $generateReceiptItem
+                        ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
                         ->setStudentId($student->getId())
                         ->setStudentName($student->getFullCanonicalName())
                         ->setUnits($previousItem->getUnits())
@@ -257,6 +124,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 $privateLessons = $this->er->getPrivateLessonsByStudentYearAndMonth($student, $year, $month);
                 $generateReceiptItem = new GenerateReceiptItemModel();
                 $generateReceiptItem
+                    ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
                     ->setStudentId($student->getId())
                     ->setStudentName($student->getFullCanonicalName())
                     ->setUnits((float) count($privateLessons))
@@ -284,17 +152,24 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         if (array_key_exists('month', $requestArray)) {
             $generateReceipt->setMonth((int) $requestArray['month']);
         }
+        if (array_key_exists('trainingCenter', $requestArray)) {
+            $trainingCenterId = (int) $requestArray['trainingCenter'];
+            /** @var TrainingCenter $trainingCenter */
+            $trainingCenter = $this->tcr->find($trainingCenterId);
+            $generateReceipt->setTrainingCenter($trainingCenter);
+        }
         if (array_key_exists('items', $requestArray)) {
             $items = $requestArray['items'];
             /** @var array $item */
             foreach ($items as $item) {
-                if (array_key_exists('units', $item) && array_key_exists('unitPrice', $item) && array_key_exists('discount', $item) && array_key_exists('studentId', $item)) {
+                if (array_key_exists('units', $item) && array_key_exists('unitPrice', $item) && array_key_exists('discount', $item) && array_key_exists('studentId', $item) && array_key_exists('trainingCenterId', $item)) {
                     $studentId = (int) $item['studentId'];
                     /** @var Student $student */
                     $student = $this->sr->find($studentId);
                     if ($student) {
                         $generateReceiptItem = new GenerateReceiptItemModel();
                         $generateReceiptItem
+                            ->setTrainingCenterId($trainingCenterId)
                             ->setStudentId($student->getId())
                             ->setStudentName($student->getFullCanonicalName())
                             ->setUnits($this->parseStringToFloat($item['units']))
@@ -341,6 +216,8 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 ++$recordsParsed;
                 /** @var Student $student */
                 $student = $this->sr->find($generateReceiptItemModel->getStudentId());
+                /** @var TrainingCenter $trainingCenter */
+                $trainingCenter = $this->tcr->find($generateReceiptItemModel->getTrainingCenterId());
                 if (!is_null($previousReceipt)) {
                     // update existing receipt
                     if (1 === count($previousReceipt->getLines())) {
@@ -381,6 +258,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $receipt = new Receipt();
                     $receipt
                         ->setDate(new \DateTimeImmutable())
+                        ->setTrainingCenter($trainingCenter)
                         ->setStudent($student)
                         ->setPerson($student->getParent() ?: null)
                         ->setIsPayed(false)
@@ -432,6 +310,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 }
             }
             if (count($ids) > 0) {
+                // TODO use a messenger queue
                 $command = 'nohup '.$phpBinaryPath.' '.$this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'console app:deliver:receipts:batch '.implode(' ', $ids).' --force --env='.$this->kernel->getEnvironment().' 2>&1 > /dev/null &';
                 $this->logger->info('[GRFM] '.$command);
                 $process = new Process([$command]);

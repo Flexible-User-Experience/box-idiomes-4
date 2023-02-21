@@ -11,7 +11,7 @@ use App\Form\Model\GenerateInvoiceModel;
 use App\Repository\EventRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\StudentRepository;
-use DateTime;
+use App\Repository\TrainingCenterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -23,9 +23,9 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
     private InvoiceRepository $ir;
     private ParameterBagInterface $parameterBag;
 
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er, InvoiceRepository $ir, ParameterBagInterface $parameterBag)
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, TrainingCenterRepository $tcr, StudentRepository $sr, EventRepository $er, InvoiceRepository $ir, ParameterBagInterface $parameterBag)
     {
-        parent::__construct($logger, $kernel, $em, $ts, $sr, $er);
+        parent::__construct($logger, $kernel, $em, $ts, $tcr, $sr, $er);
         $this->ir = $ir;
         $this->parameterBag = $parameterBag;
     }
@@ -163,7 +163,7 @@ class GenerateInvoiceFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $invoice
                         ->setStudent($student)
                         ->setPerson($student->getParent() ?: null)
-                        ->setDate(new DateTime())
+                        ->setDate(new \DateTime())
                         ->setIsPayed(false)
                         ->setIsSepaXmlGenerated(false)
                         ->setIsSended(false)

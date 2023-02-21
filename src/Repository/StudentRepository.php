@@ -182,6 +182,24 @@ final class StudentRepository extends ServiceEntityRepository
         return $this->getPrivateLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQ($year, $month)->getResult();
     }
 
+    public function getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQB(GenerateReceiptModel $generateReceipt): QueryBuilder
+    {
+        return $this->getStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQB($generateReceipt->getYear(), $generateReceipt->getMonth())
+            ->andWhere('cg.trainingCenter = :trainingCenter')
+            ->setParameter('trainingCenter', $generateReceipt->getTrainingCenter())
+        ;
+    }
+
+    public function getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQ(GenerateReceiptModel $generateReceipt): Query
+    {
+        return $this->getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQB($generateReceipt)->getQuery();
+    }
+
+    public function getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariff(GenerateReceiptModel $generateReceipt): array
+    {
+        return $this->getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQ($generateReceipt)->getResult();
+    }
+
     public function getGroupLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQB(int $year, int $month): QueryBuilder
     {
         return $this->getStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQB($year, $month)

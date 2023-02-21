@@ -17,24 +17,24 @@ abstract class AbstractGenerateReceiptInvoiceModel
         $this->items = new ArrayCollection();
     }
 
-    public function getYear(): int
+    public function getYear(): ?int
     {
         return $this->year;
     }
 
-    public function setYear(int $year): self
+    public function setYear(?int $year): self
     {
         $this->year = $year;
 
         return $this;
     }
 
-    public function getMonth(): int
+    public function getMonth(): ?int
     {
         return $this->month;
     }
 
-    public function setMonth(int $month): self
+    public function setMonth(?int $month): self
     {
         $this->month = $month;
 
