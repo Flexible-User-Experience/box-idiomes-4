@@ -9,10 +9,7 @@ use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
 use App\Kernel;
-use DateTime;
-use DateTimeImmutable;
 use Digitick\Sepa\Util\StringHelper;
-use Exception;
 use PhpZip\ZipFile;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -36,10 +33,8 @@ final class ReceiptAdminController extends AbstractAdminController
         $form = $this->createForm(GenerateReceiptType::class, $generateReceipt);
         $form->handleRequest($request);
         if ($yearMonthForm->isSubmitted() && $yearMonthForm->isValid()) {
-            $year = $generateReceiptYearMonthChooser->getYear();
-            $month = $generateReceiptYearMonthChooser->getMonth();
             // build preview view
-            $generateReceipt = $this->grfm->buildFullModelForm($year, $month);
+            $generateReceipt = $this->grfm->buildFullModelForm($generateReceipt);
             $form = $this->createForm(GenerateReceiptType::class, $generateReceipt);
         }
 
@@ -154,7 +149,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
         $object
             ->setIsSended(true)
-            ->setSendDate(new DateTimeImmutable())
+            ->setSendDate(new \DateTimeImmutable())
         ;
         $this->mr->getManager()->flush();
         $pdf = $this->rbp->build($object);
@@ -178,16 +173,16 @@ final class ReceiptAdminController extends AbstractAdminController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
         $paymentUniqueId = uniqid('', true);
-        $xml = $this->xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
+        $xml = $this->xsbs->buildDirectDebitSingleReceiptXml($paymentUniqueId, new \DateTime('now + 3 days'), $object);
         $object
             ->setIsSepaXmlGenerated(true)
-            ->setSepaXmlGeneratedDate(new DateTimeImmutable())
+            ->setSepaXmlGeneratedDate(new \DateTimeImmutable())
         ;
         $this->mr->getManager()->flush();
         if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $fileSystem = new Filesystem();
         $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_receipt_'.$now->format('Y-m-d_H-i').'.xml';
         $fileSystem->touch($fileNamePath);
@@ -214,7 +209,7 @@ final class ReceiptAdminController extends AbstractAdminController
             }
 
             return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminders.pdf'), 200, ['Content-type' => 'application/pdf']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu de recordatoris de pagaments de rebut amb format PDF. Revisa els rebuts seleccionats.');
             $this->addFlash('error', $e->getMessage());
 
@@ -236,19 +231,19 @@ final class ReceiptAdminController extends AbstractAdminController
             $banksCreditorSepa = $this->bcsr->getEnabledSortedByName();
             /** @var BankCreditorSepa $bankCreditorSepa */
             foreach ($banksCreditorSepa as $bankCreditorSepa) {
-                $xmlsArray[] = $this->xsbs->buildDirectDebitReceiptsXmlForBankCreditorSepa($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels, $bankCreditorSepa);
+                $xmlsArray[] = $this->xsbs->buildDirectDebitReceiptsXmlForBankCreditorSepa($paymentUniqueId, new \DateTime('now + 3 days'), $selectedModels, $bankCreditorSepa);
             }
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
                     $selectedModel
                         ->setIsSepaXmlGenerated(true)
-                        ->setSepaXmlGeneratedDate(new DateTimeImmutable())
+                        ->setSepaXmlGeneratedDate(new \DateTimeImmutable())
                     ;
                 }
             }
             $this->mr->getManager()->flush();
-            $now = new DateTimeImmutable();
+            $now = new \DateTimeImmutable();
             $fileName = 'SEPA_receipts_'.$now->format('Y-m-d_H-i').'.zip';
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$fileName;
             $zipFile = new ZipFile();
@@ -263,7 +258,7 @@ final class ReceiptAdminController extends AbstractAdminController
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu SEPA amb format XML. Revisa els rebuts seleccionats.');
             $this->addFlash('error', $e->getMessage());
 
@@ -284,13 +279,13 @@ final class ReceiptAdminController extends AbstractAdminController
             foreach ($selectedModels as $selectedModel) {
                 $selectedModel
                     ->setIsPayed(true)
-                    ->setPaymentDate(new DateTimeImmutable())
+                    ->setPaymentDate(new \DateTimeImmutable())
                 ;
             }
             $modelManager = $this->admin->getModelManager();
             $modelManager->update($selectedModel);
             $this->addFlash('success', 'S\'han marcat '.count($selectedModels).' rebuts com a pagats correctament.');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar marcar els rebuts com a pagats. Revisa els rebuts seleccionats.');
             $this->addFlash('error', $e->getMessage());
         }

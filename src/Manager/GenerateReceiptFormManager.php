@@ -11,7 +11,6 @@ use App\Form\Model\GenerateReceiptModel;
 use App\Repository\EventRepository;
 use App\Repository\ReceiptRepository;
 use App\Repository\StudentRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -59,7 +58,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 ;
                 $receipt = new Receipt();
                 $receipt
-                    ->setDate(new DateTimeImmutable())
+                    ->setDate(new \DateTimeImmutable())
                     ->setStudent($student)
                     ->setPerson($student->getParent() ?: null)
                     ->setIsPayed(false)
@@ -73,7 +72,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 if ($enableEmailDelivery) {
                     $receipt
                         ->setIsSended(true)
-                        ->setSendDate(new DateTimeImmutable())
+                        ->setSendDate(new \DateTimeImmutable())
                     ;
                 }
                 $this->em->persist($receipt);
@@ -108,7 +107,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 ;
                 $receipt = new Receipt();
                 $receipt
-                    ->setDate(new DateTimeImmutable())
+                    ->setDate(new \DateTimeImmutable())
                     ->setStudent($student)
                     ->setPerson($student->getParent() ?: null)
                     ->setIsPayed(false)
@@ -122,7 +121,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 if ($enableEmailDelivery) {
                     $receipt
                         ->setIsSended(true)
-                        ->setSendDate(new DateTimeImmutable())
+                        ->setSendDate(new \DateTimeImmutable())
                     ;
                 }
                 $this->em->persist($receipt);
@@ -145,7 +144,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     $ids[] = $receipt->getId();
                     $receipt
                         ->setIsSended(true)
-                        ->setSendDate(new DateTimeImmutable())
+                        ->setSendDate(new \DateTimeImmutable())
                     ;
                 }
                 $this->em->flush();
@@ -175,20 +174,14 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         return $this->commonFastGenerateReciptsForYearAndMonth($year, $month, true);
     }
 
-    public function buildFullModelForm(int $year, int $month): GenerateReceiptModel
+    public function buildFullModelForm(GenerateReceiptModel $generateReceipt): GenerateReceiptModel
     {
-        $generateReceipt = new GenerateReceiptModel();
-        $generateReceipt
-            ->setYear($year)
-            ->setMonth($month)
-        ;
-
         // group lessons
-        $studentsInGroupLessons = $this->sr->getGroupLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariff($year, $month);
+        $studentsInGroupLessons = $this->sr->getGroupLessonStudentsInEventsForReceiptModelWithValidTariff($generateReceipt);
         /** @var Student $student */
         foreach ($studentsInGroupLessons as $student) {
             /** @var Receipt $previousReceipt */
-            $previousReceipt = $this->rr->findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNull($student, $year, $month);
+            $previousReceipt = $this->rr->findOnePreviousGroupLessonsReceiptByStudentYearAndMonthOrNull($student, $generateReceipt->getYear(), $generateReceipt->getMonth());
             if (!is_null($previousReceipt)) {
                 // old
                 if (count($previousReceipt->getLines()) > 0) {
@@ -227,8 +220,10 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         }
 
         // private lessons (in previous month period)
-        $oldYear = $year;
-        $oldMonth = $month;
+        $oldYear = $generateReceipt->getYear();
+        $oldMonth = $generateReceipt->getMonth();
+        $year = $oldYear;
+        $month = $oldMonth;
         --$month;
         if (0 === $month) {
             $month = 12;
@@ -349,7 +344,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 if (!is_null($previousReceipt)) {
                     // update existing receipt
                     if (1 === count($previousReceipt->getLines())) {
-                        $previousReceipt->setDate(new DateTimeImmutable());
+                        $previousReceipt->setDate(new \DateTimeImmutable());
                         /** @var ReceiptLine $receiptLine */
                         $receiptLine = $previousReceipt->getLines()[0];
                         $receiptLine
@@ -367,7 +362,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                         if ($markReceiptAsSended) {
                             $previousReceipt
                                 ->setIsSended(true)
-                                ->setSendDate(new DateTimeImmutable())
+                                ->setSendDate(new \DateTimeImmutable())
                             ;
                         }
                         $this->em->flush();
@@ -385,7 +380,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     ;
                     $receipt = new Receipt();
                     $receipt
-                        ->setDate(new DateTimeImmutable())
+                        ->setDate(new \DateTimeImmutable())
                         ->setStudent($student)
                         ->setPerson($student->getParent() ?: null)
                         ->setIsPayed(false)
@@ -399,7 +394,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     if ($markReceiptAsSended) {
                         $receipt
                             ->setIsSended(true)
-                            ->setSendDate(new DateTimeImmutable())
+                            ->setSendDate(new \DateTimeImmutable())
                         ;
                     }
                     $this->em->persist($receipt);
