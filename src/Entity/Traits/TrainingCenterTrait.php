@@ -14,12 +14,12 @@ trait TrainingCenterTrait
      */
     protected ?TrainingCenter $trainingCenter = null;
 
-    public function getTrainingCenter(): TrainingCenter
+    public function getTrainingCenter(): ?TrainingCenter
     {
         return $this->trainingCenter;
     }
 
-    public function setTrainingCenter(TrainingCenter $trainingCenter): self
+    public function setTrainingCenter(?TrainingCenter $trainingCenter): self
     {
         $this->trainingCenter = $trainingCenter;
 
