@@ -1,3 +1,10 @@
+<script>
+    function triggerEventOuterIframeScope(path, title) {
+        let event = new CustomEvent('app-audio-player-button-clicked', {bubbles: true, detail: {path: path, title: title}});
+        window.frameElement.dispatchEvent(event);
+    }
+</script>
+
 <div class="table-responsive list-blk">
     <table class="table">
         <colgroup>
@@ -126,9 +133,14 @@
                                             data-target="#js-display-image"
                                             data-placement="left"
                                             data-href='{{ fileEntity.preview.path }}'>
-                                        <span class="fas fa-eye"></span>
+                                        <span class="far fa-file-pdf"></span>
                                     </button>
                                 </span>
+                            {% endif %}
+                            {% if file is audio_file_type %}
+                                <button type="button" onclick="triggerEventOuterIframeScope('{{ fileEntity.preview.path }}', '{{ file.fileName }}')" class="btn btn-xs btn-default" title="{{ 'title.preview.file'|trans }}">
+                                    <span class="fas fa-play"></span>
+                                </button>
                             {% endif %}
                         {% endif %}
                     {% endblock %}
