@@ -225,6 +225,7 @@ final class StudentAdmin extends AbstractBaseAdmin
                 EntityType::class,
                 [
                     'label' => 'backend.admin.class_group.training_center',
+                    'help' => 'backend.admin.student.training_center_help',
                     'required' => true,
                     'class' => TrainingCenter::class,
                     'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),

@@ -7,6 +7,7 @@ Changelog
 ##### Version 5.4.00 (WIP)
  * show previews in files management
  * distribute massive mailing notifications
+ * add Student training center helper
 
 ##### Version 5.3.00 (2022-02-22)
  * remove unnecessary console commands

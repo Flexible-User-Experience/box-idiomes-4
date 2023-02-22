@@ -59,6 +59,9 @@
 "Bank Creditor Sepa List": "Bancs"
 "Bank Creditor Sepa Create": "Crear"
 "Bank Creditor Sepa Delete": "Esborrar"
+"Training Center List": "Centres de formació"
+"Training Center Create": "Crear"
+"Training Center Delete": "Esborrar"
 "File Dummy List": "Fitxers"
 "File Dummy Show": "Gestor de Documents"
 Monday: "Dilluns"
@@ -244,6 +247,7 @@ backend:
             agenda: "Horaris"
             notification_date: "Data notificació per email"
             has_been_notified: "Notificació enviada per email"
+            training_center_help: "El centre de formació no determina els seus rebuts. Són els grups d'aula als quals està assignat."
         class_group:
             code: "Codi"
             name: "Nom"
