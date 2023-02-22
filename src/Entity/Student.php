@@ -3,8 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\BankCreditorSepaTrait;
-use DateTimeImmutable;
-use DateTimeInterface;
+use App\Entity\Traits\TrainingCenterTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,17 +12,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StudentRepository")
+ *
  * @ORM\Table(name="student")
+ *
  * @UniqueEntity({"name", "surname"})
  */
 class Student extends AbstractPerson
 {
     use BankCreditorSepaTrait;
+    use TrainingCenterTrait;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private ?DateTimeInterface $birthDate = null;
+    private ?\DateTimeInterface $birthDate = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -42,12 +44,14 @@ class Student extends AbstractPerson
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
+     *
      * @Assert\Valid
      */
     protected ?Bank $bank = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tariff")
+     *
      * @ORM\JoinColumn(name="tariff_id", referencedColumnName="id")
      */
     private ?Tariff $tariff = null;
@@ -82,7 +86,7 @@ class Student extends AbstractPerson
         $this->events = new ArrayCollection();
     }
 
-    public function getBirthDate(): ?DateTimeInterface
+    public function getBirthDate(): ?\DateTimeInterface
     {
         return $this->birthDate;
     }
@@ -92,7 +96,7 @@ class Student extends AbstractPerson
         return $this->getBirthDate() ? $this->getBirthDate()->format(AbstractBase::DATE_STRING_FORMAT) : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    public function setBirthDate(?DateTimeInterface $birthDate): self
+    public function setBirthDate(?\DateTimeInterface $birthDate): self
     {
         $this->birthDate = $birthDate;
 
@@ -101,7 +105,7 @@ class Student extends AbstractPerson
 
     public function getYearsOld(): int
     {
-        $today = new DateTimeImmutable();
+        $today = new \DateTimeImmutable();
 
         return $today->diff($this->birthDate)->y;
     }

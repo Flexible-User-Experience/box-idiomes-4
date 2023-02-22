@@ -43,6 +43,7 @@ App\Entity\TeacherAbsence:
 # Students
 App\Entity\Student:
   student{1..2}:
+    trainingCenter: '@trainingcenter1'
     dni: <bothify('########?')>
     name: <name()>
     surname: <firstName()>
