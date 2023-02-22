@@ -11,6 +11,7 @@ use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\Tariff;
+use App\Entity\TrainingCenter;
 use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
@@ -217,6 +218,16 @@ final class StudentAdmin extends AbstractBaseAdmin
                     'class' => Tariff::class,
                     'query_builder' => $this->em->getRepository(Tariff::class)->findAllSortedByYearAndPriceQB(),
                     'help' => 'backend.admin.student.tariff_helper',
+                ]
+            )
+            ->add(
+                'trainingCenter',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'required' => true,
+                    'class' => TrainingCenter::class,
+                    'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
                 ]
             )
             ->add(
@@ -485,6 +496,18 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'trainingCenter',
+                null,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => TrainingCenter::class,
+                        'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                    ],
+                ]
+            )
+            ->add(
                 'hasImageRightsAccepted',
                 null,
                 [
@@ -710,6 +733,7 @@ final class StudentAdmin extends AbstractBaseAdmin
             'dischargeDateString',
             'schedule',
             'tariff',
+            'trainingCenter',
             'hasImageRightsAccepted',
             'hasSepaAgreementAccepted',
             'hasAcceptedInternalRegulations',
