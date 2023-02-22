@@ -626,7 +626,7 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
-                    'header_style' => 'width:213px',
+                    'header_style' => 'width:215px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
