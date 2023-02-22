@@ -93,6 +93,7 @@ final class SpendingCategoryAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:83px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [

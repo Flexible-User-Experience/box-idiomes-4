@@ -5,13 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Enum\StudentPaymentEnum;
-use App\Form\Model\GenerateInvoiceModel;
-use App\Form\Type\GenerateInvoiceType;
-use App\Form\Type\GenerateInvoiceYearMonthChooserType;
 use App\Kernel;
-use DateTime;
-use DateTimeImmutable;
-use Exception;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -23,48 +17,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 final class InvoiceAdminController extends AbstractAdminController
 {
-    public function generateAction(Request $request): Response
-    {
-        // year & month chooser form
-        $generateInvoiceYearMonthChooser = new GenerateInvoiceModel();
-        $yearMonthForm = $this->createForm(GenerateInvoiceYearMonthChooserType::class, $generateInvoiceYearMonthChooser);
-        $yearMonthForm->handleRequest($request);
-        // build items form
-        $generateInvoice = new GenerateInvoiceModel();
-        $form = $this->createForm(GenerateInvoiceType::class, $generateInvoice);
-        $form->handleRequest($request);
-        if ($yearMonthForm->isSubmitted() && $yearMonthForm->isValid()) {
-            $year = $generateInvoiceYearMonthChooser->getYear();
-            $month = $generateInvoiceYearMonthChooser->getMonth();
-            // fill full items form
-            $generateInvoice = $this->gifm->buildFullModelForm($year, $month);
-            $form = $this->createForm(GenerateInvoiceType::class, $generateInvoice);
-        }
-
-        return $this->renderWithExtraParams(
-            'Admin/Invoice/generate_invoice_form.html.twig',
-            [
-                'action' => 'generate',
-                'year_month_form' => $yearMonthForm->createView(),
-                'form' => $form->createView(),
-                'generate_invoice' => $generateInvoice,
-            ]
-        );
-    }
-
-    public function creatorAction(Request $request): RedirectResponse
-    {
-        $generateInvoice = $this->gifm->transformRequestArrayToModel($request->get('generate_invoice'));
-        $recordsParsed = $this->gifm->persistFullModelForm($generateInvoice);
-        if (0 === $recordsParsed) {
-            $this->addFlash('warning', $this->ts->trans('backend.admin.invoice.generator.no_records_presisted'));
-        } else {
-            $this->addFlash('success', $this->ts->trans('backend.admin.invoice.generator.flash_success', ['%amount%' => $recordsParsed], 'messages'));
-        }
-
-        return $this->redirectToList();
-    }
-
     public function pdfAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
@@ -93,7 +45,7 @@ final class InvoiceAdminController extends AbstractAdminController
         }
         $object
             ->setIsSended(true)
-            ->setSendDate(new DateTimeImmutable())
+            ->setSendDate(new \DateTimeImmutable())
         ;
         $this->mr->getManager()->flush();
         $pdf = $this->ibp->build($object);
@@ -120,16 +72,16 @@ final class InvoiceAdminController extends AbstractAdminController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
         $paymentUniqueId = uniqid('', true);
-        $xml = $this->xsbs->buildDirectDebitSingleInvoiceXml($paymentUniqueId, new DateTime('now + 3 days'), $object);
+        $xml = $this->xsbs->buildDirectDebitSingleInvoiceXml($paymentUniqueId, new \DateTime('now + 3 days'), $object);
         $object
             ->setIsSepaXmlGenerated(true)
-            ->setSepaXmlGeneratedDate(new DateTimeImmutable())
+            ->setSepaXmlGeneratedDate(new \DateTimeImmutable())
         ;
         $this->mr->getManager()->flush();
         if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
             return new Response($xml, 200, ['Content-type' => 'application/xml']);
         }
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $fileSystem = new Filesystem();
         $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoice_'.$now->format('Y-m-d_H-i').'.xml';
         $fileSystem->touch($fileNamePath);
@@ -150,10 +102,11 @@ final class InvoiceAdminController extends AbstractAdminController
             throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
         }
         // new invoice
-        $today = new DateTimeImmutable();
+        $today = new \DateTimeImmutable();
         $newInvoice = new Invoice();
         $newInvoice
             ->setDate($today)
+            ->setTrainingCenter($object->getTrainingCenter())
             ->setStudent($object->getStudent())
             ->setPerson($object->getPerson())
             ->setBaseAmount($object->getBaseAmount())
@@ -193,13 +146,13 @@ final class InvoiceAdminController extends AbstractAdminController
         $selectedModels = $query->execute();
         try {
             $paymentUniqueId = uniqid('', true);
-            $xmls = $this->xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new DateTime('now + 3 days'), $selectedModels);
+            $xmls = $this->xsbs->buildDirectDebitInvoicesXml($paymentUniqueId, new \DateTime('now + 3 days'), $selectedModels);
             /** @var Invoice $selectedModel */
             foreach ($selectedModels as $selectedModel) {
                 if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
                     $selectedModel
                         ->setIsSepaXmlGenerated(true)
-                        ->setSepaXmlGeneratedDate(new DateTimeImmutable())
+                        ->setSepaXmlGeneratedDate(new \DateTimeImmutable())
                     ;
                 }
             }
@@ -207,7 +160,7 @@ final class InvoiceAdminController extends AbstractAdminController
             if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
                 return new Response($xmls, 200, ['Content-type' => 'application/xml']);
             }
-            $now = new DateTimeImmutable();
+            $now = new \DateTimeImmutable();
             $fileSystem = new Filesystem();
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoices_'.$now->format('Y-m-d_H-i').'.xml';
             $fileSystem->touch($fileNamePath);
@@ -216,7 +169,7 @@ final class InvoiceAdminController extends AbstractAdminController
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu SEPA amb format XML. Revisa les factures seleccionades.');
             $this->addFlash('error', $e->getMessage());
 

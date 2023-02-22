@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Repository\TrainingCenterRepository;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,8 +14,9 @@ class GenerateReceiptType extends GenerateReceiptYearMonthChooserType
 
     private RouterInterface $rs;
 
-    public function __construct(RouterInterface $rs)
+    public function __construct(TrainingCenterRepository $tcr, RouterInterface $rs)
     {
+        parent::__construct($tcr);
         $this->rs = $rs;
     }
 

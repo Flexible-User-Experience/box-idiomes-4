@@ -78,6 +78,12 @@
                                     <td>{{ object.tariff }}</td>
                                 </tr>
                             {% endif %}
+                            {% if object.trainingCenter %}
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'backend.admin.class_group.training_center' | trans }}</th>
+                                    <td>{{ object.trainingCenter }}</td>
+                                </tr>
+                            {% endif %}
                             <tr class="sonata-ba-view-container">
                                 <th>{{ 'backend.admin.imagerigths.checkbox_label' | trans }}</th>
                                 <td>

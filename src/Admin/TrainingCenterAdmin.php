@@ -3,24 +3,25 @@
 namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
-use App\Enum\TariffTypeEnum;
+use App\Entity\City;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-final class TariffAdmin extends AbstractBaseAdmin
+final class TrainingCenterAdmin extends AbstractBaseAdmin
 {
-    protected $classnameLabel = 'Tarriff';
-    protected $baseRoutePattern = 'billings/tariff';
+    protected $classnameLabel = 'TrainingCenter';
+    protected $baseRoutePattern = 'classrooms/training-center';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
-        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
-        $sortValues[DatagridInterface::SORT_BY] = 'year';
+        $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
+        $sortValues[DatagridInterface::SORT_BY] = 'name';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
@@ -32,42 +33,41 @@ final class TariffAdmin extends AbstractBaseAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
-            ->add(
-                'year',
-                null,
-                [
-                    'label' => 'backend.admin.tariff.year',
-                    'required' => true,
-                ]
-            )
+            ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 4))
             ->add(
                 'name',
                 null,
                 [
-                    'label' => 'backend.admin.tariff.name',
-                    'required' => false,
+                    'label' => 'backend.admin.training_center.name',
                 ]
             )
             ->add(
-                'price',
+                'address',
                 null,
                 [
-                    'label' => 'backend.admin.tariff.price',
-                    'required' => true,
+                    'label' => 'backend.admin.training_center.address',
+                    'required' => false,
                 ]
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
             ->add(
-                'type',
-                ChoiceType::class,
+                'city',
+                EntityType::class,
                 [
-                    'label' => 'backend.admin.teacher_absence.type',
-                    'choices' => TariffTypeEnum::getEnumArray(),
-                    'multiple' => false,
-                    'expanded' => false,
+                    'label' => 'backend.admin.training_center.city',
                     'required' => true,
+                    'class' => City::class,
+                    'choice_label' => 'name',
+                    'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
+                ]
+            )
+            ->add(
+                'enabled',
+                CheckboxType::class,
+                [
+                    'label' => 'backend.admin.enabled',
+                    'required' => false,
                 ]
             )
             ->end()
@@ -78,37 +78,36 @@ final class TariffAdmin extends AbstractBaseAdmin
     {
         $filter
             ->add(
-                'year',
+                'name',
                 null,
                 [
-                    'label' => 'backend.admin.tariff.year',
+                    'label' => 'backend.admin.training_center.name',
                 ]
             )
             ->add(
-                'type',
+                'address',
                 null,
                 [
-                    'label' => 'backend.admin.tariff.type',
-                    'field_type' => ChoiceType::class,
+                    'label' => 'backend.admin.training_center.address',
+                ]
+            )
+            ->add(
+                'city',
+                null,
+                [
+                    'label' => 'backend.admin.training_center.city',
+                    'field_type' => EntityType::class,
                     'field_options' => [
-                        'expanded' => false,
-                        'multiple' => false,
-                        'choices' => TariffTypeEnum::getEnumArray(),
+                        'class' => City::class,
+                        'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
                     ],
                 ]
             )
             ->add(
-                'name',
+                'enabled',
                 null,
                 [
-                    'label' => 'backend.admin.tariff.name',
-                ]
-            )
-            ->add(
-                'price',
-                null,
-                [
-                    'label' => 'backend.admin.tariff.price',
+                    'label' => 'backend.admin.enabled',
                 ]
             )
         ;
@@ -118,40 +117,37 @@ final class TariffAdmin extends AbstractBaseAdmin
     {
         $list
             ->add(
-                'year',
-                null,
-                [
-                    'label' => 'backend.admin.tariff.year',
-                    'editable' => true,
-                    'header_class' => 'text-right',
-                    'row_align' => 'right',
-                ]
-            )
-            ->add(
-                'type',
-                null,
-                [
-                    'label' => 'backend.admin.tariff.type',
-                    'template' => 'Admin/Cells/list__cell_tariff_type.html.twig',
-                ]
-            )
-            ->add(
                 'name',
                 null,
                 [
-                    'label' => 'backend.admin.tariff.name',
+                    'label' => 'backend.admin.training_center.name',
                     'editable' => true,
                 ]
             )
             ->add(
-                'price',
+                'address',
                 null,
                 [
-                    'label' => 'backend.admin.tariff.price',
-                    'template' => 'Admin/Cells/list__cell_tariff_price.html.twig',
+                    'label' => 'backend.admin.training_center.address',
+                    'editable' => true,
+                ]
+            )
+            ->add(
+                'city',
+                null,
+                [
+                    'label' => 'backend.admin.training_center.city',
                     'editable' => false,
-                    'header_class' => 'text-right',
-                    'row_align' => 'right',
+                ]
+            )
+            ->add(
+                'enabled',
+                null,
+                [
+                    'label' => 'backend.admin.enabled',
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
+                    'editable' => true,
                 ]
             )
             ->add(
@@ -175,10 +171,7 @@ final class TariffAdmin extends AbstractBaseAdmin
     public function configureExportFields(): array
     {
         return [
-            'year',
-            'typeString',
             'name',
-            'price',
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\ClassGroup;
 use App\Entity\PreRegister;
 use App\Entity\Student;
+use App\Form\Model\GenerateReceiptModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -181,6 +182,24 @@ final class StudentRepository extends ServiceEntityRepository
         return $this->getPrivateLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQ($year, $month)->getResult();
     }
 
+    public function getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQB(GenerateReceiptModel $generateReceipt): QueryBuilder
+    {
+        return $this->getStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQB($generateReceipt->getYear(), $generateReceipt->getMonth())
+            ->andWhere('cg.trainingCenter = :trainingCenter')
+            ->setParameter('trainingCenter', $generateReceipt->getTrainingCenter())
+        ;
+    }
+
+    public function getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQ(GenerateReceiptModel $generateReceipt): Query
+    {
+        return $this->getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQB($generateReceipt)->getQuery();
+    }
+
+    public function getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariff(GenerateReceiptModel $generateReceipt): array
+    {
+        return $this->getPrivateLessonStudentsInEventsForReceiptModelSortedBySurnameWithValidTariffQ($generateReceipt)->getResult();
+    }
+
     public function getGroupLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQB(int $year, int $month): QueryBuilder
     {
         return $this->getStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQB($year, $month)
@@ -197,6 +216,24 @@ final class StudentRepository extends ServiceEntityRepository
     public function getGroupLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariff(int $year, int $month): array
     {
         return $this->getGroupLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQ($year, $month)->getResult();
+    }
+
+    public function getGroupLessonStudentsInEventsForReceiptModelWithValidTariffQB(GenerateReceiptModel $generateReceipt): QueryBuilder
+    {
+        return $this->getGroupLessonStudentsInEventsForYearAndMonthSortedBySurnameWithValidTariffQB($generateReceipt->getYear(), $generateReceipt->getMonth())
+            ->andWhere('cg.trainingCenter = :trainingCenter')
+            ->setParameter('trainingCenter', $generateReceipt->getTrainingCenter())
+        ;
+    }
+
+    public function getGroupLessonStudentsInEventsForReceiptModelWithValidTariffQ(GenerateReceiptModel $generateReceipt): Query
+    {
+        return $this->getGroupLessonStudentsInEventsForReceiptModelWithValidTariffQB($generateReceipt)->getQuery();
+    }
+
+    public function getGroupLessonStudentsInEventsForReceiptModelWithValidTariff(GenerateReceiptModel $generateReceipt): array
+    {
+        return $this->getGroupLessonStudentsInEventsForReceiptModelWithValidTariffQ($generateReceipt)->getResult();
     }
 
     public function getStudentsInClassGroupQB(ClassGroup $classGroup): QueryBuilder

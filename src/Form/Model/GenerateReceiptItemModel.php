@@ -4,6 +4,7 @@ namespace App\Form\Model;
 
 class GenerateReceiptItemModel
 {
+    protected int $trainingCenterId;
     protected int $studentId;
     protected string $studentName;
     protected float $units;
@@ -12,6 +13,18 @@ class GenerateReceiptItemModel
     protected bool $isReadyToGenerate;
     protected bool $isPreviouslyGenerated;
     protected bool $isPrivateLessonType;
+
+    public function getTrainingCenterId(): int
+    {
+        return $this->trainingCenterId;
+    }
+
+    public function setTrainingCenterId(int $trainingCenterId): self
+    {
+        $this->trainingCenterId = $trainingCenterId;
+
+        return $this;
+    }
 
     public function getStudentId(): int
     {

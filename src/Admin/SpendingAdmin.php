@@ -299,6 +299,7 @@ final class SpendingAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:152px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [

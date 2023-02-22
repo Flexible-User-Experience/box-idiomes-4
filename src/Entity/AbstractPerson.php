@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\CityTrait;
+use App\Entity\Traits\NameTrait;
 use App\Enum\StudentPaymentEnum;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,10 +15,21 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class AbstractPerson extends AbstractBase
 {
+    use AddressTrait;
+    use CityTrait;
+    use NameTrait;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\City")
+     *
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
+     */
+    protected ?City $city = null;
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected ?DateTimeInterface $dischargeDate = null;
+    protected ?\DateTimeInterface $dischargeDate = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -40,19 +53,10 @@ abstract class AbstractPerson extends AbstractBase
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @Assert\Email()
      */
     protected ?string $email = null;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected ?string $address = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City")
-     */
-    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
@@ -61,7 +65,7 @@ abstract class AbstractPerson extends AbstractBase
 
     protected ?Bank $bank = null;
 
-    public function getDischargeDate(): ?DateTimeInterface
+    public function getDischargeDate(): ?\DateTimeInterface
     {
         return $this->dischargeDate;
     }
@@ -71,7 +75,7 @@ abstract class AbstractPerson extends AbstractBase
         return self::convertDateAsString($this->getDischargeDate());
     }
 
-    public function setDischargeDate(?DateTimeInterface $dischargeDate): self
+    public function setDischargeDate(?\DateTimeInterface $dischargeDate): self
     {
         $this->dischargeDate = $dischargeDate;
 
@@ -90,11 +94,6 @@ abstract class AbstractPerson extends AbstractBase
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
     public function getFullName(): string
     {
         return $this->name.' '.$this->surname;
@@ -103,13 +102,6 @@ abstract class AbstractPerson extends AbstractBase
     public function getFullCanonicalName(): string
     {
         return $this->surname.', '.$this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getSurname(): ?string
@@ -144,30 +136,6 @@ abstract class AbstractPerson extends AbstractBase
     public function setEmail(?string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getCity(): ?City
-    {
-        return $this->city;
-    }
-
-    public function setCity(?City $city): self
-    {
-        $this->city = $city;
 
         return $this;
     }
