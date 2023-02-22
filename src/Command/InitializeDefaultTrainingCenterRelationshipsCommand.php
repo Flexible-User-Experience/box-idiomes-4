@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\ClassGroup;
 use App\Entity\Invoice;
 use App\Entity\Receipt;
+use App\Entity\Student;
 use App\Entity\TrainingCenter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -31,7 +32,7 @@ class InitializeDefaultTrainingCenterRelationshipsCommand extends Command
             ->addArgument(
                 'tcid',
                 InputArgument::REQUIRED,
-                'TrainingCenter ID to set into ClassGroup, Receipt and Invoice entities relationship'
+                'TrainingCenter ID to set into Student, ClassGroup, Receipt and Invoice entities relationship'
             )
             ->addOption(
                 'force',
@@ -48,6 +49,14 @@ class InitializeDefaultTrainingCenterRelationshipsCommand extends Command
         $trainingCenter = $this->em->getRepository(TrainingCenter::class)->find($input->getArgument('tcid'));
         if ($trainingCenter) {
             $output->writeln('TrainingCenter ID#'.$input->getArgument('tcid').' '.$trainingCenter->getName().' loaded');
+            $output->writeln('<comment>Setting Student relationship</comment>');
+            $students = $this->em->getRepository(Student::class)->findAll();
+            /** @var Student $student */
+            foreach ($students as $student) {
+                if ($input->getOption('force')) {
+                    $student->setTrainingCenter($trainingCenter);
+                }
+            }
             $output->writeln('<comment>Setting ClassGroups relationship</comment>');
             $classGroups = $this->em->getRepository(ClassGroup::class)->findAll();
             /** @var ClassGroup $classGroup */
