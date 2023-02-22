@@ -49,12 +49,24 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigTest('instance_of', [$this, 'isInstanceOf']),
+            new TwigTest('pdf_file_type', [$this, 'isPdfFileType']),
+            new TwigTest('audio_file_type', [$this, 'isAudioFileType']),
         ];
     }
 
     public function isInstanceOf($var, $instance): bool
     {
         return (new \ReflectionClass($instance))->isInstance($var);
+    }
+
+    public function isPdfFileType($object): bool
+    {
+        return $this->isInstanceOf($object, \SplFileInfo::class) && 'pdf' === strtolower($object->getExtension());
+    }
+
+    public function isAudioFileType($object): bool
+    {
+        return $this->isInstanceOf($object, \SplFileInfo::class) && ('mp3' === strtolower($object->getExtension()) || 'wav' === strtolower($object->getExtension()));
     }
 
     /**
