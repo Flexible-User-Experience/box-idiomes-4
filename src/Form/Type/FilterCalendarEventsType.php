@@ -4,10 +4,12 @@ namespace App\Form\Type;
 
 use App\Entity\ClassGroup;
 use App\Entity\Teacher;
+use App\Entity\TrainingCenter;
 use App\Enum\EventClassroomTypeEnum;
 use App\Form\Model\FilterCalendarEventModel;
 use App\Repository\ClassGroupRepository;
 use App\Repository\TeacherRepository;
+use App\Repository\TrainingCenterRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,13 +27,15 @@ class FilterCalendarEventsType extends AbstractType
     private RouterInterface $rs;
     private TeacherRepository $tr;
     private ClassGroupRepository $cgr;
+    private TrainingCenterRepository $tcr;
 
-    public function __construct(TranslatorInterface $ts, RouterInterface $rs, TeacherRepository $tr, ClassGroupRepository $cgr)
+    public function __construct(TranslatorInterface $ts, RouterInterface $rs, TeacherRepository $tr, ClassGroupRepository $cgr, TrainingCenterRepository $tcr)
     {
         $this->ts = $ts;
         $this->rs = $rs;
         $this->tr = $tr;
         $this->cgr = $cgr;
+        $this->tcr = $tcr;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -87,6 +91,25 @@ class FilterCalendarEventsType extends AbstractType
                     'required' => false,
                     'attr' => [
                         'data-placeholder' => $this->ts->trans('backend.admin.event.group'),
+                    ],
+                ]
+            )
+            ->add(
+                'trainingCenter',
+                ChoiceType::class,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'placeholder' => 'backend.admin.class_group.training_center',
+                    'choices' => $this->tcr->getEnabledSortedByName(),
+                    'choice_value' => 'id',
+                    'choice_label' => function (?TrainingCenter $trainingCenter) {
+                        return $trainingCenter ? $trainingCenter->getName() : '';
+                    },
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => false,
+                    'attr' => [
+                        'data-placeholder' => $this->ts->trans('backend.admin.class_group.training_center'),
                     ],
                 ]
             )

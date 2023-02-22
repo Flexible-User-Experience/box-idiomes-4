@@ -57,6 +57,7 @@ final class EventRepository extends ServiceEntityRepository
     public function getEnabledFilteredByBeginEndAndFilterCalendarEventFormQB(\DateTimeInterface $startDate, \DateTimeInterface $endDate, FilterCalendarEventModel $filter): QueryBuilder
     {
         $qb = $this->getEnabledFilteredByBeginAndEndQB($startDate, $endDate);
+        $qb->leftJoin('e.group', 'g');
         if ($filter->getClassroom()) {
             $qb
                 ->andWhere('e.classroom = :classroom')
@@ -73,6 +74,12 @@ final class EventRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('e.group = :group')
                 ->setParameter('group', $filter->getGroup())
+            ;
+        }
+        if ($filter->getTrainingCenter()) {
+            $qb
+                ->andWhere('g.trainingCenter = :center')
+                ->setParameter('center', $filter->getTrainingCenter())
             ;
         }
 

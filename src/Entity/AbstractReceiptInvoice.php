@@ -2,21 +2,25 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TrainingCenterTrait;
 use App\Enum\InvoiceYearMonthEnum;
 use App\Enum\StudentPaymentEnum;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractReceiptInvoice extends AbstractBase
 {
+    use TrainingCenterTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Student")
+     *
      * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
     protected ?Student $student = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+     *
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     protected ?Person $person = null;
@@ -24,7 +28,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    protected ?DateTimeInterface $date = null;
+    protected ?\DateTimeInterface $date = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
@@ -34,7 +38,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    protected ?DateTimeInterface $paymentDate = null;
+    protected ?\DateTimeInterface $paymentDate = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
@@ -44,7 +48,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    protected ?DateTimeInterface $sendDate = null;
+    protected ?\DateTimeInterface $sendDate = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
@@ -54,7 +58,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    protected ?DateTimeInterface $sepaXmlGeneratedDate = null;
+    protected ?\DateTimeInterface $sepaXmlGeneratedDate = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -105,7 +109,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this;
     }
 
-    public function getDate(): ?DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
@@ -115,7 +119,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return self::convertDateAsString($this->getDate());
     }
 
-    public function setDate(?DateTimeInterface $date): self
+    public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -144,7 +148,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this;
     }
 
-    public function getPaymentDate(): ?DateTimeInterface
+    public function getPaymentDate(): ?\DateTimeInterface
     {
         return $this->paymentDate;
     }
@@ -154,7 +158,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return self::convertDateAsString($this->getPaymentDate());
     }
 
-    public function setPaymentDate(?DateTimeInterface $paymentDate): self
+    public function setPaymentDate(?\DateTimeInterface $paymentDate): self
     {
         $this->paymentDate = $paymentDate;
 
@@ -183,7 +187,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this;
     }
 
-    public function getSendDate(): ?DateTimeInterface
+    public function getSendDate(): ?\DateTimeInterface
     {
         return $this->sendDate;
     }
@@ -193,7 +197,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return self::convertDateAsString($this->getSendDate());
     }
 
-    public function setSendDate(?DateTimeInterface $sendDate): self
+    public function setSendDate(?\DateTimeInterface $sendDate): self
     {
         $this->sendDate = $sendDate;
 
@@ -237,7 +241,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return $this;
     }
 
-    public function getSepaXmlGeneratedDate(): ?DateTimeInterface
+    public function getSepaXmlGeneratedDate(): ?\DateTimeInterface
     {
         return $this->sepaXmlGeneratedDate;
     }
@@ -247,7 +251,7 @@ abstract class AbstractReceiptInvoice extends AbstractBase
         return self::convertDateAsString($this->getSepaXmlGeneratedDate());
     }
 
-    public function setSepaXmlGeneratedDate(?DateTimeInterface $sepaXmlGeneratedDate): self
+    public function setSepaXmlGeneratedDate(?\DateTimeInterface $sepaXmlGeneratedDate): self
     {
         $this->sepaXmlGeneratedDate = $sepaXmlGeneratedDate;
 
