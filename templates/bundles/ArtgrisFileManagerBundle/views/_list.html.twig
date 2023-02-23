@@ -75,44 +75,32 @@
                 </td>
                 <td class="text-right">
                     {% block file_action %}
-                        <span data-toggle="tooltip" title="{{ 'title.delete'|trans }}">
+                        <div class="btn-group">
                             <button type="button"
-                                    class="btn btn-xs btn-danger js-delete-modal"
-                                    data-trigger="click"
-                                    data-container="body"
-                                    data-toggle="modal"
-                                    data-target="#js-confirm-delete"
-                                    data-placement="left"
-                                    data-html="true"
-                                    data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>
-                                <span class="far fa-trash-alt"></span>
-                            </button>
-                        </span>
-                        <span data-toggle="tooltip" title="{{ 'title.rename.file'|trans }}">
-                            <button type="button"
-                                    class="btn btn-xs btn-default js-rename-modal"
+                                    title="{{ 'title.rename.file' | trans }}"
+                                    class="btn btn-sm btn-default js-rename-modal"
                                     data-trigger="click"
                                     data-container="body"
                                     data-toggle="modal"
                                     data-target="#js-confirm-rename"
                                     data-placement="left"
                                     data-html="true"
-                                    data-name='{{ file.basename('.'~file.extension) }}'
+                                    data-name='{{ file.basename('.' ~ file.extension) }}'
                                     data-extension='{{ file.extension }}'
-                                    data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>
-                                <span class="far fa-edit"></span>
+                                    data-href='{{ path('file_manager_rename', fileManager.queryParameters | merge({'fileName':file.fileName})) }}'>
+                                <span class="fa fa-edit"></span>
                             </button>
-                        </span>
-                        {% if file.type == "file" %}
-                            <a data-placement="left" title="{{ 'title.download'|trans }}"
-                               class="btn btn-xs btn-default js-download"
-                               href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}" download>
-                                <span class="fas fa-download"></span>
-                            </a>
-                            {% if fileEntity.isImage() %}
-                                <span data-toggle="tooltip" title="{{ 'title.preview.file'|trans }}">
+                            {% if file.type == "file" %}
+                                <a title="{{ 'title.download' | trans }}"
+                                   class="btn btn-sm btn-default js-download"
+                                   href="{{ path('file_manager_file', fileManager.queryParameters | merge({'fileName':file.fileName})) }}"
+                                   download>
+                                    <span class="fas fa-download"></span>
+                                </a>
+                                {% if fileEntity.isImage() %}
                                     <button type="button"
-                                            class="btn btn-xs btn-default js-open-modal"
+                                            class="btn btn-sm btn-default js-open-modal"
+                                            title="{{ 'title.preview.file' | trans }}"
                                             data-trigger="click"
                                             data-container="body"
                                             data-toggle="modal"
@@ -121,22 +109,36 @@
                                             data-href='{{ fileEntity.preview.path }}'>
                                         <span class="fas fa-eye"></span>
                                     </button>
-                                </span>
+                                {% endif %}
+                                {% if file is pdf_file_type %}
+                                    <button type="button"
+                                            onclick="triggerEventOuterIframeScope('app-modal-helper-open', '{{ fileEntity.preview.path }}', '{{ file.fileName }}');triggerEventOuterIframeScope('app-pdf-preview-button-clicked', '{{ fileEntity.preview.path }}', '{{ file.fileName }}')"
+                                            class="btn btn-sm btn-default"
+                                            title="{{ 'title.preview.file' | trans }}">
+                                        <span class="far fa-file-pdf"></span>
+                                    </button>
+                                {% endif %}
+                                {% if file is audio_file_type %}
+                                    <button type="button"
+                                            onclick="triggerEventOuterIframeScope('app-audio-player-button-clicked', '{{ fileEntity.preview.path }}', '{{ file.fileName }}')"
+                                            class="btn btn-sm btn-default"
+                                            title="{{ 'title.preview.file' | trans }}">
+                                        <span class="fas fa-play"></span>
+                                    </button>
+                                {% endif %}
                             {% endif %}
-                            {% if file is pdf_file_type %}
-                                <button type="button"
-                                        onclick="triggerEventOuterIframeScope('app-modal-helper-open', '{{ fileEntity.preview.path }}', '{{ file.fileName }}');triggerEventOuterIframeScope('app-pdf-preview-button-clicked', '{{ fileEntity.preview.path }}', '{{ file.fileName }}')"
-                                        class="btn btn-xs btn-default"
-                                        title="{{ 'title.preview.file'|trans }}">
-                                    <span class="far fa-file-pdf"></span>
-                                </button>
-                            {% endif %}
-                            {% if file is audio_file_type %}
-                                <button type="button" onclick="triggerEventOuterIframeScope('app-audio-player-button-clicked', '{{ fileEntity.preview.path }}', '{{ file.fileName }}')" class="btn btn-xs btn-default" title="{{ 'title.preview.file'|trans }}">
-                                    <span class="fas fa-play"></span>
-                                </button>
-                            {% endif %}
-                        {% endif %}
+                            <button type="button"
+                                    class="btn btn-sm btn-default js-delete-modal"
+                                    title="{{ 'title.delete' | trans }}"
+                                    data-trigger="click"
+                                    data-container="body"
+                                    data-toggle="modal"
+                                    data-target="#js-confirm-delete"
+                                    data-html="true"
+                                    data-href='{{ path('file_manager_delete', fileManager.queryParameters | merge({'delete[]':file.fileName})) }}'>
+                                <span class="far fa-trash-alt text-danger"></span>
+                            </button>
+                        </div>
                     {% endblock %}
                 </td>
             </tr>

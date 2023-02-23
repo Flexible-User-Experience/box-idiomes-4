@@ -163,7 +163,7 @@ backend:
         date: "Data creació"
         dates: "Dates"
         enabled: "Actiu"
-        filter_calendar_by: "Filtrar calendari per"
+        filter_calendar_by: "Filtrar calendari"
         reset_filter_calendar_by: "Eliminar filtres"
         no_students_assigned: "Cap alumne assignat"
         is_for_private_lessons: "Classe particular"
