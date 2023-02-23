@@ -9,6 +9,7 @@ use App\Entity\TrainingCenter;
 use App\Enum\ReceiptYearMonthEnum;
 use App\Form\Model\GenerateReceiptItemModel;
 use App\Form\Model\GenerateReceiptModel;
+use App\Message\NewReceiptCreatedEmailMessage;
 use App\Repository\EventRepository;
 use App\Repository\ReceiptRepository;
 use App\Repository\StudentRepository;
@@ -17,8 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Process\PhpExecutableFinder;
-use Symfony\Component\Process\Process;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManager
@@ -26,13 +26,15 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
     private ReceiptRepository $rr;
     private EventManager $eem;
     private ParameterBagInterface $parameterBag;
+    private MessageBusInterface $bus;
 
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, TrainingCenterRepository $tcr, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem, ParameterBagInterface $parameterBag)
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, TrainingCenterRepository $tcr, StudentRepository $sr, EventRepository $er, ReceiptRepository $rr, EventManager $eem, ParameterBagInterface $parameterBag, MessageBusInterface $bus)
     {
         parent::__construct($logger, $kernel, $em, $ts, $tcr, $sr, $er);
         $this->rr = $rr;
         $this->eem = $eem;
         $this->parameterBag = $parameterBag;
+        $this->bus = $bus;
     }
 
     public function buildFullModelForm(GenerateReceiptModel $generateReceipt): GenerateReceiptModel
@@ -294,11 +296,8 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         $this->logger->info('[GRFM] persistAndDeliverFullModelForm call');
         $recordsParsed = $this->persistFullModelForm($generateReceiptModel, true);
         $this->logger->info('[GRFM] '.$recordsParsed.' records managed');
-
         if (0 < $recordsParsed) {
             $ids = [];
-            $phpBinaryFinder = new PhpExecutableFinder();
-            $phpBinaryPath = $phpBinaryFinder->find();
             /** @var GenerateReceiptItemModel $generateReceiptItemModel */
             foreach ($generateReceiptModel->getItems() as $generateReceiptItemModel) {
                 if (!$generateReceiptItemModel->isPrivateLessonType()) {
@@ -315,12 +314,9 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 }
             }
             if (count($ids) > 0) {
-                // TODO use a messenger queue
-                $command = 'nohup '.$phpBinaryPath.' '.$this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'bin'.DIRECTORY_SEPARATOR.'console app:deliver:receipts:batch '.implode(' ', $ids).' --force --env='.$this->kernel->getEnvironment().' 2>&1 > /dev/null &';
-                $this->logger->info('[GRFM] '.$command);
-                $process = new Process([$command]);
-                $process->setTimeout(null);
-                $process->run();
+                foreach ($ids as $id) {
+                    $this->bus->dispatch(new NewReceiptCreatedEmailMessage($id));
+                }
             }
         }
         $this->logger->info('[GRFM] persistAndDeliverFullModelForm EOF');
