@@ -19,7 +19,9 @@
         {{ form_widget(filter.submit) }}
     </div>
     <div class="form-group">
-        <a href="{{ path('admin_app_filter_calendar', {'reset': true}) }}" class="btn btn-default" style="margin-bottom:5px;margin-top:5px;">{{ 'backend.admin.reset_filter_calendar_by' | trans | capitalize }}</a>
+        <a href="{{ path('admin_app_filter_calendar', {'reset': true}) }}" class="btn btn-default" title="{{ 'backend.admin.reset_filter_calendar_by' | trans | capitalize }}" style="margin-bottom:5px;margin-top:5px;">
+            <i class="fa fa-undo"></i>
+        </a>
     </div>
 {{ form_rest(filter) }}
 {{ form_end(filter) }}
