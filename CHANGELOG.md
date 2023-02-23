@@ -1,13 +1,15 @@
 Changelog
 =========
 
-##### Version 5.4.01 (WIP)
+##### Version 5.5.01 (WIP)
  * fix minor bugs
 
-##### Version 5.4.00 (WIP)
+##### Version 5.5.00 (WIP)
  * add queues management
- * show previews in files management
  * distribute massive mailing notifications
+
+##### Version 5.4.00 (2022-02-23)
+ * show previews in files management
  * add Student training center helper
 
 ##### Version 5.3.00 (2022-02-22)
