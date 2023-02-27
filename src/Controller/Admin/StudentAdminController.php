@@ -59,4 +59,25 @@ final class StudentAdminController extends CRUDController
             ]
         );
     }
+
+    public function mailingAction(Request $request): Response
+    {
+        $this->assertObjectExists($request, true);
+        $id = $request->get($this->admin->getIdParameter());
+        $object = $this->admin->getObject($id);
+        if (!$object) {
+            throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
+        }
+        $this->admin->checkAccess('show', $object);
+        $this->admin->setSubject($object);
+
+        return $this->renderWithExtraParams(
+            'Admin/Student/show.html.twig',
+            [
+                'action' => 'show',
+                'object' => $object,
+                'elements' => $this->admin->getShow(),
+            ]
+        );
+    }
 }

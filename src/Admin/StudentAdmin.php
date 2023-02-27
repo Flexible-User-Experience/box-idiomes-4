@@ -52,6 +52,7 @@ final class StudentAdmin extends AbstractBaseAdmin
         $collection
             ->add('imagerights', $this->getRouterIdParameter().'/image-rights')
             ->add('sepaagreement', $this->getRouterIdParameter().'/sepa-agreement')
+            ->add('mailing', 'mailing')
             ->remove('batch')
         ;
     }

@@ -83,10 +83,12 @@ Horari: "Horari"
 Servei: "Servei"
 Ciutat: "Ciutat"
 "Pare, mare o tutor": "Pare, mare o tutor"
-Absència: "Absència"
+"Absència": "Absència"
 "Missatge de contacte": "Missatge de contacte"
 "Butlletí de contacte": "Butlletí de contacte"
 Província: "Província"
+"Absència alumne": "Absència alumne"
+"Students Mailing": "Mailing alumnes"
 
 frontend:
     meta: "academia anglès %main_brand_title% amposta"
