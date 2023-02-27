@@ -50,19 +50,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 if (count($previousReceipt->getLines()) > 0) {
                     /** @var ReceiptLine $previousItem */
                     $previousItem = $previousReceipt->getLines()[0];
-                    $generateReceiptItem = new GenerateReceiptItemModel();
-                    $generateReceiptItem
-                        ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
-                        ->setStudentId($student->getId())
-                        ->setStudentName($student->getFullCanonicalName())
-                        ->setUnits($previousItem->getUnits())
-                        ->setUnitPrice($previousItem->getPriceUnit())
-                        ->setDiscount($previousItem->getDiscount())
-                        ->setIsReadyToGenerate(false)
-                        ->setIsPreviouslyGenerated(true)
-                        ->setIsPrivateLessonType(false)
-                    ;
-                    $generateReceipt->addItem($generateReceiptItem);
+                    $this->buildGenerateReceiptItemModelAndAddIntoGenerateReceiptModel($generateReceipt, $student, $previousItem, false);
                 }
             } else {
                 // new
@@ -107,19 +95,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 if (count($previousReceipt->getLines()) > 0) {
                     /** @var ReceiptLine $previousItem */
                     $previousItem = $previousReceipt->getLines()[0];
-                    $generateReceiptItem = new GenerateReceiptItemModel();
-                    $generateReceiptItem
-                        ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
-                        ->setStudentId($student->getId())
-                        ->setStudentName($student->getFullCanonicalName())
-                        ->setUnits($previousItem->getUnits())
-                        ->setUnitPrice($previousItem->getPriceUnit())
-                        ->setDiscount($previousItem->getDiscount())
-                        ->setIsReadyToGenerate(false)
-                        ->setIsPreviouslyGenerated(true)
-                        ->setIsPrivateLessonType(true)
-                    ;
-                    $generateReceipt->addItem($generateReceiptItem);
+                    $this->buildGenerateReceiptItemModelAndAddIntoGenerateReceiptModel($generateReceipt, $student, $previousItem, true);
                 }
             } else {
                 // new
@@ -309,7 +285,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                     /** @var Receipt $previousReceipt */
                     $previousReceipt = $this->rr->findOnePreviousPrivateLessonsReceiptByStudentIdYearAndMonthOrNull($generateReceiptItemModel->getStudentId(), $generateReceiptModel->getYear(), $generateReceiptModel->getMonth());
                 }
-                if ($previousReceipt && 1 === count($previousReceipt->getLines()) && $generateReceiptItemModel->isReadyToGenerate()) {
+                if ($previousReceipt && $generateReceiptItemModel->isReadyToGenerate() && 1 === count($previousReceipt->getLines())) {
                     $ids[] = $previousReceipt->getId();
                 }
             }
@@ -322,5 +298,22 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         $this->logger->info('[GRFM] persistAndDeliverFullModelForm EOF');
 
         return $recordsParsed;
+    }
+
+    private function buildGenerateReceiptItemModelAndAddIntoGenerateReceiptModel(GenerateReceiptModel $generateReceipt, Student $student, ReceiptLine $previousItem, bool $isPrivateLesson): void
+    {
+        $generateReceiptItem = new GenerateReceiptItemModel();
+        $generateReceiptItem
+            ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
+            ->setStudentId($student->getId())
+            ->setStudentName($student->getFullCanonicalName())
+            ->setUnits($previousItem->getUnits())
+            ->setUnitPrice($previousItem->getPriceUnit())
+            ->setDiscount($previousItem->getDiscount())
+            ->setIsReadyToGenerate(false)
+            ->setIsPreviouslyGenerated(true)
+            ->setIsPrivateLessonType($isPrivateLesson)
+        ;
+        $generateReceipt->addItem($generateReceiptItem);
     }
 }
