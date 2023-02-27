@@ -17,15 +17,15 @@ class NewReceiptCreatedEmailMessageHandler implements MessageHandlerInterface
     private ReceiptRepository $rr;
     private ReceiptReminderBuilderPdf $rrbp;
     private ReceiptBuilderPdf $rbp;
-    private NotificationService $messenger;
+    private NotificationService $ns;
 
-    public function __construct(LoggerInterface $logger, ReceiptRepository $rr, ReceiptReminderBuilderPdf $rrbp, ReceiptBuilderPdf $rbp, NotificationService $messenger)
+    public function __construct(LoggerInterface $logger, ReceiptRepository $rr, ReceiptReminderBuilderPdf $rrbp, ReceiptBuilderPdf $rbp, NotificationService $ns)
     {
         $this->logger = $logger;
         $this->rr = $rr;
         $this->rrbp = $rrbp;
         $this->rbp = $rbp;
-        $this->messenger = $messenger;
+        $this->ns = $ns;
     }
 
     public function __invoke(NewReceiptCreatedEmailMessage $message)
@@ -43,10 +43,10 @@ class NewReceiptCreatedEmailMessageHandler implements MessageHandlerInterface
             if ($receipt->getMainEmail()) {
                 if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER === $receipt->getMainSubject()->getPayment()) {
                     // send receipt PDF
-                    $result = $this->messenger->sendReceiptPdfNotification($receipt, $pdf);
+                    $result = $this->ns->sendReceiptPdfNotification($receipt, $pdf);
                 } else {
                     // send receipt reminder PDF
-                    $result = $this->messenger->sendReceiptReminderPdfNotification($receipt, $pdf);
+                    $result = $this->ns->sendReceiptReminderPdfNotification($receipt, $pdf);
                 }
                 if (0 === $result) {
                     $this->logger->error('[DRBBEC] delivering PDF receipt ID#'.$receipt->getId().' number '.$receipt->getReceiptNumber().' failed.');
