@@ -205,7 +205,9 @@ class EventManager
         usort($result, static function (Student $a, Student $b) {
             if ($a->getFullCanonicalName() > $b->getFullCanonicalName()) {
                 return 1;
-            } elseif ($a->getFullCanonicalName() < $b->getFullCanonicalName()) {
+            }
+
+            if ($a->getFullCanonicalName() < $b->getFullCanonicalName()) {
                 return -1;
             }
 

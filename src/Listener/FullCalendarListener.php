@@ -116,7 +116,7 @@ class FullCalendarListener implements EventSubscriberInterface
                     $events = $this->ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
                 }
                 $this->rss->getSession()->set(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE, $startDate);
-                $this->rss->getSession()->set(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE, $endDate);
+                $this->rss->getSession()->set(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE, $endDate->sub(new \DateInterval('PT1H')));
             }
             /** @var AppEvent $event */
             foreach ($events as $event) {
