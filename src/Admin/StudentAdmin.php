@@ -55,6 +55,7 @@ final class StudentAdmin extends AbstractBaseAdmin
             ->add('mailing', 'mailing')
             ->add('mailing_reset', 'mailing-reset')
             ->add('write_mailing', 'mailing-write')
+            ->add('deliver_massive_mailing', 'mailing-delivery')
             ->remove('batch')
         ;
     }

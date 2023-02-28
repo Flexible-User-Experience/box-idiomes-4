@@ -10,8 +10,6 @@ use App\Model\ExportCalendarToListDayHourItem;
 use App\Model\ExportCalendarToListDayItem;
 use App\Repository\EventRepository;
 use App\Repository\TariffRepository;
-use DateInterval;
-use DateTimeInterface;
 
 class EventManager
 {
@@ -157,7 +155,7 @@ class EventManager
         return $this->decidePrivateLessonsTariff($events) ? $this->tr->findCurrentPrivateLessonTariff() : $this->tr->findCurrentSharedPrivateLessonTariff();
     }
 
-    public function getCalendarEventsListFromDates(DateTimeInterface $start, DateTimeInterface $end): ExportCalendarToList
+    public function getCalendarEventsListFromDates(\DateTimeInterface $start, \DateTimeInterface $end): ExportCalendarToList
     {
         $calendarEventsList = new ExportCalendarToList();
         do {
@@ -184,9 +182,14 @@ class EventManager
             }
             $calendarEventsList->addDay($calendarEventsListDayItem);
             // iterate $start date one day
-            $start->add(new DateInterval('P1D'));
+            $start->add(new \DateInterval('P1D'));
         } while ($start->format(AbstractBase::DATABASE_DATE_STRING_FORMAT) < $end->format(AbstractBase::DATABASE_DATE_STRING_FORMAT));
 
         return $calendarEventsList;
+    }
+
+    public function getInvolvedUniqueStudentsInsideEventsList(array $eventsList): array
+    {
+        return []; // TODO
     }
 }

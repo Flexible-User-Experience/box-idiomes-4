@@ -11,6 +11,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FilterStudentsMailingCalendarEventsType extends FilterCalendarEventsType
 {
     public const SESSION_KEY = 'filter_students_mailing_calendar_events_form_data';
+    public const SESSION_KEY_FROM_DATE = 'filter_students_mailing_calendar_events_from';
+    public const SESSION_KEY_TO_DATE = 'filter_students_mailing_calendar_events_to';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -583,3 +583,8 @@ mailing:
     step_2: "Redactar missatge de la circular"
     step_2_button: "Redactar missatge"
     step_3: "Enviar circular als alumnes"
+    selected_filters: "Filtres aplicats a les aules escollides"
+    from: "Des de"
+    to: "Fins a"
+    all: "Qualsevol"
+    selected_studets: "Alumnes destinataris de la circular"
