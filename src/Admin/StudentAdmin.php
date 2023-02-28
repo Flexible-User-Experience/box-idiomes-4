@@ -54,6 +54,7 @@ final class StudentAdmin extends AbstractBaseAdmin
             ->add('sepaagreement', $this->getRouterIdParameter().'/sepa-agreement')
             ->add('mailing', 'mailing')
             ->add('mailing_reset', 'mailing-reset')
+            ->add('write_mailing', 'mailing-write')
             ->remove('batch')
         ;
     }

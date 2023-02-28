@@ -581,4 +581,5 @@ mailing:
     step_1: "Escollir aules a notificar"
     step_1_button: "Filtrar aules a notificar"
     step_2: "Redactar missatge de la circular"
+    step_2_button: "Redactar missatge"
     step_3: "Enviar circular als alumnes"

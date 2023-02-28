@@ -23,7 +23,7 @@ class FilterStudentsMailingCalendarEventsType extends FilterCalendarEventsType
                 [
                     'label' => 'mailing.step_1_button',
                     'attr' => [
-                        'class' => 'btn btn-success',
+                        'class' => 'btn btn-primary',
                     ],
                 ]
             )

@@ -6,31 +6,17 @@
     {{ encore_entry_link_tags('fullcalendardefaultsettings') }}
 {% endblock %}
 
-{% block sonata_page_content_header %}
-    <div class="sticky-wrapper">
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">{{ 'Students Mailing' | trans | title }}</a>
-                </div>
-                <div class="navbar-collapse"></div>
-            </div>
-        </nav>
-    </div>
-{% endblock %}
-
 {% block sonata_admin_content %}
     <div class="sonata-ba-view">
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-success">
                     <div class="box-header">
-                        <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
-                            <button type="button" class="btn btn-success"><i class="fa fa-fw fa-search"></i> {{ 'mailing.step_1' | trans }}</button>
+                        <div class="btn-group btn-group-lg" role="group">
+                            <button type="button" class="btn btn-success active"><i class="fa fa-fw fa-search"></i> {{ 'mailing.step_1' | trans }}</button>
                             <button type="button" class="btn btn-default" disabled="disabled"><i class="fa fa-fw fa-pencil-square-o"></i> {{ 'mailing.step_2' | trans }}</button>
                             <button type="button" class="btn btn-default" disabled="disabled"><i class="fa fa-fw fa-bullhorn" style="margin-right:3px"></i>{{ 'mailing.step_3' | trans }}</button>
                         </div>
-{#                        <h4 class="box-title">{{ 'backend.admin.invoice.student' | trans }}</h4>#}
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -45,6 +31,11 @@
                                 {{ form_start(filter) }}
                                 <div class="form-group" style="margin-bottom:5px;margin-top:5px;">
                                     {{ form_widget(filter.submit) }}
+                                </div>
+                                <div class="form-group">
+                                    <a href="{{ path('admin_app_student_mailing_reset') }}" class="btn btn-default" title="{{ 'backend.admin.reset_filter_calendar_by' | trans | capitalize }}" style="margin-bottom:5px;margin-top:5px;">
+                                        <i class="fa fa-undo"></i>
+                                    </a>
                                 </div>
                                 <div class="form-group">
                                     {{ form_widget(filter.classroom) }}
@@ -63,9 +54,7 @@
                                     {{ form_errors(filter.trainingCenter) }}
                                 </div>
                                 <div class="form-group">
-                                    <a href="{{ path('admin_app_student_mailing_reset') }}" class="btn btn-default" title="{{ 'backend.admin.reset_filter_calendar_by' | trans | capitalize }}" style="margin-bottom:5px;margin-top:5px;">
-                                        <i class="fa fa-undo"></i>
-                                    </a>
+                                    <a href="{{ path('admin_app_student_write_mailing') }}" class="btn btn-success"><i class="fa fa-fw fa-pencil-square-o"></i> {{ 'mailing.step_2_button' | trans }}</a>
                                 </div>
                                 {{ form_rest(filter) }}
                                 {{ form_end(filter) }}

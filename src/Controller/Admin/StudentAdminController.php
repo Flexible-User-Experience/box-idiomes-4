@@ -2,9 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\ContactMessage;
 use App\Entity\Student;
 use App\Form\Model\FilterCalendarEventModel;
 use App\Form\Type\FilterStudentsMailingCalendarEventsType;
+use App\Form\Type\MailingStudentsNotificationMessageType;
 use App\Pdf\SepaAgreementBuilderPdf;
 use App\Pdf\StudentImageRightsBuilderPdf;
 use Sonata\AdminBundle\Controller\CRUDController;
@@ -78,6 +80,7 @@ final class StudentAdminController extends CRUDController
             'Admin/Student/mailing.html.twig',
             [
                 'filter' => $calendarEventsFilterForm->createView(),
+                'selected_class_groups' => $request->getSession()->has(FilterStudentsMailingCalendarEventsType::SELECTED_CLASS_GROUPS_SESSION_KEY) ? $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SELECTED_CLASS_GROUPS_SESSION_KEY) : 0,
             ]
         );
     }
@@ -87,5 +90,27 @@ final class StudentAdminController extends CRUDController
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY);
 
         return $this->redirectToRoute('admin_app_student_mailing');
+    }
+
+    public function writeMailingAction(Request $request): Response
+    {
+        $calendarEventsFilter = new FilterCalendarEventModel();
+        if ($request->getSession()->has(FilterStudentsMailingCalendarEventsType::SESSION_KEY)) {
+            $calendarEventsFilter = $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY);
+        }
+        $form = $this->createForm(MailingStudentsNotificationMessageType::class, new ContactMessage());
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('admin_app_contactmessage_list');
+        }
+
+        return $this->renderWithExtraParams(
+            'Admin/Student/write_mailing.html.twig',
+            [
+                'form' => $form->createView(),
+                'calendar_events_filter' => $calendarEventsFilter,
+                'selected_class_groups' => $request->getSession()->has(FilterStudentsMailingCalendarEventsType::SESSION_KEY) ? 1 : 0,
+            ]
+        );
     }
 }
