@@ -89,6 +89,7 @@ Ciutat: "Ciutat"
 Província: "Província"
 "Absència alumne": "Absència alumne"
 "Students Mailing": "Mailing alumnes"
+"Student Show": "Mailing"
 
 frontend:
     meta: "academia anglès %main_brand_title% amposta"
@@ -575,3 +576,9 @@ color:
     blue: "blau"
     yellow: "groc"
     green: "verd"
+
+mailing:
+    step_1: "Escollir aules a notificar"
+    step_1_button: "Filtrar aules a notificar"
+    step_2: "Redactar missatge de la circular"
+    step_3: "Enviar circular als alumnes"
