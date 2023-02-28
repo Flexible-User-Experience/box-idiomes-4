@@ -92,19 +92,57 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <h3>{{ 'mailing.selected_studets' | trans }}</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr class="active">
+                                        <th colspan="2" class="text-center">{{ 'mailing.selected_studets' | trans }}</th>
+                                    </tr>
+                                    {% if students | length > 0 %}
+                                        <tr>
+                                            <th>{{ 'backend.admin.student.name' | trans }}</th>
+                                            <th>{{ 'backend.admin.student.email' | trans }}</th>
+                                        </tr>
+                                    {% endif %}
+                                    </thead>
+                                    <tbody>
+                                    {% if students | length > 0 %}
+                                        {% for student in students %}
+                                            <tr>
+                                                <td>{{ student.fullCanonicalName }}</td>
+                                                <td>{{ student.mainEmailSubject }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="2" class="danger">
+                                                <i class="fa fa-fw fa-exclamation-triangle"></i> {{ 'mailing.no_students_selected' | trans }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                    {% if students | length > 0 %}
+                                        <tfoot>
+                                        <tr>
+                                            <th colspan="2" class="text-right">{{ 'mailing.total_targets' | trans | upper }}: {{ students | length | i }}</th>
+                                        </tr>
+                                        </tfoot>
+                                    {% endif %}
+                                </table>
                             </div>
                             <div class="col-sm-6">
-                                {{ form(form) }}
+                                {% if students | length > 0 %}
+                                    {{ form(form) }}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                    <div class="box-footer clearfix">
-                        <div class="row">
-                            <div class="col-xs-12">
-                            </div>
+                    {% if students | length == 0 %}
+                        <div class="box-footer">
+                            <a href="{{ path('admin_app_student_mailing') }}" class="btn btn-danger">
+                                <i class="fa fa-undo"></i> {{ 'mailing.back_to_previous_step' | trans }}
+                            </a>
                         </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -124,8 +124,12 @@ final class StudentAdminController extends CRUDController
         );
     }
 
-    public function deliverMassiveMailing(): Response
+    public function deliverMassiveMailingAction(Request $request): Response
     {
+        $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY);
+        $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE);
+        $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE);
+
         return $this->renderWithExtraParams(
             'Admin/Student/deliver_massive_mailing.html.twig',
             [

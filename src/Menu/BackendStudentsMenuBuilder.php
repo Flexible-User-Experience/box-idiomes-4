@@ -73,7 +73,7 @@ class BackendStudentsMenuBuilder
                     [
                         'label' => 'Students Mailing',
                         'route' => 'admin_app_student_mailing',
-                        'current' => 'admin_app_student_mailing' === $route,
+                        'current' => 'admin_app_student_mailing' === $route || 'admin_app_student_write_mailing' === $route || 'admin_app_student_deliver_massive_mailing' === $route,
                     ]
                 )
                 ->setExtras(

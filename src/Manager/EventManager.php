@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Entity\AbstractBase;
 use App\Entity\Event;
+use App\Entity\Student;
 use App\Entity\Tariff;
 use App\Model\ExportCalendarToList;
 use App\Model\ExportCalendarToListDayHourItem;
@@ -190,6 +191,27 @@ class EventManager
 
     public function getInvolvedUniqueStudentsInsideEventsList(array $eventsList): array
     {
-        return []; // TODO
+        $result = [];
+        /** @var Event $event */
+        foreach ($eventsList as $event) {
+            $students = $event->getStudents();
+            /** @var Student $student */
+            foreach ($students as $student) {
+                if ($student->getMainEmailSubject()) {
+                    $result[$student->getId()] = $student;
+                }
+            }
+        }
+        usort($result, static function (Student $a, Student $b) {
+            if ($a->getFullCanonicalName() > $b->getFullCanonicalName()) {
+                return 1;
+            } elseif ($a->getFullCanonicalName() < $b->getFullCanonicalName()) {
+                return -1;
+            }
+
+            return 0;
+        });
+
+        return $result;
     }
 }
