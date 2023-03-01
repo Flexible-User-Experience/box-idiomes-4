@@ -4,9 +4,11 @@ namespace App\Service;
 
 use App\Entity\ContactMessage;
 use App\Entity\Invoice;
+use App\Entity\MailingStudentsNotificationMessage;
 use App\Entity\NewsletterContact;
 use App\Entity\PreRegister;
 use App\Entity\Receipt;
+use App\Entity\Student;
 use App\Entity\StudentAbsence;
 use App\Entity\User;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -329,6 +331,27 @@ class NotificationService
             );
         } catch (TransportExceptionInterface|\Exception) {
             $result = 0;
+        }
+
+        return $result;
+    }
+
+    public function sendMailingStudentsNotification(Student $student, MailingStudentsNotificationMessage $notification): bool
+    {
+        $result = true;
+        try {
+            $this->messenger->sendWithMailingTransportNotificationEmail(
+                $this->amd,
+                $student->getMainEmailSubject(),
+                'Circular '.$this->pub.' núm. '.$notification->getId(),
+                $this->twig->render('Mails/mailing_notification.html.twig', [
+                    'notification' => $notification,
+                ]),
+                null,
+                $student->getFullName()
+            );
+        } catch (TransportExceptionInterface|\Exception) {
+            $result = false;
         }
 
         return $result;

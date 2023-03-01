@@ -2,18 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\ContactMessage;
+use App\Entity\ClassGroup;
+use App\Entity\MailingStudentsNotificationMessage;
 use App\Entity\Student;
+use App\Entity\Teacher;
+use App\Entity\TrainingCenter;
 use App\Form\Model\FilterCalendarEventModel;
 use App\Form\Type\FilterStudentsMailingCalendarEventsType;
 use App\Form\Type\MailingStudentsNotificationMessageType;
 use App\Manager\EventManager;
+use App\Message\NewMailingStudentsNotificationMessage;
 use App\Pdf\SepaAgreementBuilderPdf;
 use App\Pdf\StudentImageRightsBuilderPdf;
 use App\Repository\EventRepository;
+use App\Repository\MailingStudentsNotificationMessageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class StudentAdminController extends CRUDController
 {
@@ -95,22 +102,49 @@ final class StudentAdminController extends CRUDController
         return $this->redirectToRoute('admin_app_student_mailing');
     }
 
-    public function writeMailingAction(Request $request, EventRepository $ers, EventManager $em): Response
+    public function writeMailingAction(Request $request, EntityManagerInterface $entityManager, EventRepository $er, MailingStudentsNotificationMessageRepository $msnmr, EventManager $em, MessageBusInterface $bus): Response
     {
         $startDate = $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE);
         $endDate = $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE);
         $calendarEventsFilter = new FilterCalendarEventModel();
         if ($request->getSession()->has(FilterStudentsMailingCalendarEventsType::SESSION_KEY)) {
             $calendarEventsFilter = $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY);
-            $events = $ers->getEnabledFilteredByBeginEndAndFilterCalendarEventForm($startDate, $endDate, $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY));
+            $events = $er->getEnabledFilteredByBeginEndAndFilterCalendarEventForm($startDate, $endDate, $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY));
         } else {
-            $events = $ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+            $events = $er->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
         }
         $students = $em->getInvolvedUniqueStudentsInsideEventsList($events);
-        $form = $this->createForm(MailingStudentsNotificationMessageType::class, new ContactMessage());
+        $mailingStudentsNotificationMessage = new MailingStudentsNotificationMessage();
+        $form = $this->createForm(MailingStudentsNotificationMessageType::class, $mailingStudentsNotificationMessage);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO deliver massive mailing
+            $mailingStudentsNotificationMessage
+                ->setSendDate(new \DateTimeImmutable())
+                ->setIsSended(true)
+                ->setFilterStartDate($startDate)
+                ->setFilterEndDate($endDate)
+                ->setFilteredClassroom($calendarEventsFilter->getClassroom())
+                ->setTotalTargetStudents(count($students))
+            ;
+            if ($calendarEventsFilter->getTeacher()) {
+                $filteredTeacher = $entityManager->getRepository(Teacher::class)->find($calendarEventsFilter->getTeacher()->getId());
+                $mailingStudentsNotificationMessage->setFilteredTeacher($filteredTeacher);
+            }
+            if ($calendarEventsFilter->getGroup()) {
+                $filteredClassGroup = $entityManager->getRepository(ClassGroup::class)->find($calendarEventsFilter->getGroup()->getId());
+                $mailingStudentsNotificationMessage->setFilteredClassGroup($filteredClassGroup);
+            }
+            if ($calendarEventsFilter->getTrainingCenter()) {
+                $filteredTrainingCenter = $entityManager->getRepository(TrainingCenter::class)->find($calendarEventsFilter->getTrainingCenter()->getId());
+                $mailingStudentsNotificationMessage->setFilteredTrainingCenter($filteredTrainingCenter);
+            }
+            $entityManager->persist($mailingStudentsNotificationMessage);
+            $entityManager->flush();
+            /** @var Student $student */
+            foreach ($students as $student) {
+                $bus->dispatch(new NewMailingStudentsNotificationMessage($student->getId(), $mailingStudentsNotificationMessage->getId()));
+            }
+
             return $this->redirectToRoute('admin_app_student_deliver_massive_mailing');
         }
 
@@ -120,6 +154,7 @@ final class StudentAdminController extends CRUDController
                 'form' => $form->createView(),
                 'calendar_events_filter' => $calendarEventsFilter,
                 'students' => $students,
+                'today_available_notifications_amount' => $msnmr->getTodayAvailableNotificationsAmount(),
             ]
         );
     }
@@ -130,10 +165,6 @@ final class StudentAdminController extends CRUDController
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE);
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE);
 
-        return $this->renderWithExtraParams(
-            'Admin/Student/deliver_massive_mailing.html.twig',
-            [
-            ]
-        );
+        return $this->renderWithExtraParams('Admin/Student/deliver_massive_mailing.html.twig');
     }
 }

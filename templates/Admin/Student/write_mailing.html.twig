@@ -93,6 +93,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <table class="table table-bordered">
+                                    <caption>{{ 'mailing.limit_helper' | trans({'%amount%': today_available_notifications_amount | i}) }}</caption>
                                     <thead>
                                     <tr class="active">
                                         <th colspan="2" class="text-center">{{ 'mailing.selected_studets' | trans }}</th>
@@ -122,21 +123,34 @@
                                     </tbody>
                                     {% if students | length > 0 %}
                                         <tfoot>
-                                        <tr>
-                                            <th colspan="2" class="text-right">{{ 'mailing.total_targets' | trans | upper }}: {{ students | length | i }}</th>
+                                        <tr class="info">
+                                            <th class="text-right">{{ 'mailing.total_targets' | trans | upper }}</th>
+                                            <th class="text-right">{{ students | length | i }}</th>
+                                        </tr>
+                                        <tr class="{% if students | length <= today_available_notifications_amount %}success{% else %}warning{% endif %}">
+                                            <th class="text-right">{{ 'mailing.today_limit_amount' | trans | upper }}</th>
+                                            <th class="text-right">{{ today_available_notifications_amount | i }}</th>
                                         </tr>
                                         </tfoot>
                                     {% endif %}
                                 </table>
                             </div>
                             <div class="col-sm-6">
-                                {% if students | length > 0 %}
+                                {% if students | length > 0 and students | length <= today_available_notifications_amount %}
                                     {{ form(form) }}
+                                {% endif %}
+                                {% if students | length > today_available_notifications_amount %}
+                                    <div class="alert alert-warning" role="alert">
+                                        <h4><i class="fa fa-fw fa-exclamation-triangle"></i> {{ 'mailing.limit_danger' | trans }}</h4>
+                                    </div>
+                                    <a href="{{ path('admin_app_student_mailing') }}" class="btn btn-danger">
+                                        <i class="fa fa-undo"></i> {{ 'mailing.back_to_previous_step' | trans }}
+                                    </a>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
-                    {% if students | length == 0 %}
+                    {% if students | length == 0 or students | length > today_available_notifications_amount %}
                         <div class="box-footer">
                             <a href="{{ path('admin_app_student_mailing') }}" class="btn btn-danger">
                                 <i class="fa fa-undo"></i> {{ 'mailing.back_to_previous_step' | trans }}
