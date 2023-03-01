@@ -594,3 +594,6 @@ mailing:
     message: "Text de la circular"
     submit: "Enviar circular"
     congrats: "La cirucular s'ha enviat correctament a totes les adreces dels estudiants seleccionats."
+    today_limit_amount: "Enviaments disponibles avui"
+    limit_helper: "Durant el dia d'avui pots enviar circulars fins a un màxim de %amount% destinataris"
+    limit_danger: "No es pot entregar aquesta circular perquè supera el límit d'enviaments diaris. Redueix la quantitat d'alumnes destinataris seleccionats o espera fins demà per poder enviar aquesta circular."

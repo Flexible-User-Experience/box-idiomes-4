@@ -6,6 +6,7 @@ Changelog
 
 ##### Version 5.6.00 (WIP)
  * distribute massive mailing notifications
+ * manage massive mailing notifications per day
 
 ##### Version 5.5.00 (2022-03-01)
  * add queues management to deliver monthly massive receipts notification
