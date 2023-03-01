@@ -4,7 +4,7 @@ Changelog
 ##### Version 5.6.01 (WIP)
  * fix minor bugs
 
-##### Version 5.6.00 (WIP)
+##### Version 5.6.00 (2022-03-01)
  * distribute massive mailing notifications
  * manage massive mailing notifications per day
 
