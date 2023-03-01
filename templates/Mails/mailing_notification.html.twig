@@ -1,0 +1,15 @@
+{% extends "Mails/base.html.twig" %}
+
+{% block content %}
+    <row>
+        <columns small="12" large="12">
+            <h4 class="grey-color text-center normal-m-top">Circular núm. {{ notification.id }}</h4>
+            <p>
+                {{ notification.message | raw }}
+            </p>
+            <p class="blue-color text-center only-normal-m-top">
+                Moltes gràcies per confiar amb {{ main_brand_title }}.
+            </p>
+        </columns>
+    </row>
+{% endblock %}

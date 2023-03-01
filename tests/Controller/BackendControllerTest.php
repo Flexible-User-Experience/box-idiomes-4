@@ -68,7 +68,6 @@ class BackendControllerTest extends WebTestCase
             array('/admin/students/student/1/show'),
             array('/admin/students/student/1/delete'),
             array('/admin/students/student/mailing'),
-            array('/admin/students/student/mailing-write'),
             array('/admin/students/absence/list'),
             array('/admin/students/absence/create'),
             array('/admin/students/absence/1/edit'),

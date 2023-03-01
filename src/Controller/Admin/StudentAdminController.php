@@ -15,6 +15,7 @@ use App\Message\NewMailingStudentsNotificationMessage;
 use App\Pdf\SepaAgreementBuilderPdf;
 use App\Pdf\StudentImageRightsBuilderPdf;
 use App\Repository\EventRepository;
+use App\Repository\MailingStudentsNotificationMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,16 +102,16 @@ final class StudentAdminController extends CRUDController
         return $this->redirectToRoute('admin_app_student_mailing');
     }
 
-    public function writeMailingAction(Request $request, EntityManagerInterface $entityManager, EventRepository $ers, EventManager $em, MessageBusInterface $bus): Response
+    public function writeMailingAction(Request $request, EntityManagerInterface $entityManager, EventRepository $er, MailingStudentsNotificationMessageRepository $msnmr, EventManager $em, MessageBusInterface $bus): Response
     {
         $startDate = $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE);
         $endDate = $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE);
         $calendarEventsFilter = new FilterCalendarEventModel();
         if ($request->getSession()->has(FilterStudentsMailingCalendarEventsType::SESSION_KEY)) {
             $calendarEventsFilter = $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY);
-            $events = $ers->getEnabledFilteredByBeginEndAndFilterCalendarEventForm($startDate, $endDate, $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY));
+            $events = $er->getEnabledFilteredByBeginEndAndFilterCalendarEventForm($startDate, $endDate, $request->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY));
         } else {
-            $events = $ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+            $events = $er->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
         }
         $students = $em->getInvolvedUniqueStudentsInsideEventsList($events);
         $mailingStudentsNotificationMessage = new MailingStudentsNotificationMessage();
@@ -153,6 +154,7 @@ final class StudentAdminController extends CRUDController
                 'form' => $form->createView(),
                 'calendar_events_filter' => $calendarEventsFilter,
                 'students' => $students,
+                'today_available_notifications_amount' => $msnmr->getTodayAvailableNotificationsAmount(),
             ]
         );
     }
@@ -163,10 +165,6 @@ final class StudentAdminController extends CRUDController
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE);
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE);
 
-        return $this->renderWithExtraParams(
-            'Admin/Student/deliver_massive_mailing.html.twig',
-            [
-            ]
-        );
+        return $this->renderWithExtraParams('Admin/Student/deliver_massive_mailing.html.twig');
     }
 }
