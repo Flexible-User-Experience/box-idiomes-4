@@ -578,11 +578,11 @@ color:
     green: "verd"
 
 mailing:
-    step_1: "Escollir aules a notificar"
+    step_1: "Pas 1: Escollir aules a notificar →"
     step_1_button: "Filtrar aules a notificar"
-    step_2: "Redactar missatge de la circular"
+    step_2: "Pas 2: Redactar missatge de la circular →"
     step_2_button: "Redactar missatge"
-    step_3: "Enviar circular als alumnes"
+    step_3: "Pas 3: Enviar circular als alumnes"
     selected_filters: "Filtres aplicats a les aules escollides"
     from: "Des de"
     to: "Fins a"
