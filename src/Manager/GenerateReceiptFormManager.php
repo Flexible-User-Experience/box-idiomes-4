@@ -89,7 +89,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
         /** @var Student $student */
         foreach ($studentsInPrivateLessons as $student) {
             /** @var Receipt $previousReceipt */
-            $previousReceipt = $this->rr->findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNull($student, $generateReceipt->getYear(), $generateReceipt->getMonth());
+            $previousReceipt = $this->rr->findOnePreviousPrivateLessonsReceiptByStudentYearAndMonthOrNull($student, $oldYear, $oldMonth);
             if (!is_null($previousReceipt)) {
                 // old
                 if (count($previousReceipt->getLines()) > 0) {
@@ -99,7 +99,7 @@ class GenerateReceiptFormManager extends AbstractGenerateReceiptInvoiceFormManag
                 }
             } else {
                 // new
-                $privateLessons = $this->er->getPrivateLessonsByStudentYearAndMonth($student, $year, $month);
+                $privateLessons = $this->er->getPrivateLessonsByStudentYearAndMonth($student, $generateReceipt->getYear(), $generateReceipt->getMonth());
                 $generateReceiptItem = new GenerateReceiptItemModel();
                 $generateReceiptItem
                     ->setTrainingCenterId($generateReceipt->getTrainingCenter()->getId())
