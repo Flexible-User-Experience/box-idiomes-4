@@ -3,8 +3,8 @@
 namespace App\Menu;
 
 use App\Entity\User;
-use App\Enum\UserRolesEnum;
 use App\Repository\ContactMessageRepository;
+use App\Service\SmartAssetsHelperService;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\Security\Core\Security;
@@ -14,12 +14,14 @@ class BackendTopNavMenuBuilder
     private FactoryInterface $factory;
     private Security $ss;
     private ContactMessageRepository $cmr;
+    private SmartAssetsHelperService $sahs;
 
-    public function __construct(FactoryInterface $factory, Security $ss, ContactMessageRepository $cmr)
+    public function __construct(FactoryInterface $factory, Security $ss, ContactMessageRepository $cmr, SmartAssetsHelperService $sahs)
     {
         $this->factory = $factory;
         $this->ss = $ss;
         $this->cmr = $cmr;
+        $this->sahs = $sahs;
     }
 
     public function createTopNavMenu(): ItemInterface
@@ -32,7 +34,7 @@ class BackendTopNavMenuBuilder
             ->addChild(
                 'homepage',
                 [
-                    'label' => '<i class="fa fa-globe"></i>',
+                    'label' => '<i class="fa fa-link"></i>',
                     'route' => 'app_homepage',
                 ]
             )
@@ -58,19 +60,39 @@ class BackendTopNavMenuBuilder
                 )
             ;
         }
-        if ($this->ss->isGranted(UserRolesEnum::ROLE_ADMIN)) {
-            $menu
-                ->addChild(
-                    'username',
-                    [
-                        'label' => $user->getFullname(),
-                        'route' => 'admin_app_user_edit',
-                        'routeParameters' => [
-                            'id' => $user->getId(),
-                        ],
-                    ]
-                )
-            ;
+        if ($user->getTeacher()) {
+            if ($user->getTeacher()->getImageName()) {
+                $menu
+                    ->addChild(
+                        'username',
+                        [
+                            'label' => '<img src="'.$this->sahs->getTeacherImageAssetPath($user->getTeacher(), '60x60').'" class="user-image" alt="'.$user->getFullname().'">'.$user->getFullname(),
+                            'uri' => '#',
+                        ]
+                    )
+                    ->setAttribute('class', 'user-menu')
+                    ->setExtras(
+                        [
+                            'safe_label' => true,
+                        ]
+                    )
+                ;
+            } else {
+                $menu
+                    ->addChild(
+                        'username',
+                        [
+                            'label' => '<i class="far fa-user-circle fa-fw mr-3"></i>'.$user->getFullname(),
+                            'uri' => '#',
+                        ]
+                    )
+                    ->setExtras(
+                        [
+                            'safe_label' => true,
+                        ]
+                    )
+                ;
+            }
         } else {
             $menu
                 ->addChild(

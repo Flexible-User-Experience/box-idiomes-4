@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\NameTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BankRepository")
+ *
  * @ORM\Table(name="bank")
  */
 class Bank extends AbstractBase
 {
+    use NameTrait;
+
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -18,33 +22,24 @@ class Bank extends AbstractBase
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @Assert\Iban()
      */
     private ?string $accountNumber = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     *
      * @Assert\Bic()
      */
     private ?string $swiftCode = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Person")
+     *
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      */
     private ?Person $parent = null;
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
     public function getAccountNumber(): ?string
     {

@@ -27,6 +27,7 @@ sonata_admin:
         groups:
             Alumnes:
                 icon:     '<i class="fa fa-graduation-cap"></i>'
+                provider: 'backend_students_menu'
             Professors:
                 icon:     '<i class="fa fa-user"></i>'
             Aules:
@@ -50,20 +51,20 @@ sonata_admin:
                 icon:     '<i class="fa fa-cogs"></i>'
         blocks:
             -
-                position: top
-                type:     sonata.block.service.text
+                position: 'top'
+                type:     'sonata.block.service.text'
                 class:    'col-xs-12'
                 roles:    [ 'ROLE_CMS' ]
                 settings:
                     content: >
                         <h1 style='margin-top:0'>%project_backend_title%</h1>
             -
-                position: top
-                type:     app.block.event_calendar
+                position: 'top'
+                type:     'App\Block\EventCalendarBlock'
                 class:    'col-xs-12'
                 roles:    [ 'ROLE_MANAGER' ]
             -
-                position: top
-                type:     app.block.charts
+                position: 'top'
+                type:     'App\Block\ChartsBlock'
                 class:    'col-xs-12'
                 roles:    [ 'ROLE_ADMIN' ]

@@ -6,9 +6,9 @@ use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Student;
+use App\Entity\TrainingCenter;
 use App\Enum\InvoiceYearMonthEnum;
 use App\Enum\StudentPaymentEnum;
-use DateTimeImmutable;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -88,7 +88,7 @@ final class ReceiptAdmin extends AbstractBaseAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $currentYear = $now->format('Y');
         $form
             ->with('backend.admin.receipt.receipt', $this->getFormMdSuccessBoxArray('backend.admin.receipt.receipt', 3))
@@ -166,6 +166,16 @@ final class ReceiptAdmin extends AbstractBaseAdmin
             )
             ->end()
             ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
+            ->add(
+                'trainingCenter',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'required' => true,
+                    'class' => TrainingCenter::class,
+                    'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                ]
+            )
             ->add(
                 'isForPrivateLessons',
                 CheckboxType::class,
@@ -365,6 +375,18 @@ final class ReceiptAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'trainingCenter',
+                null,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => TrainingCenter::class,
+                        'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                    ],
+                ]
+            )
+            ->add(
                 'isForPrivateLessons',
                 null,
                 [
@@ -540,6 +562,7 @@ final class ReceiptAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:248px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
@@ -584,6 +607,7 @@ final class ReceiptAdmin extends AbstractBaseAdmin
             'student.paymentString',
             'discountAppliedString',
             'baseAmountString',
+            'trainingCenter',
             'isForPrivateLessonsString',
             'isSepaXmlGeneratedString',
             'sepaXmlGeneratedDateString',

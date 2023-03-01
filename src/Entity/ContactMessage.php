@@ -3,15 +3,25 @@
 namespace App\Entity;
 
 use App\Entity\Traits\DescriptionTrait;
+use App\Entity\Traits\DocumentFileTrait;
+use App\Entity\Traits\NameTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table()
+ *
  * @ORM\Entity(repositoryClass="App\Repository\ContactMessageRepository")
+ *
+ * @Vich\Uploadable
  */
 class ContactMessage extends AbstractBase
 {
     use DescriptionTrait;
+    use DocumentFileTrait;
+    use NameTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,19 +58,14 @@ class ContactMessage extends AbstractBase
      */
     private ?string $message = null;
 
+    /**
+     * @Vich\UploadableField(mapping="contact_message", fileNameProperty="document")
+     *
+     * @Assert\File(maxSize="10M")
+     */
+    private ?File $documentFile = null;
+
     private bool $privacy;
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
     public function getEmail(): string
     {

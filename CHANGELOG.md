@@ -1,8 +1,45 @@
 Changelog
 =========
 
-##### Version 5.2.22 (WIP)
+##### Version 5.6.01 (WIP)
  * fix minor bugs
+
+##### Version 5.6.00 (WIP)
+ * distribute massive mailing notifications
+
+##### Version 5.5.00 (2022-03-01)
+ * add queues management to deliver monthly massive receipts notification
+ * improve files manager actions column button group styles
+ * improve some calendar UI issues
+ * Symfony v5.4.21 update
+
+##### Version 5.4.00 (2022-02-23)
+ * show previews in files management
+ * add Student training center helper
+
+##### Version 5.3.00 (2022-02-22)
+ * remove unnecessary console commands
+ * improve filter calendar form responsive breakpoints
+ * fix actions column width to reduce size
+ * add TrainingCenter management
+
+##### Version 5.2.25 (2023-02-17)
+ * add missing placeholders in calendar filters
+
+##### Version 5.2.24 (2023-02-17)
+ * dependencies update
+ * enable 8 hours long PHP user logged sessions
+ * feature/0003-own-teacher-calendars included 
+ * feature/0005-attatch-document-in-contact-message-responses 
+ * feature/0006-filter-calendars-only-for-role-admin included 
+
+##### Version 5.2.23 (2022-11-29)
+ * Symfony 5.4.16 update
+ * dependencies update
+ * show students inactive alert into Select2 tags
+
+##### Version 5.2.22 (2022-11-07)
+ * dependencies update
 
 ##### Version 5.2.21 (2022-09-12)
  * change Fullcalendar.js defult timeGridDay view in main dashboard

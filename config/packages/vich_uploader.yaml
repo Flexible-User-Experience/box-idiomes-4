@@ -1,15 +1,20 @@
 vich_uploader:
-    db_driver: orm
+    db_driver: 'orm'
+    storage: 'file_system'
     mappings:
         teacher:
-            uri_prefix:         '/uploads/images/teacher'
+            uri_prefix: '/uploads/images/teacher'
             upload_destination: '%kernel.project_dir%/public/uploads/images/teacher'
-            namer:              'vich_uploader.namer_uniqid'
+            namer: 'Vich\UploaderBundle\Naming\UniqidNamer'
         service:
-            uri_prefix:         '/uploads/images/service'
+            uri_prefix: '/uploads/images/service'
             upload_destination: '%kernel.project_dir%/public/uploads/images/service'
-            namer:              'vich_uploader.namer_uniqid'
+            namer: 'Vich\UploaderBundle\Naming\UniqidNamer'
         spending:
-            uri_prefix:         '/uploads/documents/spending'
+            uri_prefix: '/uploads/documents/spending'
             upload_destination: '%kernel.project_dir%/public/uploads/documents/spending'
-            namer:              'vich_uploader.namer_uniqid'
+            namer: 'Vich\UploaderBundle\Naming\UniqidNamer'
+        contact_message:
+            uri_prefix: '/uploads/contact_message_answer_attatchments'
+            upload_destination: '%kernel.project_dir%/public/uploads/contact_message_answer_attatchments'
+            namer: 'Vich\UploaderBundle\Naming\SmartUniqueNamer'

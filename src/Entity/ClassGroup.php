@@ -2,17 +2,22 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TrainingCenterTrait;
 use App\Model\Color;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClassGroupRepository")
+ *
  * @ORM\Table(name="class_group")
+ *
  * @UniqueEntity({"code"})
  */
 class ClassGroup extends AbstractBase
 {
+    use TrainingCenterTrait;
+
     /**
      * @ORM\Column(type="string")
      */

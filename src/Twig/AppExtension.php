@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Entity\AbstractBase;
 use App\Entity\ClassGroup;
+use App\Entity\ContactMessage;
 use App\Entity\Event;
 use App\Entity\PreRegister;
 use App\Entity\Receipt;
@@ -18,9 +19,8 @@ use App\Enum\TeacherAbsenceTypeEnum;
 use App\Enum\TeacherColorEnum;
 use App\Enum\UserRolesEnum;
 use App\Manager\ReceiptManager;
+use App\Service\FileService;
 use App\Service\SmartAssetsHelperService;
-use Exception;
-use ReflectionClass;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -29,12 +29,14 @@ use Twig\TwigTest;
 
 class AppExtension extends AbstractExtension
 {
+    private FileService $fs;
     private SmartAssetsHelperService $sahs;
     private ReceiptManager $rm;
     private TranslatorInterface $ts;
 
-    public function __construct(SmartAssetsHelperService $sahs, ReceiptManager $rm, TranslatorInterface $ts)
+    public function __construct(FileService $fs, SmartAssetsHelperService $sahs, ReceiptManager $rm, TranslatorInterface $ts)
     {
+        $this->fs = $fs;
         $this->sahs = $sahs;
         $this->rm = $rm;
         $this->ts = $ts;
@@ -47,12 +49,24 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigTest('instance_of', [$this, 'isInstanceOf']),
+            new TwigTest('pdf_file_type', [$this, 'isPdfFileType']),
+            new TwigTest('audio_file_type', [$this, 'isAudioFileType']),
         ];
     }
 
     public function isInstanceOf($var, $instance): bool
     {
-        return (new ReflectionClass($instance))->isInstance($var);
+        return (new \ReflectionClass($instance))->isInstance($var);
+    }
+
+    public function isPdfFileType($object): bool
+    {
+        return $this->isInstanceOf($object, \SplFileInfo::class) && 'pdf' === strtolower($object->getExtension());
+    }
+
+    public function isAudioFileType($object): bool
+    {
+        return $this->isInstanceOf($object, \SplFileInfo::class) && ('mp3' === strtolower($object->getExtension()) || 'wav' === strtolower($object->getExtension()));
     }
 
     /**
@@ -62,13 +76,15 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('generate_random_error_text', [$this, 'generateRandomErrorText']),
+            new TwigFunction('is_contact_message_document_pdf_file', [$this, 'isContactMessageDocumentPdfFile']),
+            new TwigFunction('is_contact_message_document_image_file', [$this, 'isContactMessageDocumentImageFile']),
             new TwigFunction('is_receipt_invoiced', [$this, 'isReceiptInvoicedFunction']),
             new TwigFunction('get_absolute_asset_path_context_independent', [$this, 'getAbsoluteAssetPathContextIndependent']),
         ];
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function generateRandomErrorText($length = 1024): string
     {
@@ -79,6 +95,16 @@ class AppExtension extends AbstractExtension
         $chrRepeatMax = 30; // Maximum times to repeat the seed string
 
         return substr(str_shuffle(str_repeat($chrList, random_int($chrRepeatMin, $chrRepeatMax))), 1, $length);
+    }
+
+    public function isContactMessageDocumentPdfFile(ContactMessage $contactMessage): bool
+    {
+        return $this->fs->isPdf($contactMessage, 'documentFile');
+    }
+
+    public function isContactMessageDocumentImageFile(ContactMessage $contactMessage): bool
+    {
+        return $this->fs->isImage($contactMessage, 'documentFile');
     }
 
     public function isReceiptInvoicedFunction(Receipt $receipt): bool

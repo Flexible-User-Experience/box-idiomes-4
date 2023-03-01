@@ -4,6 +4,7 @@ namespace App\Manager;
 
 use App\Repository\EventRepository;
 use App\Repository\StudentRepository;
+use App\Repository\TrainingCenterRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -15,15 +16,17 @@ abstract class AbstractGenerateReceiptInvoiceFormManager
     protected KernelInterface $kernel;
     protected EntityManagerInterface $em;
     protected TranslatorInterface $ts;
+    protected TrainingCenterRepository $tcr;
     protected StudentRepository $sr;
     protected EventRepository $er;
 
-    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, StudentRepository $sr, EventRepository $er)
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel, EntityManagerInterface $em, TranslatorInterface $ts, TrainingCenterRepository $tcr, StudentRepository $sr, EventRepository $er)
     {
         $this->logger = $logger;
         $this->kernel = $kernel;
         $this->em = $em;
         $this->ts = $ts;
+        $this->tcr = $tcr;
         $this->sr = $sr;
         $this->er = $er;
     }

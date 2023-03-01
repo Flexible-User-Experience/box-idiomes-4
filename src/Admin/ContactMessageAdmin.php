@@ -156,6 +156,14 @@ final class ContactMessageAdmin extends AbstractBaseAdmin
                         'label' => 'backend.admin.contact.answer',
                     ]
                 )
+                ->add(
+                    'document',
+                    null,
+                    [
+                        'label' => 'backend.admin.contact.attatchment',
+                        'template' => 'Admin/ContactMessage/answer_attatchment_file_preview.html.twig',
+                    ]
+                )
             ;
         }
     }
@@ -210,6 +218,7 @@ final class ContactMessageAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:116px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [

@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class ContactMessageAnswerType extends AbstractType
 {
@@ -27,11 +28,23 @@ class ContactMessageAnswerType extends AbstractType
                 ]
             )
             ->add(
+                'documentFile',
+                DropzoneType::class,
+                [
+                    'label' => 'backend.admin.contact.attatchment',
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'backend.admin.contact.attatchment_help',
+                    ],
+                ]
+            )
+            ->add(
                 'send',
                 SubmitType::class,
                 [
                     'label' => 'backend.admin.submit',
                     'attr' => [
+                        'style' => 'margin-top: 20px',
                         'class' => 'btn-primary',
                     ],
                 ]

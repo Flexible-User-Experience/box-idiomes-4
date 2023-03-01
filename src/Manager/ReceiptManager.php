@@ -6,7 +6,6 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Entity\Receipt;
 use App\Repository\InvoiceRepository;
-use DateTime;
 
 class ReceiptManager
 {
@@ -21,10 +20,11 @@ class ReceiptManager
     {
         $invoice = new Invoice();
         $invoice
+            ->setTrainingCenter($receipt->getTrainingCenter())
             ->setReceipt($receipt)
             ->setStudent($receipt->getStudent())
             ->setPerson($receipt->getPerson())
-            ->setDate(new DateTime())
+            ->setDate(new \DateTime())
             ->setIrpfPercentage(Invoice::TAX_IRPF)
             ->setTaxPercentage(Invoice::TAX_IVA)
             ->setIsPayed($receipt->getIsPayed())

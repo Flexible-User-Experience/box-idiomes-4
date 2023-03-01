@@ -1,0 +1,74 @@
+{% extends "Admin/layout.html.twig" %}
+
+{# override css includes #}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('fullcalendardefaultsettings') }}
+{% endblock %}
+
+{% block sonata_admin_content %}
+    <div class="sonata-ba-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <div class="btn-group btn-group-lg" role="group">
+                            <button type="button" class="btn btn-success active"><i class="fa fa-fw fa-search"></i> {{ 'mailing.step_1' | trans }}</button>
+                            <button type="button" class="btn btn-default" disabled="disabled"><i class="fa fa-fw fa-pencil-square-o"></i> {{ 'mailing.step_2' | trans }}</button>
+                            <button type="button" class="btn btn-default" disabled="disabled"><i class="fa fa-fw fa-bullhorn" style="margin-right:3px"></i>{{ 'mailing.step_3' | trans }}</button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12 margin-bottom">
+                                <div id="calendar-holder" data-events-url="{{ path('fc_load_events') }}" data-gcal-api-key="{{ google_calendar_api_key }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                {{ form_start(filter) }}
+                                <div class="form-group" style="margin-bottom:5px;margin-top:5px;">
+                                    {{ form_widget(filter.submit) }}
+                                </div>
+                                <div class="form-group">
+                                    <a href="{{ path('admin_app_student_mailing_reset') }}" class="btn btn-default" title="{{ 'backend.admin.reset_filter_calendar_by' | trans | capitalize }}" style="margin-bottom:5px;margin-top:5px;">
+                                        <i class="fa fa-undo"></i>
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    {{ form_widget(filter.classroom) }}
+                                    {{ form_errors(filter.classroom) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_widget(filter.teacher) }}
+                                    {{ form_errors(filter.teacher) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_widget(filter.group) }}
+                                    {{ form_errors(filter.group) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_widget(filter.trainingCenter) }}
+                                    {{ form_errors(filter.trainingCenter) }}
+                                </div>
+                                <div class="form-group pull-right">
+                                    <a href="{{ path('admin_app_student_write_mailing') }}" class="btn btn-success"><i class="fa fa-fw fa-pencil-square-o"></i> {{ 'mailing.step_2_button' | trans }}</a>
+                                </div>
+                                {{ form_rest(filter) }}
+                                {{ form_end(filter) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{# override javascript includes #}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('fullcalendardefaultsettings') }}
+{% endblock %}

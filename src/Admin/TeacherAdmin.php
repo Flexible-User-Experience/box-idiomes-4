@@ -199,6 +199,7 @@ final class TeacherAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:86px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [

@@ -6,7 +6,6 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use TCPDF;
 
 class CourierService
 {
@@ -29,12 +28,23 @@ class CourierService
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendEmailWithPdfAttached(string $from, string $toEmail, string $toName, string $subject, string $body, string $pdfFilename, TCPDF $pdf): void
+    public function sendEmailWithPdfAttached(string $from, string $toEmail, string $toName, string $subject, string $body, string $pdfFilename, \TCPDF $pdf): void
     {
         $message = $this->buildEmail($from, $toEmail, $subject, $body, null, $toName);
         $pathToTemporaryStoredPdfFile = DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pdfFilename;
         $pdf->Output($pathToTemporaryStoredPdfFile, 'F');
         $message->attachFromPath($pathToTemporaryStoredPdfFile, $pdfFilename, 'application/pdf');
+
+        $this->mailer->send($message);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function sendEmailWithAttachedFile(string $from, string $toEmail, string $toName, string $subject, string $body, string $filepath, string $filename): void
+    {
+        $message = $this->buildEmail($from, $toEmail, $subject, $body, null, $toName);
+        $message->attachFromPath($filepath, $filename);
 
         $this->mailer->send($message);
     }

@@ -11,6 +11,7 @@ use App\Entity\Person;
 use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\Tariff;
+use App\Entity\TrainingCenter;
 use App\Enum\SchoolYearChoicesGeneratorEnum;
 use App\Enum\StudentAgesEnum;
 use App\Enum\StudentPaymentEnum;
@@ -51,6 +52,10 @@ final class StudentAdmin extends AbstractBaseAdmin
         $collection
             ->add('imagerights', $this->getRouterIdParameter().'/image-rights')
             ->add('sepaagreement', $this->getRouterIdParameter().'/sepa-agreement')
+            ->add('mailing', 'mailing')
+            ->add('mailing_reset', 'mailing-reset')
+            ->add('write_mailing', 'mailing-write')
+            ->add('deliver_massive_mailing', 'mailing-delivery')
             ->remove('batch')
         ;
     }
@@ -220,6 +225,17 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'trainingCenter',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'help' => 'backend.admin.student.training_center_help',
+                    'required' => true,
+                    'class' => TrainingCenter::class,
+                    'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                ]
+            )
+            ->add(
                 'hasImageRightsAccepted',
                 CheckboxType::class,
                 [
@@ -338,6 +354,11 @@ final class StudentAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.student.city',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => City::class,
+                        'query_builder' => $this->em->getRepository(City::class)->getEnabledSortedByNameQB(),
+                    ],
                 ]
             )
             ->add(
@@ -480,6 +501,18 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'trainingCenter',
+                null,
+                [
+                    'label' => 'backend.admin.class_group.training_center',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => TrainingCenter::class,
+                        'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
+                    ],
+                ]
+            )
+            ->add(
                 'hasImageRightsAccepted',
                 null,
                 [
@@ -519,7 +552,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridHasAtLeastOneEventClassGroupAssignedFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($field === 'hasAtLeastOneEventClassGroupAssigned' && $data->hasValue()) {
+        if ('hasAtLeastOneEventClassGroupAssigned' === $field && $data->hasValue()) {
             $beginEndSchoolYearMoment = new BeginEndSchoolYearMoment((int) $data->getValue());
             $relatedEntitiesQuery = $query->getQueryBuilder()->getEntityManager()->getRepository(Student::class)
                 ->createQueryBuilder('student')
@@ -541,7 +574,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridSchoolYearFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($field === 'schoolYear' && $data->hasValue()) {
+        if ('schoolYear' === $field && $data->hasValue()) {
             $beginEndSchoolYearMoment = new BeginEndSchoolYearMoment((int) $data->getValue());
             $query->leftJoin($alias.'.events', 'ev');
             $query->andWhere('ev.begin > :begin');
@@ -557,7 +590,7 @@ final class StudentAdmin extends AbstractBaseAdmin
 
     public function buildDatagridAgesFilter(ProxyQueryInterface $query, string $alias, string $field, FilterData $data): bool
     {
-        if ($field === 'age' && $data->hasValue()) {
+        if ('age' === $field && $data->hasValue()) {
             $age = (int) $data->getValue();
             if ($age < StudentAgesEnum::AGE_20_plus) {
                 $query->andWhere('TIMESTAMPDIFF(year, '.$alias.'.birthDate, NOW()) = :age');
@@ -658,6 +691,7 @@ final class StudentAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:152px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
@@ -704,6 +738,7 @@ final class StudentAdmin extends AbstractBaseAdmin
             'dischargeDateString',
             'schedule',
             'tariff',
+            'trainingCenter',
             'hasImageRightsAccepted',
             'hasSepaAgreementAccepted',
             'hasAcceptedInternalRegulations',

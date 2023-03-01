@@ -8,8 +8,6 @@ use App\Entity\Event;
 use App\Entity\Student;
 use App\Entity\Teacher;
 use App\Enum\EventClassroomTypeEnum;
-use DateInterval;
-use Exception;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -135,8 +133,10 @@ final class EventAdmin extends AbstractBaseAdmin
                     'required' => false,
                     'multiple' => true,
                     'class' => Student::class,
-                    'choice_label' => 'fullCanonicalName',
                     'query_builder' => $this->em->getRepository(Student::class)->getAllSortedBySurnameQB(),
+                    'choice_label' => function (Student $student) {
+                        return $student->getFullCanonicalName().($student->isEnabled() ?: ' (*** BAIXA ***)');
+                    },
                 ]
             )
             ->end()
@@ -292,6 +292,7 @@ final class EventAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
+                    'header_style' => 'width:116px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
@@ -321,15 +322,15 @@ final class EventAdmin extends AbstractBaseAdmin
      *
      * @param Event $object
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function postPersist($object): void
     {
         if ($object->getDayFrequencyRepeat() && $object->getUntil()) {
             $currentBegin = $object->getBegin();
             $currentEnd = $object->getEnd();
-            $currentBegin->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
-            $currentEnd->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+            $currentBegin->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+            $currentEnd->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
             $previousEvent = $object;
             $found = false;
 
@@ -348,8 +349,8 @@ final class EventAdmin extends AbstractBaseAdmin
                 $this->em->persist($event);
                 $this->em->flush();
 
-                $currentBegin->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
-                $currentEnd->add(new DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+                $currentBegin->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
+                $currentEnd->add(new \DateInterval('P'.$object->getDayFrequencyRepeat().'D'));
                 $previousEvent = $event;
                 $found = true;
             }
