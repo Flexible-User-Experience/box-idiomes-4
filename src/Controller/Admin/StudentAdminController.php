@@ -2,8 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\ClassGroup;
 use App\Entity\MailingStudentsNotificationMessage;
 use App\Entity\Student;
+use App\Entity\Teacher;
+use App\Entity\TrainingCenter;
 use App\Form\Model\FilterCalendarEventModel;
 use App\Form\Type\FilterStudentsMailingCalendarEventsType;
 use App\Form\Type\MailingStudentsNotificationMessageType;
@@ -120,11 +123,20 @@ final class StudentAdminController extends CRUDController
                 ->setFilterStartDate($startDate)
                 ->setFilterEndDate($endDate)
                 ->setFilteredClassroom($calendarEventsFilter->getClassroom())
-                ->setFilteredTeacher($calendarEventsFilter->getTeacher())
-                ->setFilteredClassGroup($calendarEventsFilter->getGroup())
-                ->setFilteredTrainingCenter($calendarEventsFilter->getTrainingCenter())
                 ->setTotalTargetStudents(count($students))
             ;
+            if ($calendarEventsFilter->getTeacher()) {
+                $filteredTeacher = $entityManager->getRepository(Teacher::class)->find($calendarEventsFilter->getTeacher()->getId());
+                $mailingStudentsNotificationMessage->setFilteredTeacher($filteredTeacher);
+            }
+            if ($calendarEventsFilter->getGroup()) {
+                $filteredClassGroup = $entityManager->getRepository(ClassGroup::class)->find($calendarEventsFilter->getGroup()->getId());
+                $mailingStudentsNotificationMessage->setFilteredClassGroup($filteredClassGroup);
+            }
+            if ($calendarEventsFilter->getTrainingCenter()) {
+                $filteredTrainingCenter = $entityManager->getRepository(TrainingCenter::class)->find($calendarEventsFilter->getTrainingCenter()->getId());
+                $mailingStudentsNotificationMessage->setFilteredTrainingCenter($filteredTrainingCenter);
+            }
             $entityManager->persist($mailingStudentsNotificationMessage);
             $entityManager->flush();
             /** @var Student $student */

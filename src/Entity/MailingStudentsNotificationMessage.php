@@ -39,7 +39,7 @@ class MailingStudentsNotificationMessage extends AbstractBase
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $filteredClassroom;
+    private ?int $filteredClassroom;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
@@ -60,7 +60,7 @@ class MailingStudentsNotificationMessage extends AbstractBase
      *
      * @ORM\JoinColumn(name="training_center_id", referencedColumnName="id", nullable=true)
      */
-    private ?ClassGroup $filteredTrainingCenter;
+    private ?TrainingCenter $filteredTrainingCenter;
 
     /**
      * @ORM\Column(type="integer", nullable=false, options={"default"=0})
@@ -132,12 +132,12 @@ class MailingStudentsNotificationMessage extends AbstractBase
         return $this;
     }
 
-    public function getFilteredClassroom(): int
+    public function getFilteredClassroom(): ?int
     {
         return $this->filteredClassroom;
     }
 
-    public function setFilteredClassroom(int $filteredClassroom): self
+    public function setFilteredClassroom(?int $filteredClassroom): self
     {
         $this->filteredClassroom = $filteredClassroom;
 
@@ -168,12 +168,12 @@ class MailingStudentsNotificationMessage extends AbstractBase
         return $this;
     }
 
-    public function getFilteredTrainingCenter(): ?ClassGroup
+    public function getFilteredTrainingCenter(): ?TrainingCenter
     {
         return $this->filteredTrainingCenter;
     }
 
-    public function setFilteredTrainingCenter(?ClassGroup $filteredTrainingCenter): self
+    public function setFilteredTrainingCenter(?TrainingCenter $filteredTrainingCenter): self
     {
         $this->filteredTrainingCenter = $filteredTrainingCenter;
 
