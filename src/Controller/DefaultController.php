@@ -7,7 +7,6 @@ use App\Entity\MailingStudentsNotificationMessage;
 use App\Entity\NewsletterContact;
 use App\Entity\PreRegister;
 use App\Entity\Service;
-use App\Entity\Student;
 use App\Entity\Teacher;
 use App\Enum\PreRegisterSeasonEnum;
 use App\Form\Type\ContactHomepageType;
@@ -209,13 +208,11 @@ class DefaultController extends AbstractController
         if (Kernel::ENV_PROD === $kernel->getEnvironment()) {
             throw new AccessDeniedHttpException();
         }
-        $student = $em->getRepository(Student::class)->find(1);
         $notification = $em->getRepository(MailingStudentsNotificationMessage::class)->find(1);
 
         return $this->render(
             'Mails/mailing_notification.html.twig',
             [
-                'student' => $student,
                 'notification' => $notification,
             ]
         );

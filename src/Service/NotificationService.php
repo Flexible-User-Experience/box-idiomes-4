@@ -346,7 +346,6 @@ class NotificationService
                 $student->getMainEmailSubject(),
                 'Circular '.$this->pub.' núm. '.$notification->getId(),
                 $this->twig->render('Mails/mailing_notification.html.twig', [
-                    'student' => $student,
                     'notification' => $notification,
                 ]),
                 null,
