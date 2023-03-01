@@ -8,6 +8,7 @@ use App\Form\Model\FilterCalendarEventModel;
 use App\Form\Type\FilterStudentsMailingCalendarEventsType;
 use App\Form\Type\MailingStudentsNotificationMessageType;
 use App\Manager\EventManager;
+use App\Message\NewMailingStudentsNotificationMessage;
 use App\Pdf\SepaAgreementBuilderPdf;
 use App\Pdf\StudentImageRightsBuilderPdf;
 use App\Repository\EventRepository;
@@ -128,7 +129,7 @@ final class StudentAdminController extends CRUDController
             $entityManager->flush();
             /** @var Student $student */
             foreach ($students as $student) {
-                $bus->dispatch();
+                $bus->dispatch(new NewMailingStudentsNotificationMessage($student->getId(), $mailingStudentsNotificationMessage->getId()));
             }
 
             return $this->redirectToRoute('admin_app_student_deliver_massive_mailing');
