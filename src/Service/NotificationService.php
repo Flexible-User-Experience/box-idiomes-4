@@ -4,9 +4,11 @@ namespace App\Service;
 
 use App\Entity\ContactMessage;
 use App\Entity\Invoice;
+use App\Entity\MailingStudentsNotificationMessage;
 use App\Entity\NewsletterContact;
 use App\Entity\PreRegister;
 use App\Entity\Receipt;
+use App\Entity\Student;
 use App\Entity\StudentAbsence;
 use App\Entity\User;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -332,5 +334,11 @@ class NotificationService
         }
 
         return $result;
+    }
+
+    public function sendMailingStudentsNotification(Student $student, MailingStudentsNotificationMessage $notidication): bool
+    {
+        // TODO
+        return false;
     }
 }
