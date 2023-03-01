@@ -66,6 +66,13 @@ services:
         factory: [ '@App\Menu\BackendTopNavMenuBuilder', 'createTopNavMenu' ]
         tags:
             - { name: 'knp_menu.menu', alias: 'backend_top_nav_menu' }
+    app.backend_students_menu:
+        class: 'Knp\Menu\MenuItem'
+        factory: [ '@App\Menu\BackendStudentsMenuBuilder', 'createSideMenu' ]
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: 'knp_menu.menu', alias: 'backend_students_menu' }
     app.backend_invoice_menu:
         class: 'Knp\Menu\MenuItem'
         factory: [ '@App\Menu\BackendInvoiceMenuBuilder', 'createSideMenu' ]

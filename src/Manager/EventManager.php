@@ -4,14 +4,13 @@ namespace App\Manager;
 
 use App\Entity\AbstractBase;
 use App\Entity\Event;
+use App\Entity\Student;
 use App\Entity\Tariff;
 use App\Model\ExportCalendarToList;
 use App\Model\ExportCalendarToListDayHourItem;
 use App\Model\ExportCalendarToListDayItem;
 use App\Repository\EventRepository;
 use App\Repository\TariffRepository;
-use DateInterval;
-use DateTimeInterface;
 
 class EventManager
 {
@@ -157,7 +156,7 @@ class EventManager
         return $this->decidePrivateLessonsTariff($events) ? $this->tr->findCurrentPrivateLessonTariff() : $this->tr->findCurrentSharedPrivateLessonTariff();
     }
 
-    public function getCalendarEventsListFromDates(DateTimeInterface $start, DateTimeInterface $end): ExportCalendarToList
+    public function getCalendarEventsListFromDates(\DateTimeInterface $start, \DateTimeInterface $end): ExportCalendarToList
     {
         $calendarEventsList = new ExportCalendarToList();
         do {
@@ -184,9 +183,37 @@ class EventManager
             }
             $calendarEventsList->addDay($calendarEventsListDayItem);
             // iterate $start date one day
-            $start->add(new DateInterval('P1D'));
+            $start->add(new \DateInterval('P1D'));
         } while ($start->format(AbstractBase::DATABASE_DATE_STRING_FORMAT) < $end->format(AbstractBase::DATABASE_DATE_STRING_FORMAT));
 
         return $calendarEventsList;
+    }
+
+    public function getInvolvedUniqueStudentsInsideEventsList(array $eventsList): array
+    {
+        $result = [];
+        /** @var Event $event */
+        foreach ($eventsList as $event) {
+            $students = $event->getStudents();
+            /** @var Student $student */
+            foreach ($students as $student) {
+                if ($student->getMainEmailSubject()) {
+                    $result[$student->getId()] = $student;
+                }
+            }
+        }
+        usort($result, static function (Student $a, Student $b) {
+            if ($a->getFullCanonicalName() > $b->getFullCanonicalName()) {
+                return 1;
+            }
+
+            if ($a->getFullCanonicalName() < $b->getFullCanonicalName()) {
+                return -1;
+            }
+
+            return 0;
+        });
+
+        return $result;
     }
 }
