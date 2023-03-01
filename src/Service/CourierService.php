@@ -28,6 +28,16 @@ class CourierService
     /**
      * @throws TransportExceptionInterface
      */
+    public function sendWithMailingTransportNotificationEmail(string $from, string $toEmail, string $subject, string $body, ?string $replyAddress = null, ?string $toName = null): void
+    {
+        $message = $this->buildEmail($from, $toEmail, $subject, $body, $replyAddress, $toName);
+        $message->getHeaders()->addTextHeader('X-Transport', 'mailing');
+        $this->mailer->send($message);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function sendEmailWithPdfAttached(string $from, string $toEmail, string $toName, string $subject, string $body, string $pdfFilename, \TCPDF $pdf): void
     {
         $message = $this->buildEmail($from, $toEmail, $subject, $body, null, $toName);

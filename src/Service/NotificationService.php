@@ -338,10 +338,9 @@ class NotificationService
 
     public function sendMailingStudentsNotification(Student $student, MailingStudentsNotificationMessage $notification): bool
     {
-        // TODO send with mailing transport
         $result = true;
         try {
-            $this->messenger->sendEmail(
+            $this->messenger->sendWithMailingTransportNotificationEmail(
                 $this->amd,
                 $student->getMainEmailSubject(),
                 'Circular '.$this->pub.' núm. '.$notification->getId(),
