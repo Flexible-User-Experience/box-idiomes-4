@@ -336,9 +336,26 @@ class NotificationService
         return $result;
     }
 
-    public function sendMailingStudentsNotification(Student $student, MailingStudentsNotificationMessage $notidication): bool
+    public function sendMailingStudentsNotification(Student $student, MailingStudentsNotificationMessage $notification): bool
     {
-        // TODO
-        return false;
+        // TODO send with mailing transport
+        $result = true;
+        try {
+            $this->messenger->sendEmail(
+                $this->amd,
+                $student->getMainEmailSubject(),
+                'Circular '.$this->pub.' núm. '.$notification->getId(),
+                $this->twig->render('Mails/mailing_notification.html.twig', [
+                    'student' => $student,
+                    'notification' => $notification,
+                ]),
+                null,
+                $student->getFullName()
+            );
+        } catch (TransportExceptionInterface|\Exception) {
+            $result = false;
+        }
+
+        return $result;
     }
 }
