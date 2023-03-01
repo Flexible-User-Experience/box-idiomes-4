@@ -23,11 +23,11 @@ class FilterCalendarEventsType extends AbstractType
 {
     public const SESSION_KEY = 'filter_calendar_events_form_data';
 
-    private TranslatorInterface $ts;
-    private RouterInterface $rs;
-    private TeacherRepository $tr;
-    private ClassGroupRepository $cgr;
-    private TrainingCenterRepository $tcr;
+    protected TranslatorInterface $ts;
+    protected RouterInterface $rs;
+    protected TeacherRepository $tr;
+    protected ClassGroupRepository $cgr;
+    protected TrainingCenterRepository $tcr;
 
     public function __construct(TranslatorInterface $ts, RouterInterface $rs, TeacherRepository $tr, ClassGroupRepository $cgr, TrainingCenterRepository $tcr)
     {

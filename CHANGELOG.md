@@ -1,12 +1,17 @@
 Changelog
 =========
 
-##### Version 5.5.01 (WIP)
+##### Version 5.6.01 (WIP)
  * fix minor bugs
 
-##### Version 5.5.00 (WIP)
- * add queues management
+##### Version 5.6.00 (WIP)
  * distribute massive mailing notifications
+
+##### Version 5.5.00 (2022-03-01)
+ * add queues management to deliver monthly massive receipts notification
+ * improve files manager actions column button group styles
+ * improve some calendar UI issues
+ * Symfony v5.4.21 update
 
 ##### Version 5.4.00 (2022-02-23)
  * show previews in files management

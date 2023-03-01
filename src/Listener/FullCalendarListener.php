@@ -7,6 +7,7 @@ use App\Entity\Student;
 use App\Entity\TeacherAbsence;
 use App\Enum\UserRolesEnum;
 use App\Form\Type\FilterCalendarEventsType;
+use App\Form\Type\FilterStudentsMailingCalendarEventsType;
 use App\Repository\EventRepository;
 use App\Repository\StudentRepository;
 use App\Repository\TeacherAbsenceRepository;
@@ -98,6 +99,25 @@ class FullCalendarListener implements EventSubscriberInterface
             /** @var Student $student */
             $student = $this->srs->find((int) $parameters['id']);
             $events = $this->ers->getEnabledFilteredByBeginEndAndStudent($startDate, $endDate, $student);
+            /** @var AppEvent $event */
+            foreach ($events as $event) {
+                $calendarEvent->addEvent($this->etfs->build($event));
+            }
+
+        // // admin student mailing action
+        } elseif ('admin_app_student_mailing' === $route) {
+            $events = [];
+            // classroom events
+            if ($this->security->isGranted(UserRolesEnum::ROLE_ADMIN)) {
+                // all teachers events
+                if ($this->rss->getSession()->has(FilterStudentsMailingCalendarEventsType::SESSION_KEY)) {
+                    $events = $this->ers->getEnabledFilteredByBeginEndAndFilterCalendarEventForm($startDate, $endDate, $this->rss->getSession()->get(FilterStudentsMailingCalendarEventsType::SESSION_KEY));
+                } else {
+                    $events = $this->ers->getEnabledFilteredByBeginAndEnd($startDate, $endDate);
+                }
+                $this->rss->getSession()->set(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE, $startDate);
+                $this->rss->getSession()->set(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE, $endDate->sub(new \DateInterval('PT1H')));
+            }
             /** @var AppEvent $event */
             foreach ($events as $event) {
                 $calendarEvent->addEvent($this->etfs->build($event));

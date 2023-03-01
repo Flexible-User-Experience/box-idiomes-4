@@ -27,6 +27,7 @@ sonata_admin:
         groups:
             Alumnes:
                 icon:     '<i class="fa fa-graduation-cap"></i>'
+                provider: 'backend_students_menu'
             Professors:
                 icon:     '<i class="fa fa-user"></i>'
             Aules:

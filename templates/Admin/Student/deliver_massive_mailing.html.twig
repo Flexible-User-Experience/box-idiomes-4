@@ -1,0 +1,28 @@
+{% extends "Admin/layout.html.twig" %}
+
+{% block sonata_admin_content %}
+    <div class="sonata-ba-view">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <div class="btn-group btn-group-lg" role="group">
+                            <button type="button" class="btn btn-default" disabled="disabled"><i class="fa fa-fw fa-search"></i> {{ 'mailing.step_1' | trans }}</button>
+                            <button type="button" class="btn btn-default" disabled="disabled"><i class="fa fa-fw fa-pencil-square-o"></i> {{ 'mailing.step_2' | trans }}</button>
+                            <button type="button" class="btn btn-success active"><i class="fa fa-fw fa-bullhorn" style="margin-right:3px"></i>{{ 'mailing.step_3' | trans }}</button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="alert alert-success" role="alert">
+                                    <h2><i class="fa fa-fw fa-paper-plane"></i> {{ 'mailing.congrats' | trans }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
