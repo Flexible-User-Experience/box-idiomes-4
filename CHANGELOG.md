@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.6.02 (WIP)
+##### Version 5.6.03 (WIP)
  * fix bugs
+
+##### Version 5.6.02 (2022-03-02)
+ * enable StudentAbsence delete action
+ * fix broken testing suite
+ * dependencies update
 
 ##### Version 5.6.01 (2022-03-01)
  * fix receipt generation for private lessons problem
