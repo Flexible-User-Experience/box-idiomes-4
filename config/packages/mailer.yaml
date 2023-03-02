@@ -13,4 +13,6 @@ when@dev:
 when@test:
     framework:
         mailer:
-            dsn: 'null://null'
+            transports:
+                main: 'null://null'
+                mailing: 'null://null'

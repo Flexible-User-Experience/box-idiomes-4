@@ -29,10 +29,7 @@ final class StudentAbsenceAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
-        $collection
-            ->add('notification', $this->getRouterIdParameter().'/notification')
-            ->remove('delete')
-        ;
+        $collection->add('notification', $this->getRouterIdParameter().'/notification');
     }
 
     protected function configureFormFields(FormMapper $form): void
@@ -181,7 +178,7 @@ final class StudentAbsenceAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
-                    'header_style' => 'width:84px',
+                    'header_style' => 'width:116px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
