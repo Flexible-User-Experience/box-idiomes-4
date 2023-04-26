@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.6.03 (WIP)
  * fix bugs
+ * Symfony 5.4.22 update
 
 ##### Version 5.6.02 (2022-03-02)
  * enable StudentAbsence delete action
