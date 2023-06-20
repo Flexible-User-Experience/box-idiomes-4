@@ -143,6 +143,45 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/contacte-iframe", name="app_contact_embed")
+     */
+    public function contactEmbedAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
+    {
+        $contactMessage = new ContactMessage();
+        $contactMessageForm = $this->createForm(ContactMessageType::class, $contactMessage);
+        $contactMessageForm->handleRequest($request);
+        if ($contactMessageForm->isSubmitted() && $contactMessageForm->isValid()) {
+            // Persist new contact message into DB
+            $em->persist($contactMessage);
+            $em->flush();
+            // Send email notifications
+            if (0 !== $messenger->sendCommonUserNotification($contactMessage)) {
+                // Set frontend flash message
+                $this->addFlash(
+                    'notice',
+                    'El teu missatge s\'ha enviat correctament'
+                );
+            } else {
+                $this->addFlash(
+                    'danger',
+                    'El teu missatge no s\'ha enviat'
+                );
+            }
+            $messenger->sendContactAdminNotification($contactMessage);
+            // Clean up new form
+            $contactMessage = new ContactMessage();
+            $contactMessageForm = $this->createForm(ContactMessageType::class, $contactMessage);
+        }
+
+        return $this->render(
+            'Front/contact_embed.html.twig',
+            [
+                'contactMessageForm' => $contactMessageForm->createView(),
+            ]
+        );
+    }
+
+    /**
      * @Route("/preinscripcions", name="app_pre_register")
      */
     public function preRegistersAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
