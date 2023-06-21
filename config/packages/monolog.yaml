@@ -56,6 +56,7 @@ when@prod:
                 path: '%kernel.logs_dir%/%kernel.environment%.log'
                 type: 'rotating_file'
                 level: 'debug'
+                channels: [ '!deprecation' ]
                 max_files: 30
             console:
                 process_psr_3_messages: false
