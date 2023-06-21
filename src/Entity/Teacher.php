@@ -56,7 +56,7 @@ class Teacher extends AbstractBase
     private int $color = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private bool $showInHomepage = true;
 
