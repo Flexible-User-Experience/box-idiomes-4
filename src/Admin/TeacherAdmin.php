@@ -85,14 +85,6 @@ final class TeacherAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'showInHomepage',
-                CheckboxType::class,
-                [
-                    'label' => 'backend.admin.teacher.showInHomepage',
-                    'required' => false,
-                ]
-            )
-            ->add(
                 'enabled',
                 CheckboxType::class,
                 [
@@ -118,13 +110,6 @@ final class TeacherAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.description',
-                ]
-            )
-            ->add(
-                'showInHomepage',
-                null,
-                [
-                    'label' => 'backend.admin.teacher.showInHomepage',
                 ]
             )
             ->add(
@@ -175,16 +160,6 @@ final class TeacherAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
-                'showInHomepage',
-                null,
-                [
-                    'label' => 'backend.admin.teacher.showInHomepage',
-                    'editable' => true,
-                    'header_class' => 'text-center',
-                    'row_align' => 'center',
-                ]
-            )
-            ->add(
                 'enabled',
                 null,
                 [
@@ -222,7 +197,6 @@ final class TeacherAdmin extends AbstractBaseAdmin
             'position',
             'color',
             'description',
-            'showInHomepage',
             'enabled',
         ];
     }
