@@ -96,11 +96,6 @@ services:
         tags:
             - { name: 'knp_menu.menu', alias: 'top' }
     # Listeners
-    App\Listener\SitemapListener:
-        arguments:
-            - '@router'
-        tags:
-            - { name: 'kernel.event_subscriber', priority: 100 }
     App\Doctrine\Listener\UserListener:
         arguments:
             - '@security.user_password_hasher'

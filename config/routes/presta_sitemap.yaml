@@ -1,3 +1,0 @@
-presta_sitemap:
-    resource: '@PrestaSitemapBundle/config/routing.yml'
-    prefix:   '/sitemap'

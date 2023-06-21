@@ -1,11 +1,16 @@
 Changelog
 =========
 
-##### Version 5.6.04 (WIP)
+##### Version 5.6.05 (WIP)
  * fix bugs
+
+##### Version 5.6.04 (2023-06-21)
  * make Teacher showInHomepage attribute nullable
  * hide Teacher showInHomepage attribute from admin
  * remove Service admin
+ * remove presta/sitemap-bundle dependecy
+ * remove frontend pages except contact form iFrame
+ * add automatic redirection to Amin pages
 
 ##### Version 5.6.03 (2023-06-21)
  * Symfony 5.4.22 update

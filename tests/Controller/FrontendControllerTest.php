@@ -12,6 +12,20 @@ class FrontendControllerTest extends WebTestCase
      * @dataProvider provideSuccessfulUrls
      * @param string $url
      */
+    public function testPagesAreRedirected(string $url): void
+    {
+        $client = WebTestCase::createClient();
+        $client->request('GET', '/');
+
+        self::assertResponseRedirects();
+    }
+
+    /**
+     * Test HTTP request is successful
+     *
+     * @dataProvider provideSuccessfulUrls
+     * @param string $url
+     */
     public function testPagesAreSuccessful(string $url): void
     {
         $client = WebTestCase::createClient();
@@ -28,14 +42,7 @@ class FrontendControllerTest extends WebTestCase
     public function provideSuccessfulUrls(): array
     {
         return array(
-            array('/'),
-            array('/serveis'),
-            array('/academia'),
-            array('/contacte'),
-            array('/preinscripcions'),
-            array('/politica-de-privacitat'),
-            array('/credits'),
-            array('/sitemap/sitemap.default.xml'),
+            array('/contacte-iframe'),
         );
     }
 
@@ -61,6 +68,11 @@ class FrontendControllerTest extends WebTestCase
     public function provideNotFoundUrls(): array
     {
         return array(
+            array('/serveis'),
+            array('/academia'),
+            array('/preinscripcions'),
+            array('/politica-de-privacitat'),
+            array('/credits'),
             array('/ca/pagina-trenacada'),
             array('/es/pagina-rota'),
             array('/en/broken-page'),
