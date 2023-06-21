@@ -5,6 +5,7 @@ Changelog
  * fix bugs
  * make Teacher showInHomepage attribute nullable
  * hide Teacher showInHomepage attribute from admin
+ * remove Service admin
 
 ##### Version 5.6.03 (2023-06-21)
  * Symfony 5.4.22 update

@@ -102,12 +102,6 @@ services:
         arguments: [ ~, App\Entity\Spending, App\Controller\Admin\SpendingAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Despesa', group: 'Despeses' }
-    # Services
-    admin.service:
-        class: App\Admin\ServiceAdmin
-        arguments: [ ~, App\Entity\Service, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Servei', group: 'Serveis' }
     # Contacts
     admin.contactmessage:
         class: App\Admin\ContactMessageAdmin
