@@ -1,9 +1,14 @@
 Changelog
 =========
 
-##### Version 5.6.03 (WIP)
+##### Version 5.6.04 (WIP)
  * fix bugs
+
+##### Version 5.6.03 (2023-06-21)
  * Symfony 5.4.22 update
+ * PHP 8.2 upgrade
+ * add iFrame contact form format
+ * remove deprectation log channel from PROD
 
 ##### Version 5.6.02 (2022-03-02)
  * enable StudentAbsence delete action
