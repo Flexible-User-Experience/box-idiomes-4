@@ -1,8 +1,10 @@
 Changelog
 =========
 
-##### Version 5.6.04 (WIP)
+##### Version 5.6.05 (WIP)
  * fix bugs
+
+##### Version 5.6.04 (2023-06-21)
  * make Teacher showInHomepage attribute nullable
  * hide Teacher showInHomepage attribute from admin
  * remove Service admin
