@@ -17,12 +17,13 @@ use App\Pdf\StudentImageRightsBuilderPdf;
 use App\Repository\EventRepository;
 use App\Repository\MailingStudentsNotificationMessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class StudentAdminController extends CRUDController
+final class StudentAdminController extends AbstractAdminController
 {
     public function imagerightsAction(Request $request, StudentImageRightsBuilderPdf $sirps): Response
     {
@@ -166,5 +167,33 @@ final class StudentAdminController extends CRUDController
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE);
 
         return $this->renderWithExtraParams('Admin/Student/deliver_massive_mailing.html.twig');
+    }
+
+    public function batchActionMarkasinactive(ProxyQueryInterface $query): Response
+    {
+        $this->admin->checkAccess('edit');
+        $selectedModels = $query->execute();
+        if (count($selectedModels) > 0) {
+            $total = 0;
+            /** @var Student $selectedModel */
+            foreach ($selectedModels as $selectedModel) {
+                if ($selectedModel->isEnabled()) {
+                    $selectedModel->setEnabled(false);
+                    ++$total;
+                }
+            }
+            if ($total > 0) {
+                $this->mr->getManager()->flush();
+                $this->addFlash('success', 'S\'han marcat com a inactius un total de '.$total.' alumnes.');
+            } else {
+                $this->addFlash('warning', 'No s\'han modificat cap alumne, tots els alumnes escollits ja estaven marcats com a inactius.');
+            }
+        }
+
+        return new RedirectResponse(
+            $this->admin->generateUrl('list', [
+                'filter' => $this->admin->getFilterParameters(),
+            ])
+        );
     }
 }

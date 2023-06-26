@@ -4,6 +4,10 @@ Changelog
 ##### Version 5.6.05 (WIP)
  * fix bugs
 
+##### Version 5.6.05 (2023-06-26)
+ * add mark as inactive Student batch
+ * dependencies update
+
 ##### Version 5.6.04 (2023-06-21)
  * make Teacher showInHomepage attribute nullable
  * hide Teacher showInHomepage attribute from admin
