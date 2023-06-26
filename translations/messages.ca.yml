@@ -221,6 +221,7 @@ backend:
             day: "Dia"
             show_title: "Absències"
         student:
+            mark_as_inactive_batch_action: "Marcar els alumnes seleccionats com a inactius"
             student: "Alumne"
             parent: "Pare, mare o tutor"
             payment_information: "Dades de pagament"

@@ -56,8 +56,21 @@ final class StudentAdmin extends AbstractBaseAdmin
             ->add('mailing_reset', 'mailing-reset')
             ->add('write_mailing', 'mailing-write')
             ->add('deliver_massive_mailing', 'mailing-delivery')
-            ->remove('batch')
         ;
+    }
+
+    public function configureBatchActions(array $actions): array
+    {
+        unset($actions['delete']);
+        if ($this->hasRoute('edit') && $this->hasAccess('edit')) {
+            $actions['markasinactive'] = [
+                'label' => 'backend.admin.student.mark_as_inactive_batch_action',
+                'translation_domain' => 'messages',
+                'ask_confirmation' => false,
+            ];
+        }
+
+        return $actions;
     }
 
     protected function configureFormFields(FormMapper $form): void
