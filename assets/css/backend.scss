@@ -13,6 +13,10 @@
   margin-right: 3px !important;
 }
 
+input[type=file].dropzone-input {
+  height: 100% !important;
+}
+
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';

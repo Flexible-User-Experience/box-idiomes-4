@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.6.05 (WIP)
+##### Version 5.6.07 (WIP)
  * fix bugs
+
+##### Version 5.6.06 (2023-08-30)
+ * fix Dropzone file uploader problem
 
 ##### Version 5.6.05 (2023-06-26)
  * add mark as inactive Student batch
