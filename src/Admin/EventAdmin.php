@@ -135,7 +135,7 @@ final class EventAdmin extends AbstractBaseAdmin
                     'class' => Student::class,
                     'query_builder' => $this->em->getRepository(Student::class)->getAllSortedBySurnameQB(),
                     'choice_label' => function (Student $student) {
-                        return $student->getFullCanonicalName().($student->isEnabled() ?: ' (*** BAIXA ***)');
+                        return $student->getFullCanonicalName().($student->isEnabled() ? '' : ' (*** BAIXA ***)');
                     },
                 ]
             )
