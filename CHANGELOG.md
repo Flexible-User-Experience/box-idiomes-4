@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.6.07 (WIP)
+##### Version 5.6.08 (WIP)
  * fix bugs
+
+##### Version 5.6.07 (2023-10-25)
+ * dependencies update
+ * update installed Composer version during Ansible deployment
+ * fix unnecessary "1" string after full canonical student name
 
 ##### Version 5.6.06 (2023-08-30)
  * fix Dropzone file uploader problem
