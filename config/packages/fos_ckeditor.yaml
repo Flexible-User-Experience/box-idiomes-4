@@ -1,5 +1,6 @@
 fos_ck_editor:
-    inline:    false
+    inline: false
     configs:
         my_config:
-            toolbar: standard
+            toolbar: 'standard'
+            versionCheck: false
