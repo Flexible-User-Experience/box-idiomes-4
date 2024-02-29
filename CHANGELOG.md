@@ -1,8 +1,15 @@
 Changelog
 =========
 
-##### Version 5.6.08 (WIP)
+##### Version 5.6.09 (WIP)
  * fix bugs
+
+##### Version 5.6.08 (2024-02-29)
+ * Symfony v5.4.36 upgrade
+ * add public/canteras_simo_logo.jpg asset
+ * fix CKEditor version & problem with version check error message
+ * composer recipes update
+ * better Monolog config
 
 ##### Version 5.6.07 (2023-10-25)
  * dependencies update
