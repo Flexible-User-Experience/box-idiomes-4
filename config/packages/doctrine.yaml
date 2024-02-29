@@ -1,5 +1,6 @@
 doctrine:
     dbal:
+        use_savepoints: true
         url: '%env(resolve:DATABASE_URL)%'
         charset: 'utf8mb4'
     orm:
