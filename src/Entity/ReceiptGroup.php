@@ -30,6 +30,11 @@ class ReceiptGroup extends AbstractBase
      */
     private ?Collection $receipts;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\BankCreditorSepa")
+     */
+    private BankCreditorSepa $bankCreditorSepa;
+
     public function __construct()
     {
         $this->receipts = new ArrayCollection();
@@ -62,6 +67,18 @@ class ReceiptGroup extends AbstractBase
         if ($this->receipts->contains($receipt)) {
             $this->receipts->removeElement($receipt);
         }
+
+        return $this;
+    }
+
+    public function getBankCreditorSepa(): BankCreditorSepa
+    {
+        return $this->bankCreditorSepa;
+    }
+
+    public function setBankCreditorSepa(BankCreditorSepa $bankCreditorSepa): self
+    {
+        $this->bankCreditorSepa = $bankCreditorSepa;
 
         return $this;
     }
