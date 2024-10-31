@@ -37,11 +37,13 @@ class NewReceiptGroupCreatedMessageHandler implements MessageHandlerInterface
         if (count($banksCreditorSepa) > 0 && count($message->getSelectedModelIdsArray()) > 0) {
             /** @var BankCreditorSepa $bankCreditorSepa */
             foreach ($banksCreditorSepa as $bankCreditorSepa) {
+                $found = false;
                 $receiptGroup = new ReceiptGroup();
                 $totalAmount = 0.0;
                 foreach ($message->getSelectedModelIdsArray() as $receiptId) {
                     $receipt = $this->rr->find($receiptId);
                     if ($receipt && $receipt->getMainSubject()->getBankCreditorSepa() && $receipt->getMainSubject()->getBankCreditorSepa()->getId() === $bankCreditorSepa->getId()) {
+                        $found = true;
                         $receiptGroup->addReceipt($receipt);
                         $receiptGroup
                             ->setYear($receipt->getYear())
@@ -57,8 +59,10 @@ class NewReceiptGroupCreatedMessageHandler implements MessageHandlerInterface
                     ->setBankCreditorSepa($bankCreditorSepa)
                     ->setBaseAmount($totalAmount)
                 ;
-                $this->em->persist($receiptGroup);
-                $this->em->flush();
+                if ($found) {
+                    $this->em->persist($receiptGroup);
+                    $this->em->flush();
+                }
             }
         } else {
             $this->logger->error('[NRGCM] Empty selected models array OR enabled bank creditors array');
