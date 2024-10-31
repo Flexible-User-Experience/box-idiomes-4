@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\BaseAmountTrait;
 use App\Entity\Traits\MonthTrait;
 use App\Entity\Traits\TrainingCenterTrait;
 use App\Entity\Traits\YearTrait;
@@ -12,16 +13,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReceiptGroupRepository")
+ *
  * @ORM\Table(name="receipt_group")
  */
 class ReceiptGroup extends AbstractBase
 {
+    use BaseAmountTrait;
     use MonthTrait;
     use TrainingCenterTrait;
     use YearTrait;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Receipt", mappedBy="receiptGroup")
+     *
      * @Assert\Valid
      */
     private ?Collection $receipts;
@@ -71,6 +75,11 @@ class ReceiptGroup extends AbstractBase
         }
 
         return $result;
+    }
+
+    public function getReceiptNumber(): string
+    {
+        return sprintf('%s/%s', $this->getYear(), $this->getMonth());
     }
 
     public function __toString(): string

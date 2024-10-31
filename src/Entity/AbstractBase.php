@@ -2,38 +2,41 @@
 
 namespace App\Entity;
 
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 abstract class AbstractBase
 {
-    public const DEFAULT_NULL_STRING = '---';
-    public const DEFAULT_NULL_DATE_STRING = '--/--/----';
-    public const DEFAULT_NULL_DATETIME_STRING = '--/--/---- --:--';
-    public const DATE_STRING_FORMAT = 'd/m/Y';
-    public const DATETIME_STRING_FORMAT = 'd/m/Y H:i';
-    public const DATABASE_DATE_STRING_FORMAT = 'Y-m-d';
-    public const DATABASE_DATETIME_STRING_FORMAT = 'Y-m-d H:i:s';
+    public const string DEFAULT_NULL_STRING = '---';
+    public const string DEFAULT_NULL_DATE_STRING = '--/--/----';
+    public const string DEFAULT_NULL_DATETIME_STRING = '--/--/---- --:--';
+    public const string DATE_STRING_FORMAT = 'd/m/Y';
+    public const string DATETIME_STRING_FORMAT = 'd/m/Y H:i';
+    public const string DATABASE_DATE_STRING_FORMAT = 'Y-m-d';
+    public const string DATABASE_DATETIME_STRING_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue
      */
     protected $id;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @Gedmo\Timestampable(on="create")
      */
-    protected DateTimeInterface $createdAt;
+    protected \DateTimeInterface $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Timestampable(on="update")
      */
-    protected ?DateTimeInterface $updatedAt;
+    protected ?\DateTimeInterface $updatedAt;
 
     /**
      * @ORM\Column(type="boolean")
@@ -45,14 +48,14 @@ abstract class AbstractBase
         return $this->id;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -62,14 +65,14 @@ abstract class AbstractBase
         return self::convertDateTimeAsString($this->getCreatedAt());
     }
 
-    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
@@ -101,12 +104,12 @@ abstract class AbstractBase
         return $value ? 'yes' : 'no';
     }
 
-    public static function convertDateAsString(?DateTimeInterface $date): string
+    public static function convertDateAsString(?\DateTimeInterface $date): string
     {
         return $date ? $date->format(self::DATE_STRING_FORMAT) : self::DEFAULT_NULL_DATE_STRING;
     }
 
-    public static function convertDateTimeAsString(?DateTimeInterface $date): string
+    public static function convertDateTimeAsString(?\DateTimeInterface $date): string
     {
         return $date ? $date->format(self::DATETIME_STRING_FORMAT) : self::DEFAULT_NULL_DATETIME_STRING;
     }
