@@ -63,7 +63,7 @@ class BackendInvoiceMenuBuilder
                 [
                     'label' => 'backend.admin.receipt.receipt_group',
                     'route' => 'admin_app_receiptgroup_list',
-                    'current' => 'admin_app_receiptgroup_list' === $route || 'admin_app_receiptgroup_create' === $route || 'admin_app_receiptgroup_edit' === $route || 'admin_app_receiptgroup_show' === $route,
+                    'current' => 'admin_app_receiptgroup_list' === $route || 'admin_app_receiptgroup_delete' === $route,
                 ]
             )
         ;

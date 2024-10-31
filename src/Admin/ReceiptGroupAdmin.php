@@ -34,6 +34,7 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
         $collection
             ->remove('create')
             ->remove('edit')
+            ->remove('export')
         ;
     }
 

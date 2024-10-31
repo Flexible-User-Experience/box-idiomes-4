@@ -227,6 +227,15 @@ App\Entity\Event:
     students:
       - '@student1'
 
+# Receipt Groups
+App\Entity\ReceiptGroup:
+  receiptGroup{1..2}:
+    trainingCenter: '@trainingcenter1'
+    bankCreditorSepa: '@bankCreditorSepa<current()>'
+    baseAmount: <randomFloat(1, 5)>
+    month: <month()>
+    year: <year()>
+
 # Receipts
 App\Entity\Receipt:
   receipt{1..2}:
