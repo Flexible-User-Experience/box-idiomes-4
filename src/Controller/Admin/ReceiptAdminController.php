@@ -44,7 +44,7 @@ final class ReceiptAdminController extends AbstractAdminController
             $form = $this->createForm(GenerateReceiptType::class, $generateReceipt);
         }
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Receipt/generate_receipt_form.html.twig',
             [
                 'action' => 'generate',

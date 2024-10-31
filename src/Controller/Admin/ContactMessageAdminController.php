@@ -28,7 +28,7 @@ final class ContactMessageAdminController extends AbstractAdminController
         $this->mr->getManager()->persist($object);
         $this->mr->getManager()->flush();
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/show.html.twig',
             [
                 'action' => 'show',
@@ -66,7 +66,7 @@ final class ContactMessageAdminController extends AbstractAdminController
             return $this->redirectToRoute('admin_app_contactmessage_list');
         }
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/ContactMessage/answer_form.html.twig',
             [
                 'action' => 'answer',
