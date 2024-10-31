@@ -12,6 +12,7 @@
 "Class Group List": "Grups"
 "Class Group Create": "Crear"
 "Class Group Delete": "Esborrar"
+"Receipt Group List": "Remeses"
 "Receipt List": "Rebuts"
 "Receipt Create": "Crear"
 "Receipt Generate": "Generar rebuts mensual"
@@ -420,6 +421,7 @@ backend:
         receipt:
             mark_as_payed_batch_action: "Marcar com a rebuts pagats"
             receipt: "Rebut"
+            receipt_group: "Remesa"
             date: "Data"
             generate_only: "Generar rebuts"
             generate: "Generar rebuts marcats"

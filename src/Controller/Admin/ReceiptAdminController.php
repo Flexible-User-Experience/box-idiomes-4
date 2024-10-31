@@ -9,6 +9,8 @@ use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
 use App\Kernel;
+use App\Message\NewReceiptGroupCreatedMessage;
+use Digitick\Sepa\Exception\InvalidArgumentException;
 use Digitick\Sepa\Util\StringHelper;
 use PhpZip\ZipFile;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
@@ -19,6 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class ReceiptAdminController extends AbstractAdminController
 {
@@ -44,7 +47,7 @@ final class ReceiptAdminController extends AbstractAdminController
             $form = $this->createForm(GenerateReceiptType::class, $generateReceipt);
         }
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Receipt/generate_receipt_form.html.twig',
             [
                 'action' => 'generate',
@@ -169,6 +172,9 @@ final class ReceiptAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function generateDirectDebitAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
@@ -207,7 +213,7 @@ final class ReceiptAdminController extends AbstractAdminController
             $pdf = $this->rrbp->buildBatchReminder();
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
-                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER !== $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
+                if (StudentPaymentEnum::BANK_ACCOUNT_NUMBER !== $selectedModel->getMainSubject()->getPayment() && !$selectedModel->getStudent()?->getIsPaymentExempt()) {
                     // add page
                     $pdf->AddPage('L', 'A5', true, true);
                     $this->rrbp->buildReceiptRemainderPageForItem($pdf, $selectedModel);
@@ -227,7 +233,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
-    public function batchActionGeneratesepaxmls(ProxyQueryInterface $query): Response
+    public function batchActionGeneratesepaxmls(ProxyQueryInterface $query, MessageBusInterface $bus): Response
     {
         $this->admin->checkAccess('edit');
         $selectedModels = $query->execute();
@@ -239,9 +245,11 @@ final class ReceiptAdminController extends AbstractAdminController
             foreach ($banksCreditorSepa as $bankCreditorSepa) {
                 $xmlsArray[] = $this->xsbs->buildDirectDebitReceiptsXmlForBankCreditorSepa($paymentUniqueId, new \DateTime('now + 3 days'), $selectedModels, $bankCreditorSepa);
             }
+            $selectedModelIdsArray = [];
             /** @var Receipt $selectedModel */
             foreach ($selectedModels as $selectedModel) {
-                if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()->getIsPaymentExempt()) {
+                if ($selectedModel->isReadyToGenerateSepa() && !$selectedModel->getStudent()?->getIsPaymentExempt()) {
+                    $selectedModelIdsArray[] = $selectedModel->getId();
                     $selectedModel
                         ->setIsSepaXmlGenerated(true)
                         ->setSepaXmlGeneratedDate(new \DateTimeImmutable())
@@ -249,6 +257,7 @@ final class ReceiptAdminController extends AbstractAdminController
                 }
             }
             $this->mr->getManager()->flush();
+            $bus->dispatch(new NewReceiptGroupCreatedMessage($selectedModelIdsArray));
             $now = new \DateTimeImmutable();
             $fileName = 'SEPA_receipts_'.$now->format('Y-m-d_H-i').'.zip';
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$fileName;

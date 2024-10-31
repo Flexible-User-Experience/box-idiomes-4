@@ -8,9 +8,7 @@ use App\Entity\Student;
 use App\Entity\StudentAbsence;
 use App\Form\Type\EventBatchRemoveType;
 use App\Form\Type\EventType;
-use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +35,7 @@ final class EventAdminController extends AbstractAdminController
     /**
      * Edit event and all the next related events action.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function batcheditAction(Request $request): Response
     {
@@ -59,8 +57,8 @@ final class EventAdminController extends AbstractAdminController
                 while (!is_null($iteratedEvent->getNext())) {
                     $currentBegin = $iteratedEvent->getBegin();
                     $currentEnd = $iteratedEvent->getEnd();
-                    $currentBegin->add(new DateInterval('P'.$firstEvent->getDayFrequencyRepeat().'D'));
-                    $currentEnd->add(new DateInterval('P'.$firstEvent->getDayFrequencyRepeat().'D'));
+                    $currentBegin->add(new \DateInterval('P'.$firstEvent->getDayFrequencyRepeat().'D'));
+                    $currentEnd->add(new \DateInterval('P'.$firstEvent->getDayFrequencyRepeat().'D'));
                     $iteratedEvent = $iteratedEvent->getNext();
                     if ($iteratedEvent->getId() <= $eventIdStopRangeIterator) {
                         $iteratedEvent
@@ -83,7 +81,7 @@ final class EventAdminController extends AbstractAdminController
             return $this->redirectToList();
         }
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Event/batch_edit_form.html.twig',
             [
                 'action' => 'batchedit',
@@ -189,7 +187,7 @@ final class EventAdminController extends AbstractAdminController
             return $this->redirectToList();
         }
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Event/batch_delete_form.html.twig',
             [
                 'action' => 'batchdelete',

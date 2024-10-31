@@ -7,7 +7,7 @@ A Symfony 5.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat) we
 
 #### Installation requirements
 
-* PHP 8.2
+* PHP 8.3
 * MySQL 8.0
 * Git 2.0
 * Composer 2.0
@@ -23,6 +23,7 @@ $ cp env.dist .env
 $ nano .env
 $ composer install
 $ yarn install
+$ php bin/console messenger:consume async --env=prod
 ```
 
 Remember to edit `.env` config file according to your system environment needs.
@@ -32,4 +33,20 @@ Remember to edit `.env` config file according to your system environment needs.
 ```bash
 $ ./scripts/developer-tools/test-database-reset.sh
 $ ./scripts/developer-tools/run-test.sh
+```
+
+#### Developer important notes
+
+* Read about how to start a local web server instance [here](https://symfony.com/doc/current/setup/symfony_server.html)
+
+#### Messenger queues
+
+In a production environment remember to properly configure Messenger queue consumers handled by a Supervisor instance. Read [these](https://symfony.com/doc/current/messenger.html#messenger-supervisor) instructions.
+
+#### Code Style notes
+
+Execute following link to be sure that php-cs-fixer will be applied automatically before every commit. Please, check https://github.com/FriendsOfPHP/PHP-CS-Fixer to install it globally (manual) in your system.
+
+```bash
+$ ln -s ../../scripts/githooks/pre-commit .git/hooks/pre-commit
 ```

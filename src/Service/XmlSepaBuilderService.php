@@ -63,7 +63,7 @@ class XmlSepaBuilderService
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
         /** @var Receipt $receipt */
         foreach ($receipts as $receipt) {
-            if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()->getIsPaymentExempt()) {
+            if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()?->getIsPaymentExempt()) {
                 $this->addTransfer($directDebit, $paymentId, $receipt);
             }
         }
@@ -80,7 +80,7 @@ class XmlSepaBuilderService
         $this->addPaymentInfoForBankCreditorSepa($directDebit, $paymentId, $dueDate, $bankCreditorSepa);
         /** @var Receipt $receipt */
         foreach ($receipts as $receipt) {
-            if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()->getIsPaymentExempt() && $receipt->getMainSubject()->getBankCreditorSepa() && $receipt->getMainSubject()->getBankCreditorSepa()->getId() === $bankCreditorSepa->getId()) {
+            if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()?->getIsPaymentExempt() && $receipt->getMainSubject()->getBankCreditorSepa() && $receipt->getMainSubject()->getBankCreditorSepa()->getId() === $bankCreditorSepa->getId()) {
                 $this->addTransfer($directDebit, $paymentId, $receipt);
             }
         }
@@ -115,7 +115,7 @@ class XmlSepaBuilderService
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
         /** @var Invoice $invoice */
         foreach ($invoices as $invoice) {
-            if ($invoice->isReadyToGenerateSepa() && !$invoice->getStudent()->getIsPaymentExempt()) {
+            if ($invoice->isReadyToGenerateSepa() && !$invoice->getStudent()?->getIsPaymentExempt()) {
                 $this->addTransfer($directDebit, $paymentId, $invoice);
             }
         }
@@ -191,7 +191,7 @@ class XmlSepaBuilderService
 
         $transferInformation = [
             'amount' => $amount,
-            'debtorIban' => $this->removeSpacesFrom($ari->getMainBank()->getAccountNumber()),
+            'debtorIban' => $this->removeSpacesFrom($ari->getMainBank()?->getAccountNumber()),
             'debtorName' => $ari->getMainEmailName(),
             'debtorMandate' => $ari->getDebtorMandate(),
             'debtorMandateSignDate' => $ari->getDebtorMandateSignDate(),
