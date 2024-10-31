@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\AbstractBase;
+use App\Entity\BankCreditorSepa;
 use App\Entity\TrainingCenter;
 use App\Enum\InvoiceYearMonthEnum;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
@@ -11,7 +12,9 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
 use Sonata\Form\Type\CollectionType;
+use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -38,86 +41,20 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
         ;
     }
 
-    protected function configureFormFields(FormMapper $form): void
-    {
-        $now = new \DateTimeImmutable();
-        $currentYear = $now->format('Y');
-        $form
-            ->with('backend.admin.receipt.receipt', $this->getFormMdSuccessBoxArray('backend.admin.receipt.receipt', 3))
-            ->add(
-                'year',
-                ChoiceType::class,
-                [
-                    'label' => 'backend.admin.invoice.year',
-                    'required' => true,
-                    'choices' => InvoiceYearMonthEnum::getYearEnumArray(),
-                    'preferred_choices' => $currentYear,
-                ]
-            )
-            ->add(
-                'month',
-                ChoiceType::class,
-                [
-                    'label' => 'backend.admin.invoice.month',
-                    'required' => true,
-                    'choices' => InvoiceYearMonthEnum::getMonthEnumArray(),
-                ]
-            )
-            ->end()
-            ->with('backend.admin.invoice.detail', $this->getFormMdSuccessBoxArray('backend.admin.invoice.detail', 3))
-            ->add(
-                'baseAmount',
-                null,
-                [
-                    'label' => 'backend.admin.invoice.baseAmount',
-                    'required' => false,
-                ]
-            )
-            ->end()
-            ->with('backend.admin.controls', $this->getFormMdSuccessBoxArray('backend.admin.controls', 3))
-            ->add(
-                'trainingCenter',
-                EntityType::class,
-                [
-                    'label' => 'backend.admin.class_group.training_center',
-                    'required' => true,
-                    'class' => TrainingCenter::class,
-                    'query_builder' => $this->em->getRepository(TrainingCenter::class)->getEnabledSortedByNameQB(),
-                ]
-            )
-            ->end()
-        ;
-        if ($this->id($this->getSubject())) { // is edit mode, disable on new subjetcs
-            $form
-                ->with('backend.admin.receipt.lines', $this->getFormMdSuccessBoxArray('backend.admin.receipt.lines', 12))
-                ->add(
-                    'receipts',
-                    CollectionType::class,
-                    [
-                        'label' => 'backend.admin.invoice.line',
-                        'required' => true,
-                        'error_bubbling' => true,
-                        'by_reference' => false,
-                    ],
-                    [
-                        'edit' => 'inline',
-                        'inline' => 'table',
-                    ]
-                )
-                ->end()
-            ;
-        }
-    }
-
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
             ->add(
-                'id',
-                null,
+                'createdAt',
+                DateFilter::class,
                 [
-                    'label' => 'backend.admin.receipt.id',
-                ]
+                    'label' => 'backend.admin.date',
+                    'field_type' => DatePickerType::class,
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd/MM/yyyy',
+                    ],
+                ],
             )
             ->add(
                 'year',
@@ -152,6 +89,18 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'bankCreditorSepa',
+                null,
+                [
+                    'label' => 'backend.admin.bank.creditor_bank_name',
+                    'field_type' => EntityType::class,
+                    'field_options' => [
+                        'class' => BankCreditorSepa::class,
+                        'query_builder' => $this->em->getRepository(BankCreditorSepa::class)->getEnabledSortedByNameQB(),
+                    ],
+                ]
+            )
+            ->add(
                 'baseAmount',
                 null,
                 [
@@ -168,8 +117,7 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
                 'createdAt',
                 null,
                 [
-                    'label' => 'Data Remesa', // TODO
-                    //                    'template' => 'Admin/Cells/list__cell_receipt_date.html.twig',
+                    'label' => 'backend.admin.date',
                     'format' => AbstractBase::DATETIME_STRING_FORMAT,
                     'editable' => false,
                     'header_class' => 'text-center',
@@ -182,6 +130,7 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.invoice.year',
                     'editable' => false,
+                    'sortable' => false,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
                 ]
@@ -191,6 +140,8 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.invoice.month',
+                    'editable' => false,
+                    'sortable' => false,
                     'template' => 'Admin/Cells/list__cell_event_month.html.twig',
                 ]
             )
@@ -198,7 +149,17 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
                 'trainingCenter',
                 null,
                 [
-                    'label' => 'Centre Formació', // TODO
+                    'label' => 'backend.admin.class_group.training_center',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
+                ]
+            )
+            ->add(
+                'bankCreditorSepa',
+                null,
+                [
+                    'label' => 'backend.admin.bank.creditor_bank_name',
                     'editable' => false,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
@@ -211,6 +172,7 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.baseAmount',
                     'template' => 'Admin/Cells/list__cell_receipt_amount.html.twig',
                     'editable' => false,
+                    'sortable' => false,
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                 ]
@@ -224,9 +186,6 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
-                        'show' => [
-                            'template' => 'Admin/Buttons/list__action_show_button.html.twig',
-                        ],
                         'delete' => [
                             'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
                         ],

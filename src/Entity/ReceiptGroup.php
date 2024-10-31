@@ -33,7 +33,7 @@ class ReceiptGroup extends AbstractBase
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\BankCreditorSepa")
      */
-    private BankCreditorSepa $bankCreditorSepa;
+    private ?BankCreditorSepa $bankCreditorSepa = null;
 
     public function __construct()
     {
@@ -71,12 +71,12 @@ class ReceiptGroup extends AbstractBase
         return $this;
     }
 
-    public function getBankCreditorSepa(): BankCreditorSepa
+    public function getBankCreditorSepa(): ?BankCreditorSepa
     {
         return $this->bankCreditorSepa;
     }
 
-    public function setBankCreditorSepa(BankCreditorSepa $bankCreditorSepa): self
+    public function setBankCreditorSepa(?BankCreditorSepa $bankCreditorSepa): self
     {
         $this->bankCreditorSepa = $bankCreditorSepa;
 
