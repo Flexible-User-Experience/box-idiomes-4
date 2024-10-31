@@ -9,7 +9,7 @@ final class FileManagerAdminController extends CRUDController
 {
     public function handlerAction(): Response
     {
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/FileManager/show_file_manager.html.twig',
             [
                 '_sonata_admin' => 'admin.file_manager_dummy',

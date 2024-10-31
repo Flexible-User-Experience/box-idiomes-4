@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\MonthTrait;
 use App\Entity\Traits\TrainingCenterTrait;
-use App\Enum\InvoiceYearMonthEnum;
+use App\Entity\Traits\YearTrait;
 use App\Enum\StudentPaymentEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractReceiptInvoice extends AbstractBase
 {
+    use MonthTrait;
     use TrainingCenterTrait;
+    use YearTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Student")
@@ -69,16 +72,6 @@ abstract class AbstractReceiptInvoice extends AbstractBase
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
      */
     protected ?bool $discountApplied = false;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected int $month = 0;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected int $year = 0;
 
     /**
      * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
@@ -293,35 +286,6 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     public function setDiscountApplied(?bool $discountApplied): self
     {
         $this->discountApplied = $discountApplied;
-
-        return $this;
-    }
-
-    public function getMonth(): int
-    {
-        return $this->month;
-    }
-
-    public function getMonthNameString(): string
-    {
-        return InvoiceYearMonthEnum::getTranslatedMonthEnumArray()[$this->getMonth()];
-    }
-
-    public function setMonth(int $month): self
-    {
-        $this->month = $month;
-
-        return $this;
-    }
-
-    public function getYear(): int
-    {
-        return $this->year;
-    }
-
-    public function setYear(int $year): self
-    {
-        $this->year = $year;
 
         return $this;
     }

@@ -59,6 +59,16 @@ class BackendInvoiceMenuBuilder
         ;
         $menu
             ->addChild(
+                'receipt_groups',
+                [
+                    'label' => 'backend.admin.receipt.receipt_group',
+                    'route' => 'admin_app_receiptgroup_list',
+                    'current' => 'admin_app_receiptgroup_list' === $route || 'admin_app_receiptgroup_delete' === $route,
+                ]
+            )
+        ;
+        $menu
+            ->addChild(
                 'invoices',
                 [
                     'label' => 'backend.admin.invoice.invoice',

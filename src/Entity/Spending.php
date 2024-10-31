@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\BaseAmountTrait;
 use App\Entity\Traits\DocumentFileTrait;
 use App\Enum\StudentPaymentEnum;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Spending extends AbstractBase
 {
+    use BaseAmountTrait;
     use DocumentFileTrait;
 
     /**
@@ -41,11 +43,6 @@ class Spending extends AbstractBase
      * @ORM\Column(type="string", nullable=true)
      */
     private ?string $description = null;
-
-    /**
-     * @ORM\Column(type="float", nullable=false)
-     */
-    private float $baseAmount;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -121,33 +118,6 @@ class Spending extends AbstractBase
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getBaseAmount(): float
-    {
-        return $this->baseAmount;
-    }
-
-    public function getBaseAmountString(): string
-    {
-        return number_format($this->baseAmount, 2, ',', '.');
-    }
-
-    public function getAmount(): float
-    {
-        return $this->getBaseAmount();
-    }
-
-    public function getAmountString(): string
-    {
-        return $this->getBaseAmountString();
-    }
-
-    public function setBaseAmount(float $baseAmount): self
-    {
-        $this->baseAmount = $baseAmount;
 
         return $this;
     }

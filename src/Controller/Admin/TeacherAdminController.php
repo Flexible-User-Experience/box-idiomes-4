@@ -21,7 +21,7 @@ final class TeacherAdminController extends CRUDController
         }
         $absences = $tar->getTeacherAbsencesSortedByDate($object);
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Teacher/detail.html.twig',
             [
                 'action' => 'show',

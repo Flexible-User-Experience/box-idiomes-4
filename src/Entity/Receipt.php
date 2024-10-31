@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,16 +10,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReceiptRepository")
+ *
  * @ORM\Table(name="receipt")
+ *
  * @UniqueEntity(fields={"month", "year", "student", "person", "isForPrivateLessons"})
  */
 class Receipt extends AbstractReceiptInvoice
 {
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ReceiptLine", mappedBy="receipt", cascade={"persist", "remove"}, orphanRemoval=true)
+     *
      * @Assert\Valid
      */
     private ?Collection $lines;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ReceiptGroup", inversedBy="receipts")
+     *
+     * @ORM\JoinColumn(name="receipt_group_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private ?ReceiptGroup $receiptGroup = null;
 
     public function __construct()
     {
@@ -61,9 +70,21 @@ class Receipt extends AbstractReceiptInvoice
         return $this;
     }
 
+    public function getReceiptGroup(): ?ReceiptGroup
+    {
+        return $this->receiptGroup;
+    }
+
+    public function setReceiptGroup(?ReceiptGroup $receiptGroup): self
+    {
+        $this->receiptGroup = $receiptGroup;
+
+        return $this;
+    }
+
     public function getReceiptNumber(): string
     {
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -73,7 +94,7 @@ class Receipt extends AbstractReceiptInvoice
 
     public function getSluggedReceiptNumber(): string
     {
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -83,7 +104,7 @@ class Receipt extends AbstractReceiptInvoice
 
     public function getUnderscoredReceiptNumber(): string
     {
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }

@@ -64,7 +64,7 @@ final class StudentAdminController extends AbstractAdminController
         $this->admin->checkAccess('show', $object);
         $this->admin->setSubject($object);
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Student/show.html.twig',
             [
                 'action' => 'show',
@@ -86,7 +86,7 @@ final class StudentAdminController extends AbstractAdminController
             $request->getSession()->set(FilterStudentsMailingCalendarEventsType::SESSION_KEY, $calendarEventsFilter);
         }
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Student/mailing.html.twig',
             [
                 'filter' => $calendarEventsFilterForm->createView(),
@@ -149,7 +149,7 @@ final class StudentAdminController extends AbstractAdminController
             return $this->redirectToRoute('admin_app_student_deliver_massive_mailing');
         }
 
-        return $this->renderWithExtraParams(
+        return $this->render(
             'Admin/Student/write_mailing.html.twig',
             [
                 'form' => $form->createView(),
@@ -166,7 +166,7 @@ final class StudentAdminController extends AbstractAdminController
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_FROM_DATE);
         $request->getSession()->remove(FilterStudentsMailingCalendarEventsType::SESSION_KEY_TO_DATE);
 
-        return $this->renderWithExtraParams('Admin/Student/deliver_massive_mailing.html.twig');
+        return $this->render('Admin/Student/deliver_massive_mailing.html.twig');
     }
 
     public function batchActionMarkasinactive(ProxyQueryInterface $query): Response
