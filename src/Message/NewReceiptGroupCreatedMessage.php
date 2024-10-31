@@ -4,15 +4,15 @@ namespace App\Message;
 
 class NewReceiptGroupCreatedMessage
 {
-    private int $receiptGroupId;
+    private array $selectedModelIds;
 
-    public function __construct(int $receiptGroupId)
+    public function __construct(array $selectedModelIds)
     {
-        $this->receiptGroupId = $receiptGroupId;
+        $this->selectedModelIds = $selectedModelIds;
     }
 
-    public function getReceiptGroupId(): int
+    public function getSelectedModelIdsArray(): array
     {
-        return $this->receiptGroupId;
+        return $this->selectedModelIds;
     }
 }
