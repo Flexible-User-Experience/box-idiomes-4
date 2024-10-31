@@ -74,6 +74,11 @@ services:
         arguments: [ ~, App\Entity\ReceiptLine, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
         tags:
             - { name: sonata.admin, manager_type: orm, label: 'Línies rebut', group: 'Facturació', show_in_dashboard: false }
+    admin.receipt_group:
+        class: App\Admin\ReceiptGroupAdmin
+        arguments: [ ~, App\Entity\ReceiptGroup, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: 'Remeses', group: 'Facturació' }
     admin.invoice:
         class: App\Admin\InvoiceAdmin
         arguments: [ ~, App\Entity\Invoice, App\Controller\Admin\InvoiceAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
