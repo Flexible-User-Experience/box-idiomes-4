@@ -1,8 +1,13 @@
 Changelog
 =========
 
-##### Version 5.6.09 (WIP)
+##### Version 5.7.01 (WIP)
  * fix bugs
+
+##### Version 5.7.00 (2024-10-31)
+ * bump to PHP 8.3 minimum version
+ * Symfony v5.4.45 upgrade
+ * add receipt groups and show total
 
 ##### Version 5.6.08 (2024-02-29)
  * Symfony v5.4.36 upgrade
