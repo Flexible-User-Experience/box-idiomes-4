@@ -256,7 +256,7 @@ final class ReceiptAdminController extends AbstractAdminController
                     ;
                 }
             }
-            // TODO $this->mr->getManager()->flush();
+            $this->mr->getManager()->flush();
             $bus->dispatch(new NewReceiptGroupCreatedMessage($selectedModelIdsArray));
             $now = new \DateTimeImmutable();
             $fileName = 'SEPA_receipts_'.$now->format('Y-m-d_H-i').'.zip';

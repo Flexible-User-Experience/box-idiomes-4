@@ -45,6 +45,8 @@ class NewReceiptGroupCreatedMessageHandler implements MessageHandlerInterface
                     if ($receipt && $receipt->getMainSubject()->getBankCreditorSepa() && $receipt->getMainSubject()->getBankCreditorSepa()->getId() === $bankCreditorSepa->getId()) {
                         $found = true;
                         $receiptGroup->addReceipt($receipt);
+                        // BE CAREFUL: following code can be tricky...
+                        // take in mind that maybe not be consistent due to full group can not have same year, month or even training center
                         $receiptGroup
                             ->setYear($receipt->getYear())
                             ->setMonth($receipt->getMonth())
