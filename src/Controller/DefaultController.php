@@ -15,13 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_homepage")
-     */
+    #[Route('/', name: 'app_homepage')]
     public function indexAction(): RedirectResponse
     {
         return $this->redirectToRoute('admin_app_login');
@@ -45,9 +43,7 @@ class DefaultController extends AbstractController
         $messenger->sendNewsletterSubscriptionAdminNotification($newsletterContact);
     }
 
-    /**
-     * @Route("/contacte-iframe", name="app_contact_embed")
-     */
+    #[Route('/contacte-iframe', name: 'app_contact_embed')]
     public function contactEmbedAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): Response
     {
         $contactMessage = new ContactMessage();
@@ -84,9 +80,7 @@ class DefaultController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/test-email", name="app_test_email")
-     */
+    #[Route('/test-email', name: 'app_test_email')]
     public function testEmailAction(KernelInterface $kernel, EntityManagerInterface $em): Response
     {
         if (Kernel::ENV_PROD === $kernel->getEnvironment()) {

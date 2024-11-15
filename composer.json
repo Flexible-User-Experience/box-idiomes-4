@@ -34,7 +34,6 @@
         "phpoffice/phpspreadsheet": "^1.21",
         "phpstan/phpdoc-parser": "^1.2",
         "qipsius/tcpdf-bundle": "^2.0",
-        "sensio/framework-extra-bundle": "^6.1",
         "sonata-project/admin-bundle": "^4.12.0",
         "sonata-project/doctrine-orm-admin-bundle": "^4.2",
         "sonata-project/exporter": "^2.10",
@@ -82,7 +81,7 @@
     },
     "require-dev": {
         "hautelook/alice-bundle": "^2.9",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.5",
         "roave/security-advisories": "dev-latest",
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
@@ -90,8 +89,7 @@
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^6.0",
         "symfony/stopwatch": "6.4.*",
-        "symfony/web-profiler-bundle": "6.4.*",
-        "thibautselingue/local-php-security-checker-installer": "^1.0"
+        "symfony/web-profiler-bundle": "6.4.*"
     },
     "config": {
         "allow-plugins": {
@@ -127,12 +125,10 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "local-php-security-checker-installer && local-php-security-checker"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "local-php-security-checker"
+            "@auto-scripts"
         ]
     },
     "conflict": {

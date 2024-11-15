@@ -8,7 +8,7 @@ use App\Form\Type\FilterCalendarEventsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -21,9 +21,7 @@ final class AdminLoginController extends AbstractController
         $this->authenticationUtils = $authenticationUtils;
     }
 
-    /**
-     * @Route("/admin/login", name="admin_app_login")
-     */
+    #[Route('/admin/login', name: 'admin_app_login')]
     public function loginAction(RouterInterface $router): Response
     {
         $form = $this->createForm(AdminLoginForm::class, [
@@ -38,17 +36,13 @@ final class AdminLoginController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/logout", name="admin_app_logout")
-     */
+    #[Route('/admin/logout', name: 'admin_app_logout')]
     public function logoutAction(): void
     {
         // Left empty intentionally because this will be handled by Symfony.
     }
 
-    /**
-     * @Route("/admin/filter-calendar", name="admin_app_filter_calendar")
-     */
+    #[Route('/admin/filter-calendar', name: 'admin_app_filter_calendar')]
     public function filterCalendarAction(Request $request): Response
     {
         $calendarEventsFilter = new FilterCalendarEventModel();
