@@ -1,6 +1,6 @@
 {
     "name": "flux/box-idiomes",
-    "description": "A Symfony 5.4 LTS project to manage Box Idiomes Enterprise",
+    "description": "A Symfony 6.4 LTS project to manage Box Idiomes Enterprise",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
