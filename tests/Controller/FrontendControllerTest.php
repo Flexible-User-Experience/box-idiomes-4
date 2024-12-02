@@ -2,17 +2,15 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class FrontendControllerTest extends WebTestCase
 {
     /**
-     * Test HTTP request is successful
-     *
-     * @param string $url
+     * Test HTTP request is redirected
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSuccessfulUrls')]
-    public function testPagesAreRedirected(string $url): void
+    public function testPagesAreRedirected(): void
     {
         $client = WebTestCase::createClient();
         $client->request('GET', '/');
@@ -25,7 +23,7 @@ class FrontendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSuccessfulUrls')]
+    #[DataProvider('provideSuccessfulUrls')]
     public function testPagesAreSuccessful(string $url): void
     {
         $client = WebTestCase::createClient();
@@ -39,7 +37,7 @@ class FrontendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideSuccessfulUrls(): array
+    public static function provideSuccessfulUrls(): array
     {
         return array(
             array('/contacte-iframe'),
@@ -51,7 +49,7 @@ class FrontendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideNotFoundUrls')]
+    #[DataProvider('provideNotFoundUrls')]
     public function testPagesAreNotFound(string $url): void
     {
         $client = WebTestCase::createClient();
@@ -65,7 +63,7 @@ class FrontendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideNotFoundUrls(): array
+    public static function provideNotFoundUrls(): array
     {
         return array(
             array('/serveis'),

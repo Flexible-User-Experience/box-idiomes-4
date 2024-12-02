@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -31,7 +32,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideSuccessfulUrls')]
+    #[DataProvider('provideSuccessfulUrls')]
     public function testAdminPagesAreSuccessful(string $url): void
     {
         $client = $this->getAuthenticatedClient();
@@ -45,7 +46,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideSuccessfulUrls(): array
+    public static function provideSuccessfulUrls(): array
     {
         return array(
             array('/admin/dashboard'),
@@ -149,7 +150,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @param string $url
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideNotFoundUrls')]
+    #[DataProvider('provideNotFoundUrls')]
     public function testAdminPagesAreNotFound(string $url): void
     {
         $client = $this->getAuthenticatedClient();
@@ -163,7 +164,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideNotFoundUrls(): array
+    public static function provideNotFoundUrls(): array
     {
         return array(
             array('/admin/contacts/message/create'),
