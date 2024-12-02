@@ -4,45 +4,34 @@ namespace App\Entity;
 
 use App\Entity\Traits\TrainingCenterTrait;
 use App\Model\Color;
+use App\Repository\ClassGroupRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ClassGroupRepository")
- *
- * @ORM\Table(name="class_group")
- *
- * @UniqueEntity({"code"})
- */
+
+#[ORM\Entity(repositoryClass: ClassGroupRepository::class)]
+#[UniqueEntity(['code'])]
+#[ORM\Table(name: 'class_group')]
 class ClassGroup extends AbstractBase
 {
     use TrainingCenterTrait;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $code;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $name;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $book;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $color;
 
     private ?Color $colorRgbArray = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $isForPrivateLessons;
 
     public function getCode(): string

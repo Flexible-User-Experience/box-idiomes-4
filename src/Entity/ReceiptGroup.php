@@ -6,16 +6,15 @@ use App\Entity\Traits\BaseAmountTrait;
 use App\Entity\Traits\MonthTrait;
 use App\Entity\Traits\TrainingCenterTrait;
 use App\Entity\Traits\YearTrait;
+use App\Repository\ReceiptGroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ReceiptGroupRepository")
- *
- * @ORM\Table(name="receipt_group")
- */
+
+#[ORM\Entity(repositoryClass: ReceiptGroupRepository::class)]
+#[ORM\Table(name: 'receipt_group')]
 class ReceiptGroup extends AbstractBase
 {
     use BaseAmountTrait;
@@ -23,16 +22,11 @@ class ReceiptGroup extends AbstractBase
     use TrainingCenterTrait;
     use YearTrait;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Receipt", mappedBy="receiptGroup")
-     *
-     * @Assert\Valid
-     */
+    #[ORM\OneToMany(mappedBy: 'receiptGroup', targetEntity: Receipt::class)]
+    #[Assert\Valid]
     private ?Collection $receipts;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\BankCreditorSepa")
-     */
+    #[ORM\ManyToOne(targetEntity: BankCreditorSepa::class)]
     private ?BankCreditorSepa $bankCreditorSepa = null;
 
     public function __construct()

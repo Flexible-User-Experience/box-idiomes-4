@@ -6,16 +6,16 @@ use App\Entity\Traits\DescriptionTrait;
 use App\Entity\Traits\ImageTrait;
 use App\Entity\Traits\PositionTrait;
 use App\Entity\Traits\SlugTrait;
+use App\Repository\ServiceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Table()
- * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="App\Repository\ServiceRepository")
- */
+#[ORM\Entity(repositoryClass: ServiceRepository::class)]
+#[ORM\Table]
+#[Vich\Uploadable]
 class Service extends AbstractBase
 {
     use DescriptionTrait;
@@ -23,24 +23,15 @@ class Service extends AbstractBase
     use PositionTrait;
     use SlugTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $title;
 
-    /**
-     * @ORM\Column(type="string", nullable=true, length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private string $slug;
 
-    /**
-     * @Vich\UploadableField(mapping="service", fileNameProperty="imageName")
-     * @Assert\File(
-     *     maxSize="10M",
-     *     mimeTypes={"image/jpg", "image/jpeg", "image/png", "image/gif"}
-     * )
-     * @Assert\Image(minWidth=1200)
-     */
+    #[Assert\File(maxSize: '10M', mimeTypes: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'])]
+    #[Assert\Image(minWidth: 1200)]
+    #[Vich\UploadableField(mapping: 'service', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     public function getTitle(): string

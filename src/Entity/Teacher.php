@@ -8,18 +8,16 @@ use App\Entity\Traits\NameTrait;
 use App\Entity\Traits\PositionTrait;
 use App\Entity\Traits\SlugTrait;
 use App\Enum\TeacherColorEnum;
+use App\Repository\TeacherRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Table()
- *
- * @Vich\Uploadable
- *
- * @ORM\Entity(repositoryClass="App\Repository\TeacherRepository")
- */
+#[ORM\Entity(repositoryClass: TeacherRepository::class)]
+#[ORM\Table]
+#[Vich\Uploadable]
 class Teacher extends AbstractBase
 {
     use DescriptionTrait;
@@ -28,36 +26,21 @@ class Teacher extends AbstractBase
     use PositionTrait;
     use SlugTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", nullable=true, length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private string $slug;
 
-    /**
-     * @Vich\UploadableField(mapping="teacher", fileNameProperty="imageName")
-     *
-     * @Assert\File(
-     *     maxSize="10M",
-     *     mimeTypes={"image/jpg", "image/jpeg", "image/png", "image/gif"}
-     * )
-     *
-     * @Assert\Image(allowLandscape=false, allowPortrait=true, minWidth=600)
-     */
+    #[Assert\File(maxSize: '10M', mimeTypes: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'])]
+    #[Assert\Image(minWidth: 600, allowLandscape: false, allowPortrait: true)]
+    #[Vich\UploadableField(mapping: 'teacher', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $color = 0;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private bool $showInHomepage = true;
 
     public function getColor(): int

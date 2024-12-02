@@ -2,13 +2,12 @@
 
 namespace App\Entity\Traits;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 trait BaseAmountTrait
 {
-    /**
-     * @ORM\Column(type="float", nullable=false)
-     */
+    #[ORM\Column(type: Types::FLOAT, nullable: false)]
     private float $baseAmount;
 
     public function getBaseAmount(): float

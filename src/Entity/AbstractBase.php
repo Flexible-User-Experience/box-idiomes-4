@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -15,32 +16,23 @@ abstract class AbstractBase
     public const string DATABASE_DATE_STRING_FORMAT = 'Y-m-d';
     public const string DATABASE_DATETIME_STRING_FORMAT = 'Y-m-d H:i:s';
 
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue
-     */
+    
+    #[ORM\Id]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\GeneratedValue]
     protected $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     *
-     * @Gedmo\Timestampable(on="create")
-     */
+    
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'create')]
     protected \DateTimeInterface $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @Gedmo\Timestampable(on="update")
-     */
+    
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Gedmo\Timestampable(on: 'update')]
     protected ?\DateTimeInterface $updatedAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     protected bool $enabled = true;
 
     public function getId()

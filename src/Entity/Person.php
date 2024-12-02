@@ -3,33 +3,27 @@
 namespace App\Entity;
 
 use App\Entity\Traits\BankCreditorSepaTrait;
+use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
- * @ORM\Table(name="person")
- */
+#[ORM\Entity(repositoryClass: PersonRepository::class)]
+#[ORM\Table(name: 'person')]
 class Person extends AbstractPerson
 {
     use BankCreditorSepaTrait;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     protected ?string $dni;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Student", mappedBy="parent")
-     */
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Student::class)]
     private Collection $students;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
-     * @Assert\Valid
-     */
+    #[ORM\OneToOne(targetEntity: Bank::class, cascade: ['persist'])]
+    #[Assert\Valid]
     protected ?Bank $bank = null;
 
     public function __construct()

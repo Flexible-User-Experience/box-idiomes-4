@@ -2,17 +2,15 @@
 
 namespace App\Entity;
 
+use App\Repository\NewsletterContactRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Repository\NewsletterContactRepository")
- */
+#[ORM\Entity(repositoryClass: NewsletterContactRepository::class)]
+#[ORM\Table]
 class NewsletterContact extends AbstractBase
 {
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $email;
 
     private bool $privacy;

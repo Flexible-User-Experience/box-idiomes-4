@@ -2,13 +2,12 @@
 
 namespace App\Entity\Traits;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 trait DescriptionTrait
 {
-    /**
-     * @ORM\Column(type="text", length=4000, nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, length: 4000, nullable: true)]
     private ?string $description = null;
 
     public function getDescription(): ?string

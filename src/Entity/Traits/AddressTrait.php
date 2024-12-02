@@ -2,13 +2,12 @@
 
 namespace App\Entity\Traits;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 trait AddressTrait
 {
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     protected ?string $address = null;
 
     public function getAddress(): ?string

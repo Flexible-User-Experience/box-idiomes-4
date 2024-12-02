@@ -4,38 +4,29 @@ namespace App\Entity;
 
 use App\Entity\Traits\NameTrait;
 use App\Enum\TariffTypeEnum;
+use App\Repository\TariffRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TariffRepository")
- *
- * @ORM\Table(name="tariff")
- *
- * @UniqueEntity({"type", "year"})
- */
+
+#[ORM\Entity(repositoryClass: TariffRepository::class)]
+#[UniqueEntity(['type', 'year'])]
+#[ORM\Table(name: 'tariff')]
 class Tariff extends AbstractBase
 {
     use NameTrait;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $year;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $price;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $type = TariffTypeEnum::TARIFF_ONE_HOUR_PER_WEEK;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $name;
 
     public function getYear(): int

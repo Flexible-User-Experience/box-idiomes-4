@@ -2,16 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\SpendingCategoryRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SpendingCategoryRepository")
- */
+#[ORM\Entity(repositoryClass: SpendingCategoryRepository::class)]
 class SpendingCategory extends AbstractBase
 {
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $name;
 
     public function getName(): string

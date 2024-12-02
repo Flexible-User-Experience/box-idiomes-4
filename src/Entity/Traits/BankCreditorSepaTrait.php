@@ -7,10 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait BankCreditorSepaTrait
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\BankCreditorSepa")
-     * @ORM\JoinColumn(name="bank_creditor_sepa_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: BankCreditorSepa::class)]
+    #[ORM\JoinColumn(name: 'bank_creditor_sepa_id', referencedColumnName: 'id', nullable: true)]
     private ?BankCreditorSepa $bankCreditorSepa = null;
 
     public function getBankCreditorSepa(): ?BankCreditorSepa

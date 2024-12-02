@@ -4,81 +4,58 @@ namespace App\Entity;
 
 use App\Entity\Traits\BankCreditorSepaTrait;
 use App\Entity\Traits\TrainingCenterTrait;
+use App\Repository\StudentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\StudentRepository")
- *
- * @ORM\Table(name="student")
- *
- * @UniqueEntity({"name", "surname"})
- */
+
+#[ORM\Entity(repositoryClass: StudentRepository::class)]
+#[UniqueEntity(['name', 'surname'])]
+#[ORM\Table(name: 'student')]
 class Student extends AbstractPerson
 {
     use BankCreditorSepaTrait;
     use TrainingCenterTrait;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $schedule = null;
 
-    /**
-     * @ORM\Column(type="text", length=4000, nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, length: 4000, nullable: true)]
     private ?string $comments = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person", inversedBy="students")
-     */
+    #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'students')]
     private ?Person $parent = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bank", cascade={"persist"})
-     *
-     * @Assert\Valid
-     */
+    
+    #[ORM\ManyToOne(targetEntity: Bank::class, cascade: ['persist'])]
+    #[Assert\Valid]
     protected ?Bank $bank = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tariff")
-     *
-     * @ORM\JoinColumn(name="tariff_id", referencedColumnName="id")
-     */
+    
+    #[ORM\ManyToOne(targetEntity: Tariff::class)]
+    #[ORM\JoinColumn(name: 'tariff_id', referencedColumnName: 'id')]
     private ?Tariff $tariff = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="students")
-     */
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'students')]
     private Collection $events;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $hasImageRightsAccepted = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $hasSepaAgreementAccepted = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $isPaymentExempt = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $hasAcceptedInternalRegulations = false;
 
     public function __construct()
