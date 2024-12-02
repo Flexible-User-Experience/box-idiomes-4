@@ -9,9 +9,9 @@ class FrontendControllerTest extends WebTestCase
     /**
      * Test HTTP request is successful
      *
-     * @dataProvider provideSuccessfulUrls
      * @param string $url
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSuccessfulUrls')]
     public function testPagesAreRedirected(string $url): void
     {
         $client = WebTestCase::createClient();
@@ -23,9 +23,9 @@ class FrontendControllerTest extends WebTestCase
     /**
      * Test HTTP request is successful
      *
-     * @dataProvider provideSuccessfulUrls
      * @param string $url
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSuccessfulUrls')]
     public function testPagesAreSuccessful(string $url): void
     {
         $client = WebTestCase::createClient();
@@ -49,9 +49,9 @@ class FrontendControllerTest extends WebTestCase
     /**
      * Test HTTP request is not found
      *
-     * @dataProvider provideNotFoundUrls
      * @param string $url
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideNotFoundUrls')]
     public function testPagesAreNotFound(string $url): void
     {
         $client = WebTestCase::createClient();

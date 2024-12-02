@@ -28,10 +28,10 @@ class BackendControllerTest extends WebTestCase
     /**
      * Test HTTP request is successful.
      *
-     * @dataProvider provideSuccessfulUrls
      *
      * @param string $url
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSuccessfulUrls')]
     public function testAdminPagesAreSuccessful(string $url): void
     {
         $client = $this->getAuthenticatedClient();
@@ -146,10 +146,10 @@ class BackendControllerTest extends WebTestCase
     /**
      * Test HTTP request is not found.
      *
-     * @dataProvider provideNotFoundUrls
      *
      * @param string $url
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideNotFoundUrls')]
     public function testAdminPagesAreNotFound(string $url): void
     {
         $client = $this->getAuthenticatedClient();
