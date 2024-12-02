@@ -5,8 +5,8 @@ namespace App\Menu;
 use App\Enum\UserRolesEnum;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Security;
 
 class BackendStudentsMenuBuilder
 {
