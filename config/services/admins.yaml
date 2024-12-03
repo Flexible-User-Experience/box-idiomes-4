@@ -1,157 +1,259 @@
 services:
     # Students
     admin.student:
-        class: App\Admin\StudentAdmin
-        arguments: [ ~, App\Entity\Student, App\Controller\Admin\StudentAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\StudentAdmin'
         tags:
             - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Student', controller: 'App\Controller\Admin\StudentAdminController', label: 'Alumne', group: 'Alumnes' }
         calls:
-            - [ setTemplate, [ edit, 'Admin/Student/edit.html.twig' ] ]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+            - [ 'setTemplate', [ 'edit', 'Admin/Student/edit.html.twig' ] ]
     admin.student_absence:
-        class: App\Admin\StudentAbsenceAdmin
-        arguments: [ ~, App\Entity\StudentAbsence, App\Controller\Admin\StudentAbsenceAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\StudentAbsenceAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Absència alumne', group: 'Alumnes' }
-    admin.parent:
-        class: App\Admin\PersonAdmin
-        arguments: [ ~, App\Entity\Person, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Pare, mare o tutor', group: 'Alumnes' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Absència alumne', group: 'Alumnes' }
         calls:
-            - [ setTemplate, [ edit, 'Admin/Student/edit.html.twig' ] ]
-    admin.pre_register:
-        class: App\Admin\PreRegisterAdmin
-        arguments: [ ~, App\Entity\PreRegister, App\Controller\Admin\PreRegisterAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+    admin.parent:
+        class: 'App\Admin\PersonAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Preinscipcions', group: 'Alumnes' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Pare, mare o tutor', group: 'Alumnes' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+            - [ 'setTemplate', [ 'edit', 'Admin/Student/edit.html.twig' ] ]
+    admin.pre_register:
+        class: 'App\Admin\PreRegisterAdmin'
+        tags:
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Preinscipcions', group: 'Alumnes' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Teachers
     admin.teacher:
-        class: App\Admin\TeacherAdmin
-        arguments: [ ~, App\Entity\Teacher, App\Controller\Admin\TeacherAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\TeacherAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Professor', group: 'Professors' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Professor', group: 'Professors' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.teacher_absence:
-        class: App\Admin\TeacherAbsenceAdmin
-        arguments: [ ~, App\Entity\TeacherAbsence, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\TeacherAbsenceAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Absència professor', group: 'Professors' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Absència professor', group: 'Professors' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Classrooms
     admin.class_group:
-        class: App\Admin\ClassGroupAdmin
-        arguments: [ ~, App\Entity\ClassGroup, App\Controller\Admin\ClassGroupAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\ClassGroupAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Grup', group: 'Aules' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Grup', group: 'Aules' }
         calls:
-            - [ setTemplate, [ edit, 'Admin/ClassGroup/edit.html.twig' ] ]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+            - [ 'setTemplate', [ 'edit', 'Admin/ClassGroup/edit.html.twig' ] ]
     admin.event:
-        class: App\Admin\EventAdmin
-        arguments: [ ~, App\Entity\Event, App\Controller\Admin\EventAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\EventAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Horari', group: 'Aules' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Horari', group: 'Aules' }
         calls:
-            - [ setTemplate, [ edit, 'Admin/Event/edit.html.twig' ] ]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+            - [ 'setTemplate', [ 'edit', 'Admin/Event/edit.html.twig' ] ]
     admin.training_center:
-        class: App\Admin\TrainingCenterAdmin
-        arguments: [ ~, App\Entity\TrainingCenter, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\TrainingCenterAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Centre Formació', group: 'Aules' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Centre Formació', group: 'Aules' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Billings
     admin.tariff:
-        class: App\Admin\TariffAdmin
-        arguments: [ ~, App\Entity\Tariff, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\TariffAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Tarifa', group: 'Facturació' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Tarifa', group: 'Facturació' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.receipt:
-        class: App\Admin\ReceiptAdmin
-        arguments: [ ~, App\Entity\Receipt, App\Controller\Admin\ReceiptAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\ReceiptAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Rebut', group: 'Facturació' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Rebut', group: 'Facturació' }
         calls:
-            - [ setTemplate, [ edit, 'Admin/Receipt/edit.html.twig' ] ]
-            - [ setTemplate, [ list, 'Admin/Receipt/list.html.twig' ] ]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+            - [ 'setTemplate', [ 'edit', 'Admin/Receipt/edit.html.twig' ] ]
+            - [ 'setTemplate', [ 'list', 'Admin/Receipt/list.html.twig' ] ]
     admin.receipt_line:
-        class: App\Admin\ReceiptLineAdmin
-        arguments: [ ~, App\Entity\ReceiptLine, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\ReceiptLineAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Línies rebut', group: 'Facturació', show_in_dashboard: false }
-    admin.receipt_group:
-        class: App\Admin\ReceiptGroupAdmin
-        arguments: [ ~, App\Entity\ReceiptGroup, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Remeses', group: 'Facturació' }
-    admin.invoice:
-        class: App\Admin\InvoiceAdmin
-        arguments: [ ~, App\Entity\Invoice, App\Controller\Admin\InvoiceAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Factura', group: 'Facturació' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Línies rebut', group: 'Facturació', show_in_dashboard: false }
         calls:
-            - [ setTemplate, [ edit, 'Admin/Invoice/edit.html.twig' ] ]
-    admin.invoice_line:
-        class: App\Admin\InvoiceLineAdmin
-        arguments: [ ~, App\Entity\InvoiceLine, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+    admin.receipt_group:
+        class: 'App\Admin\ReceiptGroupAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Línies factura', group: 'Facturació', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Remeses', group: 'Facturació' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+    admin.invoice:
+        class: 'App\Admin\InvoiceAdmin'
+        tags:
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Factura', group: 'Facturació' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
+            - [ 'setTemplate', [ 'edit', 'Admin/Invoice/edit.html.twig' ] ]
+    admin.invoice_line:
+        class: 'App\Admin\InvoiceLineAdmin'
+        tags:
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Línies factura', group: 'Facturació', show_in_dashboard: false }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Purchases
     admin.purchases.provider:
-        class: App\Admin\ProviderAdmin
-        arguments: [ ~, App\Entity\Provider, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\ProviderAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Proveïdor', group: 'Despeses' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Proveïdor', group: 'Despeses' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.purchases.spending_category:
-        class: App\Admin\SpendingCategoryAdmin
-        arguments: [ ~, App\Entity\SpendingCategory, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\SpendingCategoryAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Tipus Despesa', group: 'Despeses' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Tipus Despesa', group: 'Despeses' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.purchases.spending:
-        class: App\Admin\SpendingAdmin
-        arguments: [ ~, App\Entity\Spending, App\Controller\Admin\SpendingAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\SpendingAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Despesa', group: 'Despeses' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Despesa', group: 'Despeses' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Contacts
     admin.contactmessage:
-        class: App\Admin\ContactMessageAdmin
-        arguments: [ ~, App\Entity\ContactMessage, App\Controller\Admin\ContactMessageAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\ContactMessageAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Missatge de contacte', group: 'Contactes' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Missatge de contacte', group: 'Contactes' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.newslettercontact:
-        class: App\Admin\NewsletterContactAdmin
-        arguments: [ ~, App\Entity\NewsletterContact, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\NewsletterContactAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Butlletí de contacte', group: 'Contactes' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Butlletí de contacte', group: 'Contactes' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Configurations
     admin.bank_creditor_sepa:
-        class: App\Admin\BankCreditorSepaAdmin
-        arguments: [ ~, App\Entity\BankCreditorSepa, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\BankCreditorSepaAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Banc', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Banc', group: 'Configuració' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.province:
-        class: App\Admin\ProvinceAdmin
-        arguments: [ ~, App\Entity\Province, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\ProvinceAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Província', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Província', group: 'Configuració' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.city:
-        class: App\Admin\CityAdmin
-        arguments: [ ~, App\Entity\City, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\CityAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Ciutat', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Ciutat', group: 'Configuració' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.user:
-        class: App\Admin\UserAdmin
-        arguments: [ ~, App\Entity\User, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\UserAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Usuari', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Usuari', group: 'Configuració' }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.bank:
-        class: App\Admin\BankAdmin
-        arguments: [ ~, App\Entity\Bank, ~, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\BankAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Bank', group: 'Configuració', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Bank', group: 'Configuració', show_in_dashboard: false }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Extra Helper (admins without a related entity, for extra features like file manager or calendar)
     admin.file_manager_dummy:
-        class: App\Admin\FileDummyAdmin
-        arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\FileManagerAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\FileDummyAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'File Manager', group: 'Dummy', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'File Manager', group: 'Dummy', show_in_dashboard: false }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
     admin.extra_helper_manager_dummy:
-        class: App\Admin\ExtraHelperManagerAdmin
-        arguments: [ ~, App\Model\FileDummy, App\Controller\Admin\ExtraHelperManagerAdminController, '@doctrine.orm.entity_manager', '@security.helper', '@twig', '@App\Service\FileService' ]
+        class: 'App\Admin\ExtraHelperManagerAdmin'
         tags:
-            - { name: sonata.admin, manager_type: orm, label: 'Extra Manager', group: 'Dummy', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', label: 'Extra Manager', group: 'Dummy', show_in_dashboard: false }
+        calls:
+            - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
+            - [ 'setSecurityHelper', [ '@security.helper' ] ]
+            - [ 'setTwigEnvironment', [ '@twig' ] ]
+            - [ 'setFileService', [ '@App\Service\FileService' ] ]
