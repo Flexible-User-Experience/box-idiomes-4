@@ -108,7 +108,7 @@ class EventType extends AbstractType
                     'label' => 'backend.admin.event.range',
                     'required' => true,
                     'choices' => $this->em->getRangeChoices($event),
-                    'data' => $this->em->getLastEventOf($event)->getId(),
+                    'data' => $this->em->getLastEventOf($event)?->getId(),
                 ]
             )
         ;
