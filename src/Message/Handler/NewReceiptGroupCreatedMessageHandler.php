@@ -10,9 +10,10 @@ use App\Repository\ReceiptRepository;
 use Digitick\Sepa\Exception\InvalidArgumentException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class NewReceiptGroupCreatedMessageHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class NewReceiptGroupCreatedMessageHandler
 {
     private LoggerInterface $logger;
     private EntityManagerInterface $em;
