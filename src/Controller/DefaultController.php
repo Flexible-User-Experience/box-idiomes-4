@@ -75,7 +75,7 @@ class DefaultController extends AbstractController
         return $this->render(
             'Front/contact_embed.html.twig',
             [
-                'contactMessageForm' => $contactMessageForm->createView(),
+                'contactMessageForm' => $contactMessageForm,
             ]
         );
     }

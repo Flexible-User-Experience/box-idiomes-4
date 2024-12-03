@@ -30,7 +30,7 @@ final class AdminLoginController extends AbstractController
         ]);
 
         return $this->render('Admin/Security/login.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'last_username' => $this->authenticationUtils->getLastUsername(),
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
         ]);
@@ -65,7 +65,7 @@ final class AdminLoginController extends AbstractController
         return $this->render(
             'Admin/Helpers/filter_calendar.html.twig',
             [
-                'filter' => $calendarEventsFilterForm->createView(),
+                'filter' => $calendarEventsFilterForm,
             ]
         );
     }

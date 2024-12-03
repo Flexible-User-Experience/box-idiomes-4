@@ -89,7 +89,7 @@ final class StudentAdminController extends AbstractAdminController
         return $this->render(
             'Admin/Student/mailing.html.twig',
             [
-                'filter' => $calendarEventsFilterForm->createView(),
+                'filter' => $calendarEventsFilterForm,
             ]
         );
     }
@@ -152,7 +152,7 @@ final class StudentAdminController extends AbstractAdminController
         return $this->render(
             'Admin/Student/write_mailing.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
                 'calendar_events_filter' => $calendarEventsFilter,
                 'students' => $students,
                 'today_available_notifications_amount' => $msnmr->getTodayAvailableNotificationsAmount(),

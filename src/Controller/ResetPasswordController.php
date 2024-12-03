@@ -49,7 +49,7 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('Admin/Security/request.html.twig', [
-            'requestForm' => $form->createView(),
+            'requestForm' => $form,
         ]);
     }
 
@@ -124,7 +124,7 @@ class ResetPasswordController extends AbstractController
         }
 
         return $this->render('Admin/Security/reset.html.twig', [
-            'resetForm' => $form->createView(),
+            'resetForm' => $form,
         ]);
     }
 
