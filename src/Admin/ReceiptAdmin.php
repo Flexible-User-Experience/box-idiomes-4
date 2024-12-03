@@ -99,7 +99,7 @@ final class ReceiptAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.year',
                     'required' => true,
                     'choices' => InvoiceYearMonthEnum::getYearEnumArray(),
-                    'preferred_choices' => $currentYear,
+                    'preferred_choices' => [ $currentYear ],
                 ]
             )
             ->add(

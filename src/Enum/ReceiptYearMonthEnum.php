@@ -6,20 +6,20 @@ use DateTimeImmutable;
 
 class ReceiptYearMonthEnum
 {
-    public const APP_FIRST_YEAR = 2017;
+    public const int APP_FIRST_YEAR = 2017;
 
-    public const JANUARY = 1;
-    public const FEBRAURY = 2;
-    public const MARCH = 3;
-    public const APRIL = 4;
-    public const MAY = 5;
-    public const JUNE = 6;
-    public const JULY = 7;
-    public const AUGUST = 8;
-    public const SEPTEMBER = 9;
-    public const OCTOBER = 10;
-    public const NOVEMBER = 11;
-    public const DECEMBER = 12;
+    public const int JANUARY = 1;
+    public const int FEBRAURY = 2;
+    public const int MARCH = 3;
+    public const int APRIL = 4;
+    public const int MAY = 5;
+    public const int JUNE = 6;
+    public const int JULY = 7;
+    public const int AUGUST = 8;
+    public const int SEPTEMBER = 9;
+    public const int OCTOBER = 10;
+    public const int NOVEMBER = 11;
+    public const int DECEMBER = 12;
 
     public static function getMonthEnumArray(): array
     {
