@@ -19,13 +19,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 final class UserAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'User';
-    protected $baseRoutePattern = 'users';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'username';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'users';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

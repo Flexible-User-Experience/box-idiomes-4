@@ -9,13 +9,17 @@ use Sonata\AdminBundle\Route\RouteCollectionInterface;
 final class FileDummyAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'FileDummy';
-    protected $baseRoutePattern = 'fitxers';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'fitxers';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

@@ -26,7 +26,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 final class ReceiptAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Receipt';
-    protected $baseRoutePattern = 'billings/receipt';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
@@ -34,6 +33,11 @@ final class ReceiptAdmin extends AbstractBaseAdmin
         $sortValues[DatagridInterface::PER_PAGE] = 500;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'id';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'billings/receipt';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

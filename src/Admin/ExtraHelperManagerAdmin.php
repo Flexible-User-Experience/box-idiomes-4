@@ -9,13 +9,17 @@ use Sonata\AdminBundle\Route\RouteCollectionInterface;
 final class ExtraHelperManagerAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ExtraHelper';
-    protected $baseRoutePattern = 'extras';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'extras';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

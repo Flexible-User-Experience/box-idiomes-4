@@ -14,13 +14,17 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 final class TariffAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Tarriff';
-    protected $baseRoutePattern = 'billings/tariff';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'year';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'billings/tariff';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

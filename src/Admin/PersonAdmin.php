@@ -23,13 +23,17 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 final class PersonAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Person';
-    protected $baseRoutePattern = 'students/parent';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'surname';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'students/parent';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
