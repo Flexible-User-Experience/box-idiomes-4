@@ -30,6 +30,11 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
         $this->fs = $fs;
     }
 
+    public function getPerPageOptions(): array
+    {
+        return $this->perPageOptions;
+    }
+
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
