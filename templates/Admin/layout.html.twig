@@ -26,6 +26,7 @@
 {# override css includes #}
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/backend.scss') }}">
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}"/>
 {% endblock %}
 
