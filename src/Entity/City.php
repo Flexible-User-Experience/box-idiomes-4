@@ -2,29 +2,23 @@
 
 namespace App\Entity;
 
+use App\Repository\CityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
- * @ORM\Table(name="city")
- * @UniqueEntity({"postalCode", "province"})
- */
+#[ORM\Entity(repositoryClass: CityRepository::class)]
+#[UniqueEntity(['postalCode', 'province'])]
+#[ORM\Table(name: 'city')]
 class City extends AbstractBase
 {
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $postalCode;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Province")
-     */
+    #[ORM\ManyToOne(targetEntity: Province::class)]
     private Province $province;
 
     public function getName(): string

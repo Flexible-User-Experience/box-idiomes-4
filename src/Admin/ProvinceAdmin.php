@@ -14,13 +14,17 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class ProvinceAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Province';
-    protected $baseRoutePattern = 'administrations/province';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'administrations/province';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

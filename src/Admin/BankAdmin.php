@@ -11,13 +11,17 @@ use Sonata\AdminBundle\Form\FormMapper;
 final class BankAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Bank';
-    protected $baseRoutePattern = 'administrations/bank';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'administrations/bank';
     }
 
     protected function configureFormFields(FormMapper $form): void

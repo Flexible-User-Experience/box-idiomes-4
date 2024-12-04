@@ -51,8 +51,8 @@ final class ReceiptAdminController extends AbstractAdminController
             'Admin/Receipt/generate_receipt_form.html.twig',
             [
                 'action' => 'generate',
-                'year_month_form' => $yearMonthForm->createView(),
-                'form' => $form->createView(),
+                'year_month_form' => $yearMonthForm,
+                'form' => $form,
             ]
         );
     }

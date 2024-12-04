@@ -71,7 +71,7 @@ final class ContactMessageAdminController extends AbstractAdminController
             [
                 'action' => 'answer',
                 'object' => $object,
-                'form' => $form->createView(),
+                'form' => $form,
                 'elements' => $this->admin->getShow(),
             ]
         );

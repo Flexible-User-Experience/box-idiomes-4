@@ -3,61 +3,43 @@
 namespace App\Entity;
 
 use App\Enum\StudentPaymentEnum;
+use App\Repository\ProviderRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ProviderRepository")
- * @UniqueEntity({"tic"})
- */
+#[ORM\Entity(repositoryClass: ProviderRepository::class)]
+#[UniqueEntity(['tic'])]
 class Provider extends AbstractBase
 {
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     private string $tic;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $alias = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $address = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City")
-     */
+    #[ORM\ManyToOne(targetEntity: City::class)]
     private City $city;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $phone = null;
 
-    /**
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\Email()
-     */
+    #[ORM\Column(name: 'email', type: Types::STRING, length: 255, nullable: true)]
+    #[Assert\Email]
     private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $paymentMethod = StudentPaymentEnum::BANK_ACCOUNT_NUMBER;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Iban()
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[Assert\Iban]
     private ?string $ibanForBankDraftPayment = null;
 
     public function getTic(): string

@@ -13,6 +13,7 @@
 .php_cs.cache
 .php-cs-fixer.cache
 .env
+.env.dev
 .env.test
 ###< app/bundle ###
 
@@ -48,3 +49,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

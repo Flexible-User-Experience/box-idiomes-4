@@ -17,13 +17,17 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 final class TeacherAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Teacher';
-    protected $baseRoutePattern = 'teachers/teacher';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'position';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'teachers/teacher';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

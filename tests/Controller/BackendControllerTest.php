@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -28,10 +29,10 @@ class BackendControllerTest extends WebTestCase
     /**
      * Test HTTP request is successful.
      *
-     * @dataProvider provideSuccessfulUrls
      *
      * @param string $url
      */
+    #[DataProvider('provideSuccessfulUrls')]
     public function testAdminPagesAreSuccessful(string $url): void
     {
         $client = $this->getAuthenticatedClient();
@@ -45,7 +46,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideSuccessfulUrls(): array
+    public static function provideSuccessfulUrls(): array
     {
         return array(
             array('/admin/dashboard'),
@@ -98,8 +99,8 @@ class BackendControllerTest extends WebTestCase
             array('/admin/classrooms/timetable/list'),
             array('/admin/classrooms/timetable/create'),
             array('/admin/classrooms/timetable/1/edit'),
-            array('/admin/classrooms/timetable/1/batch-edit'),
-            array('/admin/classrooms/timetable/1/batch-delete'),
+            array('/admin/classrooms/timetable/2/batch-edit'),
+            array('/admin/classrooms/timetable/2/batch-delete'),
             array('/admin/classrooms/training-center/list'),
             array('/admin/classrooms/training-center/create'),
             array('/admin/classrooms/training-center/1/edit'),
@@ -146,10 +147,10 @@ class BackendControllerTest extends WebTestCase
     /**
      * Test HTTP request is not found.
      *
-     * @dataProvider provideNotFoundUrls
      *
      * @param string $url
      */
+    #[DataProvider('provideNotFoundUrls')]
     public function testAdminPagesAreNotFound(string $url): void
     {
         $client = $this->getAuthenticatedClient();
@@ -163,7 +164,7 @@ class BackendControllerTest extends WebTestCase
      *
      * @return array
      */
-    public function provideNotFoundUrls(): array
+    public static function provideNotFoundUrls(): array
     {
         return array(
             array('/admin/contacts/message/create'),

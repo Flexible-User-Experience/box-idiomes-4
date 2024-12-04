@@ -10,10 +10,8 @@ use App\Enum\InvoiceYearMonthEnum;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
-use Sonata\Form\Type\CollectionType;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 final class ReceiptGroupAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ReceiptGroup';
-    protected $baseRoutePattern = 'billings/receipt-group';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
@@ -29,6 +26,11 @@ final class ReceiptGroupAdmin extends AbstractBaseAdmin
         $sortValues[DatagridInterface::PER_PAGE] = 25;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'createdAt';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'billings/receipt-group';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

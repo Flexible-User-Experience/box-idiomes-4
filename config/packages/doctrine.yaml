@@ -3,16 +3,23 @@ doctrine:
         use_savepoints: true
         url: '%env(resolve:DATABASE_URL)%'
         charset: 'utf8mb4'
+        profiling_collect_backtrace: '%kernel.debug%'
     orm:
         auto_mapping: true
         auto_generate_proxy_classes: true
+        enable_lazy_ghost_objects: true
+        report_fields_where_declared: true
+        validate_xml_mapping: true
         naming_strategy: 'doctrine.orm.naming_strategy.underscore_number_aware'
         mappings:
             App:
                 is_bundle: false
+                type: 'attribute'
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: 'App'
+        controller_resolver:
+            auto_mapping: true
         dql:
             datetime_functions:
                 timestampdiff: 'DoctrineExtensions\Query\Mysql\TimestampDiff'
@@ -31,6 +38,7 @@ when@test:
                 datetime_functions:
                     month: 'DoctrineExtensions\Query\Sqlite\Month'
                     year: 'DoctrineExtensions\Query\Sqlite\Year'
+
 when@prod:
     doctrine:
         orm:
@@ -42,10 +50,3 @@ when@prod:
             result_cache_driver:
                 type: 'pool'
                 pool: 'doctrine.result_cache_pool'
-    framework:
-        cache:
-            pools:
-                doctrine.result_cache_pool:
-                    adapter: 'cache.app'
-                doctrine.system_cache_pool:
-                    adapter: 'cache.system'

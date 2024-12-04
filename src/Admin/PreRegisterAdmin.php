@@ -16,13 +16,17 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 final class PreRegisterAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'PreRegister';
-    protected $baseRoutePattern = 'students/pre-register';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'createdAt';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'students/pre-register';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

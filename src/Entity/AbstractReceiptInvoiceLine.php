@@ -2,39 +2,28 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractReceiptInvoiceLine extends AbstractBase
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student")
-     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: Student::class)]
+    #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id')]
     protected Student $student;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     protected float $units = 0.0;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     protected float $priceUnit = 0.0;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
     protected ?float $discount = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
     protected ?float $total = null;
 
     public function getStudent(): Student

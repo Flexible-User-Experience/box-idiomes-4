@@ -16,13 +16,17 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 final class ClassGroupAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ClassGroup';
-    protected $baseRoutePattern = 'classrooms/group';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'code';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'classrooms/group';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

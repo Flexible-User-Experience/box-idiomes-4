@@ -5,64 +5,45 @@ namespace App\Entity;
 use App\Entity\Traits\DescriptionTrait;
 use App\Entity\Traits\DocumentFileTrait;
 use App\Entity\Traits\NameTrait;
+use App\Repository\ContactMessageRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="App\Repository\ContactMessageRepository")
- *
- * @Vich\Uploadable
- */
+#[ORM\Entity(repositoryClass: ContactMessageRepository::class)]
+#[ORM\Table]
+#[Vich\Uploadable]
 class ContactMessage extends AbstractBase
 {
     use DescriptionTrait;
     use DocumentFileTrait;
     use NameTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $email;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $checked = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $answered = false;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $subject = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $phone = null;
 
-    /**
-     * @ORM\Column(type="text", length=4000)
-     */
+    #[ORM\Column(type: Types::TEXT, length: 4000)]
     private ?string $message = null;
 
-    /**
-     * @Vich\UploadableField(mapping="contact_message", fileNameProperty="document")
-     *
-     * @Assert\File(maxSize="10M")
-     */
+    #[Assert\File(maxSize: '10M')]
+    #[Vich\UploadableField(mapping: 'contact_message', fileNameProperty: 'document')]
     private ?File $documentFile = null;
 
     private bool $privacy;

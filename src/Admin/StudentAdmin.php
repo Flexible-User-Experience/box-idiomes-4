@@ -38,13 +38,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 final class StudentAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Student';
-    protected $baseRoutePattern = 'students/student';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'surname';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'students/student';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

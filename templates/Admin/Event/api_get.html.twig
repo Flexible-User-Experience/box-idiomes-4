@@ -1,7 +1,5 @@
-{% apply spaceless %}
-    {% for item in items %}
-        <label class="checkbox-inline">
-            <input type="checkbox" id="inlineCheckboxEvent{{ item.event.id }}Student{{ item.student.id }}" name="eid{{ item.event.id }}" value="{{ item.student.id }}"{% if item.hasAttendedTheClass %} checked{% endif %} data-action="click->events-student-assistance#update"> {{ item.student.fullCanonicalName }}
-        </label>
-    {% endfor %}
-{% endapply %}
+{% for item in items %}
+    <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckboxEvent{{ item.event.id }}Student{{ item.student.id }}" name="eid{{ item.event.id }}" value="{{ item.student.id }}"{% if item.hasAttendedTheClass %} checked{% endif %} data-action="click->events-student-assistance#update"> {{ item.student.fullCanonicalName }}
+    </label>
+{% endfor %}

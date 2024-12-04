@@ -3,71 +3,51 @@
 namespace App\Entity;
 
 use App\Enum\EventClassroomTypeEnum;
+use App\Repository\EventRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
- * @ORM\Table(name="event")
- */
+#[ORM\Entity(repositoryClass: EventRepository::class)]
+#[ORM\Table(name: 'event')]
 class Event extends AbstractBase
 {
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private DateTimeInterface $begin;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private DateTimeInterface $end;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
-     */
+    #[ORM\ManyToOne(targetEntity: Teacher::class)]
     private Teacher $teacher;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $classroom = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClassGroup")
-     */
+    #[ORM\ManyToOne(targetEntity: ClassGroup::class)]
     private ClassGroup $group;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Student", inversedBy="events")
-     * @ORM\OrderBy({"surname"="ASC", "name"="ASC"})
-     */
+    #[ORM\ManyToMany(targetEntity: Student::class, inversedBy: 'events')]
+    #[ORM\OrderBy(['surname' => 'ASC', 'name' => 'ASC'])]
     private Collection $students;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event")
-     * @ORM\JoinColumn(name="previous_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: Event::class)]
+    #[ORM\JoinColumn(name: 'previous_id', referencedColumnName: 'id', nullable: true)]
     private ?Event $previous = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event")
-     * @ORM\JoinColumn(name="next_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: Event::class)]
+    #[ORM\JoinColumn(name: 'next_id', referencedColumnName: 'id', nullable: true)]
     private ?Event $next = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(1)
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    #[Assert\GreaterThanOrEqual(1)]
     private ?int $dayFrequencyRepeat = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $until = null;
 
     public function __construct()
@@ -254,9 +234,7 @@ class Event extends AbstractBase
         return $this;
     }
 
-    /**
-     * @Assert\Callback
-     */
+    #[Assert\Callback]
     public function validateEnd(ExecutionContextInterface $context): void
     {
         if ($this->getEnd() < $this->getBegin()) {
@@ -267,9 +245,7 @@ class Event extends AbstractBase
         }
     }
 
-    /**
-     * @Assert\Callback
-     */
+    #[Assert\Callback]
     public function validateUntil(ExecutionContextInterface $context): void
     {
         if (!is_null($this->getUntil()) && $this->getUntil() < $this->getEnd()) {

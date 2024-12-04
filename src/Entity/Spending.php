@@ -5,68 +5,47 @@ namespace App\Entity;
 use App\Entity\Traits\BaseAmountTrait;
 use App\Entity\Traits\DocumentFileTrait;
 use App\Enum\StudentPaymentEnum;
+use App\Repository\SpendingRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SpendingRepository")
- *
- * @Vich\Uploadable
- */
+#[ORM\Entity(repositoryClass: SpendingRepository::class)]
+#[Vich\Uploadable]
 class Spending extends AbstractBase
 {
     use BaseAmountTrait;
     use DocumentFileTrait;
 
-    /**
-     * @ORM\Column(type="date", nullable=false)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
     private \DateTimeInterface $date;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\SpendingCategory")
-     *
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     */
+    
+    #[ORM\ManyToOne(targetEntity: SpendingCategory::class)]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private ?SpendingCategory $category = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Provider")
-     *
-     * @ORM\JoinColumn(name="provider_id", referencedColumnName="id")
-     */
+    
+    #[ORM\ManyToOne(targetEntity: Provider::class)]
+    #[ORM\JoinColumn(name: 'provider_id', referencedColumnName: 'id')]
     private ?Provider $provider = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private ?bool $isPayed = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $paymentDate = null;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $paymentMethod = StudentPaymentEnum::BANK_ACCOUNT_NUMBER;
 
-    /**
-     * @Vich\UploadableField(mapping="spending", fileNameProperty="document")
-     *
-     * @Assert\File(
-     *     maxSize="10M",
-     *     mimeTypes={"application/pdf", "application/x-pdf"}
-     * )
-     */
+    #[Assert\File(maxSize: '10M', mimeTypes: ['application/pdf', 'application/x-pdf'])]
+    #[Vich\UploadableField(mapping: 'spending', fileNameProperty: 'document')]
     private ?File $documentFile = null;
 
     public function getDate(): \DateTimeInterface

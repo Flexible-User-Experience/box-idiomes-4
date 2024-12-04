@@ -7,7 +7,7 @@ use App\Repository\ContactMessageRepository;
 use App\Service\SmartAssetsHelperService;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class BackendTopNavMenuBuilder
 {

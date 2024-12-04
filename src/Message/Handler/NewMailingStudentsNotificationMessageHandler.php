@@ -8,9 +8,10 @@ use App\Repository\StudentRepository;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class NewMailingStudentsNotificationMessageHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class NewMailingStudentsNotificationMessageHandler
 {
     private LoggerInterface $logger;
     private EntityManagerInterface $em;

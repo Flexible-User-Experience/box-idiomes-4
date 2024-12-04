@@ -2,45 +2,33 @@
 
 namespace App\Entity;
 
+use App\Repository\StudentAbsenceRepository;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\StudentAbsenceRepository")
- * @ORM\Table(name="student_absence")
- * @UniqueEntity({"student", "day"})
- */
+#[ORM\Entity(repositoryClass: StudentAbsenceRepository::class)]
+#[UniqueEntity(['student', 'day'])]
+#[ORM\Table(name: 'student_absence')]
 class StudentAbsence extends AbstractBase
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student")
-     */
+    #[ORM\ManyToOne(targetEntity: Student::class)]
     private Student $student;
 
-    /**
-     * @ORM\Column(type="date", nullable=false)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
     private DateTimeInterface $day;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $hasBeenNotified = false;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $notificationDate = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $hasBeenAccepted = false;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $acceptedDate;
 
     public function getStudent(): Student

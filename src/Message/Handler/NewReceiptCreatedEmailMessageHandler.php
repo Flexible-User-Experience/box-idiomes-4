@@ -9,9 +9,10 @@ use App\Pdf\ReceiptReminderBuilderPdf;
 use App\Repository\ReceiptRepository;
 use App\Service\NotificationService;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class NewReceiptCreatedEmailMessageHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class NewReceiptCreatedEmailMessageHandler
 {
     private LoggerInterface $logger;
     private ReceiptRepository $rr;

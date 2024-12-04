@@ -3,33 +3,26 @@
 namespace App\Entity;
 
 use App\Entity\Traits\NameTrait;
+use App\Repository\ProvinceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ProvinceRepository")
- *
- * @ORM\Table(name="province")
- *
- * @UniqueEntity({"code", "country"})
- */
+
+#[ORM\Entity(repositoryClass: ProvinceRepository::class)]
+#[UniqueEntity(['code', 'country'])]
+#[ORM\Table(name: 'province')]
 class Province extends AbstractBase
 {
     use NameTrait;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $code;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $country;
 
     public function getCode(): string

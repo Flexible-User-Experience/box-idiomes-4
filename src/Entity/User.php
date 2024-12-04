@@ -3,112 +3,77 @@
 namespace App\Entity;
 
 use App\Enum\UserRolesEnum;
+use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- *
- * @ORM\Table(name="admin_user")
- *
- * @UniqueEntity("username")
- */
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity('username')]
+#[ORM\Table(name: 'admin_user')]
 class User extends AbstractBase implements PasswordAuthenticatedUserInterface, UserInterface
 {
-    public const DEFAULT_ROLE_USER = UserRolesEnum::ROLE_USER;
+    public const string DEFAULT_ROLE_USER = UserRolesEnum::ROLE_USER;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
-     *
-     * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", nullable=true)
-     */
+    
+    #[ORM\ManyToOne(targetEntity: Teacher::class)]
+    #[ORM\JoinColumn(name: 'teacher_id', referencedColumnName: 'id', nullable: true)]
     private ?Teacher $teacher = null;
 
-    /**
-     * @ORM\Column(name="username", type="string", length=180, nullable=false, unique=true)
-     */
+    #[ORM\Column(name: 'username', type: Types::STRING, length: 180, unique: true, nullable: false)]
     private string $username;
 
-    /**
-     * @ORM\Column(name="username_canonical", type="string", length=180, nullable=false, unique=true)
-     */
+    #[ORM\Column(name: 'username_canonical', type: Types::STRING, length: 180, unique: true, nullable: false)]
     private string $usernameCanonical;
 
-    /**
-     * @ORM\Column(name="email", type="string", length=180, nullable=false)
-     *
-     * @Assert\Email()
-     */
+    
+    #[ORM\Column(name: 'email', type: Types::STRING, length: 180, nullable: false)]
+    #[Assert\Email]
     private string $email;
 
-    /**
-     * @ORM\Column(name="email_canonical", type="string", length=180, unique=true)
-     */
+    #[ORM\Column(name: 'email_canonical', type: Types::STRING, length: 180, unique: true)]
     private string $emailCanonical;
 
-    /**
-     * @ORM\Column(name="firstname", type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(name: 'firstname', type: Types::STRING, length: 64, nullable: true)]
     private ?string $firstname = null;
 
-    /**
-     * @ORM\Column(name="lastname", type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(name: 'lastname', type: Types::STRING, length: 64, nullable: true)]
     private ?string $lastname = null;
 
-    /**
-     * @ORM\Column(name="phone", type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(name: 'phone', type: Types::STRING, length: 64, nullable: true)]
     private ?string $phone = null;
 
-    /**
-     * @ORM\Column(name="gender", type="string", length=1, nullable=true)
-     */
+    #[ORM\Column(name: 'gender', type: Types::STRING, length: 1, nullable: true)]
     private ?string $gender = null;
 
-    /**
-     * @ORM\Column(name="locale", type="string", length=8, nullable=true)
-     */
+    #[ORM\Column(name: 'locale', type: Types::STRING, length: 8, nullable: true)]
     private ?string $locale = null;
 
-    /**
-     * @ORM\Column(name="token", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'token', type: Types::STRING, length: 255, nullable: true)]
     private ?string $token = null;
 
-    /**
-     * @ORM\Column(name="two_step_code", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'two_step_code', type: Types::STRING, length: 255, nullable: true)]
     private ?string $twoStepVerificationCode = null;
 
-    /**
-     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'salt', type: Types::STRING, length: 255, nullable: true)]
     private ?string $salt = null;
 
-    /**
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     */
+    #[ORM\Column(name: 'password', type: Types::STRING, length: 255, nullable: false)]
     private string $password;
 
     private ?string $plainPassword = null;
 
-    /**
-     * @ORM\Column(name="confirmation_token", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'confirmation_token', type: Types::STRING, length: 255, nullable: true)]
     private ?string $confirmationToken = null;
 
-    /**
-     * @ORM\Column(name="last_login", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'last_login', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $lastLogin = null;
 
-    /**
-     * @ORM\Column(name="roles", type="json")
-     */
+    #[ORM\Column(name: 'roles', type: Types::JSON)]
     private ?array $roles = [];
 
     public function getTeacher(): ?Teacher

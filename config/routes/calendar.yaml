@@ -1,5 +1,5 @@
 calendar:
     resource: '@CalendarBundle/Resources/config/routing.yaml'
-    prefix:   '/admin'
+    prefix: '/admin'
     options:
         expose: true

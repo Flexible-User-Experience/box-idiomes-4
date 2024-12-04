@@ -6,6 +6,7 @@ use App\Entity\Traits\MonthTrait;
 use App\Entity\Traits\TrainingCenterTrait;
 use App\Entity\Traits\YearTrait;
 use App\Enum\StudentPaymentEnum;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractReceiptInvoice extends AbstractBase
@@ -14,68 +15,44 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     use TrainingCenterTrait;
     use YearTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student")
-     *
-     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
-     */
+    
+    #[ORM\ManyToOne(targetEntity: Student::class)]
+    #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id')]
     protected ?Student $student = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
-     *
-     * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
-     */
+    
+    #[ORM\ManyToOne(targetEntity: Person::class)]
+    #[ORM\JoinColumn(name: 'person_id', referencedColumnName: 'id')]
     protected ?Person $person = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $date = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     protected ?bool $isPayed = false;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $paymentDate = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     protected ?bool $isSended = false;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $sendDate = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     protected ?bool $isSepaXmlGenerated = false;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $sepaXmlGeneratedDate = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
     protected ?float $baseAmount = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     protected ?bool $discountApplied = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     protected ?bool $isForPrivateLessons = false;
 
     public function getStudent(): ?Student

@@ -12,13 +12,17 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 final class ReceiptLineAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ReceiptLine';
-    protected $baseRoutePattern = 'billings/receipt-line';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'description';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'billings/receipt-line';
     }
 
     protected function configureFormFields(FormMapper $form): void
