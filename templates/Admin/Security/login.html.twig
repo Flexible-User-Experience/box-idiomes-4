@@ -2,16 +2,6 @@
 
 {% block sonata_head_title %}{{ 'backend.admin.login.title' | trans }} · {{ main_brand_title }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('backend') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('backend') }}
-{% endblock %}
-
 {% block sonata_nav %}{% endblock sonata_nav %}
 
 {% block logo %}{% endblock logo %}

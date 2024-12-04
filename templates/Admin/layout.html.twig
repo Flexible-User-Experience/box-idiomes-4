@@ -26,14 +26,14 @@
 {# override css includes #}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('backend') }}
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}"/>
 {% endblock %}
 
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('backend') }}
+    {{ importmap('app') }}
+{#    {{ encore_entry_script_tags('backend') }}#}
 {% endblock %}
 
 {# custom main content #}
