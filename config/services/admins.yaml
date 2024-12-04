@@ -13,7 +13,7 @@ services:
     admin.student_absence:
         class: 'App\Admin\StudentAbsenceAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Absència alumne', group: 'Alumnes' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\StudentAbsence', controller: 'App\Controller\Admin\StudentAbsenceAdminController', label: 'Absència alumne', group: 'Alumnes' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -22,7 +22,7 @@ services:
     admin.parent:
         class: 'App\Admin\PersonAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Pare, mare o tutor', group: 'Alumnes' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Person', label: 'Pare, mare o tutor', group: 'Alumnes' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -32,7 +32,7 @@ services:
     admin.pre_register:
         class: 'App\Admin\PreRegisterAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Preinscipcions', group: 'Alumnes' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\PreRegister', controller: 'App\Controller\Admin\PreRegisterAdminController', label: 'Preinscipcions', group: 'Alumnes' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -42,7 +42,7 @@ services:
     admin.teacher:
         class: 'App\Admin\TeacherAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Professor', group: 'Professors' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Teacher', controller: 'App\Controller\Admin\TeacherAdminController', label: 'Professor', group: 'Professors' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -51,7 +51,7 @@ services:
     admin.teacher_absence:
         class: 'App\Admin\TeacherAbsenceAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Absència professor', group: 'Professors' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\TeacherAbsence', label: 'Absència professor', group: 'Professors' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -61,7 +61,7 @@ services:
     admin.class_group:
         class: 'App\Admin\ClassGroupAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Grup', group: 'Aules' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\ClassGroup', controller: 'App\Controller\Admin\ClassGroupAdminController', label: 'Grup', group: 'Aules' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -71,7 +71,7 @@ services:
     admin.event:
         class: 'App\Admin\EventAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Horari', group: 'Aules' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Event', controller: 'App\Controller\Admin\EventAdminController', label: 'Horari', group: 'Aules' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -81,7 +81,7 @@ services:
     admin.training_center:
         class: 'App\Admin\TrainingCenterAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Centre Formació', group: 'Aules' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\TrainingCenter', label: 'Centre Formació', group: 'Aules' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -91,7 +91,7 @@ services:
     admin.tariff:
         class: 'App\Admin\TariffAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Tarifa', group: 'Facturació' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Tariff', label: 'Tarifa', group: 'Facturació' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -100,7 +100,7 @@ services:
     admin.receipt:
         class: 'App\Admin\ReceiptAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Rebut', group: 'Facturació' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Receipt', controller: 'App\Controller\Admin\ReceiptAdminController', label: 'Rebut', group: 'Facturació' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -111,7 +111,7 @@ services:
     admin.receipt_line:
         class: 'App\Admin\ReceiptLineAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Línies rebut', group: 'Facturació', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\ReceiptLine', label: 'Línies rebut', group: 'Facturació', show_in_dashboard: false }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -120,7 +120,7 @@ services:
     admin.receipt_group:
         class: 'App\Admin\ReceiptGroupAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Remeses', group: 'Facturació' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\ReceiptGroup', label: 'Remeses', group: 'Facturació' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -129,7 +129,7 @@ services:
     admin.invoice:
         class: 'App\Admin\InvoiceAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Factura', group: 'Facturació' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Invoice', controller: 'App\Controller\Admin\InvoiceAdminController', label: 'Factura', group: 'Facturació' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -139,7 +139,7 @@ services:
     admin.invoice_line:
         class: 'App\Admin\InvoiceLineAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Línies factura', group: 'Facturació', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\InvoiceLine', label: 'Línies factura', group: 'Facturació', show_in_dashboard: false }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -149,7 +149,7 @@ services:
     admin.purchases.provider:
         class: 'App\Admin\ProviderAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Proveïdor', group: 'Despeses' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Provider', label: 'Proveïdor', group: 'Despeses' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -158,7 +158,7 @@ services:
     admin.purchases.spending_category:
         class: 'App\Admin\SpendingCategoryAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Tipus Despesa', group: 'Despeses' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\SpendingCategory', label: 'Tipus Despesa', group: 'Despeses' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -167,7 +167,7 @@ services:
     admin.purchases.spending:
         class: 'App\Admin\SpendingAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Despesa', group: 'Despeses' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Spending', controller: 'App\Controller\Admin\SpendingAdminController', label: 'Despesa', group: 'Despeses' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -177,7 +177,7 @@ services:
     admin.contactmessage:
         class: 'App\Admin\ContactMessageAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Missatge de contacte', group: 'Contactes' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\ContactMessage', controller: 'App\Controller\Admin\ContactMessageAdminController', label: 'Missatge de contacte', group: 'Contactes' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -186,7 +186,7 @@ services:
     admin.newslettercontact:
         class: 'App\Admin\NewsletterContactAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Butlletí de contacte', group: 'Contactes' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\NewsletterContact', label: 'Butlletí de contacte', group: 'Contactes' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -196,7 +196,7 @@ services:
     admin.bank_creditor_sepa:
         class: 'App\Admin\BankCreditorSepaAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Banc', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\BankCreditorSepa', label: 'Banc', group: 'Configuració' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -205,7 +205,7 @@ services:
     admin.province:
         class: 'App\Admin\ProvinceAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Província', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Province', label: 'Província', group: 'Configuració' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -214,7 +214,7 @@ services:
     admin.city:
         class: 'App\Admin\CityAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Ciutat', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\City', label: 'Ciutat', group: 'Configuració' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -223,7 +223,7 @@ services:
     admin.user:
         class: 'App\Admin\UserAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Usuari', group: 'Configuració' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\User', controller: 'App\Controller\Admin\UserAdminController', label: 'Usuari', group: 'Configuració' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -232,7 +232,7 @@ services:
     admin.bank:
         class: 'App\Admin\BankAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Bank', group: 'Configuració', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\Bank', label: 'Bank', group: 'Configuració', show_in_dashboard: false }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -242,7 +242,7 @@ services:
     admin.file_manager_dummy:
         class: 'App\Admin\FileDummyAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'File Manager', group: 'Dummy', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\FileDummy', controller: 'App\Controller\Admin\FileManagerAdminController', label: 'File Manager', group: 'Dummy', show_in_dashboard: false }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
@@ -251,7 +251,7 @@ services:
     admin.extra_helper_manager_dummy:
         class: 'App\Admin\ExtraHelperManagerAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', label: 'Extra Manager', group: 'Dummy', show_in_dashboard: false }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\ExtraHelperManager', controller: 'App\Controller\Admin\ExtraHelperManagerAdminController', label: 'Extra Manager', group: 'Dummy', show_in_dashboard: false }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
