@@ -13,6 +13,7 @@
 .php_cs.cache
 .php-cs-fixer.cache
 .env
+.env.dev
 .env.test
 ###< app/bundle ###
 
