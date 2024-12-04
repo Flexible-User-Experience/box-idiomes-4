@@ -68,7 +68,6 @@
         "symfony/ux-dropzone": "^2.22",
         "symfony/validator": "6.4.*",
         "symfony/web-link": "6.4.*",
-        "symfony/webpack-encore-bundle": "^1.12",
         "symfony/yaml": "6.4.*",
         "symfonycasts/reset-password-bundle": "^1.11",
         "tattali/calendar-bundle": "^1.3",
