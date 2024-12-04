@@ -197,9 +197,8 @@ footer {
 
 textarea { resize: vertical; }
 
-@import '~bootstrap/scss/bootstrap';
-@import '~icheck-bootstrap/icheck-bootstrap.css';
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '~@fortawesome/fontawesome-free/scss/regular';
-@import '~@fortawesome/fontawesome-free/scss/solid';
-@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '@bootstrap/bootstrap';
+@import '@fortawesome/fontawesome';
+@import '@fortawesome/regular';
+@import '@fortawesome/solid';
+@import '@fortawesome/brands';
