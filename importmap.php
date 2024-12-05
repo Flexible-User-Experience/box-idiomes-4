@@ -50,4 +50,7 @@ return [
         'version' => '5.3.3',
         'type' => 'css',
     ],
+    'axios' => [
+        'version' => '1.7.9',
+    ],
 ];

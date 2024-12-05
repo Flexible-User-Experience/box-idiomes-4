@@ -1,18 +1,26 @@
 import { Controller } from '@hotwired/stimulus';
-import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/lib/pdf';
-GlobalWorkerOptions.workerSrc = require('../../node_modules/pdfjs-dist/build/pdf.worker.entry.js');
+import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf.min.mjs';
+GlobalWorkerOptions.workerSrc = '/pdfjs-dist/pdf.worker.min.mjs'; // IMPORTANT -> copy from importmaps `vendor` directory to public/pdfjs-dist
 
-export default class extends Controller {
-    static classes = [ 'hidden' ];
+export default class extends Controller
+{
     static targets = [
+        'loader',
+        'warning',
+        'canvas',
+        'downloader',
         'current',
         'total',
-        'downloader',
-        'canvas',
-        'loader'
+        'pager',
     ];
 
-    initialize() {
+    static values = {
+        path: String,
+        mime: String,
+    }
+
+    initialize()
+    {
         this.pdfDoc = null;
         this.pdfPageNum = 1;
         this.pdfPageRendering = false;
@@ -21,12 +29,31 @@ export default class extends Controller {
         this.pdfCtx = this.canvasTarget.getContext('2d');
     }
 
-    connect() {
-        this.loaderTarget.classList.remove(this.hiddenClass);
-        this.canvasTarget.classList.add(this.hiddenClass);
+    connect()
+    {
+        if (this.mimeValue === 'application/pdf' && this.pathValue !== '') {
+            let loadingTask = getDocument(this.pathValue);
+            loadingTask.promise.then((pdf) => {
+                this.pdfDoc = pdf;
+                this.renderPage(1);
+            }, (errorGet) => {
+                console.error('Error during ' + this.pathValue + ' loading document:', errorGet);
+                this.canvasTarget.classList.add('hide');
+                this.loaderTarget.classList.add('hide');
+                this.downloaderTarget.classList.add('hide');
+                this.pagerTarget.classList.add('hide');
+                this.warningTarget.classList.remove('hide');
+            });
+        } else {
+            this.canvasTarget.classList.add('hide')
+            this.loaderTarget.classList.add('hide');
+            this.downloaderTarget.classList.add('hide');
+            this.pagerTarget.classList.add('hide');
+        }
     }
 
-    renderPage(num) {
+    renderPage(num)
+    {
         this.pdfPageRendering = true;
         let self = this;
         this.pdfDoc.getPage(num).then(function(page) {
@@ -45,12 +72,26 @@ export default class extends Controller {
                     self.pdfPageNumPending = null;
                 }
             });
+            self.canvasTarget.classList.remove('hide');
+            self.downloaderTarget.classList.remove('hide');
+            self.loaderTarget.classList.add('hide');
+        }, (errorGet) => {
+            console.error('Error during ' + this.pathValue + ' loading first page:', errorGet);
+            self.canvasTarget.classList.add('hide');
+            self.downloaderTarget.classList.add('hide');
+            self.loaderTarget.classList.add('hide');
+            self.pagerTarget.classList.add('hide');
+            self.warningTarget.classList.remove('hide');
         });
         this.currentTarget.textContent = num;
         this.totalTarget.textContent = this.pdfDoc.numPages;
+        if (this.pdfDoc.numPages > 1) {
+            self.pagerTarget.classList.remove('hide');
+        }
     }
 
-    queueRenderPage(num) {
+    queueRenderPage(num)
+    {
         if (this.pdfPageRendering) {
             this.pdfPageNumPending = num;
         } else {
@@ -58,7 +99,8 @@ export default class extends Controller {
         }
     }
 
-    onPrevPage() {
+    onPrevPage()
+    {
         if (this.pdfPageNum <= 1) {
             return;
         }
@@ -66,7 +108,8 @@ export default class extends Controller {
         this.queueRenderPage(this.pdfPageNum);
     }
 
-    onNextPage() {
+    onNextPage()
+    {
         if (this.pdfPageNum >= this.pdfDoc.numPages) {
             return;
         }
@@ -74,7 +117,8 @@ export default class extends Controller {
         this.queueRenderPage(this.pdfPageNum);
     }
 
-    update(event) {
+    update(event)
+    {
         this.downloaderTarget.href = event.detail.path;
         this.loaderTarget.classList.add(this.hiddenClass);
         this.canvasTarget.classList.remove(this.hiddenClass);
