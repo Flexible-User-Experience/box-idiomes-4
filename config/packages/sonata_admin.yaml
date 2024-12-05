@@ -5,7 +5,10 @@ sonata_admin:
     show_mosaic_button: false
     search:             false
     options:
-        logo_content:  'icon'
+        form_type: 'standard'
+        default_icon: 'fas fa-folder'
+        logo_content: 'icon'
+        list_action_button_content: 'icon'
         html5_validate: true
         confirm_exit:   true
         use_select2:    true
@@ -66,3 +69,24 @@ sonata_admin:
                 type:     'App\Block\ChartsBlock'
                 class:    'col-xs-12'
                 roles:    [ 'ROLE_ADMIN' ]
+
+when@dev:
+    sonata_admin:
+        dashboard:
+            groups:
+                Alumnes:
+                    keep_open: true
+                Professors:
+                    keep_open: true
+                Aules:
+                    keep_open: true
+                Facturació:
+                    keep_open: true
+                Despeses:
+                    keep_open: true
+                Fitxers:
+                    keep_open: true
+                Contactes:
+                    keep_open: true
+                Configuració:
+                    keep_open: true

@@ -10,7 +10,7 @@
                     {% if service.imageName is not null %}
                         <img src="{{ vich_uploader_asset(service, 'imageFile') | imagine_filter('585xY') }}"  class="img-fluid img-rounded mb-3" alt="{{ service.imageName }}">
                     {% else %}
-                        <img src="{{ asset('build/img/serveis.jpeg') | imagine_filter('585xY') }}" class="img-fluid img-rounded mb-3" alt="serveis">
+                        <img src="{{ asset('img/serveis.jpeg') | imagine_filter('585xY') }}" class="img-fluid img-rounded mb-3" alt="serveis">
                     {% endif %}
                     <h4 class="c-blue">{{ service.title }}</h4>
                     <p>{{ service.description | raw }}</p>
