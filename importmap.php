@@ -26,16 +26,16 @@ return [
         'version' => '4.4.7',
     ],
     'pdfjs-dist/build/pdf.min.mjs' => [
-        'version' => '4.9.124',
+        'version' => '4.9.155',
     ],
     'pdfjs-dist/build/pdf.worker.min.mjs' => [
-        'version' => '4.9.124',
+        'version' => '4.9.155',
     ],
     '@hotwired/turbo' => [
         'version' => '8.0.12',
     ],
     'stimulus-use' => [
-        'version' => '0.52.2',
+        'version' => '0.52.3',
     ],
     '@kurkle/color' => [
         'version' => '0.3.4',
