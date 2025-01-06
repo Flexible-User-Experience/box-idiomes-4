@@ -12,7 +12,7 @@
 {# custom sidebar before meunu #}
 {% block side_bar_before_nav %}
     {% if admin_is_stage %}
-        <div class="alert alert-warning no-margin" style="border-radius: 0">
+        <div class="alert alert-warning no-margin" style="border-radius:0">
             <i class="fas fa-exclamation-triangle fa-fw"></i> {{ 'Stagging' | trans }}
         </div>
     {% endif %}
@@ -66,19 +66,19 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'Close' | trans }}"><span aria-hidden="true">&times;</span></button>
                     <div class="btn-group mr-3" role="group" aria-label="Modal">
                         <a
-                                {{ stimulus_target('pdf-viewer', 'downloader') }}
-                                style="margin-right:3px;"
-                                class="btn btn-primary"
-                                download
+                            {{ stimulus_target('pdf-viewer', 'downloader') }}
+                            style="margin-right:3px;"
+                            class="btn btn-primary"
+                            download
                         >
                             <i class="fas fa-cloud-download-alt margin-r-5"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
                         </a>
                     </div>
                     <div
-                            {{ stimulus_target('pdf-viewer', 'pager') }}
-                            class="btn-group"
-                            role="group"
-                            aria-label="Modal"
+                        {{ stimulus_target('pdf-viewer', 'pager') }}
+                        class="btn-group"
+                        role="group"
+                        aria-label="Modal"
                     >
                         <button {{ stimulus_action('pdf-viewer', 'onPrevPage') }} type="button" class="btn btn-primary"><i class="fas fa-chevron-left"></i></button>
                         <button type="button" class="btn btn-default">{{ 'Page' | trans }}&nbsp;<span {{ stimulus_target('pdf-viewer', 'current') }}></span>&nbsp;{{ 'Of' | trans }}&nbsp;<span {{ stimulus_target('pdf-viewer', 'total') }}></span></button>
@@ -105,4 +105,3 @@
     </div>
     {{ parent() }}
 {% endblock %}
-
