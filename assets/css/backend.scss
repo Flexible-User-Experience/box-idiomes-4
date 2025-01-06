@@ -16,6 +16,15 @@
   margin-bottom: 15px !important;
 }
 
+// customs
+canvas.viewer {
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
 @import '@fortawesome/fontawesome';
 @import '@fortawesome/regular';
 @import '@fortawesome/solid';
