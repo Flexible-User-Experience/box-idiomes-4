@@ -26,10 +26,10 @@ return [
         'version' => '4.4.7',
     ],
     'pdfjs-dist/build/pdf.min.mjs' => [
-        'version' => '4.9.155',
+        'version' => '4.10.38',
     ],
     'pdfjs-dist/build/pdf.worker.min.mjs' => [
-        'version' => '4.9.155',
+        'version' => '4.10.38',
     ],
     '@hotwired/turbo' => [
         'version' => '8.0.12',
