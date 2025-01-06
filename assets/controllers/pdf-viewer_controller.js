@@ -32,7 +32,6 @@ export default class extends Controller
 
     connect()
     {
-        console.log('connected');
         if (this.mimeValue === 'application/pdf' && this.pathValue !== '') {
             let loadingTask = getDocument(this.pathValue);
             loadingTask.promise.then((pdf) => {

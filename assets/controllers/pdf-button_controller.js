@@ -10,7 +10,6 @@ export default class extends Controller
 
     clicked()
     {
-        console.log('cicled');
         const event = new CustomEvent('app-pdf-viewer-button-clicked', {detail: {attachment: this.attachmentValue, path: this.pathValue}});
         window.dispatchEvent(event);
     }

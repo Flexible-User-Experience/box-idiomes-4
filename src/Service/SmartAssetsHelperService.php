@@ -9,30 +9,37 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 final class SmartAssetsHelperService
 {
-    public const HTTP_PROTOCOL = 'https://';
+    public const string HTTP_PROTOCOL = 'https://';
 
     private UploaderHelper $uh;
     private CacheManager $icm;
     private KernelInterface $kernel;
+    private Filesystem $filesystem;
     private string $pub;
     private string $amd;
     private string $bba;
     private string $bpn;
+    private string $assetsPathDir;
 
     public function __construct(UploaderHelper $uh, CacheManager $icm, KernelInterface $kernel, ParameterBagInterface $pb)
     {
         $this->uh = $uh;
         $this->icm = $icm;
         $this->kernel = $kernel;
+        $this->filesystem = new Filesystem();
         $this->pub = $pb->get('project_url_base');
         $this->amd = $pb->get('mailer_destination');
         $this->bba = $pb->get('boss_address');
         $this->bpn = $pb->get('boss_phone_number_1');
+        $this->assetsPathDir = $pb->get('kernel.project_dir').DIRECTORY_SEPARATOR.'assets';
     }
 
     public function getAmd(): string
@@ -118,5 +125,20 @@ final class SmartAssetsHelperService
     public function getAbsoluteAssetFilePath($assetPath): string
     {
         return $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
+    }
+
+    public function getLocalAssetsPath(string $path): string
+    {
+        $publicPath = sprintf('%s%s', $this->assetsPathDir, $path);
+        if (!$this->fileExists($publicPath)) {
+            throw new FileNotFoundException();
+        }
+
+        return $publicPath;
+    }
+
+    public function fileExists(string $filepath): bool
+    {
+        return $this->filesystem->exists($filepath);
     }
 }
