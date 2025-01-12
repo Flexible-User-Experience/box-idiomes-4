@@ -11,8 +11,6 @@ use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Path;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 final class SmartAssetsHelperService
@@ -21,25 +19,25 @@ final class SmartAssetsHelperService
 
     private UploaderHelper $uh;
     private CacheManager $icm;
-    private KernelInterface $kernel;
     private Filesystem $filesystem;
     private string $pub;
     private string $amd;
     private string $bba;
     private string $bpn;
     private string $assetsPathDir;
+    private string $publicAssetsPathDir;
 
-    public function __construct(UploaderHelper $uh, CacheManager $icm, KernelInterface $kernel, ParameterBagInterface $pb)
+    public function __construct(UploaderHelper $uh, CacheManager $icm, ParameterBagInterface $pb)
     {
         $this->uh = $uh;
         $this->icm = $icm;
-        $this->kernel = $kernel;
         $this->filesystem = new Filesystem();
         $this->pub = $pb->get('project_url_base');
         $this->amd = $pb->get('mailer_destination');
         $this->bba = $pb->get('boss_address');
         $this->bpn = $pb->get('boss_phone_number_1');
         $this->assetsPathDir = $pb->get('kernel.project_dir').DIRECTORY_SEPARATOR.'assets';
+        $this->publicAssetsPathDir = $pb->get('kernel.project_dir').DIRECTORY_SEPARATOR.'public';
     }
 
     public function getAmd(): string
@@ -86,19 +84,6 @@ final class SmartAssetsHelperService
     }
 
     /**
-     * If is CLI context returns absolute file path, otherwise returns absolute URL path.
-     */
-    public function getAbsoluteAssetPathByContext($assetPath): string
-    {
-        $result = $this->getAbsoluteAssetPathContextIndependent($assetPath);
-        if ($this->isCliContext()) {
-            $result = $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
-        }
-
-        return $result;
-    }
-
-    /**
      * Always return relative URL path, even in CLI contexts.
      */
     public function getRelativeAssetPathContextIndependent($assetPath): string
@@ -107,24 +92,11 @@ final class SmartAssetsHelperService
     }
 
     /**
-     * If is CLI context returns absolute file path, otherwise returns relative URL path.
-     */
-    public function getRelativeAssetPathByContext($assetPath): string
-    {
-        $result = $this->getRelativeAssetPathContextIndependent($assetPath);
-        if ($this->isCliContext()) {
-            $result = $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
-        }
-
-        return $result;
-    }
-
-    /**
      * Returns absolute file path.
      */
     public function getAbsoluteAssetFilePath($assetPath): string
     {
-        return $this->kernel->getProjectDir().DIRECTORY_SEPARATOR.'public'.$assetPath;
+        return $this->publicAssetsPathDir.$assetPath;
     }
 
     public function getLocalAssetsPath(string $path): string
