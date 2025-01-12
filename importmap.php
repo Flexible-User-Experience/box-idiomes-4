@@ -53,4 +53,43 @@ return [
     'axios' => [
         'version' => '1.7.9',
     ],
+    'fullcalendar' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/core/index.js' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/interaction/index.js' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/daygrid/index.js' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/timegrid/index.js' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/list/index.js' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/multimonth/index.js' => [
+        'version' => '6.1.15',
+    ],
+    'preact' => [
+        'version' => '10.12.1',
+    ],
+    'preact/compat' => [
+        'version' => '10.12.1',
+    ],
+    '@fullcalendar/core/internal.js' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/core/preact.js' => [
+        'version' => '6.1.15',
+    ],
+    '@fullcalendar/daygrid/internal.js' => [
+        'version' => '6.1.15',
+    ],
+    'preact/hooks' => [
+        'version' => '10.12.1',
+    ],
 ];

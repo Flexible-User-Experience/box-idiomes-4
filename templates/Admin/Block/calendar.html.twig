@@ -1,7 +1,12 @@
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
-    <div class="box box-primary">
+    <div
+        class="box box-primary"
+        {{ stimulus_controller('fullcalendar-default') }}
+        data-fullcalendar-default-events-value="{{ path('fc_load_events') }}"
+        data-fullcalendar-default-gcal-value="{{ google_calendar_api_key }}"
+    >
         <div class="box-body">
             <div class="row">
                 <div class="col-xs-12 margin-bottom">
@@ -13,7 +18,7 @@
             <div class="row">
                 <div class="col-md-6 col-lg-4">
                     <div class="form-inline">
-                        <div class="form-group" style="margin-bottom: 5px">
+                        <div class="form-group" style="margin-bottom:5px">
                             <a href="{{ path('admin_app_event_create') }}" class="btn btn-primary margin-r-5"><i class="fa fa-plus-circle fa-fw"></i> {{ 'backend.admin.event.button.add' | trans }}</a>
                             <a id="export_calendar_pdf_list_anchor" href="{{ path('admin_app_extrahelpermanager_exportCalendarPdfList', {start: 'start', end: 'end'}) }}" class="btn btn-info"><i class="fa fa-file-pdf-o fa-fw"></i> {{ 'backend.admin.event.button.export_pdf_list' | trans }}</a>
                         </div>
