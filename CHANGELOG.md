@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 5.7.01 (WIP)
+##### Version 5.7.02 (WIP)
  * fix bugs
+
+##### Version 5.7.01 (WIP)
+ * replace symfony/webpack-encore-bundle dependency by symfony/asset-mapper
+ * reduce injected dependencies in SmartAssetsHelperService
 
 ##### Version 5.7.00 (2024-10-31)
  * bump to PHP 8.3 minimum version
