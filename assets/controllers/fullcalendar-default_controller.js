@@ -1,7 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
@@ -22,13 +21,13 @@ export default class extends Controller
     {
         console.log('fullcalendar connection!', this.eventsValue, this.gcalValue);
         const calendar = new Calendar(this.holderTarget, {
-            plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
-            initialView: 'dayGridMonth',
+            plugins: [interactionPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
+            initialView: 'timeGridWeek',
             timeZone: 'Europe/Madrid',
             headerToolbar: {
                 start: 'prev,today,next',
                 center: 'title',
-                end: 'timeGridDay,timeGridWeek,dayGridMonth listWeek'
+                end: 'timeGridDay,timeGridWeek, listWeek'
             },
             views: {
                 timeGrid: {
