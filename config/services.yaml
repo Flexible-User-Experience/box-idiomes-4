@@ -95,10 +95,3 @@ services:
             - '@request_stack'
         tags:
             - { name: 'knp_menu.menu', alias: 'top' }
-    # Listeners
-    App\Doctrine\Listener\UserListener:
-        arguments:
-            - '@security.user_password_hasher'
-        tags:
-            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\User', priority: 2 }
-            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\User', priority: 2 }

@@ -3,16 +3,16 @@
 namespace App\Doctrine\Listener;
 
 use App\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserListener
+#[AsEntityListener(event: 'prePersist', entity: User::class, priority: 2)]
+#[AsEntityListener(event: 'preUpdate', entity: User::class, priority: 2)]
+final readonly class UserListener
 {
-    private UserPasswordHasherInterface $pe;
-
-    public function __construct(UserPasswordHasherInterface $pe)
+    public function __construct(private UserPasswordHasherInterface $pe)
     {
-        $this->pe = $pe;
     }
 
     public function prePersist(User $user): void
