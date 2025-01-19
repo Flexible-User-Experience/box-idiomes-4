@@ -16,20 +16,18 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use Twig\Environment;
 
-class NotificationService
+final readonly class NotificationService
 {
-    private SmartAssetsHelperService $sahs;
-    private CourierService $messenger;
-    private Environment $twig;
     private string $amd; // system's App Mail Destionation
     private string $pwt; // project web title
     private string $pub; // project URL base
 
-    public function __construct(SmartAssetsHelperService $sahs, CourierService $messenger, Environment $twig, ParameterBagInterface $pb)
-    {
-        $this->sahs = $sahs;
-        $this->messenger = $messenger;
-        $this->twig = $twig;
+    public function __construct(
+        private SmartAssetsHelperService $sahs,
+        private CourierService $messenger,
+        private Environment $twig,
+        private ParameterBagInterface $pb,
+    ) {
         $this->amd = $pb->get('mailer_destination');
         $this->pwt = $pb->get('project_web_title');
         $this->pub = $pb->get('project_url_base');

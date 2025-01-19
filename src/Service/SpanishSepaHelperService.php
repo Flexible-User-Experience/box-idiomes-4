@@ -9,16 +9,14 @@ namespace App\Service;
  */
 class SpanishSepaHelperService
 {
-    const COUNTRY_CODE = 'ES';
-    const SUFIX = '000';
-    const MINFIX = '00';
+    public const string COUNTRY_CODE = 'ES';
+    public const string SUFIX = '000';
+    public const string MINFIX = '00';
 
     /**
      * @param string $nif
-     *
-     * @return string
      */
-    public function getSpanishCreditorIdFromNif($nif)
+    public function getSpanishCreditorIdFromNif($nif): string
     {
         $composition = $nif.self::COUNTRY_CODE.self::MINFIX;
         $conversionWithoutLetters = $this->letterToNumberConversion($composition);
@@ -27,57 +25,24 @@ class SpanishSepaHelperService
         return self::COUNTRY_CODE.$controlDigits.self::SUFIX.$nif;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    private function letterToNumberConversion($value)
+    private function letterToNumberConversion(string $value): string
     {
-        $result = str_replace('A', '10', $value);
-        $result = str_replace('B', '11', $result);
-        $result = str_replace('C', '12', $result);
-        $result = str_replace('D', '13', $result);
-        $result = str_replace('E', '14', $result);
-        $result = str_replace('F', '15', $result);
-        $result = str_replace('G', '16', $result);
-        $result = str_replace('H', '17', $result);
-        $result = str_replace('I', '18', $result);
-        $result = str_replace('J', '19', $result);
-        $result = str_replace('K', '20', $result);
-        $result = str_replace('L', '21', $result);
-        $result = str_replace('M', '22', $result);
-        $result = str_replace('N', '23', $result);
-        $result = str_replace('O', '24', $result);
-        $result = str_replace('P', '25', $result);
-        $result = str_replace('Q', '26', $result);
-        $result = str_replace('R', '27', $result);
-        $result = str_replace('S', '28', $result);
-        $result = str_replace('T', '29', $result);
-        $result = str_replace('U', '30', $result);
-        $result = str_replace('V', '31', $result);
-        $result = str_replace('W', '32', $result);
-        $result = str_replace('X', '33', $result);
-        $result = str_replace('Y', '34', $result);
-        $result = str_replace('Z', '35', $result);
-
-        return $result;
+        return str_replace(
+            ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+            ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'],
+            $value
+        );
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    private function controlDigitsCalculation($value)
+    private function controlDigitsCalculation(string $value): string
     {
-        $result = intval($value);
+        $result = (int) $value;
         $result = 98 - ($result % 97);
 
         if ($result < 10) {
-            $result = '0'.strval($result);
+            $result = '0'.$result;
         } else {
-            $result = strval($result);
+            $result = (string) $result;
         }
 
         return $result;

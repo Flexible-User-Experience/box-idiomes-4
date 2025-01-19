@@ -7,13 +7,10 @@ use App\Entity\EventFullCalendar;
 use App\Entity\TeacherAbsence;
 use Symfony\Component\Routing\RouterInterface;
 
-class EventTransformerFactoryService
+final readonly class EventTransformerFactoryService
 {
-    private RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     /**

@@ -6,32 +6,24 @@ use App\Enum\ReceiptYearMonthEnum;
 use App\Repository\InvoiceRepository;
 use App\Repository\ReceiptRepository;
 use App\Repository\SpendingRepository;
-use DateInterval;
-use DateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
-class ChartsFactoryService
+final readonly class ChartsFactoryService
 {
-    private const RED = 'rgb(255, 99, 132)';
-    private const GREEN = 'rgb(75, 192, 192)';
-    private const BLUE = 'rgb(54, 162, 235)';
-    private const BLACK = 'rgb(35, 35, 35)';
+    private const string RED = 'rgb(255, 99, 132)';
+    private const string GREEN = 'rgb(75, 192, 192)';
+    private const string BLUE = 'rgb(54, 162, 235)';
+    private const string BLACK = 'rgb(35, 35, 35)';
 
-    private TranslatorInterface $ts;
-    private ReceiptRepository $rr;
-    private InvoiceRepository $ir;
-    private SpendingRepository $sr;
-    private ChartBuilderInterface $cb;
-
-    public function __construct(TranslatorInterface $ts, ReceiptRepository $rr, InvoiceRepository $ir, SpendingRepository $sr, ChartBuilderInterface $cb)
-    {
-        $this->ts = $ts;
-        $this->rr = $rr;
-        $this->ir = $ir;
-        $this->sr = $sr;
-        $this->cb = $cb;
+    public function __construct(
+        private TranslatorInterface $ts,
+        private ReceiptRepository $rr,
+        private InvoiceRepository $ir,
+        private SpendingRepository $sr,
+        private ChartBuilderInterface $cb,
+    ) {
     }
 
     public function buildLastYearResultsChart(): Chart
@@ -41,9 +33,9 @@ class ChartsFactoryService
         $expenses = [];
         $results = [];
         $zeros = [];
-        $date = new DateTime();
-        $date->sub(new DateInterval('P24M'));
-        $interval = new DateInterval('P1M');
+        $date = new \DateTime();
+        $date->sub(new \DateInterval('P24M'));
+        $interval = new \DateInterval('P1M');
         for ($i = 0; $i <= 24; ++$i) {
             $sale = $this->rr->getMonthlyIncomingsAmountForDate($date);
             $sale += $this->ir->getMonthlyIncomingsAmountForDate($date);

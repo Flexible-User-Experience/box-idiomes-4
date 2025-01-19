@@ -13,12 +13,10 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-final class SmartAssetsHelperService
+final readonly class SmartAssetsHelperService
 {
     public const string HTTP_PROTOCOL = 'https://';
 
-    private UploaderHelper $uh;
-    private CacheManager $icm;
     private Filesystem $filesystem;
     private string $pub;
     private string $amd;
@@ -27,10 +25,11 @@ final class SmartAssetsHelperService
     private string $assetsPathDir;
     private string $publicAssetsPathDir;
 
-    public function __construct(UploaderHelper $uh, CacheManager $icm, ParameterBagInterface $pb)
-    {
-        $this->uh = $uh;
-        $this->icm = $icm;
+    public function __construct(
+        private UploaderHelper $uh,
+        private CacheManager $icm,
+        private ParameterBagInterface $pb,
+    ) {
         $this->filesystem = new Filesystem();
         $this->pub = $pb->get('project_url_base');
         $this->amd = $pb->get('mailer_destination');
