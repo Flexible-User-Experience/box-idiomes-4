@@ -26,6 +26,9 @@ final readonly class ChartsFactoryService
     ) {
     }
 
+    /**
+     * @throws \DateInvalidOperationException
+     */
     public function buildLastYearResultsChart(): Chart
     {
         $labels = [];
@@ -102,10 +105,11 @@ final readonly class ChartsFactoryService
             ->setOptions([
                 'aspectRatio' => 4,
                 'scales' => [
-                    'yAxes' => [
-                        'ticks' => [
-                            'display' => true,
-                        ],
+                    'x' => [
+                        'display' => true,
+                    ],
+                    'y' => [
+                        'display' => true,
                     ],
                 ],
                 'legend' => [

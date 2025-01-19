@@ -5,8 +5,13 @@ Changelog
  * fix bugs
 
 ##### Version 5.7.01 (WIP)
+ * Symfony v6.4 LTS upgrade
+ * fix bad security config problem related with too many web server redirections (login)
  * replace symfony/webpack-encore-bundle dependency by symfony/asset-mapper
  * reduce injected dependencies in SmartAssetsHelperService
+ * fix ChartsUX axis visualization problem
+ * improve Canvas PDF viewer CSS
+ * remove deprecation log messages
 
 ##### Version 5.7.00 (2024-10-31)
  * bump to PHP 8.3 minimum version
