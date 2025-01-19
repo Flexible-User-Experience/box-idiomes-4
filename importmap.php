@@ -54,13 +54,13 @@ return [
         'version' => '1.7.9',
     ],
     'preact' => [
-        'version' => '10.12.1',
+        'version' => '10.25.4',
     ],
     'preact/compat' => [
-        'version' => '10.12.1',
+        'version' => '10.25.4',
     ],
     'preact/hooks' => [
-        'version' => '10.12.1',
+        'version' => '10.25.4',
     ],
     '@fullcalendar/core' => [
         'version' => '6.1.15',
