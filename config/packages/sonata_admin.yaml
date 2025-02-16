@@ -20,7 +20,6 @@ sonata_admin:
         role_super_admin: 'ROLE_ADMIN'
     templates:
         layout:        'Admin/layout.html.twig'
-        dashboard:     'Admin/dashboard.html.twig'
         list:          'Admin/list.html.twig'
         edit:          'Admin/edit.html.twig'
         show:          'Admin/show.html.twig'

@@ -1,9 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
+import 'fullcalendar';  // <--- this sucks !!! keep it here
 import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
+import '@fullcalendar/core/locales/ca';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller
@@ -21,13 +24,13 @@ export default class extends Controller
     {
         console.log('fullcalendar connection!', this.eventsValue, this.gcalValue);
         const calendar = new Calendar(this.holderTarget, {
-            plugins: [interactionPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
-            initialView: 'timeGridWeek',
+            plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin, googleCalendarPlugin],
+            initialView: 'timeGridDay',
             timeZone: 'Europe/Madrid',
             headerToolbar: {
                 start: 'prev,today,next',
                 center: 'title',
-                end: 'timeGridDay,timeGridWeek, listWeek'
+                end: 'timeGridDay,timeGridWeek,dayGridMonth listWeek'
             },
             views: {
                 timeGrid: {
@@ -72,17 +75,6 @@ export default class extends Controller
                         console.error('error!', data.responseText);
                     }
                 }
-            ],
-            events: [
-                {
-                    title: 'All Day Event',
-                    start: '2020-09-01'
-                },
-                {
-                    title: 'Long Event',
-                    start: '2020-09-07',
-                    end: '2020-09-10'
-                },
             ],
         })
         calendar.render()

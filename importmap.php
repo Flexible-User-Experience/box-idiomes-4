@@ -53,49 +53,43 @@ return [
     'axios' => [
         'version' => '1.7.9',
     ],
-    'preact' => [
-        'version' => '10.25.4',
+    'fullcalendar' => [
+        'version' => '5.11.5',
     ],
-    'preact/compat' => [
-        'version' => '10.25.4',
-    ],
-    'preact/hooks' => [
-        'version' => '10.25.4',
+    '@fullcalendar/common' => [
+        'version' => '5.11.5',
     ],
     '@fullcalendar/core' => [
-        'version' => '6.1.15',
-    ],
-    '@fullcalendar/core/index.js' => [
-        'version' => '6.1.15',
-    ],
-    '@fullcalendar/core/internal.js' => [
-        'version' => '6.1.15',
-    ],
-    '@fullcalendar/core/preact.js' => [
-        'version' => '6.1.15',
+        'version' => '5.11.5',
     ],
     '@fullcalendar/daygrid' => [
-        'version' => '6.1.15',
+        'version' => '5.11.5',
     ],
-    '@fullcalendar/daygrid/internal.js' => [
-        'version' => '6.1.15',
+    'tslib' => [
+        'version' => '2.8.1',
     ],
-    '@fullcalendar/timegrid' => [
-        'version' => '6.1.15',
+    'preact' => [
+        'version' => '10.12.1',
     ],
-    '@fullcalendar/timegrid/internal.js' => [
-        'version' => '6.1.15',
+    'preact/compat' => [
+        'version' => '10.12.1',
     ],
-    '@fullcalendar/list' => [
-        'version' => '6.1.15',
-    ],
-    '@fullcalendar/list/internal.js' => [
-        'version' => '6.1.15',
+    'preact/hooks' => [
+        'version' => '10.12.1',
     ],
     '@fullcalendar/interaction' => [
-        'version' => '6.1.15',
+        'version' => '5.11.5',
+    ],
+    '@fullcalendar/timegrid' => [
+        'version' => '5.11.5',
+    ],
+    '@fullcalendar/list' => [
+        'version' => '5.11.5',
+    ],
+    '@fullcalendar/core/locales/ca' => [
+        'version' => '5.11.5',
     ],
     '@fullcalendar/google-calendar' => [
-        'version' => '6.1.15',
+        'version' => '5.11.5',
     ],
 ];
