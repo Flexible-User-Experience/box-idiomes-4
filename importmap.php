@@ -92,4 +92,7 @@ return [
     '@fullcalendar/google-calendar' => [
         'version' => '5.11.5',
     ],
+    '@toyokumo/fos-router' => [
+        'version' => '1.0.5',
+    ],
 ];
