@@ -1,10 +1,10 @@
 Changelog
 =========
 
-##### Version 5.7.02 (WIP)
+##### Version 5.7.01 (WIP)
  * fix bugs
 
-##### Version 5.7.01 (WIP)
+##### Version 5.8.00 (2025-02-16)
  * Symfony v6.4 LTS upgrade
  * fix bad security config problem related with too many web server redirections (login)
  * replace symfony/webpack-encore-bundle dependency by symfony/asset-mapper
