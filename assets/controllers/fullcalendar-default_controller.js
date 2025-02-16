@@ -1,12 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
 import 'fullcalendar';  // <--- this sucks !!! keep it here
-import { Calendar } from '@fullcalendar/core';
+import { Calendar } from '@fullcalendar/core'; // this hack is documented here https://github.com/fullcalendar/fullcalendar/issues/7472#issuecomment-2094293045
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import googleCalendarPlugin from '@fullcalendar/google-calendar';
-import routes from '../js/fos_routes.js';
+import routes from '../js/fos_routes.js'; // this hack is documented here https://github.com/FriendsOfSymfony/FOSJsRoutingBundle/issues/466#issuecomment-2447332728
 import Router from '@toyokumo/fos-router';
 
 /* stimulusFetch: 'lazy' */
