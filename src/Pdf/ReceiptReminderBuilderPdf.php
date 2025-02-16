@@ -74,7 +74,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
     public function buildReceiptRemainderPageForItem($pdf, Receipt $receipt): TCPDF
     {
         // logo
-        $pdf->Image($this->sahs->getAbsoluteAssetFilePath('/build/img/logo-pdf.png'), BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP, 40);
+        $pdf->Image($this->sahs->getLocalAssetsPath('/img/logo-pdf.png'), BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP, 40);
         $pdf->SetXY(BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP * 2 + BaseTcpdf::MARGIN_VERTICAL_SMALL);
 
         // invoice header

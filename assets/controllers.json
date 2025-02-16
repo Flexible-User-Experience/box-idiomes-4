@@ -14,6 +14,16 @@
                     "@symfony/ux-dropzone/dist/style.min.css": true
                 }
             }
+        },
+        "@symfony/ux-turbo": {
+            "turbo-core": {
+                "enabled": false,
+                "fetch": "eager"
+            },
+            "mercure-turbo-stream": {
+                "enabled": false,
+                "fetch": "eager"
+            }
         }
     },
     "entrypoints": []

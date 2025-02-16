@@ -16,7 +16,7 @@ final class DownloadMediaController extends AbstractController
         DownloadHandler $downloadHandler,
         #[MapEntity(mapping: ['id' => 'id'])] Spending $attachmentFile,
     ): Response {
-        return $downloadHandler->downloadObject($attachmentFile, 'documentFile', Spending::class, true, true);
+        return $downloadHandler->downloadObject($attachmentFile, 'documentFile', Spending::class, true);
     }
 
     #[Route('/app/spending-media-inline/{id}', name: 'media_inline_spending_item', options: ['expose' => false])]

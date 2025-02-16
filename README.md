@@ -1,7 +1,7 @@
 Box Idiomes
 ===========
 
-A Symfony 6.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat) website content with custom ERP integrated functionalities.
+A Symfony 6.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat/admin) website content with custom ERP integrated functionalities.
 
 ---
 
@@ -36,6 +36,7 @@ $ ./scripts/developer-tools/run-test.sh
 #### Developer important notes
 
 * Read about how to start a local web server instance [here](https://symfony.com/doc/current/setup/symfony_server.html)
+* For now there is a problem with Fullcalendar v6 ES6 modules loading that makes impossible to execute `importmap:update` command
 
 #### Messenger queues
 

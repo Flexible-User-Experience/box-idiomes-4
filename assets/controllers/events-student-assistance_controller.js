@@ -5,6 +5,7 @@ const routes = require('../../public/js/fos_js_routes.json');
 
 Routing.setRoutingData(routes);
 
+/* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static values = { eid: Number }
 

@@ -1,12 +1,27 @@
 {% extends "@SonataAdmin/standard_layout.html.twig" %}
 
-{# removes top search bar #}
-{% block sonata_sidebar_search %}{% endblock %}
+{# custom favicon loader #}
+{% block meta_tags %}
+    {{ parent() }}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+{% endblock %}
+
+{# disable Turbo to avoid form redirect responses problem #}
+{% block html_attributes %}{{ parent() }} data-turbo=false{% endblock %}
+
+{# custom sidebar before meunu #}
+{% block side_bar_before_nav %}
+    {% if admin_is_stage %}
+        <div class="alert alert-warning no-margin" style="border-radius:0">
+            <i class="fas fa-exclamation-triangle fa-fw"></i> {{ 'Stagging' | trans }}
+        </div>
+    {% endif %}
+{% endblock %}
 
 {# custom logo #}
 {% block logo %}
     <a class="logo" href="{{ path('sonata_admin_dashboard') }}">
-        <img src="{{ asset('build/img/backend-logo.png') }}" alt="{{ sonata_config.title }}">
+        <img src="{{ asset('img/backend-logo.png') }}" alt="{{ sonata_config.title }}">
         <span>{{ sonata_config.title }}</span>
     </a>
 {% endblock %}
@@ -19,62 +34,71 @@
 {# custom top menu#}
 {% block sonata_top_nav_menu %}
     <div class="navbar-custom-menu">
-        {{ knp_menu_render('backend_top_nav_menu', {currentClass: 'active', allow_safe_labels: true}) }}
+        {{ knp_menu_render('backend_top_nav_menu', {'currentClass': 'active', 'allow_safe_labels': true}) }}
     </div>
 {% endblock %}
 
 {# override css includes #}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('backend') }}
-    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/backend.scss') }}">
 {% endblock %}
 
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('backend') }}
+    {{ importmap('app') }}
 {% endblock %}
 
 {# custom main content #}
 {% block sonata_page_content %}
-    <div class="modal fade" tabindex="-1" role="dialog"
-         data-controller="audio-player-preview"
-         data-action="app-audio-player-button-clicked@window->audio-player-preview#update"
-         data-audio-player-preview-target="modal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+    <div class="modal fade" id="pdf-preview-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+            <div
+                class="modal-content"
+                {{ stimulus_controller('pdf-viewer') }}
+                data-action="app-pdf-viewer-button-clicked@window->pdf-viewer#update"
+                data-pdf-viewer-hidden-class="hide"
+                data-pdf-viewer-path-value=""
+                data-pdf-viewer-mime-value="application/pdf"
+            >
                 <div class="modal-header">
-                    <button type="button" class="close" data-action="audio-player-preview#closeModal"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{ 'backend.admin.modal.audio_palyer' | trans }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'Close' | trans }}"><span aria-hidden="true">&times;</span></button>
+                    <div class="btn-group mr-3" role="group" aria-label="Modal">
+                        <a
+                            {{ stimulus_target('pdf-viewer', 'downloader') }}
+                            style="margin-right:3px;"
+                            class="btn btn-primary"
+                            download
+                        >
+                            <i class="fas fa-cloud-download-alt margin-r-5"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}
+                        </a>
+                    </div>
+                    <div
+                        {{ stimulus_target('pdf-viewer', 'pager') }}
+                        class="btn-group"
+                        role="group"
+                        aria-label="Modal"
+                    >
+                        <button {{ stimulus_action('pdf-viewer', 'onPrevPage') }} type="button" class="btn btn-primary"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" class="btn btn-default">{{ 'Page' | trans }}&nbsp;<span {{ stimulus_target('pdf-viewer', 'current') }}></span>&nbsp;{{ 'Of' | trans }}&nbsp;<span {{ stimulus_target('pdf-viewer', 'total') }}></span></button>
+                        <button {{ stimulus_action('pdf-viewer', 'onNextPage') }} type="button" class="btn btn-primary"><i class="fas fa-chevron-right"></i></button>
+                    </div>
                 </div>
                 <div class="modal-body">
-                    <p class="lead" data-audio-player-preview-target="title"></p>
-                    <audio style="width:100%" data-audio-player-preview-target="loader" controls></audio>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="pdf-preview-modal" tabindex="-1" role="dialog"
-         data-controller="modal-helper"
-         data-action="app-modal-helper-open@window->modal-helper#open"
-         data-modal-helper-target="modal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div data-controller="pdf-preview" data-action="app-pdf-preview-button-clicked@window->pdf-preview#update" data-pdf-preview-hidden-class="hidden" class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" data-action="modal-helper#close" aria-label="{{ 'backend.admin.modal.close_window' | trans }}"><span aria-hidden="true">&times;</span></button>
-                    <div class="btn-group mr-3" role="group" aria-label="{{ 'backend.admin.modal.pdf_preview_window_title' | trans }}">
-                        <a data-pdf-preview-target="downloader" style="margin-right:3px;" class="btn btn-warning" download><i class="fas fa-cloud-download-alt"></i> {{ 'vich_uploader.link.download' | trans | capitalize }}</a>
+                    <div class="row" {{ stimulus_target('pdf-viewer', 'loader') }}>
+                        <div class="col-xs-12">
+                            <p class="mt-5 mb-5 text-center text-muted">
+                                <i class="fas fa-5x fa-spin fa-sync" aria-hidden="true"></i>
+                            </p>
+                        </div>
                     </div>
-                    <div class="btn-group" role="group" aria-label="{{ 'backend.admin.modal.pdf_preview_window_title' | trans }}">
-                        <button data-action="pdf-preview#onPrevPage" type="button" class="btn btn-warning"><i class="fas fa-chevron-left"></i></button>
-                        <button type="button" class="btn btn-default">{{ 'backend.admin.modal.pdf_preview_page' | trans }}&nbsp;<span data-pdf-preview-target="current"></span>&nbsp;{{ 'backend.admin.modal.pdf_preview_page_of' | trans }}&nbsp;<span data-pdf-preview-target="total"></span></button>
-                        <button data-action="pdf-preview#onNextPage" type="button" class="btn btn-warning"><i class="fas fa-chevron-right"></i></button>
+                    <div {{ stimulus_target('pdf-viewer', 'warning') }}></div>
+                    <div class="row mb-2">
+                        <div class="col-xs-12">
+                            <canvas class="viewer hide" {{ stimulus_target('pdf-viewer', 'canvas') }}></canvas>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-body">
-                    <p data-pdf-preview-target="loader" class="lead text-center mb-0"><i class="fas fa-5x fa-spin fa-circle-o-notch"></i></p>
-                    <canvas style="width:100%" class="pdf-canvas hidden" data-pdf-preview-target="canvas"></canvas>
                 </div>
             </div>
         </div>

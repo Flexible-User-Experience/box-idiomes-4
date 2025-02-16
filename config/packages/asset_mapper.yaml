@@ -1,0 +1,11 @@
+framework:
+    asset_mapper:
+        importmap_polyfill: false
+        missing_import_mode: 'warn'
+        importmap_script_attributes:
+            crossorigin: 'anonymous'
+        paths:
+            - 'assets/'
+        excluded_patterns:
+            - '*/assets/styles/_*.scss'
+            - '*/assets/styles/**/_*.scss'

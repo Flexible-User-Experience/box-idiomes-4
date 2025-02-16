@@ -30,20 +30,6 @@ class BackendTopNavMenuBuilder
         $user = $this->ss->getUser();
         $menu = $this->factory->createItem('topnav');
         $menu->setChildrenAttribute('class', 'nav navbar-nav navbar-right');
-        $menu
-            ->addChild(
-                'homepage',
-                [
-                    'label' => '<i class="fa fa-link"></i>',
-                    'route' => 'app_homepage',
-                ]
-            )
-            ->setExtras(
-                [
-                    'safe_label' => true,
-                ]
-            )
-        ;
         if ($this->cmr->getNotReadMessagesAmount() > 0) {
             $menu
                 ->addChild(

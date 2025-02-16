@@ -40,7 +40,7 @@ class BaseTcpdf extends TCPDF
     public function header(): void
     {
         // logo
-        $this->Image($this->sahs->getAbsoluteAssetFilePath('/build/img/logo-pdf.png'), 75, 20, 60);
+        $this->Image($this->sahs->getLocalAssetsPath('/img/logo-pdf.png'), 75, 20, 60);
         $this->SetXY(self::PDF_MARGIN_LEFT, 11);
         $this->setFontStyle(null, 'I', 8);
     }
