@@ -3,9 +3,7 @@
 {% block block %}
     <div
         class="box box-primary"
-        {{ stimulus_controller('fullcalendar-default') }}
-        data-fullcalendar-default-events-value="{{ path('fc_load_events') }}"
-        data-fullcalendar-default-gcal-value="{{ google_calendar_api_key }}"
+        {{ stimulus_controller('fullcalendar-default', {'events': path('fc_load_events'), 'gcal': google_calendar_api_key}) }}
     >
         <div class="box-body">
             <div class="row">
