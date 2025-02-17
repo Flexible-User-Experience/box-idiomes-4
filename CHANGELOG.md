@@ -3,6 +3,9 @@ Changelog
 
 ##### Version 5.7.01 (WIP)
  * fix bugs
+ * apply Liip versioning
+ * fix Routing problem in events-student-assistance Stimulus controller
+ * load Catalan locale in fullcalendar
 
 ##### Version 5.8.00 (2025-02-16)
  * Symfony v6.4 LTS upgrade
