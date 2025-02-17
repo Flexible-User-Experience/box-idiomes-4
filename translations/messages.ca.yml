@@ -92,6 +92,11 @@ Província: "Província"
 "Students Mailing": "Mailing alumnes"
 "Student Show": "Mailing"
 
+Page: "Pàgina"
+Of: "de"
+Close: "Tancar"
+Stagging: "Stagging"
+
 frontend:
     meta: "academia anglès %main_brand_title% amposta"
     menu:

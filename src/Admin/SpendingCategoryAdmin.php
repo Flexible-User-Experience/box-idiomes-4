@@ -12,13 +12,17 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 final class SpendingCategoryAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'SpendingCategory';
-    protected $baseRoutePattern = 'purchases/spending-category';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'purchases/spending-category';
     }
 
     protected function configureFormFields(FormMapper $form): void

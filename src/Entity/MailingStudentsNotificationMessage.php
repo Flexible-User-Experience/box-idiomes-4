@@ -2,74 +2,50 @@
 
 namespace App\Entity;
 
+use App\Repository\MailingStudentsNotificationMessageRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="App\Repository\MailingStudentsNotificationMessageRepository")
- */
+#[ORM\Entity(repositoryClass: MailingStudentsNotificationMessageRepository::class)]
+#[ORM\Table]
 class MailingStudentsNotificationMessage extends AbstractBase
 {
-    /**
-     * @ORM\Column(type="text", length=10000, nullable=false)
-     */
+    #[ORM\Column(type: Types::TEXT, length: 10000, nullable: false)]
     private string $message;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $sendDate = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false, options: ['default' => 0])]
     private bool $isSended = false;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $filterStartDate = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $filterEndDate = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $filteredClassroom;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
-     *
-     * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", nullable=true)
-     */
+    
+    #[ORM\ManyToOne(targetEntity: Teacher::class)]
+    #[ORM\JoinColumn(name: 'teacher_id', referencedColumnName: 'id', nullable: true)]
     private ?Teacher $filteredTeacher;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClassGroup")
-     *
-     * @ORM\JoinColumn(name="class_group_id", referencedColumnName="id", nullable=true)
-     */
+    #[ORM\ManyToOne(targetEntity: ClassGroup::class)]
+    #[ORM\JoinColumn(name: 'class_group_id', referencedColumnName: 'id', nullable: true)]
     private ?ClassGroup $filteredClassGroup;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TrainingCenter")
-     *
-     * @ORM\JoinColumn(name="training_center_id", referencedColumnName="id", nullable=true)
-     */
+    
+    #[ORM\ManyToOne(targetEntity: TrainingCenter::class)]
+    #[ORM\JoinColumn(name: 'training_center_id', referencedColumnName: 'id', nullable: true)]
     private ?TrainingCenter $filteredTrainingCenter;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: false, options: ['default' => 0])]
     private int $totalTargetStudents = 0;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: false, options: ['default' => 0])]
     private int $totalDeliveredErrors = 0;
 
     public function getMessage(): string

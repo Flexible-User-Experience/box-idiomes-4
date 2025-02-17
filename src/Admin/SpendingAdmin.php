@@ -21,13 +21,17 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 final class SpendingAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Spending';
-    protected $baseRoutePattern = 'purchases/spending';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'date';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'purchases/spending';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

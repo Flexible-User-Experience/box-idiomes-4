@@ -1,4 +1,3 @@
 artgris_bundle_file_manager:
     resource: '@ArtgrisFileManagerBundle/Controller'
-    prefix:   '/admin/fitxers/gestor/handler'
-    type:     annotation
+    prefix: '/admin/fitxers/gestor/handler'

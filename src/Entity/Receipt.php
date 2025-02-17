@@ -2,33 +2,26 @@
 
 namespace App\Entity;
 
+use App\Repository\ReceiptRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ReceiptRepository")
- *
- * @ORM\Table(name="receipt")
- *
- * @UniqueEntity(fields={"month", "year", "student", "person", "isForPrivateLessons"})
- */
+#[ORM\Entity(repositoryClass: ReceiptRepository::class)]
+#[UniqueEntity(fields: ['month', 'year', 'student', 'person', 'isForPrivateLessons'])]
+#[ORM\Table(name: 'receipt')]
 class Receipt extends AbstractReceiptInvoice
 {
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ReceiptLine", mappedBy="receipt", cascade={"persist", "remove"}, orphanRemoval=true)
-     *
-     * @Assert\Valid
-     */
+    
+    #[ORM\OneToMany(mappedBy: 'receipt', targetEntity: ReceiptLine::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Assert\Valid]
     private ?Collection $lines;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ReceiptGroup", inversedBy="receipts")
-     *
-     * @ORM\JoinColumn(name="receipt_group_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     */
+    
+    #[ORM\ManyToOne(targetEntity: ReceiptGroup::class, inversedBy: 'receipts')]
+    #[ORM\JoinColumn(name: 'receipt_group_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?ReceiptGroup $receiptGroup = null;
 
     public function __construct()

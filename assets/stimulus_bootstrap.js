@@ -1,7 +1,4 @@
-import { startStimulusApp } from '@symfony/stimulus-bridge';
+import { startStimulusApp } from '@symfony/stimulus-bundle';
 
-export const app = startStimulusApp(require.context(
-    '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
-    true,
-    /\.[jt]sx?$/
-));
+const app = startStimulusApp();
+// app.register('some_controller_name', SomeImportedController);

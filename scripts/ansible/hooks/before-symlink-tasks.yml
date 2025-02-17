@@ -13,9 +13,15 @@
 - name: expose FOS JS routes
   shell: "chdir={{ ansistrano_release_path.stdout }}
     SYMFONY_ENV={{ symfony_env }} {{ symfony_php_path }} {{ symfony_console_path }} fos:js-routing:dump {{ symfony_cache_options }} --format=json --target=public/js/fos_js_routes.json"
-- name: compile yarn assets
+- name: importmap install
   shell: "chdir={{ ansistrano_release_path.stdout }}
-    yarn install && yarn encore production"
+    SYMFONY_ENV={{ symfony_env }} {{ symfony_php_path }} {{ symfony_console_path }} importmap:install {{ symfony_cache_options }}"
+- name: sass build install
+  shell: "chdir={{ ansistrano_release_path.stdout }}
+    SYMFONY_ENV={{ symfony_env }} {{ symfony_php_path }} {{ symfony_console_path }} sass:build {{ symfony_cache_options }}"
+- name: asset map compile
+  shell: "chdir={{ ansistrano_release_path.stdout }}
+    SYMFONY_ENV={{ symfony_env }} {{ symfony_php_path }} {{ symfony_console_path }} asset-map:compile {{ symfony_cache_options }}"
 - name: fix symfony cache directory apache ownership
   file:
     path: "{{ ansistrano_release_path.stdout }}/var/cache"

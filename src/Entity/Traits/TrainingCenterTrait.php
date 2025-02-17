@@ -7,11 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait TrainingCenterTrait
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TrainingCenter")
-     *
-     * @ORM\JoinColumn(name="training_center_id", referencedColumnName="id", nullable=true)
-     */
+    
+    #[ORM\ManyToOne(targetEntity: TrainingCenter::class)]
+    #[ORM\JoinColumn(name: 'training_center_id', referencedColumnName: 'id', nullable: true)]
     protected ?TrainingCenter $trainingCenter = null;
 
     public function getTrainingCenter(): ?TrainingCenter

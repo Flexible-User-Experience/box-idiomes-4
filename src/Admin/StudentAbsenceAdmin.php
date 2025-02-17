@@ -17,13 +17,17 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 final class StudentAbsenceAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'StudentAbsence';
-    protected $baseRoutePattern = 'students/absence';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'day';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'students/absence';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

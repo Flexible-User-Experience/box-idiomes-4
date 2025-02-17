@@ -1,0 +1,11 @@
+symfonycasts_sass:
+    root_sass:
+        - '%kernel.project_dir%/assets/css/backend.scss'
+        - '%kernel.project_dir%/assets/css/colors.scss'
+        - '%kernel.project_dir%/assets/css/frontend.scss'
+
+when@prod:
+    symfonycasts_sass:
+        embed_sourcemap: true
+        sass_options:
+            style: 'compressed'

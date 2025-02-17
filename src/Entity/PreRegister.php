@@ -3,57 +3,39 @@
 namespace App\Entity;
 
 use App\Enum\PreRegisterSeasonEnum;
+use App\Repository\PreRegisterRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PreRegisterRepository")
- * @ORM\Table(name="pre_register")
- */
+#[ORM\Entity(repositoryClass: PreRegisterRepository::class)]
+#[ORM\Table(name: 'pre_register')]
 class PreRegister extends AbstractPerson
 {
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $age = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $courseLevel = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $preferredTimetable = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $previousAcademy = null;
 
-    /**
-     * @ORM\Column(type="text", length=4000, nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, length: 4000, nullable: true)]
     private ?string $comments = null;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $season = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClassGroup")
-     */
+    #[ORM\ManyToOne(targetEntity: ClassGroup::class)]
     protected ?ClassGroup $classGroup = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     protected ?bool $hasBeenPreviousCustomer = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default"=0})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     protected ?bool $wantsToMakeOfficialExam = false;
 
     public function getAge(): ?string

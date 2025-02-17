@@ -3,30 +3,24 @@
 namespace App\Entity;
 
 use App\Enum\TeacherAbsenceTypeEnum;
+use App\Repository\TeacherAbsenceRepository;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TeacherAbsenceRepository")
- * @ORM\Table(name="teacher_absence")
- * @UniqueEntity({"teacher", "day"})
- */
+#[ORM\Entity(repositoryClass: TeacherAbsenceRepository::class)]
+#[UniqueEntity(['teacher', 'day'])]
+#[ORM\Table(name: 'teacher_absence')]
 class TeacherAbsence extends AbstractBase
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Teacher")
-     */
+    #[ORM\ManyToOne(targetEntity: Teacher::class)]
     private Teacher $teacher;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $type = TeacherAbsenceTypeEnum::PERSONAL_ISSUES;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private DateTimeInterface $day;
 
     public function getTeacher(): Teacher

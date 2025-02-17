@@ -13,6 +13,7 @@
 .php_cs.cache
 .php-cs-fixer.cache
 .env
+.env.dev
 .env.test
 ###< app/bundle ###
 
@@ -30,6 +31,8 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 /var/testing-database.db
+/var/dart-sass/
+/var/sass/
 /vendor/
 ###< symfony/framework-bundle ###
 
@@ -41,10 +44,11 @@
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
 
-###> symfony/webpack-encore-bundle ###
-/node_modules/
-/public/build/
-npm-debug.log
-yarn-error.log
-###< symfony/webpack-encore-bundle ###
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###

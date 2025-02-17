@@ -26,7 +26,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 final class InvoiceAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Invoice';
-    protected $baseRoutePattern = 'billings/invoice';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
@@ -34,6 +33,11 @@ final class InvoiceAdmin extends AbstractBaseAdmin
         $sortValues[DatagridInterface::PER_PAGE] = 400;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'id';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'billings/invoice';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void
@@ -95,7 +99,7 @@ final class InvoiceAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.invoice.year',
                     'required' => true,
                     'choices' => InvoiceYearMonthEnum::getYearEnumArray(),
-                    'preferred_choices' => $currentYear,
+                    'preferred_choices' => [ $currentYear ],
                 ]
             )
             ->add(

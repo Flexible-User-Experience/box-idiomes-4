@@ -6,7 +6,6 @@ use App\Entity\AbstractReceiptInvoiceLine;
 use App\Entity\BankCreditorSepa;
 use App\Entity\Invoice;
 use App\Entity\Receipt;
-use DateTimeInterface;
 use Digitick\Sepa\Exception\InvalidArgumentException;
 use Digitick\Sepa\GroupHeader;
 use Digitick\Sepa\PaymentInformation;
@@ -15,21 +14,21 @@ use Digitick\Sepa\TransferFile\Factory\TransferFileFacadeFactory;
 use Digitick\Sepa\Util\StringHelper;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class XmlSepaBuilderService
+final readonly class XmlSepaBuilderService
 {
-    public const DIRECT_DEBIT_PAIN_CODE = 'pain.008.001.02';
-    public const DIRECT_DEBIT_LI_CODE = 'CORE';
-    public const DEFAULT_REMITANCE_INFORMATION = 'Import mensual';
+    public const string DIRECT_DEBIT_PAIN_CODE = 'pain.008.001.02';
+    public const string DIRECT_DEBIT_LI_CODE = 'CORE';
+    public const string DEFAULT_REMITANCE_INFORMATION = 'Import mensual';
 
-    private SpanishSepaHelperService $sshs;
     private string $bn;
     private string $bd;
     private string $ib;
     private string $bic;
 
-    public function __construct(SpanishSepaHelperService $sshs, ParameterBagInterface $pb)
-    {
-        $this->sshs = $sshs;
+    public function __construct(
+        private SpanishSepaHelperService $sshs,
+        private ParameterBagInterface $pb,
+    ) {
         $this->bn = $pb->get('boss_name');
         $this->bd = $pb->get('boss_dni');
         $this->ib = $this->removeSpacesFrom($pb->get('iban_business'));
@@ -39,7 +38,7 @@ class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    public function buildDirectDebitSingleReceiptXml(string $paymentId, DateTimeInterface $dueDate, Receipt $receipt): string
+    public function buildDirectDebitSingleReceiptXml(string $paymentId, \DateTimeInterface $dueDate, Receipt $receipt): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         if ($receipt->getMainSubject()->getBankCreditorSepa()) {
@@ -57,7 +56,7 @@ class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    public function buildDirectDebitReceiptsXml(string $paymentId, DateTimeInterface $dueDate, $receipts): string
+    public function buildDirectDebitReceiptsXml(string $paymentId, \DateTimeInterface $dueDate, $receipts): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
@@ -74,7 +73,7 @@ class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    public function buildDirectDebitReceiptsXmlForBankCreditorSepa(string $paymentId, DateTimeInterface $dueDate, $receipts, BankCreditorSepa $bankCreditorSepa): string
+    public function buildDirectDebitReceiptsXmlForBankCreditorSepa(string $paymentId, \DateTimeInterface $dueDate, $receipts, BankCreditorSepa $bankCreditorSepa): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfoForBankCreditorSepa($directDebit, $paymentId, $dueDate, $bankCreditorSepa);
@@ -91,7 +90,7 @@ class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    public function buildDirectDebitSingleInvoiceXml(string $paymentId, DateTimeInterface $dueDate, Invoice $invoice): string
+    public function buildDirectDebitSingleInvoiceXml(string $paymentId, \DateTimeInterface $dueDate, Invoice $invoice): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         if ($invoice->getMainSubject()->getBankCreditorSepa()) {
@@ -109,7 +108,7 @@ class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    public function buildDirectDebitInvoicesXml(string $paymentId, DateTimeInterface $dueDate, $invoices): string
+    public function buildDirectDebitInvoicesXml(string $paymentId, \DateTimeInterface $dueDate, $invoices): string
     {
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfo($directDebit, $paymentId, $dueDate);
@@ -136,7 +135,7 @@ class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    private function addPaymentInfo(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate): void
+    private function addPaymentInfo(CustomerDirectDebitFacade $directDebit, string $paymentId, \DateTimeInterface $dueDate): void
     {
         $directDebit->addPaymentInfo($paymentId, [
             'id' => StringHelper::sanitizeString($paymentId),
@@ -153,7 +152,7 @@ class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    private function addPaymentInfoForBankCreditorSepa(CustomerDirectDebitFacade $directDebit, string $paymentId, DateTimeInterface $dueDate, BankCreditorSepa $bankCreditorSepa): void
+    private function addPaymentInfoForBankCreditorSepa(CustomerDirectDebitFacade $directDebit, string $paymentId, \DateTimeInterface $dueDate, BankCreditorSepa $bankCreditorSepa): void
     {
         $directDebit->addPaymentInfo($paymentId, [
             'id' => StringHelper::sanitizeString($paymentId),

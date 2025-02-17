@@ -3,7 +3,7 @@
 {# override css includes #}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('fullcalendardefaultsettings') }}
+{#    {{ encore_entry_link_tags('fullcalendardefaultsettings') }}#}
 {% endblock %}
 
 {% block sonata_admin_content %}
@@ -70,5 +70,5 @@
 {# override javascript includes #}
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('fullcalendardefaultsettings') }}
+{#    {{ encore_entry_script_tags('fullcalendardefaultsettings') }}#}
 {% endblock %}

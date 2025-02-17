@@ -3,13 +3,12 @@
 namespace App\Entity\Traits;
 
 use App\Enum\InvoiceYearMonthEnum;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 trait MonthTrait
 {
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     protected int $month = 0;
 
     public function getMonth(): int

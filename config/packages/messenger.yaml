@@ -1,7 +1,6 @@
 framework:
     messenger:
         failure_transport: 'failed'
-        reset_on_message: true
         transports:
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
@@ -16,3 +15,9 @@ framework:
             App\Message\NewReceiptCreatedEmailMessage: 'async'
             App\Message\NewReceiptGroupCreatedMessage: 'async'
             Symfony\Component\Mailer\Messenger\SendEmailMessage: 'async'
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                async: 'in-memory://'

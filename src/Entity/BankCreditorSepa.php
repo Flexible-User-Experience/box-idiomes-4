@@ -2,40 +2,30 @@
 
 namespace App\Entity;
 
+use App\Repository\BankCreditorSepaRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BankCreditorSepaRepository")
- * @ORM\Table(name="bank_creditor_sepa")
- */
+#[ORM\Entity(repositoryClass: BankCreditorSepaRepository::class)]
+#[ORM\Table(name: 'bank_creditor_sepa')]
 class BankCreditorSepa extends AbstractBase
 {
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $organizationId;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $creditorName;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @Assert\Iban()
-     */
+    #[ORM\Column(type: Types::STRING, nullable: false)]
+    #[Assert\Iban]
     private string $iban;
 
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     * @Assert\Bic()
-     */
+    #[ORM\Column(type: Types::STRING, nullable: false)]
+    #[Assert\Bic]
     private string $bic;
 
     public function getName(): string

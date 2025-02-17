@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Twig\Environment;
 
 abstract class AbstractBaseAdmin extends AbstractAdmin
@@ -21,13 +21,37 @@ abstract class AbstractBaseAdmin extends AbstractAdmin
 
     protected array $perPageOptions = [25, 50, 100, 200, 400];
 
-    public function __construct($code, $class, $baseControllerName, EntityManagerInterface $em, Security $ss, Environment $twig, FileService $fs)
+    public function setEntityManager(EntityManagerInterface $em): self
     {
-        parent::__construct($code, $class, $baseControllerName);
         $this->em = $em;
+
+        return $this;
+    }
+
+    public function setSecurityHelper(Security $ss): self
+    {
         $this->ss = $ss;
+
+        return $this;
+    }
+
+    public function setTwigEnvironment(Environment $twig): self
+    {
         $this->twig = $twig;
+
+        return $this;
+    }
+
+    public function setFileService(FileService $fs): self
+    {
         $this->fs = $fs;
+
+        return $this;
+    }
+
+    public function getPerPageOptions(): array
+    {
+        return $this->perPageOptions;
     }
 
     protected function configureDefaultSortValues(array &$sortValues): void

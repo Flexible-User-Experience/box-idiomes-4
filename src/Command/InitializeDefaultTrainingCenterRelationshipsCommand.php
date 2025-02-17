@@ -8,16 +8,20 @@ use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\TrainingCenter;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class InitializeDefaultTrainingCenterRelationshipsCommand extends Command
+#[AsCommand(
+    name: 'app:initialize:training:center',
+    description: 'Initialize default training center relationships',
+)]
+final class InitializeDefaultTrainingCenterRelationshipsCommand extends Command
 {
     private EntityManagerInterface $em;
-    protected static $defaultDescription = 'Initialize default training center relationships';
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -28,7 +32,6 @@ class InitializeDefaultTrainingCenterRelationshipsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('app:initialize:training:center')
             ->addArgument(
                 'tcid',
                 InputArgument::REQUIRED,

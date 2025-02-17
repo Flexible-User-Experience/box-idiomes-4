@@ -5,15 +5,12 @@ namespace App\Service;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class FileService
+final readonly class FileService
 {
-    private UploaderHelper $uhs;
-    private ParameterBagInterface $pb;
-
-    public function __construct(UploaderHelper $uhs, ParameterBagInterface $pb)
-    {
-        $this->uhs = $uhs;
-        $this->pb = $pb;
+    public function __construct(
+        private UploaderHelper $uhs,
+        private ParameterBagInterface $pb,
+    ) {
     }
 
     public function getMimeType($entity, $attribute): string

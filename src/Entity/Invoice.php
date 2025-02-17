@@ -2,46 +2,36 @@
 
 namespace App\Entity;
 
+use App\Repository\InvoiceRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
- * @ORM\Table(name="invoice")
- */
+#[ORM\Entity(repositoryClass: InvoiceRepository::class)]
+#[ORM\Table(name: 'invoice')]
 class Invoice extends AbstractReceiptInvoice
 {
-    public const TAX_IRPF = 15;
-    public const TAX_IVA = 0;
+    public const int TAX_IRPF = 15;
+    public const int TAX_IVA = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Receipt")
-     * @ORM\JoinColumn(name="receipt_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: Receipt::class)]
+    #[ORM\JoinColumn(name: 'receipt_id', referencedColumnName: 'id')]
     private ?Receipt $receipt;
 
-    /**
-     * @Assert\Valid
-     * @ORM\OneToMany(targetEntity="App\Entity\InvoiceLine", mappedBy="invoice", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
+    #[Assert\Valid]
+    #[ORM\OneToMany(mappedBy: 'invoice', targetEntity: InvoiceLine::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Collection $lines;
 
-    /**
-     * @ORM\Column(type="float", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::FLOAT, options: ['default' => 0])]
     private float $taxPercentage = self::TAX_IVA;
 
-    /**
-     * @ORM\Column(type="float", nullable=true, options={"default"=15})
-     */
+    #[ORM\Column(type: Types::FLOAT, nullable: true, options: ['default' => 15])]
     private ?float $irpfPercentage = self::TAX_IRPF;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
     private ?float $totalAmount = null;
 
     public function __construct()

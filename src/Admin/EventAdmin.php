@@ -22,7 +22,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 final class EventAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Event';
-    protected $baseRoutePattern = 'classrooms/timetable';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
@@ -30,6 +29,11 @@ final class EventAdmin extends AbstractBaseAdmin
         $sortValues[DatagridInterface::PER_PAGE] = 400;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'begin';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'classrooms/timetable';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

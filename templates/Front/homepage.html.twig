@@ -17,7 +17,7 @@
             <div class="col">
                 <h1 class="visually-hidden">Viu els idiomes</h1>
                 <div class="text-center">
-                    <img src="{{ asset('build/img/homepage_def.png') }}" class="img-fluid" alt="imatge portada">
+                    <img src="{{ asset('img/homepage_def.png') }}" class="img-fluid" alt="imatge portada">
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     {% if teacher.imageName is not null %}
                         <img src="{{ vich_uploader_asset(teacher, 'imageFile') | imagine_filter('585x756_teacher_mask') }}" class="img-fluid" alt="{{ teacher.imageName }}">
                     {% else %}
-                        <img src="{{ asset('build/img/1teacher.jpeg') | imagine_filter('585x756_teacher_mask') }}" class="img-fluid" alt="1teacher">
+                        <img src="{{ asset('img/1teacher.jpeg') | imagine_filter('585x756_teacher_mask') }}" class="img-fluid" alt="1teacher">
                     {% endif %}
                     <h4 class="c-blue mb-1">{{ teacher.name }}</h4>
                     <p>{{ teacher.description | raw }}</p>
@@ -38,9 +38,4 @@
         </div>
     </div>
     {% include 'Front/includes/notice_flash.html.twig' %}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('scroll_to_flash') }}
 {% endblock %}

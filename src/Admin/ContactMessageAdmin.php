@@ -14,13 +14,17 @@ use Sonata\Form\Type\DatePickerType;
 final class ContactMessageAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'ContactMessage';
-    protected $baseRoutePattern = 'contacts/message';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
         $sortValues[DatagridInterface::SORT_BY] = 'createdAt';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'contacts/message';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

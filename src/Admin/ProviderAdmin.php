@@ -17,13 +17,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 final class ProviderAdmin extends AbstractBaseAdmin
 {
     protected $classnameLabel = 'Provider';
-    protected $baseRoutePattern = 'purchases/provider';
 
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::ASC;
         $sortValues[DatagridInterface::SORT_BY] = 'name';
+    }
+
+    public function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'purchases/provider';
     }
 
     protected function configureRoutes(RouteCollectionInterface $collection): void

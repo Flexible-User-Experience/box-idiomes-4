@@ -2,31 +2,26 @@
 
 namespace App\Entity;
 
+use App\Repository\EventStudentRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EventStudentRepository")
- * @ORM\Table(name="events_students", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_DB5678D3EA12567", columns={"event_id", "student_id"})})
- * @UniqueEntity({"event", "student"})
- */
+#[ORM\Entity(repositoryClass: EventStudentRepository::class)]
+#[UniqueEntity(['event', 'student'])]
+#[ORM\Table(name: 'events_students')]
+#[ORM\UniqueConstraint(name: 'UNIQ_DB5678D3EA12567', columns: ['event_id', 'student_id'])]
 class EventStudent
 {
-    /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event")
-     */
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Event::class)]
     private Event $event;
 
-    /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Entity\Student")
-     */
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Student::class)]
     private Student $student;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default"=1})
-     */
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => 1])]
     private bool $hasAttendedTheClass = true;
 
     public function getEvent(): Event

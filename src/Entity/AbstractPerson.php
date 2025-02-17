@@ -6,61 +6,44 @@ use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CityTrait;
 use App\Entity\Traits\NameTrait;
 use App\Enum\StudentPaymentEnum;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @UniqueEntity({"dni", "name", "surname"})
- */
+#[UniqueEntity(['dni', 'name', 'surname'])]
 abstract class AbstractPerson extends AbstractBase
 {
     use AddressTrait;
     use CityTrait;
     use NameTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\City")
-     *
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
-     */
+    
+    #[ORM\ManyToOne(targetEntity: City::class)]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id', nullable: true)]
     protected ?City $city = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $dischargeDate = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     protected ?string $dni = null;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     protected ?string $name = null;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     protected ?string $surname = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     protected ?string $phone = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @Assert\Email()
-     */
+    
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Assert\Email]
     protected ?string $email = null;
 
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     protected int $payment = 0;
 
     protected ?Bank $bank = null;

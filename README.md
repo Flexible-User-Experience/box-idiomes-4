@@ -1,7 +1,7 @@
 Box Idiomes
 ===========
 
-A Symfony 5.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat) website content with custom ERP integrated functionalities.
+A Symfony 6.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat/admin) website content with custom ERP integrated functionalities.
 
 ---
 
@@ -11,7 +11,6 @@ A Symfony 5.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat) we
 * MySQL 8.0
 * Git 2.0
 * Composer 2.0
-* Yarn 1.0
 * set php.ini config max_input_vars > 10.000
 
 #### Installation instructions
@@ -22,7 +21,6 @@ $ cd box-idiomes-4
 $ cp env.dist .env
 $ nano .env
 $ composer install
-$ yarn install
 $ php bin/console messenger:consume async --env=prod
 ```
 
@@ -38,6 +36,7 @@ $ ./scripts/developer-tools/run-test.sh
 #### Developer important notes
 
 * Read about how to start a local web server instance [here](https://symfony.com/doc/current/setup/symfony_server.html)
+* For now there is a problem with Fullcalendar v6 ES6 modules loading that makes impossible to execute `importmap:update` command
 
 #### Messenger queues
 
