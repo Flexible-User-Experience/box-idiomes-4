@@ -28,7 +28,6 @@ twig:
         boss_name:                  '%boss_name%'
         boss_dni:                   '%boss_dni%'
         boss_city:                  '%boss_city%'
-        admin_logo:                 '%admin_logo%'
         admin_color:                '%admin_color%'
         admin_is_stage:             '%admin_is_stage%'
         admin_tag_version:          'v5.8.01' # -> remember to change asset version in config/packages/liip_imagine.yaml too
