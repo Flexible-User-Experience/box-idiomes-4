@@ -1,6 +1,5 @@
 liip_imagine:
     driver: 'gd'
-    cache: 'format_extension'
     loaders:
         default:
             filesystem:
@@ -11,8 +10,6 @@ liip_imagine:
     twig:
         mode: 'lazy'
         assets_version: 'v508001'
-    default_filter_set_settings:
-        format: 'webp'
     filter_sets:
         cache: ~
         585x756_teacher_mask:

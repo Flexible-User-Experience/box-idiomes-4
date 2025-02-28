@@ -1,11 +1,14 @@
 Changelog
 =========
 
-##### Version 5.7.01 (WIP)
+##### Version 5.8.02 (WIP)
  * fix bugs
+
+##### Version 5.8.01 (2025-02-28)
  * apply Liip versioning
  * fix Routing problem in events-student-assistance Stimulus controller
- * load Catalan locale in fullcalendar
+ * load Catalan locale in Fullcalendar JS
+ * upgrade PHP up to minimum version 8.4
 
 ##### Version 5.8.00 (2025-02-16)
  * Symfony v6.4 LTS upgrade

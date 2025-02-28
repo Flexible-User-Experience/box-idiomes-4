@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Receipt;
 use App\Entity\Student;
-use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
@@ -164,7 +163,7 @@ final class ReceiptRepository extends ServiceEntityRepository
         return $this->findByIdsArrayQ($ids)->getResult();
     }
 
-    public function getMonthlyIncomingsAmountForDate(DateTimeInterface $date): int
+    public function getMonthlyIncomingsAmountForDate(\DateTimeInterface $date): float
     {
         $query = $this->createQueryBuilder('r')
             ->select('SUM(r.baseAmount) as amount')
@@ -175,6 +174,6 @@ final class ReceiptRepository extends ServiceEntityRepository
             ->getQuery()
         ;
 
-        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0 : (float) $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
+        return is_null($query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)) ? 0.0 : (float) $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 }
