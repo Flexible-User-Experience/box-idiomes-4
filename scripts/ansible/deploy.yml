@@ -10,7 +10,7 @@
     # ansistrano deploys config
     ansistrano_deploy_from: "{{ playbook_dir }}/../../"
     ansistrano_deploy_to: "{{ vhost_path_prod }}"
-    ansistrano_keep_releases: 6
+    ansistrano_keep_releases: 3
     # ansistrano shared resources
     ansistrano_shared_paths:
       - "var/log"
