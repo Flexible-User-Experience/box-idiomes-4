@@ -12,7 +12,7 @@ framework:
                     multiplier: 2
             failed: 'doctrine://default?queue_name=failed'
         routing:
-            App\Message\NewMailingStudentsNotificationMessageHandler: 'async'
+            App\Message\NewMailingStudentsNotificationMessage: 'async'
             App\Message\NewReceiptCreatedEmailMessage: 'async'
             App\Message\NewReceiptGroupCreatedMessage: 'async'
             Symfony\Component\Mailer\Messenger\SendEmailMessage: 'async'
