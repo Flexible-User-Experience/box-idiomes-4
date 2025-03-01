@@ -1,8 +1,11 @@
 Changelog
 =========
 
-##### Version 5.8.02 (WIP)
+##### Version 5.8.03 (WIP)
  * fix bugs
+
+##### Version 5.8.02 (2025-03-01)
+ * fix missing composer require symfony/doctrine-messenger dependency problem
 
 ##### Version 5.8.01 (2025-02-28)
  * apply Liip versioning
