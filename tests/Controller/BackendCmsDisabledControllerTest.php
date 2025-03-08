@@ -50,7 +50,7 @@ class BackendCmsDisabledControllerTest extends WebTestCase
     public static function provideForbiddenUrls(): array
     {
         return array(
-//            array('/admin/dashboard'),
+            array('/admin/dashboard'),
             array('/admin/contacts/message/list'),
             array('/admin/contacts/message/1/show'),
             array('/admin/contacts/message/1/answer'),
@@ -145,12 +145,6 @@ class BackendCmsDisabledControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * Test HTTP request is not found.
-     *
-     *
-     * @param string $url
-     */
     #[DataProvider('provideNotFoundUrls')]
     public function testAdminPagesAreNotFound(string $url): void
     {
@@ -160,11 +154,6 @@ class BackendCmsDisabledControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(404);
     }
 
-    /**
-     * Not found Urls provider.
-     *
-     * @return array
-     */
     public static function provideNotFoundUrls(): array
     {
         return array(
