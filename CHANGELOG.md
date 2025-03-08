@@ -3,6 +3,7 @@ Changelog
 
 ##### Version 5.8.03 (WIP)
  * fix bugs
+ * add more ROLE user cases into testing suite
 
 ##### Version 5.8.02 (2025-03-01)
  * fix missing composer require symfony/doctrine-messenger dependency problem
