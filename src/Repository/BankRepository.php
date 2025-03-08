@@ -16,7 +16,7 @@ final class BankRepository extends ServiceEntityRepository
         parent::__construct($registry, Bank::class);
     }
 
-    public function getStudentRelatedItemsQB(Student $student = null): QueryBuilder
+    public function getStudentRelatedItemsQB(?Student $student = null): QueryBuilder
     {
         $qb = $this->createQueryBuilder('b');
         if ($student instanceof Student && !is_null($student->getId())) {
@@ -33,12 +33,12 @@ final class BankRepository extends ServiceEntityRepository
         return $qb;
     }
 
-    public function getStudentRelatedItemsQ(Student $student = null): Query
+    public function getStudentRelatedItemsQ(?Student $student = null): Query
     {
         return $this->getStudentRelatedItemsQB($student)->getQuery();
     }
 
-    public function getStudentRelatedItems(Student $student = null): array
+    public function getStudentRelatedItems(?Student $student = null): array
     {
         return $this->getStudentRelatedItemsQ($student)->getResult();
     }

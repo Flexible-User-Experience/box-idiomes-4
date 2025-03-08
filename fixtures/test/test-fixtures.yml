@@ -318,6 +318,15 @@ App\Entity\Provider:
 
 ## Users
 App\Entity\User:
+  sper_admin:
+    username: sper_admin
+    usernameCanonical: sper_admin
+    plainPassword: passwd
+    email: sper_admin@email.com
+    emailCanonical: sper_admin@email.com
+    enabled: true
+    roles:
+      - ROLE_SUPER_ADMIN
   admin:
     username: admin
     usernameCanonical: admin
@@ -326,4 +335,22 @@ App\Entity\User:
     emailCanonical: admin@email.com
     enabled: true
     roles:
-      - ROLE_SUPER_ADMIN
+      - ROLE_ADMIN
+  teacher:
+    username: teacher
+    usernameCanonical: teacher
+    plainPassword: passwd
+    email: teacher@email.com
+    emailCanonical: teacher@email.com
+    enabled: true
+    roles:
+      - ROLE_MANAGER
+  cms:
+    username: cms
+    usernameCanonical: cms
+    plainPassword: passwd
+    email: cms@email.com
+    emailCanonical: cms@email.com
+    enabled: true
+    roles:
+      - ROLE_CMS
