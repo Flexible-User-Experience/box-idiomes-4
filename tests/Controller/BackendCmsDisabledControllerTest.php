@@ -23,7 +23,6 @@ class BackendCmsDisabledControllerTest extends WebTestCase
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
-
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -153,7 +152,6 @@ class BackendCmsDisabledControllerTest extends WebTestCase
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
-
         self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 

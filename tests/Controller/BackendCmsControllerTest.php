@@ -23,7 +23,6 @@ class BackendCmsControllerTest extends WebTestCase
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
-
         self::assertResponseIsSuccessful();
     }
 
@@ -49,7 +48,6 @@ class BackendCmsControllerTest extends WebTestCase
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
-
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
@@ -164,7 +162,6 @@ class BackendCmsControllerTest extends WebTestCase
     {
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
-
         self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 
