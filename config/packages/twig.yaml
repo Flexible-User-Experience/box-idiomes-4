@@ -30,7 +30,7 @@ twig:
         boss_city:                  '%boss_city%'
         admin_color:                '%admin_color%'
         admin_is_stage:             '%admin_is_stage%'
-        admin_tag_version:          'v5.8.03' # -> remember to change asset version in config/packages/liip_imagine.yaml too
+        admin_tag_version:          'v5.8.04' # -> remember to change asset version in config/packages/liip_imagine.yaml too
 
 when@test:
     twig:
