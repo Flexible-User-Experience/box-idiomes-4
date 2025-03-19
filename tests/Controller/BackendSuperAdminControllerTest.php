@@ -26,7 +26,7 @@ class BackendSuperAdminControllerTest extends WebTestCase
 
     public static function provideSuccessfulUrls(): array
     {
-        return array(
+        return [
             ['/admin/dashboard'],
             ['/admin/students/student/list'],
             ['/admin/students/student/create'],
@@ -40,7 +40,6 @@ class BackendSuperAdminControllerTest extends WebTestCase
             ['/admin/students/absence/create'],
             ['/admin/students/absence/1/edit'],
             ['/admin/students/absence/1/delete'],
-            // ['/admin/students/absence/1/notification'], // -> 302 redirect
             ['/admin/students/parent/list'],
             ['/admin/students/parent/create'],
             ['/admin/students/parent/1/edit'],
@@ -78,11 +77,8 @@ class BackendSuperAdminControllerTest extends WebTestCase
             ['/admin/billings/receipt/1/edit'],
             ['/admin/billings/receipt/1/delete'],
             ['/admin/billings/receipt/generate'],
-//            ['/admin/billings/receipt/1/create-invoice'], // -> 302 redirect
 //            ['/admin/billings/receipt/1/reminder-pdf'], // avoid PDF to String -> output
-//            ['/admin/billings/receipt/1/reminder-send'], // -> 302 redirect
 //            ['/admin/billings/receipt/1/pdf'], // avoid PDF to String -> output
-//            ['/admin/billings/receipt/1/send'], // -> 302 redirect
             ['/admin/billings/receipt/1/generate-direct-debit-xml'],
             ['/admin/billings/receipt-line/list'],
             ['/admin/billings/receipt-line/create'],
@@ -94,9 +90,7 @@ class BackendSuperAdminControllerTest extends WebTestCase
             ['/admin/billings/invoice/create'],
             ['/admin/billings/invoice/1/edit'],
             ['/admin/billings/invoice/1/delete'],
-//            ['/admin/billings/invoice/1/duplicate'], // -> 302 redirect
 //            ['/admin/billings/invoice/1/pdf'], // avoid PDF to String -> output
-//            ['/admin/billings/invoice/1/send'], // -> 302 redirect
             ['/admin/billings/invoice/1/generate-direct-debit-xml'],
             ['/admin/billings/invoice-line/list'],
             ['/admin/billings/invoice-line/create'],
@@ -113,7 +107,6 @@ class BackendSuperAdminControllerTest extends WebTestCase
             ['/admin/purchases/spending/create'],
             ['/admin/purchases/spending/1/edit'],
             ['/admin/purchases/spending/1/delete'],
-//            ['/admin/purchases/spending/1/duplicate'], // -> 302 redirect
             ['/admin/contacts/message/list'],
             ['/admin/contacts/message/1/delete'],
             ['/admin/contacts/message/1/show'],
@@ -140,7 +133,7 @@ class BackendSuperAdminControllerTest extends WebTestCase
             ['/admin/administrations/bank/1/delete'],
             ['/admin/fitxers/gestor'],
             ['/admin/fitxers/gestor/handler/?conf=default'],
-        );
+        ];
     }
 
     #[DataProvider('provideNotFoundUrls')]
@@ -153,7 +146,7 @@ class BackendSuperAdminControllerTest extends WebTestCase
 
     public static function provideNotFoundUrls(): array
     {
-        return array(
+        return [
             ['/admin/students/student/batch'],
             ['/admin/students/absence/batch'],
             ['/admin/students/parent/1/delete'],
@@ -187,7 +180,28 @@ class BackendSuperAdminControllerTest extends WebTestCase
             ['/admin/administrations/province/batch'],
             ['/admin/administrations/province/1/delete'],
             ['/admin/administrations/city/1/delete'],
-        );
+        ];
+    }
+
+    #[DataProvider('provideRedirectUrls')]
+    public function testAdminPagesAreRedirect(string $url): void
+    {
+        $client = $this->getAuthenticatedClient();
+        $client->request('GET', $url);
+        self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
+    }
+
+    public static function provideRedirectUrls(): array
+    {
+        return [
+            ['/admin/students/absence/1/notification'],
+            ['/admin/billings/receipt/1/create-invoice'],
+            ['/admin/billings/receipt/1/reminder-send'],
+            ['/admin/billings/receipt/1/send'],
+            ['/admin/billings/invoice/1/duplicate'],
+            ['/admin/billings/invoice/1/send'],
+            ['/admin/purchases/spending/1/duplicate'],
+        ];
     }
 
     private function getAuthenticatedClient(): KernelBrowser
