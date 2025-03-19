@@ -3,15 +3,17 @@
 namespace App\Controller\Admin;
 
 use App\Entity\StudentAbsence;
+use App\Enum\UserRolesEnum;
 use App\Service\NotificationService;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class StudentAbsenceAdminController extends CRUDController
 {
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function notificationAction(Request $request, EntityManagerInterface $em, NotificationService $messenger): RedirectResponse
     {
         $this->assertObjectExists($request, true);
@@ -24,7 +26,7 @@ final class StudentAbsenceAdminController extends CRUDController
         $this->admin->checkAccess('show', $object);
         $object
             ->setHasBeenNotified(true)
-            ->setNotificationDate(new DateTimeImmutable())
+            ->setNotificationDate(new \DateTimeImmutable())
         ;
         $em->flush();
         $messenger->sendStudentAbsenceNotification($object);

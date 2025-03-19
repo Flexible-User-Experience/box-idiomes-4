@@ -2,9 +2,7 @@
 
 namespace App\Enum;
 
-use DateTimeImmutable;
-
-class SchoolYearChoicesGeneratorEnum
+final class SchoolYearChoicesGeneratorEnum
 {
     public static function getSchoolYearChoicesArray(): array
     {
@@ -14,7 +12,7 @@ class SchoolYearChoicesGeneratorEnum
     public static function getReversedSchoolYearChoicesArray(): array
     {
         $result = [];
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $currentYear = (int) $now->format('Y');
         if (12 === (int) $now->format('m') && 15 < (int) $now->format('d')) {
             ++$currentYear;

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\BankCreditorSepa;
 use App\Entity\Receipt;
 use App\Enum\StudentPaymentEnum;
+use App\Enum\UserRolesEnum;
 use App\Form\Model\GenerateReceiptModel;
 use App\Form\Type\GenerateReceiptType;
 use App\Form\Type\GenerateReceiptYearMonthChooserType;
@@ -22,9 +23,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ReceiptAdminController extends AbstractAdminController
 {
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function generateAction(Request $request): Response
     {
         // year & month chooser form
@@ -57,6 +60,7 @@ final class ReceiptAdminController extends AbstractAdminController
         );
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function creatorAction(Request $request): RedirectResponse
     {
         $generateReceipt = $this->grfm->transformRequestArrayToModel($request->get('generate_receipt'));
@@ -76,6 +80,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function createInvoiceAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
@@ -93,6 +98,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function reminderAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
@@ -110,6 +116,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function sendReminderAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
@@ -133,6 +140,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function pdfAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
@@ -147,6 +155,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function sendAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
@@ -175,6 +184,7 @@ final class ReceiptAdminController extends AbstractAdminController
     /**
      * @throws InvalidArgumentException
      */
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function generateDirectDebitAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
@@ -205,6 +215,7 @@ final class ReceiptAdminController extends AbstractAdminController
         return $response;
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function batchActionGeneratereminderspdf(ProxyQueryInterface $query, ParameterBagInterface $parameterBag): Response
     {
         $this->admin->checkAccess('edit');
@@ -233,6 +244,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function batchActionGeneratesepaxmls(ProxyQueryInterface $query, MessageBusInterface $bus): Response
     {
         $this->admin->checkAccess('edit');
@@ -285,6 +297,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function batchActionMarkaspayed(ProxyQueryInterface $query): RedirectResponse
     {
         $this->admin->checkAccess('edit');

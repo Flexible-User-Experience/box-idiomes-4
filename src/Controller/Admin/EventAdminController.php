@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\EventStudent;
 use App\Entity\Student;
 use App\Entity\StudentAbsence;
+use App\Enum\UserRolesEnum;
 use App\Form\Type\EventBatchRemoveType;
 use App\Form\Type\EventType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class EventAdminController extends AbstractAdminController
 {
@@ -32,11 +34,7 @@ final class EventAdminController extends AbstractAdminController
         return parent::editAction($request);
     }
 
-    /**
-     * Edit event and all the next related events action.
-     *
-     * @throws \Exception
-     */
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function batcheditAction(Request $request): Response
     {
         $object = $this->getEvent($request);
@@ -94,9 +92,7 @@ final class EventAdminController extends AbstractAdminController
         );
     }
 
-    /**
-     * Delete event and all the next related events action.
-     */
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function batchdeleteAction(Request $request): Response
     {
         $object = $this->getEvent($request);
@@ -200,9 +196,7 @@ final class EventAdminController extends AbstractAdminController
         );
     }
 
-    /**
-     * API GET action.
-     */
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function apigetAction(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get($this->admin->getIdParameter());
@@ -251,9 +245,7 @@ final class EventAdminController extends AbstractAdminController
         return new JsonResponse($resonse);
     }
 
-    /**
-     * API attended action.
-     */
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function apiattendedclassAction(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $event = $this->getEvent($request);
@@ -267,9 +259,7 @@ final class EventAdminController extends AbstractAdminController
         return $this->commonAttendedClass($event, $student, true);
     }
 
-    /**
-     * API not attended action.
-     */
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function apinotattendedclassAction(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $event = $this->getEvent($request);
@@ -290,7 +280,7 @@ final class EventAdminController extends AbstractAdminController
         return $this->commonAttendedClass($event, $student, false);
     }
 
-    public function commonAttendedClass(Event $event, Student $student, bool $attended, ?int $studentAbsenceId = null): JsonResponse
+    private function commonAttendedClass(Event $event, Student $student, bool $attended, ?int $studentAbsenceId = null): JsonResponse
     {
         $searchedEventStudent = $this->mr->getManager()->getRepository(EventStudent::class)->findOneBy([
             'event' => $event,

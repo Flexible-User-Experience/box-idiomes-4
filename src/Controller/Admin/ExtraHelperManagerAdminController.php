@@ -3,15 +3,18 @@
 namespace App\Controller\Admin;
 
 use App\Entity\AbstractBase;
+use App\Enum\UserRolesEnum;
 use App\Manager\EventManager;
 use App\Pdf\ExportCalendarToListBuilderPdf;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ExtraHelperManagerAdminController extends CRUDController
 {
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function exportCalendarPdfListAction(EventManager $ems, ExportCalendarToListBuilderPdf $eclb, TranslatorInterface $ts, ParameterBagInterface $parameterBag, string $start, string $end): Response
     {
         $startDate = \DateTime::createFromFormat(AbstractBase::DATABASE_DATE_STRING_FORMAT, $start);

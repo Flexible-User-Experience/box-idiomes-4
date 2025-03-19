@@ -2,13 +2,13 @@
 
 namespace App\Enum;
 
-class TeacherAbsenceTypeEnum
+final class TeacherAbsenceTypeEnum
 {
-    public const PERSONAL_ISSUES = 0;
-    public const TRAINING = 1;
-    public const OTHER_ISSUES = 2;
-    public const HOLIDAYS = 3;
-    public const SICK_LEAVE = 4;
+    public const int PERSONAL_ISSUES = 0;
+    public const int TRAINING = 1;
+    public const int OTHER_ISSUES = 2;
+    public const int HOLIDAYS = 3;
+    public const int SICK_LEAVE = 4;
 
     public static function getEnumArray(): array
     {
