@@ -24,7 +24,7 @@ class BackendCmsDisabledControllerTest extends WebTestCase
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
 
     public static function provideForbiddenUrls(): array

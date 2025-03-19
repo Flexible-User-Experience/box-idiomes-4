@@ -35,6 +35,12 @@ class BackendCmsControllerTest extends WebTestCase
             ['/admin/teachers/teacher/create'],
             ['/admin/teachers/teacher/1/edit'],
             ['/admin/teachers/teacher/1/detail'],
+            ['/admin/contacts/message/list'],
+            ['/admin/contacts/message/1/delete'],
+            ['/admin/contacts/message/1/show'],
+            ['/admin/contacts/message/1/answer'],
+            ['/admin/contacts/newsletter/list'],
+            ['/admin/contacts/newsletter/1/show'],
         ];
     }
 
@@ -132,13 +138,6 @@ class BackendCmsControllerTest extends WebTestCase
             ['/admin/purchases/spending/1/edit'],
             ['/admin/purchases/spending/1/delete'],
             ['/admin/purchases/spending/1/duplicate'],
-            ['/admin/contacts/message/list'],
-            ['/admin/contacts/message/1/delete'],
-            ['/admin/contacts/message/1/show'],
-            ['/admin/contacts/message/1/answer'],
-            ['/admin/contacts/newsletter/list'],
-            ['/admin/contacts/newsletter/1/show'],
-            ['/admin/contacts/newsletter/1/answer'],
             ['/admin/administrations/bank-creditor-sepa/list'],
             ['/admin/administrations/bank-creditor-sepa/create'],
             ['/admin/administrations/bank-creditor-sepa/1/edit'],
