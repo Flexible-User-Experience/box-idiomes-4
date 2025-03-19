@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class SpendingAdminController extends CRUDController
 {
-    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function duplicateAction(Request $request, EntityManagerInterface $em): Response
     {
         $this->assertObjectExists($request, true);

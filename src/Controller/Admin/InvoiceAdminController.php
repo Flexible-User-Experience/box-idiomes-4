@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class InvoiceAdminController extends AbstractAdminController
 {
-    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function pdfAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
@@ -34,7 +34,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return new Response($pdf->Output($parameterBag->get('project_export_filename').'_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
-    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function sendAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
@@ -60,7 +60,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function generateDirectDebitAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
@@ -91,7 +91,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return $response;
     }
 
-    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function duplicateAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
@@ -140,7 +140,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function batchActionGeneratesepaxmls(ProxyQueryInterface $query): Response
     {
         $this->admin->checkAccess('edit');

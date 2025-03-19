@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -192,5 +193,13 @@ class BackendTeacherDisabledControllerTest extends WebTestCase
             ['/admin/administrations/province/1/delete'],
             ['/admin/administrations/city/1/delete'],
         ];
+    }
+
+    private function getAuthenticatedClient(): KernelBrowser
+    {
+        return WebTestCase::createClient([], [
+            'PHP_AUTH_USER' => 'teacher_disabled@email.com',
+            'PHP_AUTH_PW'   => 'passwd',
+        ]);
     }
 }
