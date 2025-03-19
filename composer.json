@@ -27,7 +27,7 @@
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.6",
         "friendsofsymfony/jsrouting-bundle": "^3.5",
-        "knplabs/knp-paginator-bundle": "^6.6",
+        "knplabs/knp-paginator-bundle": "^6.7",
         "league/html-to-markdown": "^5.1",
         "liip/imagine-bundle": "^2.13",
         "nelexa/zip": "^4.0",
@@ -35,7 +35,7 @@
         "phpoffice/phpspreadsheet": "^1.29",
         "phpstan/phpdoc-parser": "^1.33",
         "qipsius/tcpdf-bundle": "^2.0",
-        "sonata-project/admin-bundle": "^4.35",
+        "sonata-project/admin-bundle": "^4.36",
         "sonata-project/doctrine-orm-admin-bundle": "^4.18",
         "stof/doctrine-extensions-bundle": "^1.13",
         "symfony/asset": "6.4.*",
@@ -85,7 +85,7 @@
         "vich/uploader-bundle": "^2.5"
     },
     "require-dev": {
-        "hautelook/alice-bundle": "^2.14",
+        "hautelook/alice-bundle": "^2.15",
         "phpunit/phpunit": "^10.5",
         "rector/rector": "^1.2",
         "roave/security-advisories": "dev-latest",
