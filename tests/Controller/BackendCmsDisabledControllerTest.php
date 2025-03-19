@@ -24,13 +24,13 @@ class BackendCmsDisabledControllerTest extends WebTestCase
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
 
-        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
     public static function provideForbiddenUrls(): array
     {
         return [
-//            ['/admin/dashboard'],
+            ['/admin/dashboard'],
             ['/admin/students/student/list'],
             ['/admin/students/student/create'],
             ['/admin/students/student/1/edit'],
@@ -39,6 +39,7 @@ class BackendCmsDisabledControllerTest extends WebTestCase
             ['/admin/students/student/1/image-rights'],
             ['/admin/students/student/1/sepa-agreement'],
             ['/admin/students/student/mailing'],
+            ['/admin/students/student/batch'],
             ['/admin/teachers/absence/list'],
             ['/admin/teachers/absence/create'],
             ['/admin/teachers/absence/1/edit'],
@@ -159,7 +160,7 @@ class BackendCmsDisabledControllerTest extends WebTestCase
     public static function provideNotFoundUrls(): array
     {
         return [
-            ['/admin/students/student/batch'],
+
             ['/admin/students/absence/batch'],
             ['/admin/students/parent/1/delete'],
             ['/admin/students/parent/1/show'],
