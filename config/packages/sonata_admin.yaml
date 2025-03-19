@@ -29,10 +29,13 @@ sonata_admin:
             Alumnes:
                 icon:     '<i class="fa fa-graduation-cap"></i>'
                 provider: 'backend_students_menu'
+                roles:    [ 'ROLE_MANAGER' ]
             Professors:
                 icon:     '<i class="fa fa-user"></i>'
+                roles:    [ 'ROLE_CMS', 'ROLE_MANAGER' ]
             Aules:
                 icon:     '<i class="fa fa-window-maximize"></i>'
+                roles:    [ 'ROLE_MANAGER' ]
             Facturació:
                 icon:     '<i class="fa fa-eur"></i>'
                 provider: 'backend_invoice_menu'
@@ -46,8 +49,10 @@ sonata_admin:
                 roles:    [ 'ROLE_MANAGER' ]
             Contactes:
                 icon:     '<i class="fa fa-envelope"></i>'
+                roles:    [ 'ROLE_CMS', 'ROLE_MANAGER' ]
             Configuració:
                 icon:     '<i class="fa fa-cogs"></i>'
+                roles:    [ 'ROLE_ADMIN' ]
         blocks:
             -
                 position: 'top'

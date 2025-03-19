@@ -160,7 +160,6 @@ class BackendCmsDisabledControllerTest extends WebTestCase
     public static function provideNotFoundUrls(): array
     {
         return [
-
             ['/admin/students/absence/batch'],
             ['/admin/students/parent/1/delete'],
             ['/admin/students/parent/1/show'],
