@@ -67,12 +67,10 @@ class BackendTeacherControllerTest extends WebTestCase
             ['/admin/classrooms/timetable/2/api/get'],
             ['/admin/classrooms/timetable/2/api/1/attended-the-class'],
             ['/admin/classrooms/timetable/2/api/1/not-attended-the-class'],
-
             ['/admin/contacts/message/list'],
             ['/admin/contacts/message/1/delete'],
             ['/admin/contacts/message/1/show'],
             ['/admin/contacts/message/1/answer'],
-
             ['/admin/administrations/bank/list'],
             ['/admin/administrations/bank/create'],
             ['/admin/administrations/bank/1/edit'],

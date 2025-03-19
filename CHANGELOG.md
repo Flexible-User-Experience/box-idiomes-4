@@ -5,6 +5,7 @@ Changelog
  * fix bugs
  * add more ROLE user cases into testing suite
  * add UserChecker to prevent not enabled User logins
+ * battle-tested controllers level
 
 ##### Version 5.8.02 (2025-03-01)
  * fix missing composer require symfony/doctrine-messenger dependency problem
