@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Enum\StudentPaymentEnum;
+use App\Enum\UserRolesEnum;
 use App\Kernel;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -14,9 +15,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class InvoiceAdminController extends AbstractAdminController
 {
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function pdfAction(Request $request, ParameterBagInterface $parameterBag): Response
     {
         $this->assertObjectExists($request, true);
@@ -28,12 +31,10 @@ final class InvoiceAdminController extends AbstractAdminController
         }
         $pdf = $this->ibp->build($object);
 
-        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
-    /**
-     * Send PDF invoice action.
-     */
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function sendAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
@@ -59,9 +60,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
-    /**
-     * Generate SEPA direct debit XML action.
-     */
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function generateDirectDebitAction(Request $request): Response
     {
         $this->assertObjectExists($request, true);
@@ -79,19 +78,20 @@ final class InvoiceAdminController extends AbstractAdminController
         ;
         $this->mr->getManager()->flush();
         if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
-            return new Response($xml, 200, ['Content-type' => 'application/xml']);
+            return new Response($xml, Response::HTTP_OK, ['Content-type' => 'application/xml']);
         }
         $now = new \DateTimeImmutable();
         $fileSystem = new Filesystem();
         $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoice_'.$now->format('Y-m-d_H-i').'.xml';
         $fileSystem->touch($fileNamePath);
         $fileSystem->dumpFile($fileNamePath, $xml);
-        $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
+        $response = new BinaryFileResponse($fileNamePath, Response::HTTP_OK, ['Content-type' => 'application/xml']);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
         return $response;
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function duplicateAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
@@ -140,6 +140,7 @@ final class InvoiceAdminController extends AbstractAdminController
         return $this->redirectToList();
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function batchActionGeneratesepaxmls(ProxyQueryInterface $query): Response
     {
         $this->admin->checkAccess('edit');
@@ -158,14 +159,14 @@ final class InvoiceAdminController extends AbstractAdminController
             }
             $this->mr->getManager()->flush();
             if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
-                return new Response($xmls, 200, ['Content-type' => 'application/xml']);
+                return new Response($xmls, Response::HTTP_OK, ['Content-type' => 'application/xml']);
             }
             $now = new \DateTimeImmutable();
             $fileSystem = new Filesystem();
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoices_'.$now->format('Y-m-d_H-i').'.xml';
             $fileSystem->touch($fileNamePath);
             $fileSystem->dumpFile($fileNamePath, $xmls);
-            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
+            $response = new BinaryFileResponse($fileNamePath, Response::HTTP_OK, ['Content-type' => 'application/xml']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;

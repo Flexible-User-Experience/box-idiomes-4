@@ -7,6 +7,7 @@ use App\Entity\MailingStudentsNotificationMessage;
 use App\Entity\Student;
 use App\Entity\Teacher;
 use App\Entity\TrainingCenter;
+use App\Enum\UserRolesEnum;
 use App\Form\Model\FilterCalendarEventModel;
 use App\Form\Type\FilterStudentsMailingCalendarEventsType;
 use App\Form\Type\MailingStudentsNotificationMessageType;
@@ -22,9 +23,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class StudentAdminController extends AbstractAdminController
 {
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function imagerightsAction(Request $request, StudentImageRightsBuilderPdf $sirps): Response
     {
         $this->assertObjectExists($request, true);
@@ -36,9 +39,10 @@ final class StudentAdminController extends AbstractAdminController
         }
         $pdf = $sirps->build($object);
 
-        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function sepaagreementAction(Request $request, SepaAgreementBuilderPdf $saps): Response
     {
         $this->assertObjectExists($request, true);
@@ -50,7 +54,7 @@ final class StudentAdminController extends AbstractAdminController
         }
         $pdf = $saps->build($object);
 
-        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
     public function showAction(Request $request): Response
@@ -74,6 +78,7 @@ final class StudentAdminController extends AbstractAdminController
         );
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function mailingAction(Request $request): Response
     {
         $calendarEventsFilter = new FilterCalendarEventModel();

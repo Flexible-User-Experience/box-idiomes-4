@@ -174,7 +174,7 @@ services:
             - [ 'setTwigEnvironment', [ '@twig' ] ]
             - [ 'setFileService', [ '@App\Service\FileService' ] ]
     # Contacts
-    admin.contactmessage:
+    admin.contact_message:
         class: 'App\Admin\ContactMessageAdmin'
         tags:
             - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\ContactMessage', controller: 'App\Controller\Admin\ContactMessageAdminController', label: 'Missatge de contacte', group: 'Contactes' }
@@ -183,7 +183,7 @@ services:
             - [ 'setSecurityHelper', [ '@security.helper' ] ]
             - [ 'setTwigEnvironment', [ '@twig' ] ]
             - [ 'setFileService', [ '@App\Service\FileService' ] ]
-    admin.newslettercontact:
+    admin.newsletter_contact:
         class: 'App\Admin\NewsletterContactAdmin'
         tags:
             - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\NewsletterContact', label: 'Butlletí de contacte', group: 'Contactes' }

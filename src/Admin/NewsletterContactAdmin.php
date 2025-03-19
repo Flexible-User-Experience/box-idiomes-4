@@ -29,7 +29,6 @@ final class NewsletterContactAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection
-            ->add('answer', $this->getRouterIdParameter().'/answer')
             ->remove('create')
             ->remove('edit')
             ->remove('delete')

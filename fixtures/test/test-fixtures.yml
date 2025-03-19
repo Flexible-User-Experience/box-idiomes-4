@@ -318,6 +318,15 @@ App\Entity\Provider:
 
 ## Users
 App\Entity\User:
+  super_admin:
+    username: super_admin
+    usernameCanonical: super_admin
+    plainPassword: passwd
+    email: super_admin@email.com
+    emailCanonical: super_admin@email.com
+    enabled: true
+    roles:
+      - ROLE_SUPER_ADMIN
   admin:
     username: admin
     usernameCanonical: admin
@@ -326,4 +335,49 @@ App\Entity\User:
     emailCanonical: admin@email.com
     enabled: true
     roles:
-      - ROLE_SUPER_ADMIN
+      - ROLE_ADMIN
+  admin_disabled:
+    username: admin_disabled
+    usernameCanonical: admin_disabled
+    plainPassword: passwd
+    email: admin_disabled@email.com
+    emailCanonical: admin_disabled@email.com
+    enabled: false
+    roles:
+      - ROLE_ADMIN
+  teacher:
+    username: teacher
+    usernameCanonical: teacher
+    plainPassword: passwd
+    email: teacher@email.com
+    emailCanonical: teacher@email.com
+    enabled: true
+    roles:
+      - ROLE_MANAGER
+  teacher_disabled:
+    username: teacher_disabled
+    usernameCanonical: teacher_disabled
+    plainPassword: passwd
+    email: teacher_disabled@email.com
+    emailCanonical: teacher_disabled@email.com
+    enabled: false
+    roles:
+      - ROLE_MANAGER
+  cms:
+    username: cms
+    usernameCanonical: cms
+    plainPassword: passwd
+    email: cms@email.com
+    emailCanonical: cms@email.com
+    enabled: true
+    roles:
+      - ROLE_CMS
+  cms_disabled:
+    username: cms_disabled
+    usernameCanonical: cms_disabled
+    plainPassword: passwd
+    email: cms_disabled@email.com
+    emailCanonical: cms_disabled@email.com
+    enabled: false
+    roles:
+      - ROLE_CMS

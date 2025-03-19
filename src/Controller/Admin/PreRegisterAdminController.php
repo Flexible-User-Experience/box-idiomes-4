@@ -4,20 +4,21 @@ namespace App\Controller\Admin;
 
 use App\Entity\PreRegister;
 use App\Entity\Student;
-use DateTimeImmutable;
+use App\Enum\UserRolesEnum;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class PreRegisterAdminController extends CRUDController
 {
     /**
      * Create new Student from PreRegister record action.
      */
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function studentAction(Request $request, EntityManagerInterface $em): Response
     {
         $this->assertObjectExists($request, true);
@@ -41,7 +42,7 @@ final class PreRegisterAdminController extends CRUDController
                 ->setPhone($object->getPhone())
                 ->setEmail($object->getEmail())
                 ->setComments($object->getComments())
-                ->setBirthDate(new DateTimeImmutable())
+                ->setBirthDate(new \DateTimeImmutable())
             ;
             $em->persist($student);
             $this->addFlash('success', 'S\'ha creat un nou alumne correctament.');
@@ -51,6 +52,7 @@ final class PreRegisterAdminController extends CRUDController
         return $this->redirectToList();
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function batchActionGeneratestudents(ProxyQueryInterface $query, EntityManagerInterface $em): RedirectResponse
     {
         $this->admin->checkAccess('show');
@@ -71,7 +73,7 @@ final class PreRegisterAdminController extends CRUDController
                         ->setPhone($selectedModel->getPhone())
                         ->setEmail($selectedModel->getEmail())
                         ->setComments($selectedModel->getComments())
-                        ->setBirthDate(new DateTimeImmutable())
+                        ->setBirthDate(new \DateTimeImmutable())
                     ;
                     $em->persist($student);
                     ++$newStudentsCreated;
@@ -86,7 +88,7 @@ final class PreRegisterAdminController extends CRUDController
             } else {
                 $this->addFlash('success', 'S\'han creat '.$newStudentsCreated.' alumnes correctament.');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error inesperat al generar els alumnes seleccionats.');
             $this->addFlash('error', $e->getMessage());
         }

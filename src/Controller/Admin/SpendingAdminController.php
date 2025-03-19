@@ -3,14 +3,16 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Spending;
-use DateTimeImmutable;
+use App\Enum\UserRolesEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class SpendingAdminController extends CRUDController
 {
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN)]
     public function duplicateAction(Request $request, EntityManagerInterface $em): Response
     {
         $this->assertObjectExists($request, true);
@@ -23,7 +25,7 @@ final class SpendingAdminController extends CRUDController
         // new spending
         $newSpending = new Spending();
         $newSpending
-            ->setDate(new DateTimeImmutable())
+            ->setDate(new \DateTimeImmutable())
             ->setCategory($object->getCategory())
             ->setProvider($object->getProvider())
             ->setDescription($object->getDescription())

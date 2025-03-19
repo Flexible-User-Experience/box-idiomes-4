@@ -2,16 +2,16 @@
 
 namespace App\Enum;
 
-class EventClassroomTypeEnum
+final class EventClassroomTypeEnum
 {
-    public const CLASSROOM_1 = 0;
-    public const CLASSROOM_2 = 1;
-    public const CLASSROOM_3 = 2;
-    public const CLASSROOM_4 = 3;
-    public const CLASSROOM_5 = 4;
-    public const CLASSROOM_6 = 5;
-    public const CLASSROOM_7 = 6;
-    public const CLASSROOM_8 = 7;
+    public const int CLASSROOM_1 = 0;
+    public const int CLASSROOM_2 = 1;
+    public const int CLASSROOM_3 = 2;
+    public const int CLASSROOM_4 = 3;
+    public const int CLASSROOM_5 = 4;
+    public const int CLASSROOM_6 = 5;
+    public const int CLASSROOM_7 = 6;
+    public const int CLASSROOM_8 = 7;
 
     public static function getEnumArray(): array
     {

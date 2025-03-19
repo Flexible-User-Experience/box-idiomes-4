@@ -2,25 +2,25 @@
 
 namespace App\Enum;
 
-class TariffTypeEnum
+final class TariffTypeEnum
 {
-    public const TARIFF_ONE_HOUR_PER_WEEK = 0;
-    public const TARIFF_ONE_AND_A_HALF_HOUR_PER_WEEK = 3;
-    public const TARIFF_TWO_HOUR_PER_WEEK = 1;
-    public const TARIFF_TWO_AND_A_HALF_HOUR_PER_WEEK = 11;
-    public const TARIFF_THREE_HOUR_PER_WEEK = 2;
-    public const TARIFF_THREE_AND_A_HALF_HOUR_PER_WEEK = 6;
-    public const TARIFF_FOUR_HOUR_PER_WEEK = 7;
-    public const TARIFF_FOUR_AND_A_HALF_HOUR_PER_WEEK = 8;
-    public const TARIFF_FIVE_HOUR_PER_WEEK = 9;
-    public const TARIFF_FIVE_AND_A_HALF_HOUR_PER_WEEK = 10;
-    public const TARIFF_PRIVATE_LESSON_PER_HOUR = 4;
-    public const TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR = 5;
-    public const TARIFF_SPECIAL_TYPE = 12;
-    public const TARIFF_ONE_WEEK_INTESIVE = 13;
-    public const TARIFF_TWO_WEEKS_INTESIVE = 14;
-    public const TARIFF_THREE_WEEKS_INTESIVE = 15;
-    public const TARIFF_FOUR_FIVE_WEEKS_INTESIVE = 16;
+    public const int TARIFF_ONE_HOUR_PER_WEEK = 0;
+    public const int TARIFF_ONE_AND_A_HALF_HOUR_PER_WEEK = 3;
+    public const int TARIFF_TWO_HOUR_PER_WEEK = 1;
+    public const int TARIFF_TWO_AND_A_HALF_HOUR_PER_WEEK = 11;
+    public const int TARIFF_THREE_HOUR_PER_WEEK = 2;
+    public const int TARIFF_THREE_AND_A_HALF_HOUR_PER_WEEK = 6;
+    public const int TARIFF_FOUR_HOUR_PER_WEEK = 7;
+    public const int TARIFF_FOUR_AND_A_HALF_HOUR_PER_WEEK = 8;
+    public const int TARIFF_FIVE_HOUR_PER_WEEK = 9;
+    public const int TARIFF_FIVE_AND_A_HALF_HOUR_PER_WEEK = 10;
+    public const int TARIFF_PRIVATE_LESSON_PER_HOUR = 4;
+    public const int TARIFF_SHARED_PRIVATE_LESSON_PER_HOUR = 5;
+    public const int TARIFF_SPECIAL_TYPE = 12;
+    public const int TARIFF_ONE_WEEK_INTESIVE = 13;
+    public const int TARIFF_TWO_WEEKS_INTESIVE = 14;
+    public const int TARIFF_THREE_WEEKS_INTESIVE = 15;
+    public const int TARIFF_FOUR_FIVE_WEEKS_INTESIVE = 16;
 
     public static function getEnumArray(): array
     {

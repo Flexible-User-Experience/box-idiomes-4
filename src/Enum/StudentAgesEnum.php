@@ -2,26 +2,26 @@
 
 namespace App\Enum;
 
-class StudentAgesEnum
+final class StudentAgesEnum
 {
-    private const AGE_3 = 3;
-    private const AGE_4 = 4;
-    private const AGE_5 = 5;
-    private const AGE_6 = 6;
-    private const AGE_7 = 7;
-    private const AGE_8 = 8;
-    private const AGE_9 = 9;
-    private const AGE_10 = 10;
-    private const AGE_11 = 11;
-    private const AGE_12 = 12;
-    private const AGE_13 = 13;
-    private const AGE_14 = 14;
-    private const AGE_15 = 15;
-    private const AGE_16 = 16;
-    private const AGE_17 = 17;
-    private const AGE_18 = 18;
-    private const AGE_19 = 19;
-    public  const AGE_20_plus = 20;
+    private const int AGE_3 = 3;
+    private const int AGE_4 = 4;
+    private const int AGE_5 = 5;
+    private const int AGE_6 = 6;
+    private const int AGE_7 = 7;
+    private const int AGE_8 = 8;
+    private const int AGE_9 = 9;
+    private const int AGE_10 = 10;
+    private const int AGE_11 = 11;
+    private const int AGE_12 = 12;
+    private const int AGE_13 = 13;
+    private const int AGE_14 = 14;
+    private const int AGE_15 = 15;
+    private const int AGE_16 = 16;
+    private const int AGE_17 = 17;
+    private const int AGE_18 = 18;
+    private const int AGE_19 = 19;
+    public const int AGE_20_plus = 20;
 
     public static function getEnumArray(): array
     {

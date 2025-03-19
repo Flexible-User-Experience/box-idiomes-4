@@ -2,12 +2,12 @@
 
 namespace App\Enum;
 
-class TeacherColorEnum
+final class TeacherColorEnum
 {
-    public const MAGENTA = 0;
-    public const BLUE = 1;
-    public const YELLOW = 2;
-    public const GREEN = 3;
+    public const int MAGENTA = 0;
+    public const int BLUE = 1;
+    public const int YELLOW = 2;
+    public const int GREEN = 3;
 
     public static function getEnumArray(): array
     {

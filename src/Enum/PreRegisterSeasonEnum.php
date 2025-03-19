@@ -2,16 +2,16 @@
 
 namespace App\Enum;
 
-class PreRegisterSeasonEnum
+final class PreRegisterSeasonEnum
 {
-    public const SEASON_JULY_2020 = 0;
-    public const SEASON_SEPTEMBER_2020 = 1;
-    public const SEASON_JULY_2021 = 2;
-    public const SEASON_SEPTEMBER_2021 = 3;
-    public const SEASON_JULY_2022 = 4;
-    public const SEASON_SEPTEMBER_2022 = 5;
-    public const SEASON_JULY_2023 = 6;
-    public const SEASON_SEPTEMBER_2023 = 7;
+    public const int SEASON_JULY_2020 = 0;
+    public const int SEASON_SEPTEMBER_2020 = 1;
+    public const int SEASON_JULY_2021 = 2;
+    public const int SEASON_SEPTEMBER_2021 = 3;
+    public const int SEASON_JULY_2022 = 4;
+    public const int SEASON_SEPTEMBER_2022 = 5;
+    public const int SEASON_JULY_2023 = 6;
+    public const int SEASON_SEPTEMBER_2023 = 7;
 
     public static function getEnumArray(): array
     {

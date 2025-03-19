@@ -2,12 +2,12 @@
 
 namespace App\Enum;
 
-class StudentPaymentEnum
+final class StudentPaymentEnum
 {
-    public const BANK_ACCOUNT_NUMBER = 0;
-    public const CASH = 1;
-    public const BANK_TRANSFER = 2;
-    public const CREDIT_CARD = 3;
+    public const int BANK_ACCOUNT_NUMBER = 0;
+    public const int CASH = 1;
+    public const int BANK_TRANSFER = 2;
+    public const int CREDIT_CARD = 3;
 
     public static function getEnumArray(): array
     {
