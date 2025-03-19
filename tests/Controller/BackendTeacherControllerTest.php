@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class BackendControllerTest extends WebTestCase
+class BackendTeacherControllerTest extends WebTestCase
 {
     public function testAdminLoginPageIsSuccessful(): void
     {
@@ -180,7 +180,7 @@ class BackendControllerTest extends WebTestCase
     private function getAuthenticatedClient(): KernelBrowser
     {
         return WebTestCase::createClient([], [
-            'PHP_AUTH_USER' => 'admin@email.com',
+            'PHP_AUTH_USER' => 'teacher@email.com',
             'PHP_AUTH_PW'   => 'passwd',
         ]);
     }

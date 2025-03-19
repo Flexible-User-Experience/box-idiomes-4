@@ -336,6 +336,15 @@ App\Entity\User:
     enabled: true
     roles:
       - ROLE_ADMIN
+  admin_disabled:
+    username: admin_disabled
+    usernameCanonical: admin_disabled
+    plainPassword: passwd
+    email: admin_disabled@email.com
+    emailCanonical: admin_disabled@email.com
+    enabled: false
+    roles:
+      - ROLE_ADMIN
   teacher:
     username: teacher
     usernameCanonical: teacher
