@@ -125,7 +125,6 @@ class BackendCmsDisabledControllerTest extends WebTestCase
             ['/admin/contacts/message/1/answer'],
             ['/admin/contacts/newsletter/list'],
             ['/admin/contacts/newsletter/1/show'],
-            ['/admin/contacts/newsletter/1/answer'],
             ['/admin/administrations/bank-creditor-sepa/list'],
             ['/admin/administrations/bank-creditor-sepa/create'],
             ['/admin/administrations/bank-creditor-sepa/1/edit'],
