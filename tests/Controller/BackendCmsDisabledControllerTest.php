@@ -154,7 +154,7 @@ class BackendCmsDisabledControllerTest extends WebTestCase
         $client = $this->getAuthenticatedClient();
         $client->request('GET', $url);
 
-        self::assertResponseStatusCodeSame(404);
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 
     public static function provideNotFoundUrls(): array
