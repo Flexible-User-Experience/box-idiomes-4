@@ -1,8 +1,10 @@
 Changelog
 =========
 
-##### Version 5.8.03 (WIP)
+##### Version 5.8.04 (WIP)
  * fix bugs
+
+##### Version 5.8.03 (2025-03-19)
  * add more ROLE user cases into testing suite
  * add UserChecker to prevent not enabled User logins
  * battle-tested controllers level
