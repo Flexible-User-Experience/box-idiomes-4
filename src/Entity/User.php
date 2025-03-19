@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('username')]
 #[ORM\Table(name: 'admin_user')]
@@ -19,7 +18,6 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
 {
     public const string DEFAULT_ROLE_USER = UserRolesEnum::ROLE_USER;
 
-    
     #[ORM\ManyToOne(targetEntity: Teacher::class)]
     #[ORM\JoinColumn(name: 'teacher_id', referencedColumnName: 'id', nullable: true)]
     private ?Teacher $teacher = null;
@@ -30,7 +28,6 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
     #[ORM\Column(name: 'username_canonical', type: Types::STRING, length: 180, unique: true, nullable: false)]
     private string $usernameCanonical;
 
-    
     #[ORM\Column(name: 'email', type: Types::STRING, length: 180, nullable: false)]
     #[Assert\Email]
     private string $email;
@@ -240,7 +237,7 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
 
     public function getFullName(): string
     {
-        return $this->getFirstname() && $this->getLastname() ? $this->getFirstname().' '.$this->getLastname() : $this->getUsername();
+        return $this->getFirstname() && $this->getLastname() ? sprintf('%s %s', $this->getFirstname(), $this->getLastname()) : $this->getUsername();
     }
 
     public function getGender(): ?string
