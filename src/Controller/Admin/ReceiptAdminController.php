@@ -113,7 +113,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
         $pdf = $this->rbp->build($object);
 
-        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminder_'.$object->getSluggedReceiptNumber().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
     #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
@@ -152,7 +152,7 @@ final class ReceiptAdminController extends AbstractAdminController
         }
         $pdf = $this->rbp->build($object);
 
-        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_'.$object->getSluggedReceiptNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_'.$object->getSluggedReceiptNumber().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
     #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
@@ -202,14 +202,14 @@ final class ReceiptAdminController extends AbstractAdminController
         ;
         $this->mr->getManager()->flush();
         if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
-            return new Response($xml, 200, ['Content-type' => 'application/xml']);
+            return new Response($xml, Response::HTTP_OK, ['Content-type' => 'application/xml']);
         }
         $now = new \DateTimeImmutable();
         $fileSystem = new Filesystem();
         $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_receipt_'.$now->format('Y-m-d_H-i').'.xml';
         $fileSystem->touch($fileNamePath);
         $fileSystem->dumpFile($fileNamePath, $xml);
-        $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
+        $response = new BinaryFileResponse($fileNamePath, Response::HTTP_OK, ['Content-type' => 'application/xml']);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
         return $response;
@@ -231,7 +231,7 @@ final class ReceiptAdminController extends AbstractAdminController
                 }
             }
 
-            return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminders.pdf'), 200, ['Content-type' => 'application/pdf']);
+            return new Response($pdf->Output($parameterBag->get('project_export_filename').'_receipt_reminders.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
         } catch (\Exception $e) {
             $this->addFlash('error', 'S\'ha produït un error al generar l\'arxiu de recordatoris de pagaments de rebut amb format PDF. Revisa els rebuts seleccionats.');
             $this->addFlash('error', $e->getMessage());
@@ -281,7 +281,7 @@ final class ReceiptAdminController extends AbstractAdminController
                 ++$index;
             }
             $zipFile->saveAsFile($fileNamePath)->close();
-            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/zip']);
+            $response = new BinaryFileResponse($fileNamePath, Response::HTTP_OK, ['Content-type' => 'application/zip']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;

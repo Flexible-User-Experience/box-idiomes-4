@@ -25,7 +25,7 @@ final class ExtraHelperManagerAdminController extends CRUDController
                 if ($exportCalendarList->hasDays()) {
                     $pdf = $eclb->build($exportCalendarList);
 
-                    return new Response($pdf->Output($parameterBag->get('project_export_filename').'_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf'), 200, ['Content-type' => 'application/pdf']);
+                    return new Response($pdf->Output($parameterBag->get('project_export_filename').'_calendar_list_from_'.$startDate->format('d-m-Y').'_to_'.$endDate->format('d-m-Y').'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
                 }
                 $this->addFlash('warning', $ts->trans('backend.admin.calendar.export.error.no_items_found', [
                     '%start%' => $startDate->format(AbstractBase::DATE_STRING_FORMAT),

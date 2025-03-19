@@ -31,7 +31,7 @@ final class InvoiceAdminController extends AbstractAdminController
         }
         $pdf = $this->ibp->build($object);
 
-        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_invoice_'.$object->getSluggedInvoiceNumber().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
     #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
@@ -78,14 +78,14 @@ final class InvoiceAdminController extends AbstractAdminController
         ;
         $this->mr->getManager()->flush();
         if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
-            return new Response($xml, 200, ['Content-type' => 'application/xml']);
+            return new Response($xml, Response::HTTP_OK, ['Content-type' => 'application/xml']);
         }
         $now = new \DateTimeImmutable();
         $fileSystem = new Filesystem();
         $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoice_'.$now->format('Y-m-d_H-i').'.xml';
         $fileSystem->touch($fileNamePath);
         $fileSystem->dumpFile($fileNamePath, $xml);
-        $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
+        $response = new BinaryFileResponse($fileNamePath, Response::HTTP_OK, ['Content-type' => 'application/xml']);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
         return $response;
@@ -159,14 +159,14 @@ final class InvoiceAdminController extends AbstractAdminController
             }
             $this->mr->getManager()->flush();
             if (Kernel::ENV_DEV === $this->getParameter('kernel.environment')) {
-                return new Response($xmls, 200, ['Content-type' => 'application/xml']);
+                return new Response($xmls, Response::HTTP_OK, ['Content-type' => 'application/xml']);
             }
             $now = new \DateTimeImmutable();
             $fileSystem = new Filesystem();
             $fileNamePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'SEPA_invoices_'.$now->format('Y-m-d_H-i').'.xml';
             $fileSystem->touch($fileNamePath);
             $fileSystem->dumpFile($fileNamePath, $xmls);
-            $response = new BinaryFileResponse($fileNamePath, 200, ['Content-type' => 'application/xml']);
+            $response = new BinaryFileResponse($fileNamePath, Response::HTTP_OK, ['Content-type' => 'application/xml']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;

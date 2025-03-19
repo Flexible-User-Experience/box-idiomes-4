@@ -39,7 +39,7 @@ final class StudentAdminController extends AbstractAdminController
         }
         $pdf = $sirps->build($object);
 
-        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('student_image_rights_'.$object->getId().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
     #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
@@ -54,7 +54,7 @@ final class StudentAdminController extends AbstractAdminController
         }
         $pdf = $saps->build($object);
 
-        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output('sepa_agreement_'.$object->getId().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 
     public function showAction(Request $request): Response

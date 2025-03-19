@@ -33,6 +33,6 @@ final class ClassGroupAdminController extends CRUDController
         }
         $pdf = $cgpbs->build($object, $students);
 
-        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_class_group_'.$object->getId().'.pdf'), 200, ['Content-type' => 'application/pdf']);
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_class_group_'.$object->getId().'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
     }
 }
