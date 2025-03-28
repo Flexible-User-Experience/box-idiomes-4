@@ -7,7 +7,7 @@ A Symfony 6.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat/adm
 
 #### Installation requirements
 
-* PHP 8.3
+* PHP 8.4
 * MySQL 8.0
 * Git 2.0
 * Composer 2.0
