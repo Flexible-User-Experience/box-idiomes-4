@@ -1,8 +1,12 @@
 Changelog
 =========
 
-##### Version 5.8.04 (WIP)
+##### Version 5.8.05 (WIP)
  * fix bugs
+
+##### Version 5.8.04 (2025-03-28)
+ * Symfony v6.4.20 update
+ * add getUnsubscriptionDate Student entity attribute
 
 ##### Version 5.8.03 (2025-03-19)
  * add more ROLE user cases into testing suite
