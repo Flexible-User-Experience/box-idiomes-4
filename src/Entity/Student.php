@@ -20,6 +20,9 @@ class Student extends AbstractPerson
     use BankCreditorSepaTrait;
     use TrainingCenterTrait;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $unsubscriptionDate = null; // cancellation date
+
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
@@ -58,6 +61,23 @@ class Student extends AbstractPerson
     public function __construct()
     {
         $this->events = new ArrayCollection();
+    }
+
+    public function getUnsubscriptionDate(): ?\DateTimeInterface
+    {
+        return $this->unsubscriptionDate;
+    }
+
+    public function getUnsubscriptionDateString(): string
+    {
+        return self::convertDateAsString($this->getUnsubscriptionDate());
+    }
+
+    public function setUnsubscriptionDate(?\DateTimeInterface $unsubscriptionDate): self
+    {
+        $this->unsubscriptionDate = $unsubscriptionDate;
+
+        return $this;
     }
 
     public function getBirthDate(): ?\DateTimeInterface
@@ -237,7 +257,7 @@ class Student extends AbstractPerson
 
     public function calculateMonthlyTariffWithExtraSonDiscount(int $discountExtraSon): float
     {
-        $price = $this->getTariff()->getPrice();
+        $price = $this->getTariff() ? $this->getTariff()->getPrice() : 0.0;
         if ($this->getParent()) {
             $enabledSonsAmount = $this->getParent()->getEnabledSonsAmount();
             $discount = $enabledSonsAmount ? ((($enabledSonsAmount - 1) * $discountExtraSon) / $enabledSonsAmount) : 0;

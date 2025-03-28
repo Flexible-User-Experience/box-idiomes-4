@@ -18,13 +18,12 @@ abstract class AbstractPerson extends AbstractBase
     use CityTrait;
     use NameTrait;
 
-    
     #[ORM\ManyToOne(targetEntity: City::class)]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id', nullable: true)]
     protected ?City $city = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    protected ?\DateTimeInterface $dischargeDate = null;
+    protected ?\DateTimeInterface $dischargeDate = null; // registration date
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     protected ?string $dni = null;
@@ -38,7 +37,6 @@ abstract class AbstractPerson extends AbstractBase
     #[ORM\Column(type: Types::STRING, nullable: true)]
     protected ?string $phone = null;
 
-    
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Email]
     protected ?string $email = null;

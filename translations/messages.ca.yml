@@ -236,6 +236,7 @@ backend:
             age: "Edat"
             birthDate: "Data naixement"
             dischargeDate: "Data alta"
+            unsubscriptionDate: "Data de baixa"
             bank: "Rebut bancari"
             cash: "Efectiu"
             transfer: "Transferència bancaria"
