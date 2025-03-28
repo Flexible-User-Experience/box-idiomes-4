@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
 #[UniqueEntity(['name', 'surname'])]
 #[ORM\Table(name: 'student')]
@@ -33,12 +32,10 @@ class Student extends AbstractPerson
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'students')]
     private ?Person $parent = null;
 
-    
     #[ORM\ManyToOne(targetEntity: Bank::class, cascade: ['persist'])]
     #[Assert\Valid]
     protected ?Bank $bank = null;
 
-    
     #[ORM\ManyToOne(targetEntity: Tariff::class)]
     #[ORM\JoinColumn(name: 'tariff_id', referencedColumnName: 'id')]
     private ?Tariff $tariff = null;
