@@ -60,6 +60,12 @@
                                     <td>{{ object.dischargeDateString }}</td>
                                 </tr>
                             {% endif %}
+                            {% if object.unsubscriptionDate %}
+                                <tr class="sonata-ba-view-container">
+                                    <th>{{ 'backend.admin.student.unsubscriptionDate' | trans }}</th>
+                                    <td>{{ object.unsubscriptionDateString }}</td>
+                                </tr>
+                            {% endif %}
                             {% if object.schedule %}
                                 <tr class="sonata-ba-view-container">
                                     <th>{{ 'backend.admin.student.schedule' | trans }}</th>

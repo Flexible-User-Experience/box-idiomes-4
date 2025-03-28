@@ -224,6 +224,15 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'unsubscriptionDate',
+                DatePickerType::class,
+                [
+                    'label' => 'backend.admin.student.unsubscriptionDate',
+                    'format' => 'd/M/y',
+                    'required' => false,
+                ]
+            )
+            ->add(
                 'schedule',
                 null,
                 [
@@ -498,6 +507,18 @@ final class StudentAdmin extends AbstractBaseAdmin
                 ]
             )
             ->add(
+                'unsubscriptionDate',
+                DateFilter::class,
+                [
+                    'label' => 'backend.admin.student.unsubscriptionDate',
+                    'field_type' => DatePickerType::class,
+                    'field_options' => [
+                        'widget' => 'single_text',
+                        'format' => 'dd-MM-yyyy',
+                    ],
+                ]
+            )
+            ->add(
                 'schedule',
                 null,
                 [
@@ -753,6 +774,7 @@ final class StudentAdmin extends AbstractBaseAdmin
             'bankCreditorSepa.iban',
             'birthDateString',
             'dischargeDateString',
+            'unsubscriptionDateString',
             'schedule',
             'tariff',
             'trainingCenter',

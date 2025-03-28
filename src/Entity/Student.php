@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
 #[UniqueEntity(['name', 'surname'])]
 #[ORM\Table(name: 'student')]
@@ -20,6 +19,9 @@ class Student extends AbstractPerson
 {
     use BankCreditorSepaTrait;
     use TrainingCenterTrait;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $unsubscriptionDate = null; // cancellation date
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
@@ -33,12 +35,10 @@ class Student extends AbstractPerson
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'students')]
     private ?Person $parent = null;
 
-    
     #[ORM\ManyToOne(targetEntity: Bank::class, cascade: ['persist'])]
     #[Assert\Valid]
     protected ?Bank $bank = null;
 
-    
     #[ORM\ManyToOne(targetEntity: Tariff::class)]
     #[ORM\JoinColumn(name: 'tariff_id', referencedColumnName: 'id')]
     private ?Tariff $tariff = null;
@@ -61,6 +61,23 @@ class Student extends AbstractPerson
     public function __construct()
     {
         $this->events = new ArrayCollection();
+    }
+
+    public function getUnsubscriptionDate(): ?\DateTimeInterface
+    {
+        return $this->unsubscriptionDate;
+    }
+
+    public function getUnsubscriptionDateString(): string
+    {
+        return self::convertDateAsString($this->getUnsubscriptionDate());
+    }
+
+    public function setUnsubscriptionDate(?\DateTimeInterface $unsubscriptionDate): self
+    {
+        $this->unsubscriptionDate = $unsubscriptionDate;
+
+        return $this;
     }
 
     public function getBirthDate(): ?\DateTimeInterface
@@ -240,7 +257,7 @@ class Student extends AbstractPerson
 
     public function calculateMonthlyTariffWithExtraSonDiscount(int $discountExtraSon): float
     {
-        $price = $this->getTariff()->getPrice();
+        $price = $this->getTariff() ? $this->getTariff()->getPrice() : 0.0;
         if ($this->getParent()) {
             $enabledSonsAmount = $this->getParent()->getEnabledSonsAmount();
             $discount = $enabledSonsAmount ? ((($enabledSonsAmount - 1) * $discountExtraSon) / $enabledSonsAmount) : 0;

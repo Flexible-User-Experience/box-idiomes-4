@@ -14,12 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'receipt')]
 class Receipt extends AbstractReceiptInvoice
 {
-    
-    #[ORM\OneToMany(mappedBy: 'receipt', targetEntity: ReceiptLine::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ReceiptLine::class, mappedBy: 'receipt', cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Assert\Valid]
     private ?Collection $lines;
 
-    
     #[ORM\ManyToOne(targetEntity: ReceiptGroup::class, inversedBy: 'receipts')]
     #[ORM\JoinColumn(name: 'receipt_group_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?ReceiptGroup $receiptGroup = null;
@@ -47,7 +45,7 @@ class Receipt extends AbstractReceiptInvoice
             $line->setReceipt($this);
             $this->lines->add($line);
             $this->setBaseAmount($this->getBaseAmount() + $line->getTotal());
-            $this->setDiscountApplied($this->getStudent()->hasDiscount());
+            $this->setDiscountApplied($this->getStudent() && $this->getStudent()->hasDiscount());
         }
 
         return $this;
@@ -82,7 +80,7 @@ class Receipt extends AbstractReceiptInvoice
             $date = $this->getDate();
         }
 
-        return $date->format('Y').'/'.$this->getId();
+        return sprintf('%s/%d', $date->format('Y'), $this->getId());
     }
 
     public function getSluggedReceiptNumber(): string
@@ -92,7 +90,7 @@ class Receipt extends AbstractReceiptInvoice
             $date = $this->getDate();
         }
 
-        return $date->format('Y').'-'.$this->getId();
+        return sprintf('%s-%d', $date->format('Y'), $this->getId());
     }
 
     public function getUnderscoredReceiptNumber(): string
@@ -102,7 +100,7 @@ class Receipt extends AbstractReceiptInvoice
             $date = $this->getDate();
         }
 
-        return $date->format('Y').'_'.$this->getId();
+        return sprintf('%s_%d', $date->format('Y'), $this->getId());
     }
 
     public function calculateTotalBaseAmount(): float
@@ -118,6 +116,6 @@ class Receipt extends AbstractReceiptInvoice
 
     public function __toString(): string
     {
-        return $this->id ? $this->getReceiptNumber().' · '.$this->getStudent().' · '.$this->getBaseAmountString() : AbstractBase::DEFAULT_NULL_STRING;
+        return $this->id ? sprintf('%s · %s · %s', $this->getReceiptNumber(), $this->getStudent(), $this->getBaseAmountString()) : AbstractBase::DEFAULT_NULL_STRING;
     }
 }

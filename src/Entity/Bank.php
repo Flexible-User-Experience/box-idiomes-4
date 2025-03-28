@@ -8,7 +8,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: BankRepository::class)]
 #[ORM\Table(name: 'bank')]
 class Bank extends AbstractBase
@@ -18,17 +17,14 @@ class Bank extends AbstractBase
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $name = null;
 
-    
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Iban]
     private ?string $accountNumber = null;
 
-    
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Assert\Bic]
     private ?string $swiftCode = null;
 
-    
     #[ORM\OneToOne(targetEntity: Person::class)]
     #[ORM\JoinColumn(name: 'person_id', referencedColumnName: 'id')]
     private ?Person $parent = null;

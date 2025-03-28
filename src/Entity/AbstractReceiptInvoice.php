@@ -15,12 +15,10 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     use TrainingCenterTrait;
     use YearTrait;
 
-    
     #[ORM\ManyToOne(targetEntity: Student::class)]
     #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id')]
     protected ?Student $student = null;
 
-    
     #[ORM\ManyToOne(targetEntity: Person::class)]
     #[ORM\JoinColumn(name: 'person_id', referencedColumnName: 'id')]
     protected ?Person $person = null;
@@ -330,11 +328,9 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     }
 
     /**
-     * Get main subject, obtains who is most important actor (student or parent).
-     *
-     * @return Person|Student
+     * Get main subject, obtains who is most important actor: parent (first) or student.
      */
-    public function getMainSubject()
+    public function getMainSubject(): Student|Person
     {
         /** @var Student|Person $subject */
         $subject = $this->getStudent();
