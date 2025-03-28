@@ -73,18 +73,23 @@ final readonly class XmlSepaBuilderService
     /**
      * @throws InvalidArgumentException
      */
-    public function buildDirectDebitReceiptsXmlForBankCreditorSepa(string $paymentId, \DateTimeInterface $dueDate, $receipts, BankCreditorSepa $bankCreditorSepa): string
+    public function buildDirectDebitReceiptsXmlForBankCreditorSepa(string $paymentId, \DateTimeInterface $dueDate, $receipts, BankCreditorSepa $bankCreditorSepa): array
     {
+        $receiptsGeneratedAmount = 0;
         $directDebit = $this->buildDirectDebit($paymentId);
         $this->addPaymentInfoForBankCreditorSepa($directDebit, $paymentId, $dueDate, $bankCreditorSepa);
         /** @var Receipt $receipt */
         foreach ($receipts as $receipt) {
             if ($receipt->isReadyToGenerateSepa() && !$receipt->getStudent()?->getIsPaymentExempt() && $receipt->getMainSubject()->getBankCreditorSepa() && $receipt->getMainSubject()->getBankCreditorSepa()->getId() === $bankCreditorSepa->getId()) {
                 $this->addTransfer($directDebit, $paymentId, $receipt);
+                ++$receiptsGeneratedAmount;
             }
         }
 
-        return $directDebit->asXML();
+        return [
+            'receipts_generated_amount' => $receiptsGeneratedAmount,
+            'xml' => $directDebit->asXML(),
+        ];
     }
 
     /**

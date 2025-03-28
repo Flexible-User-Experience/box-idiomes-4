@@ -277,7 +277,9 @@ final class ReceiptAdminController extends AbstractAdminController
             $index = 0;
             /** @var BankCreditorSepa $bankCreditorSepa */
             foreach ($banksCreditorSepa as $bankCreditorSepa) {
-                $zipFile->addFromString('SEPA_'.StringHelper::sanitizeString($bankCreditorSepa->getName()).'.xml', $xmlsArray[$index]);
+                if ($xmlsArray[$index]['receipts_generated_amount'] > 0) {
+                    $zipFile->addFromString(sprintf('SEPA_%s.xml', StringHelper::sanitizeString($bankCreditorSepa->getName())), $xmlsArray[$index]['xml']);
+                }
                 ++$index;
             }
             $zipFile->saveAsFile($fileNamePath)->close();
