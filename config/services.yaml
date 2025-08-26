@@ -42,10 +42,6 @@ services:
     # Commons
     App\:
         resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
     # Renamed Alises
     Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
     # Template Blocks
