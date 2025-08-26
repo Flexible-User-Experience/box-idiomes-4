@@ -9,8 +9,8 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public const CLI_API = 'cli';
-    public const ENV_PROD = 'prod';
-    public const ENV_DEV = 'dev';
-    public const ENV_TEST = 'test';
+    public const string CLI_API = 'cli';
+    public const string ENV_PROD = 'prod';
+    public const string ENV_DEV = 'dev';
+    public const string ENV_TEST = 'test';
 }

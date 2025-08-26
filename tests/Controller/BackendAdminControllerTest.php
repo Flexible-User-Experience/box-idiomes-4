@@ -33,8 +33,8 @@ class BackendAdminControllerTest extends WebTestCase
             ['/admin/students/student/1/edit'],
             ['/admin/students/student/1/delete'],
             ['/admin/students/student/1/show'],
-//            ['/admin/students/student/1/image-rights'], // avoid PDF to String -> output
-//            ['/admin/students/student/1/sepa-agreement'], // avoid PDF to String -> output
+            //            ['/admin/students/student/1/image-rights'], // avoid PDF to String -> output
+            //            ['/admin/students/student/1/sepa-agreement'], // avoid PDF to String -> output
             ['/admin/students/student/mailing'],
             ['/admin/students/absence/list'],
             ['/admin/students/absence/create'],
@@ -56,7 +56,7 @@ class BackendAdminControllerTest extends WebTestCase
             ['/admin/classrooms/group/list'],
             ['/admin/classrooms/group/create'],
             ['/admin/classrooms/group/1/edit'],
-//            ['/admin/classrooms/group/1/get-group-emails'], // avoid PDF to String -> output
+            //            ['/admin/classrooms/group/1/get-group-emails'], // avoid PDF to String -> output
             ['/admin/classrooms/timetable/list'],
             ['/admin/classrooms/timetable/create'],
             ['/admin/classrooms/timetable/1/edit'],
@@ -74,8 +74,8 @@ class BackendAdminControllerTest extends WebTestCase
             ['/admin/billings/receipt/1/edit'],
             ['/admin/billings/receipt/1/delete'],
             ['/admin/billings/receipt/generate'],
-//            ['/admin/billings/receipt/1/reminder-pdf'], // avoid PDF to String -> output
-//            ['/admin/billings/receipt/1/pdf'], // avoid PDF to String -> output
+            //            ['/admin/billings/receipt/1/reminder-pdf'], // avoid PDF to String -> output
+            //            ['/admin/billings/receipt/1/pdf'], // avoid PDF to String -> output
             ['/admin/billings/receipt/1/generate-direct-debit-xml'],
             ['/admin/billings/receipt-line/list'],
             ['/admin/billings/receipt-line/create'],
@@ -87,7 +87,7 @@ class BackendAdminControllerTest extends WebTestCase
             ['/admin/billings/invoice/create'],
             ['/admin/billings/invoice/1/edit'],
             ['/admin/billings/invoice/1/delete'],
-//            ['/admin/billings/invoice/1/pdf'], // avoid PDF to String -> output
+            //            ['/admin/billings/invoice/1/pdf'], // avoid PDF to String -> output
             ['/admin/billings/invoice/1/generate-direct-debit-xml'],
             ['/admin/billings/invoice-line/list'],
             ['/admin/billings/invoice-line/create'],
@@ -222,7 +222,7 @@ class BackendAdminControllerTest extends WebTestCase
     {
         return WebTestCase::createClient([], [
             'PHP_AUTH_USER' => 'admin@email.com',
-            'PHP_AUTH_PW'   => 'passwd',
+            'PHP_AUTH_PW' => 'passwd',
         ]);
     }
 }
