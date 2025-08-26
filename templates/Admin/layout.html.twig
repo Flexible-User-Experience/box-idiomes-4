@@ -21,14 +21,18 @@
 {# custom logo #}
 {% block logo %}
     <a class="logo" href="{{ path('sonata_admin_dashboard') }}">
-        <img src="{{ asset('img/backend-logo.png') }}" alt="{{ sonata_config.title }}" style="margin-top: -4px;">
+        <img src="{{ asset('img/backend-logo.png') }}" alt="{{ sonata_config.title }}" style="margin-top:-4px;">
         <span>{{ sonata_config.title }}</span>
     </a>
 {% endblock %}
 
 {# custom sidebar footer #}
 {% block side_bar_after_nav %}
-    <p class="text-left small" style="padding:50px 0 0 20px;color:#EEE;">{{ admin_tag_version }}<br><i class="fa fa-code"></i> Desenvolupat per <a href="https://www.flux.cat" target="_blank">Flux</a><br><i class="fa fa-copyright"></i> {{ 'now' | date('Y') }} <a href="{{ path('app_homepage') }}" target="_blank">{{ main_brand_title }}</a></p>
+    <p class="text-left small" style="padding:50px 0 0 20px;color:#EEE;">
+        v{{ admin_tag_version | slice(0, 1) }}.{{ admin_tag_version | slice(1, 2) }}.{{ admin_tag_version | slice(3) }}<br>
+        <i class="fa fa-code"></i> Desenvolupat per <a href="https://www.flux.cat" target="_blank">Flux</a><br>
+        <i class="fa fa-copyright"></i> {{ 'now' | date('Y') }} <a href="{{ path('app_homepage') }}" target="_blank">{{ main_brand_title }}</a>
+    </p>
 {% endblock %}
 
 {# custom top menu#}
