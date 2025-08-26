@@ -23,25 +23,25 @@ return [
         'version' => '5.11.5',
     ],
     '@fullcalendar/core' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     '@fullcalendar/core/locales/ca' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     '@fullcalendar/daygrid' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     '@fullcalendar/google-calendar' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     '@fullcalendar/interaction' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     '@fullcalendar/list' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     '@fullcalendar/timegrid' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
@@ -72,7 +72,7 @@ return [
         'version' => '4.5.0',
     ],
     'fullcalendar' => [
-        'version' => '6.1.19',
+        'version' => '5.11.5',
     ],
     'pdfjs-dist/build/pdf.min.mjs' => [
         'version' => '5.4.54',
@@ -94,32 +94,5 @@ return [
     ],
     'tslib' => [
         'version' => '2.8.1',
-    ],
-    '@fullcalendar/core/index.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/core/internal.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/core/preact.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/daygrid/internal.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/interaction/index.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/daygrid/index.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/timegrid/index.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/list/index.js' => [
-        'version' => '6.1.19',
-    ],
-    '@fullcalendar/multimonth/index.js' => [
-        'version' => '6.1.19',
     ],
 ];
