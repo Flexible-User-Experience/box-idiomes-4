@@ -9,7 +9,7 @@ liip_imagine:
             web_path: ~
     twig:
         mode: 'lazy'
-        assets_version: 'v508005'
+        assets_version: 'v508006'
     filter_sets:
         cache: ~
         585x756_teacher_mask:
