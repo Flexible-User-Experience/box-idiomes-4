@@ -128,15 +128,13 @@ class FilterCalendarEventsType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'method' => Request::METHOD_POST,
-                'action' => $this->rs->generate('admin_app_filter_calendar'),
-                'data_class' => FilterCalendarEventModel::class,
-                'attr' => [
-                    'class' => 'form-inline',
-                ],
-            ]
-        );
+        $resolver->setDefaults([
+            'method' => Request::METHOD_POST,
+            'action' => $this->rs->generate('admin_app_filter_calendar'),
+            'data_class' => FilterCalendarEventModel::class,
+            'attr' => [
+                'class' => 'form-inline',
+            ],
+        ]);
     }
 }

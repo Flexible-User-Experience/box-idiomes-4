@@ -193,10 +193,8 @@ class PreRegisterType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => PreRegister::class,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => PreRegister::class,
+        ]);
     }
 }

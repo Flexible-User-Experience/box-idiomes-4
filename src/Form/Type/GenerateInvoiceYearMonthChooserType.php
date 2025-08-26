@@ -9,10 +9,8 @@ class GenerateInvoiceYearMonthChooserType extends GenerateReceiptYearMonthChoose
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => GenerateInvoiceModel::class,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => GenerateInvoiceModel::class,
+        ]);
     }
 }
