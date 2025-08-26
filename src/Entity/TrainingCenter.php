@@ -22,7 +22,6 @@ class TrainingCenter extends AbstractBase
     #[ORM\Column(type: Types::STRING, length: 255, unique: true, nullable: false)]
     private string $name;
 
-    
     #[ORM\ManyToOne(targetEntity: City::class)]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id', nullable: false)]
     private ?City $city = null;

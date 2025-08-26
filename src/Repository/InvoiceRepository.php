@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Invoice;
 use App\Entity\Student;
-use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
@@ -63,7 +62,7 @@ final class InvoiceRepository extends ServiceEntityRepository
         return $this->findOnePreviousInvoiceByStudentIdYearAndMonthOrNullQ($studentId, $year, $month)->getOneOrNullResult();
     }
 
-    public function getMonthlyIncomingsAmountForDate(DateTimeInterface $date): int
+    public function getMonthlyIncomingsAmountForDate(\DateTimeInterface $date): int
     {
         $query = $this->createQueryBuilder('i')
             ->select('SUM(i.baseAmount) as amount')

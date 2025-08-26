@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: ReceiptGroupRepository::class)]
 #[ORM\Table(name: 'receipt_group')]
 class ReceiptGroup extends AbstractBase

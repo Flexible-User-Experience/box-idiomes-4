@@ -55,7 +55,7 @@ abstract class AbstractReceiptInvoiceBuilderPdf
      *
      * @return string|array|bool (depending on second parameter. Returns False if invalid hex color value)
      */
-    protected function hex2RGBarray(string $hexStr, bool $returnAsString = false, string $seperator = ','): string | array | bool
+    protected function hex2RGBarray(string $hexStr, bool $returnAsString = false, string $seperator = ','): string|array|bool
     {
         $hexStr = preg_replace('/[^0-9A-Fa-f]/', '', $hexStr); // Gets a proper hex string
         $rgbArray = [];

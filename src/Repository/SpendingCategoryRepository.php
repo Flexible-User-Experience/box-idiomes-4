@@ -22,7 +22,7 @@ final class SpendingCategoryRepository extends ServiceEntityRepository
             ->where('sc.enabled = :enabled')
             ->setParameter('enabled', true)
             ->orderBy('sc.name', SortOrderTypeEnum::ASC)
-            ;
+        ;
     }
 
     public function getEnabledSortedByNameQ(): Query

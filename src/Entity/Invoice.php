@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\InvoiceRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -135,7 +134,7 @@ class Invoice extends AbstractReceiptInvoice
 
     public function getInvoiceNumber(): string
     {
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -145,7 +144,7 @@ class Invoice extends AbstractReceiptInvoice
 
     public function getSluggedInvoiceNumber(): string
     {
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }
@@ -155,7 +154,7 @@ class Invoice extends AbstractReceiptInvoice
 
     public function getUnderscoredInvoiceNumber(): string
     {
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         if ($this->getDate()) {
             $date = $this->getDate();
         }

@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Student;
 use App\Entity\StudentAbsence;
-use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -37,7 +36,7 @@ final class StudentAbsenceRepository extends ServiceEntityRepository
         return $this->getStudentAbsencesSortedByDateQ($student)->getResult();
     }
 
-    public function getFilteredByBeginAndEndQB(DateTimeInterface $startDate, DateTimeInterface $endDate): QueryBuilder
+    public function getFilteredByBeginAndEndQB(\DateTimeInterface $startDate, \DateTimeInterface $endDate): QueryBuilder
     {
         return $this->createQueryBuilder('sa')
             ->where('sa.day BETWEEN :startDate AND :endDate')
@@ -45,12 +44,12 @@ final class StudentAbsenceRepository extends ServiceEntityRepository
             ->setParameter('endDate', $endDate->format('Y-m-d H:i:s'));
     }
 
-    public function getFilteredByBeginAndEndQ(DateTimeInterface $startDate, DateTimeInterface $endDate): Query
+    public function getFilteredByBeginAndEndQ(\DateTimeInterface $startDate, \DateTimeInterface $endDate): Query
     {
         return $this->getFilteredByBeginAndEndQB($startDate, $endDate)->getQuery();
     }
 
-    public function getFilteredByBeginAndEnd(DateTimeInterface $startDate, DateTimeInterface $endDate): array
+    public function getFilteredByBeginAndEnd(\DateTimeInterface $startDate, \DateTimeInterface $endDate): array
     {
         return $this->getFilteredByBeginAndEndQ($startDate, $endDate)->getResult();
     }

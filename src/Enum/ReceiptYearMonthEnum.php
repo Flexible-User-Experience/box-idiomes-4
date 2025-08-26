@@ -2,8 +2,6 @@
 
 namespace App\Enum;
 
-use DateTimeImmutable;
-
 class ReceiptYearMonthEnum
 {
     public const int APP_FIRST_YEAR = 2017;
@@ -88,7 +86,7 @@ class ReceiptYearMonthEnum
     public static function getReversedYearEnumArray(): array
     {
         $result = [];
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $currentYear = (int) $now->format('Y');
         if (12 === (int) $now->format('m') && 15 < (int) $now->format('d')) {
             ++$currentYear;

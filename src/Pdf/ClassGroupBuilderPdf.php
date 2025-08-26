@@ -5,16 +5,13 @@ namespace App\Pdf;
 use App\Entity\AbstractBase;
 use App\Entity\ClassGroup;
 use App\Entity\Student;
-use DateTimeImmutable;
-use ReflectionException;
-use TCPDF;
 
 class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
     /**
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
-    public function build(ClassGroup $classGroup, $students): TCPDF
+    public function build(ClassGroup $classGroup, $students): \TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);
@@ -49,7 +46,7 @@ class ClassGroupBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $verticalTableGap = 10;
 
         // today
-        $today = new DateTimeImmutable();
+        $today = new \DateTimeImmutable();
 
         // invoice header
         $retainedYForGlobes = $pdf->GetY() - 4;

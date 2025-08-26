@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\StudentAbsenceRepository;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -17,19 +16,19 @@ class StudentAbsence extends AbstractBase
     private Student $student;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
-    private DateTimeInterface $day;
+    private \DateTimeInterface $day;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $hasBeenNotified = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $notificationDate = null;
+    private ?\DateTimeInterface $notificationDate = null;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
     private ?bool $hasBeenAccepted = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $acceptedDate;
+    private ?\DateTimeInterface $acceptedDate;
 
     public function getStudent(): Student
     {
@@ -43,7 +42,7 @@ class StudentAbsence extends AbstractBase
         return $this;
     }
 
-    public function getDay(): DateTimeInterface
+    public function getDay(): \DateTimeInterface
     {
         return $this->day;
     }
@@ -53,7 +52,7 @@ class StudentAbsence extends AbstractBase
         return self::convertDateAsString($this->getDay());
     }
 
-    public function setDay(DateTimeInterface $day): self
+    public function setDay(\DateTimeInterface $day): self
     {
         $this->day = $day;
 
@@ -87,7 +86,7 @@ class StudentAbsence extends AbstractBase
         return $this;
     }
 
-    public function getNotificationDate(): ?DateTimeInterface
+    public function getNotificationDate(): ?\DateTimeInterface
     {
         return $this->notificationDate;
     }
@@ -97,7 +96,7 @@ class StudentAbsence extends AbstractBase
         return self::convertDateTimeAsString($this->getNotificationDate());
     }
 
-    public function setNotificationDate(?DateTimeInterface $notificationDate): self
+    public function setNotificationDate(?\DateTimeInterface $notificationDate): self
     {
         $this->notificationDate = $notificationDate;
 
@@ -126,12 +125,12 @@ class StudentAbsence extends AbstractBase
         return $this;
     }
 
-    public function getAcceptedDate(): ?DateTimeInterface
+    public function getAcceptedDate(): ?\DateTimeInterface
     {
         return $this->acceptedDate;
     }
 
-    public function setAcceptedDate(?DateTimeInterface $acceptedDate): self
+    public function setAcceptedDate(?\DateTimeInterface $acceptedDate): self
     {
         $this->acceptedDate = $acceptedDate;
 

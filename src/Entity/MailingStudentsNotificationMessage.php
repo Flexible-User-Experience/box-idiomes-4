@@ -28,7 +28,6 @@ class MailingStudentsNotificationMessage extends AbstractBase
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $filteredClassroom;
 
-    
     #[ORM\ManyToOne(targetEntity: Teacher::class)]
     #[ORM\JoinColumn(name: 'teacher_id', referencedColumnName: 'id', nullable: true)]
     private ?Teacher $filteredTeacher;
@@ -37,7 +36,6 @@ class MailingStudentsNotificationMessage extends AbstractBase
     #[ORM\JoinColumn(name: 'class_group_id', referencedColumnName: 'id', nullable: true)]
     private ?ClassGroup $filteredClassGroup;
 
-    
     #[ORM\ManyToOne(targetEntity: TrainingCenter::class)]
     #[ORM\JoinColumn(name: 'training_center_id', referencedColumnName: 'id', nullable: true)]
     private ?TrainingCenter $filteredTrainingCenter;

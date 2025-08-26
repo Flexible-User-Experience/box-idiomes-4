@@ -4,16 +4,15 @@ namespace App\Model;
 
 use App\Entity\AbstractBase;
 use App\Entity\Event;
-use DateTimeInterface;
 
 class ExportCalendarToListDayHourItem
 {
     private string $rangeName;
-    private DateTimeInterface $begin;
-    private DateTimeInterface $end;
+    private \DateTimeInterface $begin;
+    private \DateTimeInterface $end;
     private array $events;
 
-    public function __construct(string $rangeName, DateTimeInterface $begin, DateTimeInterface $end)
+    public function __construct(string $rangeName, \DateTimeInterface $begin, \DateTimeInterface $end)
     {
         $this->rangeName = $rangeName;
         $this->begin = $begin;
@@ -33,7 +32,7 @@ class ExportCalendarToListDayHourItem
         return $this;
     }
 
-    public function getBegin(): DateTimeInterface
+    public function getBegin(): \DateTimeInterface
     {
         return $this->begin;
     }
@@ -43,14 +42,14 @@ class ExportCalendarToListDayHourItem
         return $this->getBegin() ? $this->getBegin()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    public function setBegin(DateTimeInterface $begin): self
+    public function setBegin(\DateTimeInterface $begin): self
     {
         $this->begin = $begin;
 
         return $this;
     }
 
-    public function getEnd(): DateTimeInterface
+    public function getEnd(): \DateTimeInterface
     {
         return $this->end;
     }
@@ -60,7 +59,7 @@ class ExportCalendarToListDayHourItem
         return $this->getEnd() ? $this->getEnd()->format('d/m/Y H:i') : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    public function setEnd(DateTimeInterface $end): self
+    public function setEnd(\DateTimeInterface $end): self
     {
         $this->end = $end;
 

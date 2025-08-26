@@ -3,16 +3,15 @@
 namespace App\Model;
 
 use App\Entity\Event;
-use DateTimeInterface;
 
 class ExportCalendarToListDayItem
 {
     private string $weekdayName;
-    private DateTimeInterface $day;
+    private \DateTimeInterface $day;
     private array $events;
     private array $hours;
 
-    public function __construct(string $weekdayName, DateTimeInterface $day)
+    public function __construct(string $weekdayName, \DateTimeInterface $day)
     {
         $this->weekdayName = $weekdayName;
         $this->day = $day;
@@ -32,12 +31,12 @@ class ExportCalendarToListDayItem
         return $this;
     }
 
-    public function getDay(): DateTimeInterface
+    public function getDay(): \DateTimeInterface
     {
         return $this->day;
     }
 
-    public function setDay(DateTimeInterface $day): self
+    public function setDay(\DateTimeInterface $day): self
     {
         $this->day = $day;
 

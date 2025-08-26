@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Enum\EventClassroomTypeEnum;
 use App\Repository\EventRepository;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -17,10 +16,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class Event extends AbstractBase
 {
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private DateTimeInterface $begin;
+    private \DateTimeInterface $begin;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private DateTimeInterface $end;
+    private \DateTimeInterface $end;
 
     #[ORM\ManyToOne(targetEntity: Teacher::class)]
     private Teacher $teacher;
@@ -48,14 +47,14 @@ class Event extends AbstractBase
     private ?int $dayFrequencyRepeat = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $until = null;
+    private ?\DateTimeInterface $until = null;
 
     public function __construct()
     {
         $this->students = new ArrayCollection();
     }
 
-    public function getBegin(): DateTimeInterface
+    public function getBegin(): \DateTimeInterface
     {
         return $this->begin;
     }
@@ -65,14 +64,14 @@ class Event extends AbstractBase
         return self::convertDateTimeAsString($this->getBegin());
     }
 
-    public function setBegin(DateTimeInterface $begin): self
+    public function setBegin(\DateTimeInterface $begin): self
     {
         $this->begin = $begin;
 
         return $this;
     }
 
-    public function getEnd(): DateTimeInterface
+    public function getEnd(): \DateTimeInterface
     {
         return $this->end;
     }
@@ -82,7 +81,7 @@ class Event extends AbstractBase
         return self::convertDateTimeAsString($this->getEnd());
     }
 
-    public function setEnd(DateTimeInterface $end): self
+    public function setEnd(\DateTimeInterface $end): self
     {
         $this->end = $end;
 
@@ -217,7 +216,7 @@ class Event extends AbstractBase
         return $this;
     }
 
-    public function getUntil(): ?DateTimeInterface
+    public function getUntil(): ?\DateTimeInterface
     {
         return $this->until;
     }
@@ -227,7 +226,7 @@ class Event extends AbstractBase
         return self::convertDateTimeAsString($this->getUntil());
     }
 
-    public function setUntil(?DateTimeInterface $until): self
+    public function setUntil(?\DateTimeInterface $until): self
     {
         $this->until = $until;
 

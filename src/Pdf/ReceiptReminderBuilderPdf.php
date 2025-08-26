@@ -4,12 +4,10 @@ namespace App\Pdf;
 
 use App\Entity\AbstractBase;
 use App\Entity\Receipt;
-use DateTimeImmutable;
-use TCPDF;
 
 class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    public function buildBatchReminder(): TCPDF
+    public function buildBatchReminder(): \TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);
@@ -39,7 +37,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         return $pdf;
     }
 
-    public function build(Receipt $receipt): TCPDF
+    public function build(Receipt $receipt): \TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);
@@ -71,7 +69,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         return $pdf;
     }
 
-    public function buildReceiptRemainderPageForItem($pdf, Receipt $receipt): TCPDF
+    public function buildReceiptRemainderPageForItem($pdf, Receipt $receipt): \TCPDF
     {
         // logo
         $pdf->Image($this->sahs->getLocalAssetsPath('/img/logo-pdf.png'), BaseTcpdf::PDF_A5_MARGIN_LEFT, BaseTcpdf::PDF_A5_MARGIN_TOP, 40);
@@ -90,7 +88,7 @@ class ReceiptReminderBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 
         $pdf->Write(0, $this->ts->trans('backend.admin.receipt_reminder.second_paragraph_1'), '', false, 'L', false);
         $pdf->setFontStyle(null, 'B', 11);
-        $pdf->Write(0, (new DateTimeImmutable())->format(AbstractBase::DATE_STRING_FORMAT), '', false, 'L', false);
+        $pdf->Write(0, (new \DateTimeImmutable())->format(AbstractBase::DATE_STRING_FORMAT), '', false, 'L', false);
         $pdf->setFontStyle(null, '', 11);
         $pdf->Write(0, $this->ts->trans('backend.admin.receipt_reminder.second_paragraph_2'), '', false, 'L', false);
         $pdf->setFontStyle(null, 'B', 11);
