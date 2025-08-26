@@ -85,7 +85,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.86",
         "hautelook/alice-bundle": "^2.15",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^12.3",
         "rector/rector": "^1.2",
         "roave/security-advisories": "dev-latest",
         "symfony/browser-kit": "7.3.*",
@@ -97,8 +97,6 @@
     },
     "config": {
         "allow-plugins": {
-            "composer/installers": false,
-            "oomphinc/composer-installers-extender": false,
             "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true
