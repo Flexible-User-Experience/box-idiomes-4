@@ -1,7 +1,7 @@
 Box Idiomes
 ===========
 
-A Symfony 6.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat/admin) website content with custom ERP integrated functionalities.
+A Symfony 7.4 LTS project to manage [Box Idiomes](https://www.boxidiomes.cat/admin) website content with custom ERP integrated functionalities.
 
 ---
 
