@@ -14,9 +14,6 @@
     "digitick/sepa-xml": {
         "version": "1.6.2"
     },
-    "doctrine/cache": {
-        "version": "1.10.0"
-    },
     "doctrine/collections": {
         "version": "1.6.4"
     },
