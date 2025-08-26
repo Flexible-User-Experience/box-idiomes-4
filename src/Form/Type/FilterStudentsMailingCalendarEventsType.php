@@ -34,15 +34,13 @@ class FilterStudentsMailingCalendarEventsType extends FilterCalendarEventsType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'method' => Request::METHOD_POST,
-                'action' => $this->rs->generate('admin_app_student_mailing'),
-                'data_class' => FilterCalendarEventModel::class,
-                'attr' => [
-                    'class' => 'form-inline',
-                ],
-            ]
-        );
+        $resolver->setDefaults([
+            'method' => Request::METHOD_POST,
+            'action' => $this->rs->generate('admin_app_student_mailing'),
+            'data_class' => FilterCalendarEventModel::class,
+            'attr' => [
+                'class' => 'form-inline',
+            ],
+        ]);
     }
 }

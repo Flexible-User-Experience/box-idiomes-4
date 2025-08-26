@@ -69,10 +69,8 @@ class ContactHomepageType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => NewsletterContact::class,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => NewsletterContact::class,
+        ]);
     }
 }

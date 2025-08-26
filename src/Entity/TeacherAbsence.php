@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Enum\TeacherAbsenceTypeEnum;
 use App\Repository\TeacherAbsenceRepository;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -21,7 +20,7 @@ class TeacherAbsence extends AbstractBase
     private int $type = TeacherAbsenceTypeEnum::PERSONAL_ISSUES;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private DateTimeInterface $day;
+    private \DateTimeInterface $day;
 
     public function getTeacher(): Teacher
     {
@@ -52,7 +51,7 @@ class TeacherAbsence extends AbstractBase
         return $this;
     }
 
-    public function getDay(): DateTimeInterface
+    public function getDay(): \DateTimeInterface
     {
         return $this->day;
     }
@@ -62,7 +61,7 @@ class TeacherAbsence extends AbstractBase
         return $this->getDay() ? $this->getDay()->format(AbstractBase::DATE_STRING_FORMAT) : AbstractBase::DEFAULT_NULL_DATE_STRING;
     }
 
-    public function setDay(DateTimeInterface $day): self
+    public function setDay(\DateTimeInterface $day): self
     {
         $this->day = $day;
 

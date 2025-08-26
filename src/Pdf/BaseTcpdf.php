@@ -4,9 +4,8 @@ namespace App\Pdf;
 
 use App\Service\SmartAssetsHelperService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use TCPDF;
 
-class BaseTcpdf extends TCPDF
+class BaseTcpdf extends \TCPDF
 {
     public const PDF_WIDTH = 210;
     public const PDF_WIDTH_LANDSCAPE = 297;

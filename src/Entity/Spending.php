@@ -22,12 +22,10 @@ class Spending extends AbstractBase
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
     private \DateTimeInterface $date;
 
-    
     #[ORM\ManyToOne(targetEntity: SpendingCategory::class)]
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private ?SpendingCategory $category = null;
 
-    
     #[ORM\ManyToOne(targetEntity: Provider::class)]
     #[ORM\JoinColumn(name: 'provider_id', referencedColumnName: 'id')]
     private ?Provider $provider = null;

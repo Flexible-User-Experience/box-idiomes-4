@@ -310,11 +310,9 @@ class User extends AbstractBase implements PasswordAuthenticatedUserInterface, U
         return $this;
     }
 
-    public function eraseCredentials(): self
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
-
-        return $this;
     }
 
     public function __toString(): string

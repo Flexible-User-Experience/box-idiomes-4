@@ -19,7 +19,7 @@ class ChartsBlock extends AbstractBlockService
         $this->cfs = $cfs;
     }
 
-    public function execute(BlockContextInterface $blockContext, Response $response = null): Response
+    public function execute(BlockContextInterface $blockContext, ?Response $response = null): Response
     {
         return $this->renderResponse(
             $blockContext->getTemplate(),

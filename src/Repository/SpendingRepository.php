@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\AbstractBase;
 use App\Entity\Spending;
-use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
@@ -20,7 +19,7 @@ final class SpendingRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function getMonthlyExpensesAmountForDate(DateTimeInterface $date): int
+    public function getMonthlyExpensesAmountForDate(\DateTimeInterface $date): int
     {
         $begin = clone $date;
         $end = clone $date;

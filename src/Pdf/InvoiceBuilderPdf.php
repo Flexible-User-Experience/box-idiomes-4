@@ -5,11 +5,10 @@ namespace App\Pdf;
 use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
 use App\Enum\StudentPaymentEnum;
-use TCPDF;
 
 class InvoiceBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 {
-    public function build(Invoice $invoice): TCPDF
+    public function build(Invoice $invoice): \TCPDF
     {
         if ($this->sahs->isCliContext()) {
             $this->ts->setLocale($this->locale);

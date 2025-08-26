@@ -7,7 +7,6 @@ use App\Service\SmartAssetsHelperService;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use TCPDF;
 
 class SepaAgreementBuilderPdf
 {
@@ -28,7 +27,7 @@ class SepaAgreementBuilderPdf
         $this->bn = $pb->get('boss_name');
     }
 
-    public function build(Student $student): TCPDF
+    public function build(Student $student): \TCPDF
     {
         /** @var BaseTcpdf $pdf */
         $pdf = $this->tcpdf->create($this->sahs, $this->pb);

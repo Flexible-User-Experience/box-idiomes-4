@@ -1,8 +1,14 @@
 Changelog
 =========
 
-##### Version 5.8.05 (WIP)
+##### Version 5.8.06 (WIP)
  * fix bugs
+
+##### Version 5.8.05 (2025-08-26)
+ * Symfony v7.3 updagrade
+ * Composer dependencies update
+ * Importmap dependencies update
+ * remove php-cs-fixer global installation requirement
 
 ##### Version 5.8.04 (2025-03-28)
  * Symfony v6.4.20 update

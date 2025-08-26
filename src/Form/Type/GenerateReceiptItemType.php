@@ -82,10 +82,8 @@ class GenerateReceiptItemType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => GenerateReceiptItemModel::class,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => GenerateReceiptItemModel::class,
+        ]);
     }
 }

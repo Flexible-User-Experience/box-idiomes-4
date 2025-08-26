@@ -9,12 +9,9 @@ use App\Model\ExportCalendarToList;
 use App\Model\ExportCalendarToListDayHourItem;
 use App\Model\ExportCalendarToListDayItem;
 use App\Service\SmartAssetsHelperService;
-use DateTimeInterface;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
-use ReflectionException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use TCPDF;
 
 class ExportCalendarToListBuilderPdf
 {
@@ -41,9 +38,9 @@ class ExportCalendarToListBuilderPdf
     }
 
     /**
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
-    public function build(ExportCalendarToList $calendarEventsList): TCPDF
+    public function build(ExportCalendarToList $calendarEventsList): \TCPDF
     {
         /** @var BaseTcpdf $pdf */
         $pdf = $this->tcpdf->create($this->sahs, $this->pb);
@@ -175,19 +172,19 @@ class ExportCalendarToListBuilderPdf
         return $pdf;
     }
 
-    private function asString(DateTimeInterface $date): string
+    private function asString(\DateTimeInterface $date): string
     {
         return $date->format(AbstractBase::DATE_STRING_FORMAT);
     }
 
-    private function drawEmptyCells(TCPDF $pdf, int $columns): void
+    private function drawEmptyCells(\TCPDF $pdf, int $columns): void
     {
         for ($index = 0; $index < $columns; ++$index) {
-            $pdf->Cell(self::CELL_WIDTH, 0, '', true, ($index === $columns - 1 ? 1 : 0), 'L', true);
+            $pdf->Cell(self::CELL_WIDTH, 0, '', true, $index === $columns - 1 ? 1 : 0, 'L', true);
         }
     }
 
-    private function buildNewPage(TCPDF $pdf, $leftMargin, $rightMargin): void
+    private function buildNewPage(\TCPDF $pdf, $leftMargin, $rightMargin): void
     {
         // add new page
         ++$this->pageCounter;
@@ -195,7 +192,7 @@ class ExportCalendarToListBuilderPdf
         $pdf->SetXY($leftMargin, $rightMargin);
     }
 
-    private function setCellColors(TCPDF $pdf, Color $backgroundColor, bool $whiteText = false): void
+    private function setCellColors(\TCPDF $pdf, Color $backgroundColor, bool $whiteText = false): void
     {
         $pdf->setTextColor(0, 0, 0);
         if ($whiteText) {
@@ -204,7 +201,7 @@ class ExportCalendarToListBuilderPdf
         $pdf->SetFillColor($backgroundColor->getRedDecimalValue(), $backgroundColor->getGreenDecimalValue(), $backgroundColor->getBlueDecimalValue());
     }
 
-    private function drawCellByEventsAmount(TCPDF $pdf, int $eventsAmount, int $leftMargin, int $cellHeigth): void
+    private function drawCellByEventsAmount(\TCPDF $pdf, int $eventsAmount, int $leftMargin, int $cellHeigth): void
     {
         if ($eventsAmount < self::MAX_CLASSROOM_COLUMNS) {
             $this->drawEmptyCells($pdf, self::MAX_CLASSROOM_COLUMNS - $eventsAmount);

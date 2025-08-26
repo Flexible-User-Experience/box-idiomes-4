@@ -2,7 +2,6 @@
 
 namespace App\Entity\Traits;
 
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -33,7 +32,7 @@ trait ImageTrait
     {
         $this->imageFile = $imageFile;
         if ($imageFile) {
-            $this->updatedAt = new DateTimeImmutable();
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;

@@ -16,83 +16,110 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    '@symfony/stimulus-bundle' => [
+        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    ],
     '@fullcalendar/common' => [
         'version' => '5.11.5',
     ],
     '@fullcalendar/core' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     '@fullcalendar/core/locales/ca' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     '@fullcalendar/daygrid' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     '@fullcalendar/google-calendar' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     '@fullcalendar/interaction' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     '@fullcalendar/list' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     '@fullcalendar/timegrid' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
     '@hotwired/turbo' => [
-        'version' => '8.0.12',
+        'version' => '8.0.13',
     ],
     '@kurkle/color' => [
-        'version' => '0.3.4',
+        'version' => '0.4.0',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
-    ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
     '@toyokumo/fos-router' => [
         'version' => '1.0.5',
     ],
     'axios' => [
-        'version' => '1.7.9',
+        'version' => '1.11.0',
     ],
     'bootstrap' => [
-        'version' => '5.3.3',
+        'version' => '5.3.7',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.3',
+        'version' => '5.3.7',
         'type' => 'css',
     ],
     'chart.js' => [
-        'version' => '4.4.7',
+        'version' => '4.5.0',
     ],
     'fullcalendar' => [
-        'version' => '5.11.5',
+        'version' => '6.1.19',
     ],
     'pdfjs-dist/build/pdf.min.mjs' => [
-        'version' => '4.10.38',
+        'version' => '5.4.54',
     ],
     'pdfjs-dist/build/pdf.worker.min.mjs' => [
-        'version' => '4.10.38',
+        'version' => '5.4.54',
     ],
     'preact' => [
-        'version' => '10.12.1',
+        'version' => '10.27.1',
     ],
     'preact/compat' => [
-        'version' => '10.12.1',
+        'version' => '10.27.1',
     ],
     'preact/hooks' => [
-        'version' => '10.12.1',
+        'version' => '10.27.1',
     ],
     'stimulus-use' => [
         'version' => '0.52.3',
     ],
     'tslib' => [
         'version' => '2.8.1',
+    ],
+    '@fullcalendar/core/index.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/core/internal.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/core/preact.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/daygrid/internal.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/interaction/index.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/daygrid/index.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/timegrid/index.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/list/index.js' => [
+        'version' => '6.1.19',
+    ],
+    '@fullcalendar/multimonth/index.js' => [
+        'version' => '6.1.19',
     ],
 ];

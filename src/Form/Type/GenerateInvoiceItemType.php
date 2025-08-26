@@ -9,10 +9,8 @@ class GenerateInvoiceItemType extends GenerateReceiptItemType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => GenerateInvoiceItemModel::class,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => GenerateInvoiceItemModel::class,
+        ]);
     }
 }

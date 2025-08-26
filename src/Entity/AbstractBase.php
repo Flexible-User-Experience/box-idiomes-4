@@ -16,18 +16,15 @@ abstract class AbstractBase
     public const string DATABASE_DATE_STRING_FORMAT = 'Y-m-d';
     public const string DATABASE_DATETIME_STRING_FORMAT = 'Y-m-d H:i:s';
 
-    
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
     protected $id;
 
-    
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     protected \DateTimeInterface $createdAt;
 
-    
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Gedmo\Timestampable(on: 'update')]
     protected ?\DateTimeInterface $updatedAt;

@@ -42,10 +42,8 @@ class MailingStudentsNotificationMessageType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => MailingStudentsNotificationMessage::class,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => MailingStudentsNotificationMessage::class,
+        ]);
     }
 }

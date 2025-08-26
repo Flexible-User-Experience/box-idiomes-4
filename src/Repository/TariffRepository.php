@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Tariff;
 use App\Enum\TariffTypeEnum;
-use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -73,7 +72,7 @@ final class TariffRepository extends ServiceEntityRepository
         $result = $this->findCurrentPrivateLessonTariffQ()->getOneOrNullResult();
 
         if (is_null($result)) {
-            $today = new DateTimeImmutable();
+            $today = new \DateTimeImmutable();
             $result = new Tariff();
             $result
                 ->setName('default empty tariff')
@@ -105,7 +104,7 @@ final class TariffRepository extends ServiceEntityRepository
         $result = $this->findCurrentSharedPrivateLessonTariffQ()->getOneOrNullResult();
 
         if (is_null($result)) {
-            $today = new DateTimeImmutable();
+            $today = new \DateTimeImmutable();
             $result = new Tariff();
             $result
                 ->setName('default empty shared tariff')
