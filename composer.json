@@ -83,6 +83,7 @@
         "vich/uploader-bundle": "^2.7"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.86",
         "hautelook/alice-bundle": "^2.15",
         "phpunit/phpunit": "^10.5",
         "rector/rector": "^1.2",
