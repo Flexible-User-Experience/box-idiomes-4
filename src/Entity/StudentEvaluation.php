@@ -37,6 +37,36 @@ class StudentEvaluation extends AbstractBase
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $closedDate;
 
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private int $course;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: false)]
+    private int $evalutaion;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $writting = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $reading = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $useOfEnglish = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $listening = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $speaking = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $behaviour = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comments = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $globalMark = null;
+
     public function isHasBeenNotified(): ?bool
     {
         return $this->hasBeenNotified;
@@ -110,8 +140,152 @@ class StudentEvaluation extends AbstractBase
         return $this;
     }
 
+    public function getHasBeenClosed(): ?bool
+    {
+        return $this->hasBeenClosed;
+    }
+
+    public function setHasBeenClosed(?bool $hasBeenClosed): self
+    {
+        $this->hasBeenClosed = $hasBeenClosed;
+
+        return $this;
+    }
+
+    public function getClosedDate(): ?\DateTimeInterface
+    {
+        return $this->closedDate;
+    }
+
+    public function setClosedDate(?\DateTimeInterface $closedDate): self
+    {
+        $this->closedDate = $closedDate;
+
+        return $this;
+    }
+
+    public function getCourse(): int
+    {
+        return $this->course;
+    }
+
+    public function setCourse(int $course): self
+    {
+        $this->course = $course;
+
+        return $this;
+    }
+
+    public function getEvalutaion(): int
+    {
+        return $this->evalutaion;
+    }
+
+    public function setEvalutaion(int $evalutaion): self
+    {
+        $this->evalutaion = $evalutaion;
+
+        return $this;
+    }
+
+    public function getWritting(): ?string
+    {
+        return $this->writting;
+    }
+
+    public function setWritting(?string $writting): self
+    {
+        $this->writting = $writting;
+
+        return $this;
+    }
+
+    public function getReading(): ?string
+    {
+        return $this->reading;
+    }
+
+    public function setReading(?string $reading): self
+    {
+        $this->reading = $reading;
+
+        return $this;
+    }
+
+    public function getUseOfEnglish(): ?string
+    {
+        return $this->useOfEnglish;
+    }
+
+    public function setUseOfEnglish(?string $useOfEnglish): self
+    {
+        $this->useOfEnglish = $useOfEnglish;
+
+        return $this;
+    }
+
+    public function getListening(): ?string
+    {
+        return $this->listening;
+    }
+
+    public function setListening(?string $listening): self
+    {
+        $this->listening = $listening;
+
+        return $this;
+    }
+
+    public function getSpeaking(): ?string
+    {
+        return $this->speaking;
+    }
+
+    public function setSpeaking(?string $speaking): self
+    {
+        $this->speaking = $speaking;
+
+        return $this;
+    }
+
+    public function getBehaviour(): ?string
+    {
+        return $this->behaviour;
+    }
+
+    public function setBehaviour(?string $behaviour): self
+    {
+        $this->behaviour = $behaviour;
+
+        return $this;
+    }
+
+    public function getComments(): ?string
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?string $comments): self
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    public function getGlobalMark(): ?string
+    {
+        return $this->globalMark;
+    }
+
+    public function setGlobalMark(?string $globalMark): self
+    {
+        $this->globalMark = $globalMark;
+
+        return $this;
+    }
+
     public function __toString(): string
     {
-        return $this->id ? $this->getDayString().' · '.$this->getStudent() : AbstractBase::DEFAULT_NULL_STRING;
+        return $this->id ? $this->getCourse().' · '.$this->getEvalutaion().' · '.$this->getStudent() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }
