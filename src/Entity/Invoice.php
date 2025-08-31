@@ -24,7 +24,7 @@ class Invoice extends AbstractReceiptInvoice
     #[ORM\OneToMany(mappedBy: 'invoice', targetEntity: InvoiceLine::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Collection $lines;
 
-    #[ORM\Column(type: Types::FLOAT, options: ['default' => 0])]
+    #[ORM\Column(type: Types::FLOAT, options: ['default' => 0.0])]
     private float $taxPercentage = self::TAX_IVA;
 
     #[ORM\Column(type: Types::FLOAT, nullable: true, options: ['default' => 15])]

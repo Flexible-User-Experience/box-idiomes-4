@@ -16,7 +16,7 @@ class MailingStudentsNotificationMessage extends AbstractBase
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $sendDate = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: false, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     private bool $isSended = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

@@ -3,23 +3,21 @@
 namespace App\Entity;
 
 use App\Entity\Traits\StudentTrait;
-use App\Repository\StudentAbsenceRepository;
+use App\Repository\StudentEvaluationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity(repositoryClass: StudentAbsenceRepository::class)]
-#[UniqueEntity(['student', 'day'])]
-#[ORM\Table(name: 'student_absence')]
-class StudentAbsence extends AbstractBase
+#[ORM\Entity(repositoryClass: StudentEvaluationRepository::class)]
+#[UniqueEntity(['student', 'course', 'evaluation'])]
+#[ORM\Table(name: 'student_evaluation')]
+class StudentEvaluation extends AbstractBase
 {
     use StudentTrait;
 
+    #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id', nullable: false)]
     #[ORM\ManyToOne(targetEntity: Student::class)]
     private Student $student;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
-    private \DateTimeInterface $day;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $hasBeenNotified = false;
@@ -33,27 +31,11 @@ class StudentAbsence extends AbstractBase
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $acceptedDate;
 
-    public function getDay(): \DateTimeInterface
-    {
-        return $this->day;
-    }
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
+    private ?bool $hasBeenClosed = false;
 
-    public function getDayString(): string
-    {
-        return self::convertDateAsString($this->getDay());
-    }
-
-    public function setDay(\DateTimeInterface $day): self
-    {
-        $this->day = $day;
-
-        return $this;
-    }
-
-    public function getCalendarTitle(): string
-    {
-        return '[Alumne] '.$this->getStudent()->getName();
-    }
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $closedDate;
 
     public function isHasBeenNotified(): ?bool
     {

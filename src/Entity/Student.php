@@ -46,16 +46,16 @@ class Student extends AbstractPerson
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'students')]
     private Collection $events;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $hasImageRightsAccepted = false;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $hasSepaAgreementAccepted = false;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $isPaymentExempt = false;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $hasAcceptedInternalRegulations = false;
 
     public function __construct()

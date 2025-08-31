@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\StudentTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractReceiptInvoiceLine extends AbstractBase
 {
+    use StudentTrait;
+
     #[ORM\ManyToOne(targetEntity: Student::class)]
     #[ORM\JoinColumn(name: 'student_id', referencedColumnName: 'id')]
     protected Student $student;
@@ -25,18 +28,6 @@ abstract class AbstractReceiptInvoiceLine extends AbstractBase
 
     #[ORM\Column(type: Types::FLOAT, nullable: true)]
     protected ?float $total = null;
-
-    public function getStudent(): Student
-    {
-        return $this->student;
-    }
-
-    public function setStudent(Student $student): self
-    {
-        $this->student = $student;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
