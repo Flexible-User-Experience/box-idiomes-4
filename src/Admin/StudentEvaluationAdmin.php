@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Student;
+use App\Enum\StudentEvaluationEnum;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -13,6 +14,10 @@ use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class StudentEvaluationAdmin extends AbstractBaseAdmin
 {
@@ -43,6 +48,94 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                     'class' => Student::class,
                     'choice_label' => 'getFullCanonicalName',
                     'query_builder' => $this->em->getRepository(Student::class)->getEnabledSortedBySurnameQB(),
+                ]
+            )
+            ->add(
+                'course',
+                NumberType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.course',
+                    'required' => true,
+                    'html5' => true,
+                    'help' => 'backend.admin.student_evaluation.course_helper',
+                ]
+            )
+            ->add(
+                'evaluation',
+                ChoiceType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.evaluation',
+                    'choices' => StudentEvaluationEnum::getEnumArray(),
+                    'required' => true,
+                ]
+            )
+            ->end()
+            ->with('backend.admin.evaluation', $this->getFormMdSuccessBoxArray('backend.admin.controls', 4))
+            ->add(
+                'writting',
+                TextType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.writting',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'reading',
+                TextType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.reading',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'useOfEnglish',
+                TextType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.use_of_english',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'listening',
+                TextType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.listening',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'speaking',
+                TextType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.speaking',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'behaviour',
+                TextType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.behaviour',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'comments',
+                TextareaType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.coments',
+                    'required' => false,
+                    'attr' => [
+                        'rows' => 5,
+                    ],
+                ]
+            )
+            ->add(
+                'globalMark',
+                TextType::class,
+                [
+                    'label' => 'backend.admin.student_evaluation.global_mark',
+                    'required' => false,
                 ]
             )
             ->end()

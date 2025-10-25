@@ -76,6 +76,11 @@ class StudentEvaluation extends AbstractBase
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $globalMark = null;
 
+    public function __construct()
+    {
+        $this->course = (int) new \DateTimeImmutable()->format('Y');
+    }
+
     public function isHasBeenNotified(): ?bool
     {
         return $this->hasBeenNotified;
