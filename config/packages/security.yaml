@@ -12,6 +12,7 @@ security:
             - 'ROLE_ADMIN_EVENT_ALL'
             - 'ROLE_ADMIN_STUDENT_ALL'
             - 'ROLE_ADMIN_STUDENT_ABSENCE_ALL'
+            - 'ROLE_ADMIN_STUDENT_EVALUATION_ALL'
             - 'ROLE_ADMIN_PARENT_ALL'
             - 'ROLE_ADMIN_BANK_ALL'
             - 'ROLE_ADMIN_PRE_REGISTER_ALL'
