@@ -8,8 +8,10 @@ use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\DateFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -102,9 +104,14 @@ final class StudentAbsenceAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'student',
-                null,
+                ModelFilter::class,
                 [
-                    'label' => 'backend.admin.student.student',
+                    'label' => 'backend.admin.invoice.student',
+                    'field_type' => ModelAutocompleteType::class,
+                    'field_options' => [
+                        'class' => Student::class,
+                        'property' => ['name', 'surname'],
+                    ],
                 ]
             )
             ->add(
