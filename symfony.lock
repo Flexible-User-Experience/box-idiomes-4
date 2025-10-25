@@ -5,9 +5,6 @@
     "beberlei/doctrineextensions": {
         "version": "v1.2.6"
     },
-    "behat/transliterator": {
-        "version": "v1.3.0"
-    },
     "composer/installers": {
         "version": "v1.9.0"
     },
