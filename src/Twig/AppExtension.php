@@ -40,7 +40,7 @@ final readonly class AppExtension
     #[AsTwigTest('instance_of')]
     public function isInstanceOf($var, $instance): bool
     {
-        return (new \ReflectionClass($instance))->isInstance($var);
+        return new \ReflectionClass($instance)->isInstance($var);
     }
 
     #[AsTwigTest('pdf_file_type')]
@@ -126,13 +126,13 @@ final readonly class AppExtension
     {
         $span = '';
         if (TeacherColorEnum::MAGENTA === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #EE388A"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #EE388A"></span>';
         } elseif (TeacherColorEnum::BLUE === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #00ABE0"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #00ABE0"></span>';
         } elseif (TeacherColorEnum::YELLOW === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #FFCD38"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #FFCD38"></span>';
         } elseif (TeacherColorEnum::GREEN === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #80C66A"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #80C66A"></span>';
         }
 
         return $span;
@@ -141,7 +141,7 @@ final readonly class AppExtension
     #[AsTwigFilter('draw_class_group_color')]
     public function drawClassGroupColorSpan(ClassGroup $object): string
     {
-        return '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color:'.$object->getColor().'"></span>';
+        return '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color:'.$object->getColor().'"></span>';
     }
 
     #[AsTwigFilter('draw_teacher_absence_type')]
