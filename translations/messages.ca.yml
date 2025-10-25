@@ -570,6 +570,11 @@ month:
     november: "novembre"
     december: "desembre"
 
+trimesters:
+    first: "primer trimestre"
+    second: "segon trimestre"
+    third: "tercer trimestre"
+
 seasons:
     july_2020: "estiu 2020"
     september_2020: "setembre 2020"

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\StudentTrait;
+use App\Enum\StudentEvaluationEnum;
 use App\Repository\StudentEvaluationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,8 +41,8 @@ class StudentEvaluation extends AbstractBase
     #[ORM\Column(type: Types::INTEGER, nullable: false)]
     private int $course;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: false)]
-    private int $evalutaion;
+    #[ORM\Column(type: Types::INTEGER, nullable: false, options: ['default' => StudentEvaluationEnum::FIRST_TRIMESTER])]
+    private int $evalutaion = StudentEvaluationEnum::FIRST_TRIMESTER;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $writting = null;
