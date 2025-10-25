@@ -27,7 +27,7 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
     {
         $sortValues[DatagridInterface::PAGE] = 1;
         $sortValues[DatagridInterface::SORT_ORDER] = SortOrderTypeEnum::DESC;
-        $sortValues[DatagridInterface::SORT_BY] = 'day';
+        $sortValues[DatagridInterface::SORT_BY] = 'course';
     }
 
     public function generateBaseRoutePattern(bool $isChildAdmin = false): string
@@ -204,6 +204,26 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
+            ->add(
+                'course',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.course',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
+                ]
+            )
+            ->add(
+                'evaluation',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.evaluation',
+                    'editable' => false,
+                    'header_class' => 'text-center',
+                    'row_align' => 'center',
+                ]
+            )
             ->add(
                 'student',
                 null,
