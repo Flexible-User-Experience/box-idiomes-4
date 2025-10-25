@@ -50,7 +50,7 @@ class StudentEvaluation extends AbstractBase
     private int $course;
 
     #[ORM\Column(type: Types::INTEGER, nullable: false, options: ['default' => StudentEvaluationEnum::FIRST_TRIMESTER])]
-    private int $evalutaion = StudentEvaluationEnum::FIRST_TRIMESTER;
+    private int $evaluation = StudentEvaluationEnum::FIRST_TRIMESTER;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $writting = null;
@@ -185,14 +185,14 @@ class StudentEvaluation extends AbstractBase
         return $this;
     }
 
-    public function getEvalutaion(): int
+    public function getEvaluation(): int
     {
-        return $this->evalutaion;
+        return $this->evaluation;
     }
 
-    public function setEvalutaion(int $evalutaion): self
+    public function setEvaluation(int $evaluation): self
     {
-        $this->evalutaion = $evalutaion;
+        $this->evaluation = $evaluation;
 
         return $this;
     }
@@ -295,6 +295,6 @@ class StudentEvaluation extends AbstractBase
 
     public function __toString(): string
     {
-        return $this->id ? $this->getCourse().' · '.$this->getEvalutaion().' · '.$this->getStudent() : AbstractBase::DEFAULT_NULL_STRING;
+        return $this->id ? $this->getCourse().' · '.$this->getEvaluation().' · '.$this->getStudent() : AbstractBase::DEFAULT_NULL_STRING;
     }
 }
