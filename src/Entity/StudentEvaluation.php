@@ -11,7 +11,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: StudentEvaluationRepository::class)]
 #[UniqueEntity(['student', 'course', 'evaluation'])]
-#[ORM\Table(name: 'student_evaluation')]
+#[ORM\Table(
+    name: 'student_evaluation',
+    uniqueConstraints: [
+        new ORM\UniqueConstraint(
+            name: 'student_course_evaluation_key',
+            columns: ['student_id', 'course_id', 'evaluation_id']
+        ),
+    ]
+)]
 class StudentEvaluation extends AbstractBase
 {
     use StudentTrait;
