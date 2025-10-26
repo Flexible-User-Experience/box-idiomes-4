@@ -20,7 +20,6 @@ use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -71,12 +70,11 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'course',
-                NumberType::class,
+                ChoiceType::class,
                 [
                     'label' => 'backend.admin.student_evaluation.course',
+                    'choices' => ReceiptYearMonthEnum::getReversedYearAsFullCourseEnumArray(),
                     'required' => true,
-                    'html5' => true,
-                    'help' => 'backend.admin.student_evaluation.course_helper',
                 ]
             )
             ->add(
@@ -89,7 +87,7 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                 ]
             )
             ->end()
-            ->with('backend.admin.evaluation', $this->getFormMdSuccessBoxArray('backend.admin.controls', 4))
+            ->with('backend.admin.evaluation', $this->getFormMdSuccessBoxArray('backend.admin.evaluation', 4))
             ->add(
                 'writting',
                 TextType::class,
@@ -142,7 +140,7 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                 'comments',
                 TextareaType::class,
                 [
-                    'label' => 'backend.admin.student_evaluation.coments',
+                    'label' => 'backend.admin.student_evaluation.comments',
                     'required' => false,
                     'attr' => [
                         'rows' => 5,
@@ -223,6 +221,62 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                         'class' => Student::class,
                         'property' => ['name', 'surname'],
                     ],
+                ]
+            )
+            ->add(
+                'writting',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.writting',
+                ]
+            )
+            ->add(
+                'reading',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.reading',
+                ]
+            )
+            ->add(
+                'useOfEnglish',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.use_of_english',
+                ]
+            )
+            ->add(
+                'listening',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.listening',
+                ]
+            )
+            ->add(
+                'speaking',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.speaking',
+                ]
+            )
+            ->add(
+                'behaviour',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.behaviour',
+                ]
+            )
+            ->add(
+                'comments',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.comments',
+                ]
+            )
+            ->add(
+                'globalMark',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.global_mark',
                 ]
             )
             ->add(
