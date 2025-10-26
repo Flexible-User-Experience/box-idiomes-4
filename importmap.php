@@ -75,10 +75,10 @@ return [
         'version' => '4.5.1',
     ],
     'pdfjs-dist/build/pdf.min.mjs' => [
-        'version' => '5.4.54',
+        'version' => '5.4.296',
     ],
     'pdfjs-dist/build/pdf.worker.min.mjs' => [
-        'version' => '5.4.54',
+        'version' => '5.4.296',
     ],
     'preact' => [
         'version' => '10.27.1',
