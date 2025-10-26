@@ -24,6 +24,12 @@ final class DownloadMediaController extends AbstractController
         DownloadHandler $downloadHandler,
         #[MapEntity(mapping: ['id' => 'id'])] Spending $attachmentFile,
     ): Response {
-        return $downloadHandler->downloadObject($attachmentFile, 'documentFile', Spending::class, true, false);
+        return $downloadHandler->downloadObject(
+            object: $attachmentFile,
+            field: 'documentFile',
+            className: Spending::class,
+            fileName: true,
+            forceDownload: false
+        );
     }
 }

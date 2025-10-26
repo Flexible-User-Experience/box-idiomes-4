@@ -88,10 +88,9 @@ final class SpendingAdmin extends AbstractBaseAdmin
                 VichFileType::class,
                 [
                     'label' => 'backend.admin.spending.document',
-                    'download_uri' => true,
+                    'download_uri' => !$this->isFormToCreateNewRecord() ? $this->getRouteGenerator()->generate('media_inline_spending_item', ['id' => $this->id($this->getSubject())]) : false,
                     'allow_delete' => true,
                     'asset_helper' => true,
-                    'download_label' => 'document',
                     'required' => false,
                     'help' => 'Pots adjuntar qualsevol document amb format PDF de fins a 10MB',
                 ]

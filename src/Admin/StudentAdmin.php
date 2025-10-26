@@ -212,6 +212,11 @@ final class StudentAdmin extends AbstractBaseAdmin
                 [
                     'label' => 'backend.admin.student.birthDate',
                     'format' => 'd/M/y',
+                    'datepicker_options' => [
+                        'localization' => [
+                            'locale' => 'es',
+                        ],
+                    ],
                 ]
             )
             ->add(
