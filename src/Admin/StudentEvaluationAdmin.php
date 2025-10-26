@@ -5,9 +5,11 @@ namespace App\Admin;
 use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Student;
 use App\Enum\StudentEvaluationEnum;
+use App\Repository\StudentRepository;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
@@ -33,6 +35,20 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
     public function generateBaseRoutePattern(bool $isChildAdmin = false): string
     {
         return 'students/evaluation';
+    }
+
+    protected function configureQuery(ProxyQueryInterface $query): ProxyQueryInterface
+    {
+        $query = parent::configureQuery($query);
+        $rootAlias = current($query->getRootAliases());
+        $query
+            ->leftJoin(sprintf('%s.student', $rootAlias), StudentRepository::ALIAS)
+            ->addOrderBy(sprintf('%s.evaluation', $rootAlias), SortOrderTypeEnum::ASC)
+            ->addOrderBy(sprintf('%s.surname', StudentRepository::ALIAS), SortOrderTypeEnum::ASC)
+            ->addOrderBy(sprintf('%s.name', StudentRepository::ALIAS), SortOrderTypeEnum::ASC)
+        ;
+
+        return $query;
     }
 
     protected function configureFormFields(FormMapper $form): void
@@ -209,6 +225,7 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.student_evaluation.course',
+                    'accessor' => 'fullCourseAsString',
                     'editable' => false,
                     'header_class' => 'text-center',
                     'row_align' => 'center',

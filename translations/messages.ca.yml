@@ -229,6 +229,9 @@ backend:
             type: "Tipus"
             day: "Dia"
             show_title: "Absències"
+        student_evaluation:
+            course: "Curs"
+            evaluation: "Avaluació"
         student:
             mark_as_inactive_batch_action: "Marcar els alumnes seleccionats com a inactius"
             student: "Alumne"

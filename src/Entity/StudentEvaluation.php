@@ -183,6 +183,11 @@ class StudentEvaluation extends AbstractBase
         return $this->course;
     }
 
+    public function getFullCourseAsString(): string
+    {
+        return sprintf('%d / %d', $this->getCourse(), $this->getCourse() + 1);
+    }
+
     public function setCourse(int $course): self
     {
         $this->course = $course;
