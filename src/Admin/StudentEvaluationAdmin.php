@@ -4,12 +4,15 @@ namespace App\Admin;
 
 use App\Doctrine\Enum\SortOrderTypeEnum;
 use App\Entity\Student;
+use App\Entity\StudentEvaluation;
+use App\Enum\ReceiptYearMonthEnum;
 use App\Enum\StudentEvaluationEnum;
 use App\Repository\StudentRepository;
 use Sonata\AdminBundle\Datagrid\DatagridInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
@@ -183,6 +186,34 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
     {
         $filter
             ->add(
+                'course',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.course',
+                    'required' => true,
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => ReceiptYearMonthEnum::getReversedYearAsFullCourseEnumArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
+                ]
+            )
+            ->add(
+                'evaluation',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.evaluation',
+                    'required' => true,
+                    'field_type' => ChoiceType::class,
+                    'field_options' => [
+                        'choices' => StudentEvaluationEnum::getEnumArray(),
+                        'expanded' => false,
+                        'multiple' => false,
+                    ],
+                ]
+            )
+            ->add(
                 'student',
                 ModelFilter::class,
                 [
@@ -233,9 +264,12 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
             )
             ->add(
                 'evaluation',
-                null,
+                FieldDescriptionInterface::TYPE_TRANS,
                 [
                     'label' => 'backend.admin.student_evaluation.evaluation',
+                    'accessor' => function (StudentEvaluation $subject) {
+                        return StudentEvaluationEnum::getReversedEnumArray()[$subject->getEvaluation()];
+                    },
                     'editable' => false,
                     'header_class' => 'text-center',
                     'row_align' => 'center',
