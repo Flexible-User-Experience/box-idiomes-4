@@ -38,6 +38,16 @@ class BackendStudentsMenuBuilder
         ;
         $menu
             ->addChild(
+                'evaluations',
+                [
+                    'label' => 'Avaluacions',
+                    'route' => 'admin_app_studentevaluation_list',
+                    'current' => 'admin_app_studentevaluation_list' === $route || 'admin_app_studentevaluation_create' === $route || 'admin_app_studentevaluation_edit' === $route,
+                ]
+            )
+        ;
+        $menu
+            ->addChild(
                 'absences',
                 [
                     'label' => 'Absència alumne',

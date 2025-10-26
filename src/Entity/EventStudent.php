@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\StudentTrait;
 use App\Repository\EventStudentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +14,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\UniqueConstraint(name: 'UNIQ_DB5678D3EA12567', columns: ['event_id', 'student_id'])]
 class EventStudent
 {
+    use StudentTrait;
+
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Event::class)]
     private Event $event;
@@ -32,18 +35,6 @@ class EventStudent
     public function setEvent(Event $event): self
     {
         $this->event = $event;
-
-        return $this;
-    }
-
-    public function getStudent(): Student
-    {
-        return $this->student;
-    }
-
-    public function setStudent(Student $student): self
-    {
-        $this->student = $student;
 
         return $this;
     }

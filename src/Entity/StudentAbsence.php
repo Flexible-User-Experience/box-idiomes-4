@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\StudentTrait;
 use App\Repository\StudentAbsenceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,35 +13,25 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table(name: 'student_absence')]
 class StudentAbsence extends AbstractBase
 {
+    use StudentTrait;
+
     #[ORM\ManyToOne(targetEntity: Student::class)]
     private Student $student;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: false)]
     private \DateTimeInterface $day;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $hasBeenNotified = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $notificationDate = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $hasBeenAccepted = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $acceptedDate;
-
-    public function getStudent(): Student
-    {
-        return $this->student;
-    }
-
-    public function setStudent(Student $student): self
-    {
-        $this->student = $student;
-
-        return $this;
-    }
 
     public function getDay(): \DateTimeInterface
     {

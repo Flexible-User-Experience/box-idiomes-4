@@ -30,7 +30,7 @@ class ClassGroup extends AbstractBase
 
     private ?Color $colorRgbArray = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     private ?bool $isForPrivateLessons;
 
     public function getCode(): string

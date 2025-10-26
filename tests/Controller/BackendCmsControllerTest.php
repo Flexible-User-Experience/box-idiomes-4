@@ -66,6 +66,10 @@ class BackendCmsControllerTest extends WebTestCase
             ['/admin/students/absence/create'],
             ['/admin/students/absence/1/edit'],
             ['/admin/students/absence/1/delete'],
+            ['/admin/students/evaluation/list'],
+            ['/admin/students/evaluation/create'],
+            ['/admin/students/evaluation/1/edit'],
+            ['/admin/students/evaluation/1/delete'],
             ['/admin/students/absence/1/notification'],
             ['/admin/students/parent/list'],
             ['/admin/students/parent/create'],
@@ -170,6 +174,7 @@ class BackendCmsControllerTest extends WebTestCase
         return [
             ['/admin/students/student/batch'],
             ['/admin/students/absence/batch'],
+            ['/admin/students/evaluation/batch'],
             ['/admin/students/parent/1/delete'],
             ['/admin/students/parent/1/show'],
             ['/admin/students/pre-register/create'],

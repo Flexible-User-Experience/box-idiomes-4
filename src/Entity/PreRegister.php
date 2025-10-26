@@ -32,10 +32,10 @@ class PreRegister extends AbstractPerson
     #[ORM\ManyToOne(targetEntity: ClassGroup::class)]
     protected ?ClassGroup $classGroup = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     protected ?bool $hasBeenPreviousCustomer = false;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     protected ?bool $wantsToMakeOfficialExam = false;
 
     public function getAge(): ?string

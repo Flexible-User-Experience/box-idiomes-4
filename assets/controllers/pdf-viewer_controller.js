@@ -1,6 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf.min.mjs';
 GlobalWorkerOptions.workerSrc = '/pdfjs-dist/pdf.worker.min.mjs'; // IMPORTANT -> copy from importmaps `vendor` directory to public/pdfjs-dist
+// $ cp assets/vendor/pdfjs-dist/build/pdf.worker.min.mjs.js public/pdfjs-dist/pdf.worker.min.mjs
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller

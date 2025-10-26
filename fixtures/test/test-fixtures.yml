@@ -88,6 +88,16 @@ App\Entity\StudentAbsence:
     updatedAt: <dateTimeThisMonth()>
     enabled: true
 
+# Student evaluations
+App\Entity\StudentEvaluation:
+  studentevaluation{1..2}:
+    student: '@student<numberBetween(1,2)>'
+    course: <numberBetween(2024,2026)>
+    evaluation: <current()>
+    createdAt: <dateTimeBetween('-2 months', '-1 months')>
+    updatedAt: <dateTimeThisMonth()>
+    enabled: true
+
 # Services
 App\Entity\Service:
   service{1..2}:
