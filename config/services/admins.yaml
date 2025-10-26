@@ -41,7 +41,7 @@ services:
     admin.student_evaluation:
         class: 'App\Admin\StudentEvaluationAdmin'
         tags:
-            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\StudentEvaluation', label: 'Avaluacions', group: 'Alumnes' }
+            - { name: 'sonata.admin', manager_type: 'orm', model_class: 'App\Entity\StudentEvaluation', controller: 'App\Controller\Admin\StudentEvaluationAdminController', label: 'Avaluacions', group: 'Alumnes' }
         calls:
             - [ 'setEntityManager', [ '@doctrine.orm.entity_manager' ] ]
             - [ 'setSecurityHelper', [ '@security.helper' ] ]

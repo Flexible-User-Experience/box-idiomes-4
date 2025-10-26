@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -37,6 +38,12 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
     public function generateBaseRoutePattern(bool $isChildAdmin = false): string
     {
         return 'students/evaluation';
+    }
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        parent::configureRoutes($collection);
+        $collection->add('notification', $this->getRouterIdParameter().'/notification');
     }
 
     protected function configureQuery(ProxyQueryInterface $query): ProxyQueryInterface
@@ -381,6 +388,9 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                     'actions' => [
                         'edit' => [
                             'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'notification' => [
+                            'template' => 'Admin/Buttons/list__action_student_evaluation_notification_button.html.twig',
                         ],
                         'delete' => [
                             'template' => 'Admin/Buttons/list__action_delete_button.html.twig',
