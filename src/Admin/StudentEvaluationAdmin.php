@@ -58,17 +58,6 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
         $form
             ->with('backend.admin.general', $this->getFormMdSuccessBoxArray('backend.admin.general', 3))
             ->add(
-                'student',
-                EntityType::class,
-                [
-                    'label' => 'backend.admin.student.student',
-                    'required' => true,
-                    'class' => Student::class,
-                    'choice_label' => 'getFullCanonicalName',
-                    'query_builder' => $this->em->getRepository(Student::class)->getEnabledSortedBySurnameQB(),
-                ]
-            )
-            ->add(
                 'course',
                 ChoiceType::class,
                 [
@@ -84,6 +73,17 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                     'label' => 'backend.admin.student_evaluation.evaluation',
                     'choices' => StudentEvaluationEnum::getEnumArray(),
                     'required' => true,
+                ]
+            )
+            ->add(
+                'student',
+                EntityType::class,
+                [
+                    'label' => 'backend.admin.student.student',
+                    'required' => true,
+                    'class' => Student::class,
+                    'choice_label' => 'getFullCanonicalName',
+                    'query_builder' => $this->em->getRepository(Student::class)->getEnabledSortedBySurnameQB(),
                 ]
             )
             ->end()
@@ -215,7 +215,7 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                 'student',
                 ModelFilter::class,
                 [
-                    'label' => 'backend.admin.invoice.student',
+                    'label' => 'backend.admin.student.student',
                     'field_type' => ModelAutocompleteType::class,
                     'field_options' => [
                         'class' => Student::class,
@@ -339,6 +339,14 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                     'sortable' => true,
                     'sort_field_mapping' => ['fieldName' => 'name'],
                     'sort_parent_association_mappings' => [['fieldName' => 'student']],
+                ]
+            )
+            ->add(
+                'globalMark',
+                null,
+                [
+                    'label' => 'backend.admin.student_evaluation.global_mark',
+                    'editable' => false,
                 ]
             )
             ->add(
