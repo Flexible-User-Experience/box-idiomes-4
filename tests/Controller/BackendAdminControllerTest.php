@@ -197,6 +197,7 @@ class BackendAdminControllerTest extends WebTestCase
     {
         return [
             ['/admin/students/absence/1/notification'],
+            ['/admin/students/evaluation/1/notification'],
             ['/admin/billings/receipt/1/create-invoice'],
             ['/admin/billings/receipt/1/reminder-send'],
             ['/admin/billings/receipt/1/send'],
