@@ -22,70 +22,41 @@ use App\Manager\ReceiptManager;
 use App\Service\FileService;
 use App\Service\SmartAssetsHelperService;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
-use Twig\TwigFunction;
-use Twig\TwigTest;
+use Twig\Attribute\AsTwigFilter;
+use Twig\Attribute\AsTwigFunction;
+use Twig\Attribute\AsTwigTest;
 
-class AppExtension extends AbstractExtension
+final readonly class AppExtension
 {
-    private FileService $fs;
-    private SmartAssetsHelperService $sahs;
-    private ReceiptManager $rm;
-    private TranslatorInterface $ts;
-
-    public function __construct(FileService $fs, SmartAssetsHelperService $sahs, ReceiptManager $rm, TranslatorInterface $ts)
-    {
-        $this->fs = $fs;
-        $this->sahs = $sahs;
-        $this->rm = $rm;
-        $this->ts = $ts;
+    public function __construct(
+        private FileService $fs,
+        private SmartAssetsHelperService $sahs,
+        private ReceiptManager $rm,
+        private TranslatorInterface $ts,
+    ) {
     }
 
-    /**
-     * Twig Tests.
-     */
-    public function getTests(): array
-    {
-        return [
-            new TwigTest('instance_of', [$this, 'isInstanceOf']),
-            new TwigTest('pdf_file_type', [$this, 'isPdfFileType']),
-            new TwigTest('audio_file_type', [$this, 'isAudioFileType']),
-        ];
-    }
-
+    // tests
+    #[AsTwigTest('instance_of')]
     public function isInstanceOf($var, $instance): bool
     {
-        return (new \ReflectionClass($instance))->isInstance($var);
+        return new \ReflectionClass($instance)->isInstance($var);
     }
 
+    #[AsTwigTest('pdf_file_type')]
     public function isPdfFileType($object): bool
     {
         return $this->isInstanceOf($object, \SplFileInfo::class) && 'pdf' === strtolower($object->getExtension());
     }
 
+    #[AsTwigTest('audio_file_type')]
     public function isAudioFileType($object): bool
     {
         return $this->isInstanceOf($object, \SplFileInfo::class) && ('mp3' === strtolower($object->getExtension()) || 'wav' === strtolower($object->getExtension()));
     }
 
-    /**
-     * Twig Functions.
-     */
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction('generate_random_error_text', [$this, 'generateRandomErrorText']),
-            new TwigFunction('is_contact_message_document_pdf_file', [$this, 'isContactMessageDocumentPdfFile']),
-            new TwigFunction('is_contact_message_document_image_file', [$this, 'isContactMessageDocumentImageFile']),
-            new TwigFunction('is_receipt_invoiced', [$this, 'isReceiptInvoicedFunction']),
-            new TwigFunction('get_absolute_asset_path_context_independent', [$this, 'getAbsoluteAssetPathContextIndependent']),
-        ];
-    }
-
-    /**
-     * @throws \Exception
-     */
+    // functions
+    #[AsTwigFunction('generate_random_error_text')]
     public function generateRandomErrorText($length = 1024): string
     {
         // Character List to Pick from
@@ -97,16 +68,19 @@ class AppExtension extends AbstractExtension
         return substr(str_shuffle(str_repeat($chrList, random_int($chrRepeatMin, $chrRepeatMax))), 1, $length);
     }
 
+    #[AsTwigFunction('is_contact_message_document_pdf_file')]
     public function isContactMessageDocumentPdfFile(ContactMessage $contactMessage): bool
     {
         return $this->fs->isPdf($contactMessage, 'documentFile');
     }
 
+    #[AsTwigFunction('is_contact_message_document_image_file')]
     public function isContactMessageDocumentImageFile(ContactMessage $contactMessage): bool
     {
         return $this->fs->isImage($contactMessage, 'documentFile');
     }
 
+    #[AsTwigFunction('is_receipt_invoiced')]
     public function isReceiptInvoicedFunction(Receipt $receipt): bool
     {
         return $this->rm->isReceiptInvoiced($receipt);
@@ -115,33 +89,14 @@ class AppExtension extends AbstractExtension
     /**
      * Always return absolute URL path, even in CLI contexts useful for background shell processes.
      */
+    #[AsTwigFunction('get_absolute_asset_path_context_independent')]
     public function getAbsoluteAssetPathContextIndependent($assetPath): string
     {
         return $this->sahs->getAbsoluteAssetPathContextIndependent($assetPath);
     }
 
-    /**
-     * Twig Filters.
-     */
-    public function getFilters(): array
-    {
-        return [
-            new TwigFilter('draw_role_span', [$this, 'drawRoleSpan']),
-            new TwigFilter('draw_teacher_color', [$this, 'drawTeacherColorSpan']),
-            new TwigFilter('draw_teacher_absence_type', [$this, 'drawTeacherAbsenceType']),
-            new TwigFilter('draw_class_group_color', [$this, 'drawClassGroupColorSpan']),
-            new TwigFilter('draw_tariff_type', [$this, 'drawTariffType']),
-            new TwigFilter('draw_event_classroom_type', [$this, 'drawEventClassroomType']),
-            new TwigFilter('draw_invoice_month', [$this, 'drawInvoiceMonth']),
-            new TwigFilter('draw_money', [$this, 'drawMoney']),
-            new TwigFilter('draw_pre_register_season_type', [$this, 'drawPreRegisterSeasonType']),
-            new TwigFilter('write_pre_register_season_string', [$this, 'writePreRegisterSeasonString']),
-            new TwigFilter('i', [$this, 'integerNumberFormattedString']),
-            new TwigFilter('f', [$this, 'floatNumberFormattedString']),
-            new TwigFilter('euro', [$this, 'euroFloatNumberFormattedString']),
-        ];
-    }
-
+    // filters
+    #[AsTwigFilter('draw_role_span')]
     public function drawRoleSpan(User $object): string
     {
         $span = '';
@@ -166,47 +121,54 @@ class AppExtension extends AbstractExtension
         return $span;
     }
 
+    #[AsTwigFilter('draw_teacher_color')]
     public function drawTeacherColorSpan(Teacher $object): string
     {
         $span = '';
         if (TeacherColorEnum::MAGENTA === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #EE388A"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #EE388A"></span>';
         } elseif (TeacherColorEnum::BLUE === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #00ABE0"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #00ABE0"></span>';
         } elseif (TeacherColorEnum::YELLOW === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #FFCD38"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #FFCD38"></span>';
         } elseif (TeacherColorEnum::GREEN === $object->getColor()) {
-            $span .= '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color: #80C66A"></span>';
+            $span .= '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color: #80C66A"></span>';
         }
 
         return $span;
     }
 
+    #[AsTwigFilter('draw_class_group_color')]
     public function drawClassGroupColorSpan(ClassGroup $object): string
     {
-        return '<span class="label" style="margin-right:10px; width: 100%; height: 12px; display: block; background-color:'.$object->getColor().'"></span>';
+        return '<span class="label" style="width: 100%; height: 12px; display: inline-block; background-color:'.$object->getColor().'"></span>';
     }
 
+    #[AsTwigFilter('draw_teacher_absence_type')]
     public function drawTeacherAbsenceType(TeacherAbsence $object): string
     {
         return '<div class="text-left">'.TeacherAbsenceTypeEnum::getReversedEnumArray()[$object->getType()].'</div>';
     }
 
+    #[AsTwigFilter('draw_tariff_type')]
     public function drawTariffType(Tariff $object): string
     {
         return TariffTypeEnum::getReversedEnumArray()[$object->getType()];
     }
 
+    #[AsTwigFilter('draw_event_classroom_type')]
     public function drawEventClassroomType(Event $object): string
     {
         return EventClassroomTypeEnum::getReversedEnumArray()[$object->getClassroom()];
     }
 
+    #[AsTwigFilter('draw_invoice_month')]
     public function drawInvoiceMonth($object): string
     {
         return $object->getMonthNameString();
     }
 
+    #[AsTwigFilter('draw_money')]
     public function drawMoney($object): string
     {
         $result = '<span class="text text-info">0,00 €</span>';
@@ -221,6 +183,7 @@ class AppExtension extends AbstractExtension
         return $result;
     }
 
+    #[AsTwigFilter('draw_pre_register_season_type')]
     public function drawPreRegisterSeasonType(PreRegister $object): string
     {
         $span = '';
@@ -241,21 +204,25 @@ class AppExtension extends AbstractExtension
         return $span;
     }
 
+    #[AsTwigFilter('write_pre_register_season_string')]
     public function writePreRegisterSeasonString(PreRegister $object): string
     {
         return PreRegisterSeasonEnum::getReversedEnumArray()[$object->getSeason()];
     }
 
+    #[AsTwigFilter('i')]
     public function integerNumberFormattedString(int $value): string
     {
         return number_format($value, 0, '\'', '.');
     }
 
+    #[AsTwigFilter('f')]
     public function floatNumberFormattedString(float $value): string
     {
         return number_format($value, 2, '\'', '.');
     }
 
+    #[AsTwigFilter('euro')]
     public function euroFloatNumberFormattedString(?float $value): string
     {
         return $value ? $this->floatNumberFormattedString($value).' €' : AbstractBase::DEFAULT_NULL_STRING;

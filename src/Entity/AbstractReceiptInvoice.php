@@ -26,19 +26,19 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     protected ?bool $isPayed = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $paymentDate = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     protected ?bool $isSended = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     protected ?\DateTimeInterface $sendDate = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     protected ?bool $isSepaXmlGenerated = false;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
@@ -47,10 +47,10 @@ abstract class AbstractReceiptInvoice extends AbstractBase
     #[ORM\Column(type: Types::FLOAT, nullable: true)]
     protected ?float $baseAmount = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     protected ?bool $discountApplied = false;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => 0])]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true, options: ['default' => false])]
     protected ?bool $isForPrivateLessons = false;
 
     public function getStudent(): ?Student

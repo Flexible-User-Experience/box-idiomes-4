@@ -9,6 +9,9 @@
 "Student Absence List": "Absències alumne"
 "Student Absence Create": "Crear"
 "Student Absence Delete": "Esborrar"
+"Student Evaluation List": "Avaluacions"
+"Student Evaluation Create": "Crear"
+"Student Evaluation Delete": "Esborrar"
 "Class Group List": "Grups"
 "Class Group Create": "Crear"
 "Class Group Delete": "Esborrar"
@@ -169,6 +172,7 @@ backend:
         controls: "Controls"
         general: "General"
         assistance: "Control assistència"
+        evaluation: "Avaluació"
         date: "Data creació"
         dates: "Dates"
         enabled: "Actiu"
@@ -226,6 +230,18 @@ backend:
             type: "Tipus"
             day: "Dia"
             show_title: "Absències"
+        student_evaluation:
+            course: "Curs"
+            course_helper: "Curs"
+            evaluation: "Avaluació"
+            writting: "Writting"
+            reading: "Reading"
+            use_of_english: "Use of English"
+            listening: "Listening"
+            speaking: "Speaking"
+            behaviour: "Comportament"
+            comments: "Comentaris"
+            global_mark: "Nota Global"
         student:
             mark_as_inactive_batch_action: "Marcar els alumnes seleccionats com a inactius"
             student: "Alumne"
@@ -569,6 +585,11 @@ month:
     october: "octubre"
     november: "novembre"
     december: "desembre"
+
+trimesters:
+    first: "primer trimestre"
+    second: "segon trimestre"
+    third: "tercer trimestre"
 
 seasons:
     july_2020: "estiu 2020"

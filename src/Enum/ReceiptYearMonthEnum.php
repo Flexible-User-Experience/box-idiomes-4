@@ -99,4 +99,21 @@ class ReceiptYearMonthEnum
 
         return $result;
     }
+
+    public static function getReversedYearAsFullCourseEnumArray(): array
+    {
+        $result = [];
+        $now = new \DateTimeImmutable();
+        $currentYear = (int) $now->format('Y');
+        if (12 === (int) $now->format('m') && 15 < (int) $now->format('d')) {
+            ++$currentYear;
+        }
+        $steps = $currentYear - self::APP_FIRST_YEAR + 1;
+        for ($i = 0; $i < $steps; ++$i) {
+            $year = $currentYear - $i;
+            $result[sprintf('%s / %s', $year, $year + 1)] = $year;
+        }
+
+        return $result;
+    }
 }

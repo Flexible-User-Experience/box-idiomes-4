@@ -66,7 +66,7 @@
                 {% block footer_router %}
                     <a href="{{ path('app_forgot_password_request') }}"><i class="fa fa-key"></i> He oblidat la contrasenya</a>
                 {% endblock %}
-                <span style="margin-top:5px;display:block;">{{ admin_tag_version }}</span>
+                <span style="margin-top:5px;display:block;">v{{ admin_tag_version | slice(0, 1) }}.{{ admin_tag_version | slice(1, 2) }}.{{ admin_tag_version | slice(3) }}</span>
             </p>
         </div>
     </div>
