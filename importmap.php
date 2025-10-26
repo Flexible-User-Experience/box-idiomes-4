@@ -43,11 +43,14 @@ return [
     '@fullcalendar/timegrid' => [
         'version' => '5.11.5',
     ],
+    'fullcalendar' => [
+        'version' => '5.11.5',
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
     '@hotwired/turbo' => [
-        'version' => '8.0.13',
+        'version' => '8.0.18',
     ],
     '@kurkle/color' => [
         'version' => '0.4.0',
@@ -59,20 +62,17 @@ return [
         'version' => '1.0.5',
     ],
     'axios' => [
-        'version' => '1.11.0',
+        'version' => '1.12.2',
     ],
     'bootstrap' => [
-        'version' => '5.3.7',
+        'version' => '5.3.8',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.7',
+        'version' => '5.3.8',
         'type' => 'css',
     ],
     'chart.js' => [
-        'version' => '4.5.0',
-    ],
-    'fullcalendar' => [
-        'version' => '5.11.5',
+        'version' => '4.5.1',
     ],
     'pdfjs-dist/build/pdf.min.mjs' => [
         'version' => '5.4.54',
