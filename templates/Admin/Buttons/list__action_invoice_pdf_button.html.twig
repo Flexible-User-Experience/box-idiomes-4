@@ -1,9 +1,7 @@
 {% if not object.student.isPaymentExempt %}
     <a
-        {{ stimulus_controller('pdf-button') }}
+        {{ stimulus_controller('pdf-button', {'attachment': object.id, 'path': path('admin_app_invoice_pdf', {'id': object.id})}) }}
         {{ stimulus_action('pdf-button', 'clicked') }}
-        data-pdf-button-attachment-value="{{ object.id }}"
-        data-pdf-button-path-value="{{ path('admin_app_invoice_pdf', {'id': object.id}) }}"
         data-toggle="modal"
         data-target="#pdf-preview-modal"
         class="btn btn-sm btn-default"
@@ -12,4 +10,3 @@
         <i class="fas fa-cloud-download-alt"></i>
     </a>
 {% endif %}
-
