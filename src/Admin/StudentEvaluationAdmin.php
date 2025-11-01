@@ -385,7 +385,7 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
-                    'header_style' => 'width:149px',
+                    'header_style' => 'width:152px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
