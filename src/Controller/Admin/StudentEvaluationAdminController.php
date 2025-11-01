@@ -5,15 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\StudentEvaluation;
 use App\Enum\StudentEvaluationEnum;
 use App\Enum\UserRolesEnum;
-use App\Service\NotificationService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class StudentEvaluationAdminController extends AbstractAdminController
 {
@@ -34,7 +31,7 @@ final class StudentEvaluationAdminController extends AbstractAdminController
     }
 
     #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
-    public function notificationAction(Request $request, EntityManagerInterface $em, NotificationService $messenger, TranslatorInterface $translator): RedirectResponse
+    public function notificationAction(Request $request): RedirectResponse
     {
         $this->assertObjectExists($request, true);
         $id = $request->get($this->admin->getIdParameter());
@@ -48,18 +45,32 @@ final class StudentEvaluationAdminController extends AbstractAdminController
             ->setHasBeenNotified(true)
             ->setNotificationDate(new \DateTimeImmutable())
         ;
-        $em->flush();
-        //        $messenger->sendStudentAbsenceNotification($object); // TODO render PDF & send by email
-        $this->addFlash(
-            'success',
-            sprintf(
-                'S\'ha enviat un correu electrònic a l\'adreça %s amb l\'avaluació %s del %s de l\'alumne %s.',
-                $object->getStudent()->getMainEmailSubject(),
-                $object->getFullCourseAsString(),
-                $translator->trans(StudentEvaluationEnum::getReversedEnumArray()[$object->getEvaluation()]),
-                $object->getStudent()->getFullName()
-            )
-        );
+        $this->mr->getManager()->flush();
+        $pdf = $this->sebp->build($object);
+        $result = $this->ns->sendStudentEvaluationPdfNotification($object, $pdf);
+        if (0 === $result) {
+            $this->addFlash(
+                'danger',
+                sprintf(
+                    'S\'ha produït un error durant l\'enviament a l\'adreça %s de l\'avaluació %s del %s de l\'alumne %s en PDF.',
+                    $object->getStudent()->getMainEmailSubject(),
+                    $object->getFullCourseAsString(),
+                    $this->ts->trans(StudentEvaluationEnum::getReversedEnumArray()[$object->getEvaluation()]),
+                    $object->getStudent()->getFullName()
+                )
+            );
+        } else {
+            $this->addFlash(
+                'success',
+                sprintf(
+                    'S\'ha enviat un correu electrònic a l\'adreça %s amb l\'avaluació %s del %s de l\'alumne %s en PDF.',
+                    $object->getStudent()->getMainEmailSubject(),
+                    $object->getFullCourseAsString(),
+                    $this->ts->trans(StudentEvaluationEnum::getReversedEnumArray()[$object->getEvaluation()]),
+                    $object->getStudent()->getFullName()
+                )
+            );
+        }
 
         return $this->redirectToList();
     }
