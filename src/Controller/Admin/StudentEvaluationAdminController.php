@@ -7,14 +7,32 @@ use App\Enum\StudentEvaluationEnum;
 use App\Enum\UserRolesEnum;
 use App\Service\NotificationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class StudentEvaluationAdminController extends CRUDController
+final class StudentEvaluationAdminController extends AbstractAdminController
 {
+    #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
+    public function previewAction(Request $request, ParameterBagInterface $parameterBag, SluggerInterface $slugger): Response
+    {
+        $this->assertObjectExists($request, true);
+        $id = $request->get($this->admin->getIdParameter());
+        /** @var StudentEvaluation $object */
+        $object = $this->admin->getObject($id);
+        if (!$object) {
+            throw $this->createNotFoundException(sprintf('unable to find the object with id: %s', $id));
+        }
+        $this->admin->checkAccess('show', $object);
+        $pdf = $this->sebp->build($object);
+
+        return new Response($pdf->Output($parameterBag->get('project_export_filename').'_evaluation_'.$slugger->slug($object->getFullCourseAsString()).'.pdf'), Response::HTTP_OK, ['Content-type' => 'application/pdf']);
+    }
+
     #[IsGranted(UserRolesEnum::ROLE_MANAGER)]
     public function notificationAction(Request $request, EntityManagerInterface $em, NotificationService $messenger, TranslatorInterface $translator): RedirectResponse
     {

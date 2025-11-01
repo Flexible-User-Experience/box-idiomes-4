@@ -5,7 +5,13 @@
         {% if is_contact_message_document_image_file(object) %}
             <img src="{{ vich_uploader_asset(object, 'documentFile') | imagine_filter('480xY') }}" alt="{{ object.document }}" class="img-responsive">
         {% elseif is_contact_message_document_pdf_file(object) %}
-            <a data-controller="pdf-button" data-action="pdf-button#clicked" data-toggle="modal" class="btn btn-warning btn-xs btn-flat d-block margin-bottom" data-target="#pdf-preview-modal" data-pdf-button-attachment-value="{{ object.id }}" data-pdf-button-path-value="{{ vich_uploader_asset(object, 'documentFile') }}">
+            <a
+                {{ stimulus_controller('pdf-button', {'attachment': object.id, 'path': vich_uploader_asset(object, 'documentFile')}) }}
+                {{ stimulus_action('pdf-button', 'clicked') }}
+                data-toggle="modal"
+                data-target="#pdf-preview-modal"
+                class="btn btn-warning btn-xs btn-flat d-block margin-bottom"
+            >
                 <i class="fas fa-file-pdf mr-1"></i> {{ 'backend.admin.modal.pdf_preview_window_title' | trans }}
             </a>
             <div id="{{ object.id }}" data-holder="pdf" data-download="{{ vich_uploader_asset(object, 'documentFile') }}" >
