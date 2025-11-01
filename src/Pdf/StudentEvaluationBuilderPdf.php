@@ -2,6 +2,7 @@
 
 namespace App\Pdf;
 
+use App\Entity\AbstractBase;
 use App\Entity\StudentEvaluation;
 use App\Enum\StudentEvaluationEnum;
 
@@ -23,10 +24,10 @@ class StudentEvaluationBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $pdf->SetTitle($this->ts->trans('backend.admin.student_evaluation.pdf.title').' '.$student->getFullName());
         $pdf->SetSubject($this->ts->trans('backend.admin.student_evaluation.pdf.subject').' '.$studentEvaluation->getFullCourseAsString());
         // set default font subsetting mode
-        $pdf->setFontSubsetting(true);
+        $pdf->setFontSubsetting();
         // remove default header/footer
-        $pdf->setPrintHeader(true);
-        $pdf->setPrintFooter(true);
+        $pdf->setPrintHeader();
+        $pdf->setPrintFooter();
         // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
         // set margins
@@ -47,7 +48,7 @@ class StudentEvaluationBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $retainedYForGlobes = $pdf->GetY() - 4;
         $pdf->setFontStyle(null, 'B', 9);
         $pdf->SetX(BaseTcpdf::PDF_MARGIN_LEFT + 4);
-        $pdf->Write(0, strtoupper($this->ts->trans('backend.admin.student_evaluation.pdf.evaluation_data')), '', false, 'L', false);
+        $pdf->Write(0, strtoupper($this->ts->trans('backend.admin.student_evaluation.pdf.evaluation_data')), '', false, 'L');
         $pdf->SetX($column2Gap);
         $pdf->Write(0, strtoupper($this->ts->trans('backend.admin.student_evaluation.pdf.student_data')), '', false, 'L', true);
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_SMALL);
@@ -55,7 +56,7 @@ class StudentEvaluationBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 
         // left column
         $pdf->SetX(BaseTcpdf::PDF_MARGIN_LEFT + 4);
-        $pdf->Write(0, $this->ts->trans('backend.admin.student_evaluation.course').' '.$studentEvaluation->getFullCourseAsString(), '', false, 'L', false);
+        $pdf->Write(0, $this->ts->trans('backend.admin.student_evaluation.course').' '.$studentEvaluation->getFullCourseAsString(), '', false, 'L');
         $pdf->SetX($column2Gap);
         $pdf->Write(0, $student->getFullName(), '', false, 'L', true);
 
@@ -65,7 +66,7 @@ class StudentEvaluationBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         $pdf->Write(0, $student->getDni() ?: '-', '', false, 'L', true);
 
         $pdf->SetX(BaseTcpdf::PDF_MARGIN_LEFT + 4);
-        $pdf->Write(0, $this->ts->trans('backend.admin.student_evaluation.pdf.evaluation_date').' '.(new \DateTimeImmutable())->format('d/m/Y'), '', false, 'L', false);
+        $pdf->Write(0, $this->ts->trans('backend.admin.student_evaluation.pdf.evaluation_date').' '.new \DateTimeImmutable()->format(AbstractBase::DATE_STRING_FORMAT), '', false, 'L', false);
         $pdf->SetX($column2Gap);
         if ($student->getParent()) {
             $pdf->Write(0, $this->ts->trans('backend.admin.student.parent').': '.$student->getParent()->getFullName(), '', false, 'L', true);
@@ -93,7 +94,7 @@ class StudentEvaluationBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
 
         // evaluation skills rows
         $skills = [
-            ['writing', $studentEvaluation->getWritting()],
+            ['writting', $studentEvaluation->getWritting()],
             ['reading', $studentEvaluation->getReading()],
             ['use_of_english', $studentEvaluation->getUseOfEnglish()],
             ['listening', $studentEvaluation->getListening()],
@@ -109,7 +110,7 @@ class StudentEvaluationBuilderPdf extends AbstractReceiptInvoiceBuilderPdf
         // global mark
         $pdf->Ln(BaseTcpdf::MARGIN_VERTICAL_BIG);
         $pdf->setFontStyle(null, 'B', 9);
-        $pdf->MultiCell(75, $verticalTableGapSmall, $this->ts->trans('backend.admin.student_evaluation.globalMark'), 0, 'L', 0, 0, '', '', true, 0, false, true, 0, 'M');
+        $pdf->MultiCell(75, $verticalTableGapSmall, $this->ts->trans('backend.admin.student_evaluation.global_mark'), 0, 'L', 0, 0, '', '', true, 0, false, true, 0, 'M');
         $pdf->MultiCell(75, $verticalTableGapSmall, $studentEvaluation->getGlobalMark() ?: '-', 0, 'C', 0, 1, '', '', true, 0, false, true, 0, 'M');
         $pdf->setFontStyle(null, '', 9);
 
