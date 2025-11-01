@@ -10,9 +10,11 @@ use App\Entity\PreRegister;
 use App\Entity\Receipt;
 use App\Entity\Student;
 use App\Entity\StudentAbsence;
+use App\Entity\StudentEvaluation;
 use App\Entity\User;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use Twig\Environment;
 
@@ -26,6 +28,7 @@ final readonly class NotificationService
         private SmartAssetsHelperService $sahs,
         private CourierService $messenger,
         private Environment $twig,
+        private SluggerInterface $slugger,
         private ParameterBagInterface $pb,
     ) {
         $this->amd = $pb->get('mailer_destination');
@@ -350,6 +353,33 @@ final readonly class NotificationService
             );
         } catch (TransportExceptionInterface|\Exception) {
             $result = false;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Send attached student evaluation PDF to student or parent email.
+     *
+     * @return int If is 0 failure otherwise amount of recipients
+     */
+    public function sendStudentEvaluationPdfNotification(StudentEvaluation $studentEvaluation, \TCPDF $pdf): int
+    {
+        $result = 1;
+        try {
+            $this->messenger->sendEmailWithPdfAttached(
+                from: $this->amd,
+                toEmail: $studentEvaluation->getStudent()->getMainEmailSubject(),
+                toName: $studentEvaluation->getStudent()->getFullName(),
+                subject: 'Avaluació '.$this->pwt.' '.$studentEvaluation->getFullCourseAsString(),
+                body: $this->twig->render('Mails/student_evaluation_pdf_notification.html.twig', [
+                    'studentEvaluation' => $studentEvaluation,
+                ]),
+                pdfFilename: 'evaluation_'.$this->slugger->slug($studentEvaluation->getStudent()->getFullName()).'_'.$this->slugger->slug($studentEvaluation->getFullCourseAsString()).'.pdf',
+                pdf: $pdf
+            );
+        } catch (TransportExceptionInterface|\Exception) {
+            $result = 0;
         }
 
         return $result;
