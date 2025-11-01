@@ -43,7 +43,10 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         parent::configureRoutes($collection);
-        $collection->add('notification', $this->getRouterIdParameter().'/notification');
+        $collection
+            ->add('preview', $this->getRouterIdParameter().'/preview')
+            ->add('notification', $this->getRouterIdParameter().'/notification')
+        ;
     }
 
     protected function configureQuery(ProxyQueryInterface $query): ProxyQueryInterface
@@ -382,12 +385,15 @@ final class StudentEvaluationAdmin extends AbstractBaseAdmin
                 null,
                 [
                     'label' => 'backend.admin.actions',
-                    'header_style' => 'width:116px',
+                    'header_style' => 'width:149px',
                     'header_class' => 'text-right',
                     'row_align' => 'right',
                     'actions' => [
                         'edit' => [
                             'template' => 'Admin/Buttons/list__action_edit_button.html.twig',
+                        ],
+                        'preview' => [
+                            'template' => 'Admin/Buttons/list__action_student_evaluation_preview_button.html.twig',
                         ],
                         'notification' => [
                             'template' => 'Admin/Buttons/list__action_student_evaluation_notification_button.html.twig',
