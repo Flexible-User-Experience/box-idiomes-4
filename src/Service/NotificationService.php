@@ -31,9 +31,9 @@ final readonly class NotificationService
         private SluggerInterface $slugger,
         private ParameterBagInterface $pb,
     ) {
-        $this->amd = $pb->get('mailer_destination');
-        $this->pwt = $pb->get('project_web_title');
-        $this->pub = $pb->get('project_url_base');
+        $this->amd = $this->pb->get('mailer_destination');
+        $this->pwt = $this->pb->get('project_web_title');
+        $this->pub = $this->pb->get('project_url_base');
     }
 
     /**
@@ -372,7 +372,7 @@ final readonly class NotificationService
                 toEmail: $studentEvaluation->getStudent()->getMainEmailSubject(),
                 toName: $studentEvaluation->getStudent()->getFullName(),
                 subject: 'Avaluació '.$this->pwt.' '.$studentEvaluation->getFullCourseAsString(),
-                body: $this->twig->render('Mails/student_evaluation_pdf_notification.html.twig', [
+                body: $this->twig->render('Mails/student_evaluation_notification.html.twig', [
                     'studentEvaluation' => $studentEvaluation,
                 ]),
                 pdfFilename: 'evaluation_'.$this->slugger->slug($studentEvaluation->getStudent()->getFullName()).'_'.$this->slugger->slug($studentEvaluation->getFullCourseAsString()).'.pdf',

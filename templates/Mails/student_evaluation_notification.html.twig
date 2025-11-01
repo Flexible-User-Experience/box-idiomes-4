@@ -1,0 +1,13 @@
+{% extends "Mails/base.html.twig" %}
+
+{% block content %}
+    <row>
+        <columns small="12" large="12">
+            <h4 class="grey-color text-center normal-m-top">{{ 'backend.admin.student_evaluation.pdf.evaluation_data' | trans }}</h4>
+            <p>Us adjuntem l'avaluació acadèmica corresponent al <strong>{{ studentEvaluation.fullCourseAsString }}</strong> - <strong>{{ ('backend.admin.student_evaluation.' ~ (studentEvaluation.evaluation == 1 ? 'first_trimester' : (studentEvaluation.evaluation == 2 ? 'second_trimester' : 'third_trimester')))|trans }}</strong>.</p>
+            <p class="blue-color text-center only-normal-m-top">
+                Moltes gràcies per confiar amb {{ main_brand_title }}.
+            </p>
+        </columns>
+    </row>
+{% endblock %}
