@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'invoice')]
 class Invoice extends AbstractReceiptInvoice
 {
-    public const int TAX_IRPF = 15;
+    public const int TAX_IRPF = 0;
     public const int TAX_IVA = 0;
 
     #[ORM\ManyToOne(targetEntity: Receipt::class)]
@@ -21,7 +21,7 @@ class Invoice extends AbstractReceiptInvoice
     private ?Receipt $receipt;
 
     #[Assert\Valid]
-    #[ORM\OneToMany(mappedBy: 'invoice', targetEntity: InvoiceLine::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: InvoiceLine::class, mappedBy: 'invoice', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private ?Collection $lines;
 
     #[ORM\Column(type: Types::FLOAT, options: ['default' => 0.0])]
@@ -75,7 +75,7 @@ class Invoice extends AbstractReceiptInvoice
             $line->setInvoice($this);
             $this->lines->add($line);
             $this->setBaseAmount($this->getBaseAmount() + $line->getTotal());
-            $this->setDiscountApplied($this->getStudent()->hasDiscount());
+            $this->setDiscountApplied($this->getStudent()?->hasDiscount());
         }
 
         return $this;
